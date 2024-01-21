@@ -65,12 +65,11 @@ Una plataforma robusta y eficiente con perfiles profesionales verificados, valor
 Consulta las historias de usuario en el documento principal.
 
 ## Diagramas
-- [Diagrama de Ishikawa por Tareas][(ruta al diagrama)](https://excalidraw.com/#json=HCMjsqMg6TbkcZrT65BC2,hpV8_DXeRq8OC4qpk0m7pw)
-- [Diagrama Base de Datos][(ruta al diagrama)](https://dbdiagram.io/d/Proyecto-Final-Primer-boceto-65ab3dd0ac844320ae52cdc2)
+- [Diagrama de Ishikawa por Tareas][(diagrama)](https://excalidraw.com/#json=HCMjsqMg6TbkcZrT65BC2,hpV8_DXeRq8OC4qpk0m7pw)
+- [Diagrama Base de Datos][(diagrama)](https://dbdiagram.io/d/Proyecto-Final-Primer-boceto-65ab3dd0ac844320ae52cdc2)
 
 ## Instrucciones para Implementación
 1. Clona este repositorio.
 2. Instala las dependencias usando `npm install`.
 3. Ejecuta el servidor de desarrollo con `npm run dev`.
 
-¡Bienvenido al proyecto! Estamos emocionados de trabajar juntos para lograr nuestros objetivos. ¡Vamos equipo!
