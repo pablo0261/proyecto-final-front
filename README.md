@@ -58,7 +58,6 @@ Una plataforma robusta y eficiente con perfiles profesionales verificados, valor
 ## Roles del Equipo
 - **Desarrolladores JS:** Lean, Ricardo, Ale, Pablo
 - **Desarrollador Node:** Tiago, Diego, Freydder, Manu
-- **Investigador/Estudio:** Tiago, Lean, Manu, Pablo
 - **Diseñadores:** Ale, Ricardo
 
 ## User Stories
