@@ -1,0 +1,137 @@
+[33mcommit 855952132faeb3b61d25185aeb71a9a3af13c796[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m)[m
+Merge: b730bdf c42fc5f
+Author: Pablo Besler <93159778+pablo0261@users.noreply.github.com>
+Date:   Mon Jan 22 00:21:36 2024 -0300
+
+    Merge pull request #8 from LinxInformatica/prueba
+    
+    Modificar el contador a 5
+
+[33mcommit c42fc5f5df8d5efb8000032dfc458cf42ca96a54[m
+Author: LinxInformatica <diegolepore01@gmail.com>
+Date:   Mon Jan 22 00:06:16 2024 -0300
+
+    Modificar el contador a 5
+
+[33mcommit b730bdf23647ec61ad42c8c9454569c68f702b0a[m
+Merge: 7e8ab69 74734d9
+Author: Pablo Besler <93159778+pablo0261@users.noreply.github.com>
+Date:   Sun Jan 21 23:46:49 2024 -0300
+
+    Merge pull request #7 from tiago1820/rama-de-prueba
+    
+    hdkhfkdjfhkdfdfd
+
+[33mcommit 74734d948cd71bd228722f34088d3e9fa9addd73[m
+Author: tiago1820 <tiago.zdo@gmail.com>
+Date:   Sun Jan 21 23:38:38 2024 -0300
+
+    hdkhfkdjfhkdfdfd
+    fdfdfdfdfdfd
+    dfdfdfdf
+    dfdfdfdfdfd
+    
+    fdfdfdfdf
+    dfdfdfdfdfd
+
+[33mcommit 7e8ab690900a841782f793f6ecf22f55a4304e29[m
+Merge: bfc0315 161bdbf
+Author: Pablo Besler <93159778+pablo0261@users.noreply.github.com>
+Date:   Sun Jan 21 21:44:05 2024 -0300
+
+    Merge pull request #6 from pablo0261/pablo0261-patch-2
+    
+    Update README.md
+
+[33mcommit 161bdbf94254d451a3c5a24eac731ab285f032ac[m
+Author: Pablo Besler <93159778+pablo0261@users.noreply.github.com>
+Date:   Sun Jan 21 21:43:54 2024 -0300
+
+    Update README.md
+
+[33mcommit bfc0315c1771424bf1784037b1247748718778ef[m
+Merge: 52cfd6b 9dd6894
+Author: Pablo Besler <93159778+pablo0261@users.noreply.github.com>
+Date:   Sun Jan 21 21:43:01 2024 -0300
+
+    Merge pull request #5 from pablo0261/pablo0261-patch-1
+    
+    Update README.md
+
+[33mcommit 9dd689486189e294e08e5af918f3441bfea63dfb[m
+Author: Pablo Besler <93159778+pablo0261@users.noreply.github.com>
+Date:   Sun Jan 21 21:42:34 2024 -0300
+
+    Update README.md
+
+[33mcommit 52cfd6b27ca7bafe848d9c62a27e40a7d8af6dcd[m
+Author: pablo0261 <pablobesler@gmail.com>
+Date:   Sun Jan 21 21:35:14 2024 -0300
+
+    first commit
+
+[33mcommit 1cb5bbeaf542fdab2d74cb93fc461875ac46ed80[m
+Merge: 8bb267e 5c32caf
+Author: Pablo Besler <93159778+pablo0261@users.noreply.github.com>
+Date:   Sun Jan 21 17:48:54 2024 -0300
+
+    Merge pull request #4 from pablo0261/pablo0261-patch-1
+    
+    Update README.md
+
+[33mcommit 5c32cafc20fda4aa01afe4854ef2d97a6737b35b[m
+Author: Pablo Besler <93159778+pablo0261@users.noreply.github.com>
+Date:   Sun Jan 21 17:48:38 2024 -0300
+
+    Update README.md
+
+[33mcommit 8bb267eb9f52d80c154c05810dc0752e61d1b759[m
+Merge: 0159e62 58c3030
+Author: Pablo Besler <93159778+pablo0261@users.noreply.github.com>
+Date:   Sun Jan 21 17:02:13 2024 -0300
+
+    Merge pull request #3 from pablo0261/pablo0261-patch-3
+    
+    Update README.md
+
+[33mcommit 58c30304c66cb834156001f74ec04df53551f69d[m
+Author: Pablo Besler <93159778+pablo0261@users.noreply.github.com>
+Date:   Sun Jan 21 17:02:02 2024 -0300
+
+    Update README.md
+
+[33mcommit 0159e621f4cfef8b2ca2234f156945e83c06cac3[m
+Merge: 2d442d7 5b162ed
+Author: Pablo Besler <93159778+pablo0261@users.noreply.github.com>
+Date:   Sun Jan 21 17:01:03 2024 -0300
+
+    Merge pull request #2 from pablo0261/pablo0261-patch-2
+    
+    Update README.md
+
+[33mcommit 5b162ed833bfa21e047d24c0544d23897684a8d4[m
+Author: Pablo Besler <93159778+pablo0261@users.noreply.github.com>
+Date:   Sun Jan 21 17:00:50 2024 -0300
+
+    Update README.md
+
+[33mcommit 2d442d70d309b205b70384dbc6b6b19dfdcd9306[m
+Merge: 10511cf 9858440
+Author: Pablo Besler <93159778+pablo0261@users.noreply.github.com>
+Date:   Sun Jan 21 16:56:55 2024 -0300
+
+    Merge pull request #1 from pablo0261/pablo0261-patch-1
+    
+    Update README.md
+
+[33mcommit 98584402136bffa98cdcfb939dca68831207f8b5[m
+Author: Pablo Besler <93159778+pablo0261@users.noreply.github.com>
+Date:   Sun Jan 21 16:56:07 2024 -0300
+
+    Update README.md
+
+[33mcommit 10511cf99ff4f80be2ea769cd2247ff8ae74f19c[m
+Author: Pablo Besler <93159778+pablo0261@users.noreply.github.com>
+Date:   Fri Jan 19 16:14:52 2024 -0300
+
+    Initial commit
