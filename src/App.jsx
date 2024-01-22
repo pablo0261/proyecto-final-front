@@ -4,7 +4,12 @@ import viteLogo from '/vite.svg'
 import './App.css'
 
 function App() {
+<<<<<<< HEAD
   const [contador, setContador] = useState(5);
+=======
+  const [count, setCount] = useState(0);
+  const nuevaVariable = "algo nuevo";
+>>>>>>> rama-de-prueba
 
   return (
     <>
@@ -19,7 +24,11 @@ function App() {
       <h1>Vite + React</h1>
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>
+<<<<<<< HEAD
           O contador è {count}
+=======
+          Esse é o contador {count}
+>>>>>>> rama-de-prueba
         </button>
         <p>
           Edit <code>src/App.jsx</code> and save to test HMR
