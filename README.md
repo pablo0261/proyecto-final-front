@@ -73,6 +73,10 @@ Consulta las historias de usuario en el documento principal.
 3. Ejecuta el servidor de desarrollo con `npm run dev`.
 
 
-![](https://img.shields.io/github/followers/pablo0261?logo=github&style=for-the-badge&color=0891b2&labelColor=1c1917)
+## 💰 You can help us by Donating
+
+<br/>
+ 
+  [![BuyMeACoffee](https://img.buymeacoffee.com/button-api/?text=Buymeacoffee&emoji=&slug=codingstella&button_colour=FFDD00&font_colour=000000&font_family=Comic&outline_colour=000000&coffee_colour=ffffff)](https://www.buymeacoffee.com/pablobesler)
 
 
