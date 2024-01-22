@@ -27,8 +27,8 @@ function App() {
           Edit <code>src/App.jsx</code> and save to test HMR
         </p>
       </div>
-      <p className="textoAle">
-        Esta es una prueba de Ale
+      <p className="read-the-docs">
+        Faccio un pasticcio
       </p>
     </>
   )
