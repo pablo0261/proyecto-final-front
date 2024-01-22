@@ -20,9 +20,7 @@ function App() {
       <h1>Vite + React</h1>
       <h2>Hola!</h2>
       <div className="card">
-        <button onClick={() => setCount((count) => count + 5)}>
-          cuenta es {count}
-        </button>
+       
         <p>
           Edit <code>src/App.jsx</code> and save to test HMR
         </p>
