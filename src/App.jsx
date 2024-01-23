@@ -4,7 +4,8 @@ import viteLogo from '/vite.svg'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
+  const nuevaVariable = "algo nuevo";
 
   return (
     <>
@@ -17,16 +18,17 @@ function App() {
         </a>
       </div>
       <h1>Vite + React</h1>
+      <h2>Hola!</h2>
       <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
+        <button onClick={() => setCount((count) => count + 5)}>
+          cuenta es {count}
         </button>
         <p>
           Edit <code>src/App.jsx</code> and save to test HMR
         </p>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
+      <p className="textoAle">
+        Faccio un pasticcio - Prueba Ale
       </p>
     </>
   )
