@@ -6,6 +6,7 @@ const Landing = () => {
         <div>
 
             <Link to="/home">
+                <h1>Landing</h1>
                 <button>Home</button>
             </Link>
 
