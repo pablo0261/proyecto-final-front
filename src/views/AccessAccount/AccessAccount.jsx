@@ -6,8 +6,8 @@ import Helpers from '../../Helpers/RoutesFront';
 
 function AccessAccount() {
 
-    useEffect(()=>{
-        localStorage.setItem('isProvider', JSON.stringify(true)) 
+    useEffect(() => {
+        localStorage.setItem('isProvider', JSON.stringify(true))
     }, [])
 
     let isProvider;
@@ -17,10 +17,32 @@ function AccessAccount() {
         isProvider = null
         window.alert('LocalStorage.isProvider No Existe. ¡¿Landing?!')
     }
-    
+
     const [signInView, setSignInView] = useState(true)
     const handleFormsVisibility = () => {
         setSignInView(!signInView)
+    }
+
+    const logInProcess = (logInData) => {
+        /* axios.post('rutadelback', logInData)
+            .then((response)=>{
+                if(response.status === 200) {
+                    navigate('/perfil')
+                }
+            }) */
+        window.alert('InicioSinErrores')
+        console.log(logInData)
+    }
+
+    const signInProcess = (signInData) => {
+        /* axios.post('rutadelback', signInData)
+            .then((response)=>{
+                if(response.status === 200) {
+                    navigate('/perfil')
+                }
+            }) */
+        window.alert('InicioSinErrores')
+        console.log(signInData)
     }
 
     return (
@@ -29,22 +51,28 @@ function AccessAccount() {
                 isProvider != null ?
                     <div>
                         {
-                            signInView ? 
-                            <div>
-                                <SignIn isProvider={isProvider} handleFormsVisibility={handleFormsVisibility}></SignIn>
-                                <div>Componente de Stats</div>
-                                <div>Componente de Comentario</div>
-                            </div>
-                            : 
-                            <div>
-                                <LogIn isProvider={isProvider} handleFormsVisibility={handleFormsVisibility}></LogIn>
-                                <div>Componente de Stats</div>
-                                <div>Componente de Comentario</div>
-                            </div>  
+                            signInView ?
+                                <div>
+                                    <SignIn
+                                        isProvider={isProvider}
+                                        handleFormsVisibility={handleFormsVisibility}
+                                        signInProcess={signInProcess}></SignIn>
+                                    <div>Componente de Stats</div>
+                                    <div>Componente de Comentario</div>
+                                </div>
+                                :
+                                <div>
+                                    <LogIn
+                                        isProvider={isProvider}
+                                        handleFormsVisibility={handleFormsVisibility}
+                                        logInProcess={logInProcess}></LogIn>
+                                    <div>Componente de Stats</div>
+                                    <div>Componente de Comentario</div>
+                                </div>
                         }
                     </div>
-                :
-                <Link to={Helpers.Landing}>Volver a Landing</Link>
+                    :
+                    <Link to={Helpers.Landing}>Volver a Landing</Link>
             }
         </div>
     )
