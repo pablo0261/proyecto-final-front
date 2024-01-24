@@ -6,26 +6,10 @@ import Helpers from '../../Helpers/RoutesFront';
 
 function AccessAccount() {
 
-    const [isProvider, setIsProvider] = useState()
-
-    useEffect(() => {
-
-        let isProviderStorage;
-
-        if (localStorage.getItem('isProvider') !== 'undefined') {
-            isProviderStorage = JSON.parse(localStorage.getItem('isProvider'))
-        } else {
-            isProviderStorage = null
-            window.alert('LocalStorage.isProvider No Existe. ¡¿Landing?!')
-        }
-
-        setIsProvider(isProviderStorage)
-    
-    }, [isProvider])
-
-    console.log(isProvider)
+    const [isProvider, setIsProvider] = useState(JSON.parse(localStorage.getItem('isProvider')))
 
     const [signInView, setSignInView] = useState(true)
+
     const handleFormsVisibility = () => {
         setSignInView(!signInView)
     }

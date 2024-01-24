@@ -15,12 +15,16 @@ function App() {
     <div>
       <NavBar></NavBar>
       <Routes>
-        <Route exact path="/" element={<Landing/>}/>
-        <Route path="/home" element={<Home/>}/>
-        <Route path="/profileProveedor" element={<ProfileProveedor/>}/>
-
-        {/* Ruta para manejar rutas no definidas */}
+        <Route exact path={Helpers.Landing} element={<Landing/>}/>
         <Route path={Helpers.AccessAccount} element={<AccessAccount/>} />
+
+        {/* Cliente */}
+        <Route path={Helpers.Home} element={<Home/>}/>
+
+        {/* Proveedor */}
+        <Route path={Helpers.ProfileProveedor} element={<ProfileProveedor/>}/>
+
+        {/* Administrador */}
       </Routes>
     </div>
   )
