@@ -2,7 +2,7 @@ import { Routes, Route } from 'react-router-dom';
 import Landing from './views/landing/Landing';
 import Home from './views/home/Home';
 // import NotFound from './utils/notFound/NotFound';
-import './App.css'
+
 import Helpers from './Helpers/RoutesFront';
 import AccessAccount from './Views/AccessAccount/AccessAccount';
 import ProfileProveedor from './components/ProfileComponents/ProfileProveedor/profileproveedor';
