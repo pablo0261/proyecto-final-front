@@ -1,5 +1,7 @@
+import Card from "../../components/CardHomeProveedor/CardHomeProveedor";
 import { useEffect, useState } from "react";
 import axios from 'axios';
+
 
 const Home = () => {
   const [users, setUsers] = useState([]);
@@ -15,21 +17,26 @@ const Home = () => {
 
   return (
     <>
-      <h1>Nav</h1>
-      <div className="flex">
-        <div >
-          <h2 className="text-3xl font-bold">Buscar en el mapa</h2>
-          <div className="w-96 h-96">490*490</div>
+      <h1 className="h-24">Nav</h1>
+      <div className="flex justify-between gap-4">
+        <div className="w-1/2">
+          <h2 className="text-3xl font-bold text-red-900">Buscar en el mapa</h2>
+          <div className=" h-96 bg-red-900">490*490</div>
         </div>
-        <div>
-          <div>
-            <button>Filtrar</button>
-            <button>Ordenar</button>
+
+        <div className="w-1/2">
+          <div className="flex justify-start gap-2 mx-3.5">
+          <button class="overflow-hidden relative w-36	 bg-red-400 text-gray-900 py-2 px-4 rounded-xl font-bold uppercase transition-all duration-100 -- hover:shadow-md border border-stone-100 hover:bg-gradient-to-t hover:from-red-500 before:to-stone-50 hover:-translate-y-[3px]">
+              <span class="relative">Filtrar</span>
+            </button>
+            <button class="overflow-hidden relative w-36	 bg-red-400 text-gray-900 py-2 px-4 rounded-xl font-bold uppercase transition-all duration-100 -- hover:shadow-md border border-stone-100 hover:bg-gradient-to-t hover:from-red-500 before:to-stone-50 hover:-translate-y-[3px]">
+              <span class="relative">Ordenar</span>
+            </button>
           </div>
-          <div>
-            <h3>card</h3>
-            <h3>card</h3>
-            <h3>card</h3>
+          <div className="w-full flex flex-col gap-4 ">
+            <Card/>
+            <Card/>
+            <Card/>
           </div>
         </div>
       </div>
