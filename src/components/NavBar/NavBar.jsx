@@ -1,73 +1,46 @@
-import React from 'react'
-import { useLocation } from 'react-router'
-import { NavLink } from 'react-router-dom';
+import React, { useEffect } from 'react'
+import { NavLink, useLocation } from 'react-router-dom';
+import Helpers from '../../Helpers/RoutesFront';
 
 function NavBar() {
 
     const location = useLocation()
-    console.log(location)
 
-    let navContent;
+    /* const handleLocalStorage = (bool) => {
+        localStorage.setItem('isProvider',JSON.stringify(bool))
+        console.log(localStorage.getItem('isProvider'))
+    } */
 
-    switch (location.pathname) {
+    const isProvider = localStorage.getItem('isProvider')
 
-        case '/landing':
-            navContent = (
-                <div>
-                    <NavLink to="/#">¿Como Funciona?</NavLink>
-                </div>
-            )
-            break
-
-        case '/accessaccount':
-            navContent = (
-                <div>
-                    <NavLink to="/">Volver</NavLink>
-                    <button onClick={localStorage.setItem('isProvider',JSON.stringify(true))}>Soy Proveedor</button>
-                    <button onClick={localStorage.setItem('isProvider',JSON.stringify(false))}>Soy Cliente</button>
-                </div>
-            )
-            break
-
-        case '/cliente':
-            navContent = (
-                <div>
-                    <p>Contenido de Cliente</p>
-                    <a href="/enlace5">Enlace 5</a>
-                    <a href="/enlace6">Enlace 6</a>
-                </div>
-            )
-            break
-
-        case '/proveedor':
-            navContent = (
-                <div>
-                    <p>Contenido de Proveedor</p>
-                    <a href="/enlace7">Enlace 7</a>
-                    <a href="/enlace8">Enlace 8</a>
-                </div>
-            )
-            break
-
-        case '/administrador':
-            navContent = (
-                <div>
-                    <p>Contenido de Administrador</p>
-                    <a href="/enlace9">Enlace 9</a>
-                    <a href="/enlace10">Enlace 10</a>
-                </div>
-            )
-            break
-
-        default:
-            navContent = <div>Default Content</div>
-            break
-    }
     // 5 Opciones: Landing / AccessAccount / Cliente / Proveedor / Administrador
     return (
         <div>
-            {navContent}
-        </div> 
+            {
+                location.pathname === Helpers.Landing && <NavLink to="/#">¿Como Funciona?</NavLink>
+            }
+            {
+                location.pathname === Helpers.AccessAccount && <NavLink to="/">Volver</NavLink>
+            }
+            {
+                isProvider && location.pathname !== Helpers.AccessAccount &&
+                <div>
+                    <NavLink to="#">Mis Estadisticas</NavLink>
+                    <NavLink to="#">Mis Conexiones</NavLink>
+                    <NavLink to="#">Mis Reportes</NavLink>
+                    <NavLink to={Helpers.ProfileProveedor}>Mi Perfil</NavLink>
+                </div>
+            }
+            {
+                !isProvider && location.pathname !== Helpers.AccessAccount &&
+                <div>
+                    <NavLink to="#">Ver Proveedores</NavLink>
+                    <NavLink to="#">Mis Conexiones</NavLink>
+                    <NavLink to="#">Mis Reportes</NavLink>
+                    <NavLink to="#">Mi Perfil</NavLink>
+                </div>
+            }
+        </div>
     )
 }
 
