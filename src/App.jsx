@@ -19,7 +19,7 @@ function App() {
         <Route path={Helpers.AccessAccount} element={<AccessAccount/>} />
 
         {/* Cliente */}
-        <Route path={Helpers.Home} element={<Home/>}/>
+        <Route path={Helpers.HomeCustomer} element={<Home/>}/>
 
         {/* Proveedor */}
         <Route path={Helpers.ProfileProveedor} element={<ProfileProveedor/>}/>
