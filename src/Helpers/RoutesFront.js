@@ -3,7 +3,7 @@ const Helpers = {
     AccessAccount : "/accessAccount",
 
     /* Cliente */
-    HomeCliente: "/homeCustomer",
+    HomeCustomer: "/homeCustomer",
 
     /* Proveedor */
     ProfileProveedor: "/profileProveedor", 
