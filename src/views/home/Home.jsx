@@ -1,6 +1,7 @@
 import Card from "../../components/CardHomeProveedor/CardHomeProveedor";
 import { useEffect, useState } from "react";
 import axios from 'axios';
+import styles from "../home/Home.module.sass"
 
 
 const Home = () => {
@@ -18,7 +19,7 @@ const Home = () => {
   return (
     <>
       <h1 className="h-24">Nav</h1>
-      <div className="flex justify-between gap-4">
+      <div className={styles.container}>
         <div className="w-1/2">
           <h2 className="text-3xl font-bold text-red-900">Buscar en el mapa</h2>
           <div className=" h-96 bg-red-900">490*490</div>
