@@ -1,6 +1,7 @@
 const Helpers = {
     Landing : "/",
-    AccessAccount : "/accessaccount"
+    AccessAccount : "/accessaccount",
+    ProfileProveedor: "/profileProveedor", 
 }
 
 export default Helpers
