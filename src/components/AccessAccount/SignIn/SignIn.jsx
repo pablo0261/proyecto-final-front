@@ -10,7 +10,7 @@ function SignIn(props) {
         birthDate: "",
         email: "",
         password: "",
-        isProvider: isProvider,
+        typeOfPerson: isProvider ? 'provider' : 'customer',
         price: isProvider ? 25 : null
     })
 

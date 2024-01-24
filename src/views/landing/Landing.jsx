@@ -1,30 +1,50 @@
-import { Link } from 'react-router-dom';
+import styles from './landing.module.css';
+import logo from '../../assets/image/logo.svg';
+import quote from '../../assets/image/quote-left.png';
+import { useNavigate } from 'react-router';
+import Helpers from '../../Helpers/RoutesFront';
 
 const Landing = () => {
 
+    const navigate = useNavigate()
+
+    const handleLocalStorage = (bool) => {
+        JSON.stringify(localStorage.setItem('isProvider', bool))
+        navigate(Helpers.AccessAccount)
+    }
+
     return (
         <>
-            <header>
+            <header className={styles.header}>
                 {/* Barra de navegacion */}
-                <nav>
-                    <img src="" alt="" />
-                    <a href="#">¿Como funciona?</a>
+                <nav className={styles.nav}>
+                    <div className={styles.nav__container}>
+                        <img className={styles.nav__logo} src={logo} alt="Logo" />
+                        <a className={styles.nav__link} href="#">¿Como funciona?</a>
+                    </div>
                 </nav>
             </header>
 
-            <main>
+            <main className={styles.main}>
 
                 {/* Seccion Hero */}
-                <section>
-                    <h2>Cuidados para adultos mayores</h2>
-                    <h1>"Amor en cada cuidado, conexiones que perduran</h1>
-                    <p>Nuestra plataforma intuitiva te permite explorar perfiles detallados de cuidadores, leer reseñas auténticas y conectar con aquellos que se adaptan a las necesidades únicas de tu familia.</p>
-                    <button>Busco un cuidador</button>
-                    <button>Ofrecer mis servicios</button>
-                    <blockquote>
-                        <p>Officia quaerat itaque, obcaecati ipsam aperiam magni molestiae quisquam ad voluptatem sapiente doloremque id soluta suscipit veniam? Eligendi, esse. Aperiam, doloremque ad!</p>
-                        <cite>Fulanita de Tal - Cliente</cite>
-                    </blockquote>
+                <section className={styles.hero__container}>
+                    <div className={styles.hero__text}>
+                        <h2 className={styles.hero__text__subtitle}>Cuidados para adultos mayores</h2>
+                        <h1 className={styles.hero__text__title}>"Amor en cada cuidado, <br />conexiones que perduran"</h1>
+                        <p className={styles.hero__text__paragraph}>Nuestra plataforma intuitiva te permite explorar perfiles detallados de cuidadores, leer reseñas auténticas y conectar con aquellos que se adaptan a las necesidades únicas de tu familia.</p>
+                        <div className={styles.hero__container__button}>
+                            <button className={styles.button} onClick={()=>{handleLocalStorage(false)}}>Busco un cuidador</button>
+                            <button className={styles.button} onClick={()=>{handleLocalStorage(true)}}>Ofrecer mis servicios</button>
+                        </div>
+                    </div >
+                    <div className={styles.hero__quote}>
+                        <blockquote>
+                            <img src={quote} alt="" />
+                            <p>Officia quaerat itaque, obcaecati ipsam aperiam magni molestiae quisquam ad voluptatem sapiente doloremque id soluta suscipit veniam? Eligendi, esse. Aperiam, doloremque ad!</p>
+                            <cite className={styles.hero__quotecite}>Fulanita de Tal - Cliente</cite>
+                        </blockquote>
+                    </div>
                 </section>
 
                 {/* ¿Cómo funciona? */}

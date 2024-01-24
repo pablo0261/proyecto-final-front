@@ -1,6 +1,11 @@
 const Helpers = {
     Landing : "/",
-    AccessAccount : "/accessaccount",
+    AccessAccount : "/accessAccount",
+
+    /* Cliente */
+    HomeCustomer: "/homeCustomer",
+
+    /* Proveedor */
     ProfileProveedor: "/profileProveedor", 
     ServicesProveedorCard: "/servicesProveedorCard", 
 }
