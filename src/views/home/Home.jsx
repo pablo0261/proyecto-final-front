@@ -10,7 +10,7 @@ const Home = () => {
   const [users, setUsers] = useState([]);
 
 
-  //*  Aqui va a guardar el get en el estado local para renderizar hasta que se vea si estos valores van a ser pasados al global
+  //* Aqui va a guardar el get en el estado local para renderizar hasta que se vea si estos valores van a ser pasados al global
   // useEffect(async () => {
   //   const url = '/algunaruta';
   //   const res = await axios.get(url);
