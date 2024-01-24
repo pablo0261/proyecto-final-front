@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from 'axios';
 import styles from "../home/Home.module.sass"
+import data from "../../../data.json";
 
 
 const Home = () => {
@@ -15,6 +16,9 @@ const Home = () => {
   //   const res = await axios.get(url);
   //   setUsers(res.data);
   // }, []);
+  useEffect(() => {
+    setUsers(data.salida.data);
+  }, []);
 
 
   return (
@@ -28,17 +32,17 @@ const Home = () => {
 
         <div className={styles.servicesContainer}>
           <div className={styles.filtersContainer}>
-          <button class="overflow-hidden relative w-36	 bg-red-400 text-gray-900 py-2 px-4 rounded-xl font-bold uppercase transition-all duration-100 -- hover:shadow-md border border-stone-100 hover:bg-gradient-to-t hover:from-red-500 before:to-stone-50 hover:-translate-y-[3px]">
-              <span class="relative">Filtrar</span>
+          <button className={styles.botones}>
+              Filtrar
             </button>
-            <button class="overflow-hidden relative w-36	 bg-red-400 text-gray-900 py-2 px-4 rounded-xl font-bold uppercase transition-all duration-100 -- hover:shadow-md border border-stone-100 hover:bg-gradient-to-t hover:from-red-500 before:to-stone-50 hover:-translate-y-[3px]">
-              <span class="relative">Ordenar</span>
+            <button className={styles.botones}>
+              Ordenar
             </button>
           </div>
           <div className={styles.cardContainer}>
-            <Card/>
-            <Card/>
-            <Card/>
+          {users.map((user) => (
+              <Card key={user.idPeople} user={user} />
+            ))}
           </div>
         </div>
       </div>
