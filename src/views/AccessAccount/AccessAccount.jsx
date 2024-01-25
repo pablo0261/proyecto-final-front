@@ -25,7 +25,7 @@ function AccessAccount() {
                 }
             }) */
         localStorage.setItem(StoreItem.idUserLogged, 1)
-        navigate(Helpers.ProfileProveedor.replace(':id',1))
+        navigate(Helpers.ProfileProviderView.replace(':id',1))
         window.alert('InicioSinErrores')
     }
 

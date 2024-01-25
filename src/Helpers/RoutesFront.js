@@ -3,10 +3,16 @@ const Helpers = {
     AccessAccount : "/accessAccount",
 
     /* Cliente */
-    HomeCustomer: "/homeCustomer",
+    HomeCustomerView: "/homeCustomerView/:id",
+    ProfileCustomerView: "/profileCustomerView/:id",
+    ConnectionsCustomerView: "/connectionsCustomerView/:id",
+    ReportsCustomerView: "/reportsCustomerView/:id",
 
     /* Proveedor */
-    ProfileProveedorView: "/profileProveedorView/:id", 
+    ProfileProviderView: "/profileProviderView/:id",
+    ConnectionsProviderView: "/connectionsProviderView/:id",
+    ReportsProviderView: "/reportsProviderView/:id",
+    StatsProviderView: "/statsProviderView/:id", 
 }
 
 export default Helpers
