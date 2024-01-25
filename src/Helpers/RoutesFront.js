@@ -7,7 +7,6 @@ const Helpers = {
 
     /* Proveedor */
     ProfileProveedorView: "/profileProveedorView", 
-    ServicesProveedorCard: "/servicesProveedorCard", 
 }
 
 export default Helpers
