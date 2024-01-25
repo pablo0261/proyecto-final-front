@@ -6,7 +6,7 @@ function ScheduleProveedorCard() {
 
   const handleDeleteClick = () => {
     // dispatch(handleDeleteService(item));
-    // Este código está comentado ya que handleDeleteClick no está definido en el código proporcionado.
+   
   };
 
   const schedule = infoUserLog.schedule || [];
