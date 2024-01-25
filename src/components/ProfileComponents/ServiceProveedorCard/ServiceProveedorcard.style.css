@@ -1,0 +1,30 @@
+.edit{
+	height: 20px;
+	margin-top: 5px;
+    margin-right: 0px;
+}
+.container{
+    border: 2px solid black;
+	height: 400px;
+	margin-top: 20px;
+    margin-inline: auto;
+}
+.service{
+    border: 2px solid black;
+    margin-inline: 30px;
+	width: 30vw;
+}
+.cost{
+    border: 2px solid black;
+	 margin-inline: 30px;
+	 width: 10vw;
+}
+.buttonContract{
+    border: 2px solid black;
+	 margin-inline: 30px;
+}
+.delete{
+    border: 2px solid black;
+	 margin-inline: 30px;
+	 width: 10vw;
+}

@@ -20,6 +20,18 @@ const infoDetailProveedor = (id) => {
     };
   };
 
+const handleContratService = (item) => {
+    return async () => {
+      try {
+        await axios.post(`/people/${item}`);//*Verificar si el post iria a la misma ruta
+        
+      } catch (error) {
+        console.log(error);
+      }
+    };
+  };
+
   export {
     infoDetailProveedor,
+    handleContratService,
   }
