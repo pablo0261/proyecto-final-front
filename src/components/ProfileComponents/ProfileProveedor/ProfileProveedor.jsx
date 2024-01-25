@@ -31,6 +31,10 @@ function ProfileProveedor() {
 
   const Verification = isAllInfoFilled;
 
+  const handleEditClick = () => {
+    //  dispatch(handleDeleteService(item)); //* enviará un put para actualizar el estado global infoDetailProveedor
+  };
+
   return (
     <div className="container">
       <div className={Verification ? "verified" : "not-verified"}>
@@ -65,7 +69,7 @@ function ProfileProveedor() {
             </div>
           </div>
         </div>
-        <img src="editImage" alt="edit" className="edit-button" />
+        <button onClick={handleEditClick()} src="editImage" alt="edit" className="edit-button" />
       </div>
     </div>
   );

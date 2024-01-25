@@ -5,9 +5,8 @@ import Home from './views/home/Home';
 
 import Helpers from './Helpers/RoutesFront';
 import AccessAccount from './Views/AccessAccount/AccessAccount';
-import ProfileProveedor from './components/ProfileComponents/ProfileProveedor/profileproveedor';
+import ProfileProveedorView from './views/ProfileProveedorView/PerfilProveedorView';
 import NavBar from './components/NavBar/NavBar';
-import ServicesProveedorCard from './components/ProfileComponents/ServiceProveedorCard/SeviceproveedorCard';
 
 function App() {
   
@@ -19,8 +18,6 @@ function App() {
         <Route exact path={Helpers.Landing} element={<Landing/>}/>
         <Route exact path="/" element={<Landing/>}/>
         <Route path="/home" element={<Home/>}/>
-        <Route path="/profileProveedor" element={<ProfileProveedor/>}/>
-        <Route path="/ServicesProveedorCard" element={<ServicesProveedorCard/>}/>
 
         {/* Ruta para manejar rutas no definidas */}
         <Route path={Helpers.AccessAccount} element={<AccessAccount/>} />
@@ -29,7 +26,7 @@ function App() {
         <Route path={Helpers.HomeCustomer} element={<Home/>}/>
 
         {/* Proveedor */}
-        <Route path={Helpers.ProfileProveedor} element={<ProfileProveedor/>}/>
+        <Route path={Helpers.ProfileProveedorView} element={<ProfileProveedorView/>}/>
 
         {/* Administrador */}
       </Routes>

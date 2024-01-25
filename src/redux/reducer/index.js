@@ -25,6 +25,12 @@ let initialState = {  //!Contiene un obj de una persona fake
     country: "Brasil",
     profesion: "software engineer",
     phone: "219998655541",
+    service: [
+      {name:"care", value: 30},
+      {name:"cleaning", value: 20},
+      {name: "cooking", value: 30},
+      {name: "walking", value: 10},
+    ]
   },
 };
 

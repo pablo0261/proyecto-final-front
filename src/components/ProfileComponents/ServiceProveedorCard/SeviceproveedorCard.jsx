@@ -1,10 +1,11 @@
 import {  useSelector } from "react-redux";
 // import { handleDeleteService, handleContratService } from "redux/actions";
+import "./ServiceProveedorCard.style.css";
 
 function ServicesProveedorCard() {
 
   // const dispatch = useDispatch();
-  const infoDetailProveedor = useSelector((state) => state.infoDetailProveedor);
+  const infoUserLog = useSelector((state) => state.infoUserLog);
 
   // useEffect(() => {
   //   let isProvider;
@@ -16,7 +17,10 @@ function ServicesProveedorCard() {
   //   }
   // }, []);
 
-  const handleDeleteClick = () => {
+  const handleDeleteClick  = () => {
+    //  dispatch(handleDeleteService(item)); //* enviará un put para actualizar el estado global infoDetailProveedor
+  };
+  const handleEditClick = () => {
     //  dispatch(handleDeleteService(item)); //* enviará un put para actualizar el estado global infoDetailProveedor
   };
 
@@ -25,26 +29,29 @@ function ServicesProveedorCard() {
   };
 
   return (
-    <div>
+    <div className="container">
+        <img className="edit" src="editImage" alt="edit" />
       <table>
         <thead>
           <tr>
-            <hh></hh>
-            <h2>Servicios</h2>
-            <th>Precio x Hora</th>
-            <th></th>
+          <th className="delete"></th>
+            <th className="service">Servicios</th>
+            <th className="cost">Precio x Hora</th>
+            <td>
+                <button onClick={() => handleEditClick()}>X</button>
+              </td>
           </tr>
         </thead>
         <tbody>
-        {infoDetailProveedor.servicios.map((item, index) => (
+        {infoUserLog.service.map((item, index) => (
             <tr key={index}>
               <td>
                 <button onClick={() => handleDeleteClick(item)}>X</button>
               </td>
-              <td>{item.servicio}</td>
-              <td>{item.valor}</td>
+              <td className="service" >{item.name}</td>
+              <td className="cost" >Pesos {item.value}</td>
               <td>
-                <button onClick={() => handleContratClick(item)}>
+                <button className="buttonContract" onClick={() => handleContratClick(item)}>
                   Contratar este Servicio
                 </button>
               </td>
@@ -52,7 +59,7 @@ function ServicesProveedorCard() {
           ))}
         </tbody>
       </table>
-      <img src="editImage" alt="edit" />
+    
     </div>
   );
 }

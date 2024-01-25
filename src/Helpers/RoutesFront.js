@@ -6,7 +6,7 @@ const Helpers = {
     HomeCustomer: "/homeCustomer",
 
     /* Proveedor */
-    ProfileProveedor: "/profileProveedor", 
+    ProfileProveedorView: "/profileProveedorView", 
     ServicesProveedorCard: "/servicesProveedorCard", 
 }
 
