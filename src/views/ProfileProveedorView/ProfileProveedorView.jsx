@@ -2,6 +2,7 @@
 import ProfileProveedor from "../../components/ProfileComponents/ProfileProveedor/ProfileProveedor";
 import ServicesProveedorCard from '../../components/ProfileComponents/ServiceProveedorCard/SeviceProveedorCard';
 import InteresProveedorCard from '../../components/ProfileComponents/InteresProveedorcard/InteresProveedorCard';
+import ScheduleProveedorCard from '../../components/ProfileComponents/ScheduleProveedorCard/ScheduleProveedorCard';
 import EducationExperienciaProveedor from '../../components/ProfileComponents/EducationExperienciaProveedor/EducationExperienciaProveedor';
 import MapProveedorCard from '../../components/ProfileComponents/MapProveedorCard/MapProveedorCard';
 import ReviewProveedorCard from '../../components/ProfileComponents/ReviewProveedorCard/ReviewProveedorCard';
@@ -19,6 +20,7 @@ function profile() {
       <ServicesProveedorCard/>
       <EducationExperienciaProveedor/>
       <InteresProveedorCard/>
+      <ScheduleProveedorCard/>
       <MapProveedorCard/>
       <ReviewProveedorCard/>
       <ConectionProveedorCard/>

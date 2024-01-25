@@ -120,6 +120,7 @@ let initialState = {  //!Contiene un obj de una persona fake
         detail:  "Excelente servicio"
       }
     ],
+    schedule: [true, false, true , false, true , true, true , true, true , true, true , true, true , true, true , true, true , true, true, false]
   },
 };
 
