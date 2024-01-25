@@ -6,7 +6,7 @@ const Helpers = {
     HomeCustomer: "/homeCustomer",
 
     /* Proveedor */
-    ProfileProveedor: "/profileProveedor", 
+    ProfileProveedor: "/profileProveedor/:id", 
 }
 
 export default Helpers

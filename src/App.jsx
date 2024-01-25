@@ -1,7 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
 import Landing from './views/landing/Landing';
 import Home from './views/home/Home';
-// import NotFound from './utils/notFound/NotFound';
+import NotFound from './utils/notFound/NotFound';
 
 import Helpers from './Helpers/RoutesFront';
 import AccessAccount from './Views/AccessAccount/AccessAccount';
@@ -25,6 +25,9 @@ function App() {
         <Route path={Helpers.ProfileProveedor} element={<ProfileProveedor/>}/>
 
         {/* Administrador */}
+
+        {/* Rutas No Especificada */}
+        <Route path='*' element={<NotFound></NotFound>}/>
       </Routes>
     </div>
   )
