@@ -4,7 +4,7 @@ import Home from './views/home/Home';
 import NotFound from './utils/notFound/NotFound';
 import Helpers from './Helpers/RoutesFront';
 import AccessAccount from './Views/AccessAccount/AccessAccount';
-import ProfileProveedorView from './views/ProfileProveedorView/PerfilProveedorView';
+import ProfileProveedorView from './views/ProfileProveedorView/ProfileProveedorView';
 import NavBar from './components/NavBar/NavBar';
 import ReportsCustomerView from './Views/CustomerViews/ReportsCustomerView';
 import ConnectionsCustomerView from './Views/CustomerViews/ConnectionsCustomerView';

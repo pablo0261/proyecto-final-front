@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
-import "./SkilsInteresesProveedorCard.style.css";
+import "./EducationExperienciaProveedor.style.css";
 
-function SkilsInteresesProveedorCard() {
+function EducationExperienciaProveedor() {
   const infoUserLog = useSelector((state) => state.infoUserLog);
 
   const skills = infoUserLog.skills || [];
@@ -53,4 +53,4 @@ function SkilsInteresesProveedorCard() {
   );
 }
 
-export default SkilsInteresesProveedorCard;
+export default EducationExperienciaProveedor;
