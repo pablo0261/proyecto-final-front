@@ -1,0 +1,21 @@
+.footer__container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    height: 350px;
+    background-color: #260D0D;
+    color: white;
+    align-items: center;
+    text-align: left;
+}
+
+.footer__container__menu {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 60px;
+}
+
+.a {
+    display: block;
+    margin-bottom: 20px;
+}
