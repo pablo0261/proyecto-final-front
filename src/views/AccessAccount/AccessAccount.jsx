@@ -1,18 +1,21 @@
 import React, { useEffect, useState } from 'react'
 import LogIn from '../../components/AccessAccount/LogIn/LogIn'
 import SignIn from '../../components/AccessAccount/SignIn/SignIn'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Helpers from '../../Helpers/RoutesFront';
+import StoreItem from '../../Helpers/LocalStorage';
 
 function AccessAccount() {
 
-    const [isProvider, setIsProvider] = useState(JSON.parse(localStorage.getItem('isProvider')))
+    const isProvider = useState(JSON.parse(localStorage.getItem(StoreItem.isProvider)))
 
     const [signInView, setSignInView] = useState(true)
 
     const handleFormsVisibility = () => {
         setSignInView(!signInView)
     }
+
+    const navigate = useNavigate()
 
     const logInProcess = (logInData) => {
         /* axios.post('rutadelback', logInData)
@@ -21,8 +24,9 @@ function AccessAccount() {
                     navigate('/perfil')
                 }
             }) */
+        localStorage.setItem(StoreItem.idUserLogged, 1)
+        navigate(Helpers.ProfileProveedor.replace(':id',1))
         window.alert('InicioSinErrores')
-        console.log(logInData)
     }
 
     const signInProcess = (signInData) => {
@@ -32,8 +36,7 @@ function AccessAccount() {
                     navigate('/perfil')
                 }
             }) */
-        window.alert('InicioSinErrores')
-        console.log(signInData)
+        window.alert('RegistroSinErrores')
     }
 
     return (

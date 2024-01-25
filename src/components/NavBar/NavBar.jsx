@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { NavLink, useLocation } from 'react-router-dom';
 import Helpers from '../../Helpers/RoutesFront';
+import StoreItem from '../../Helpers/LocalStorage';
 
 function NavBar() {
 
@@ -11,7 +12,8 @@ function NavBar() {
         console.log(localStorage.getItem('isProvider'))
     } */
 
-    const isProvider = localStorage.getItem('isProvider')
+    const isProvider = JSON.parse(localStorage.getItem(StoreItem.isProvider))
+    const idUserLogged = JSON.parse(localStorage.getItem(StoreItem.idUserLogged))
 
     // 5 Opciones: Landing / AccessAccount / Cliente / Proveedor / Administrador
     return (
@@ -28,7 +30,7 @@ function NavBar() {
                     <NavLink to="#">Mis Estadisticas</NavLink>
                     <NavLink to="#">Mis Conexiones</NavLink>
                     <NavLink to="#">Mis Reportes</NavLink>
-                    <NavLink to={Helpers.ProfileProveedor}>Mi Perfil</NavLink>
+                    <NavLink to={Helpers.ProfileProveedor.replace(':id', idUserLogged)}>Mi Perfil</NavLink>
                 </div>
             }
             {
