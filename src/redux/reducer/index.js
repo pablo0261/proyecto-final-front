@@ -4,7 +4,7 @@ let initialState = {  //!Contiene un obj de una persona fake
   infoUserLog: {
    //*ESTO NO LO USE
     idLocation: 1,
-    geoposition: "40.7128,-74.0060",
+    
     dateOfBirth: "1990-01-01T02:00:00.000Z",
     idGenre: 1,
     noShow: false,
@@ -78,6 +78,46 @@ let initialState = {  //!Contiene un obj de una persona fake
         ],
         talents: ["Reading", "Singing", "Movies"," Books"
         ],
+        extras: ["Driving", "Childrens", "Pets", "Smoking", "Have a Car"
+        ],
+      }
+    ],
+    geoposition: "40.7128,-74.0060",
+    // availability: [
+    //   {
+    //     skills: ["Administering Injections", "First Aid", "CPR (Cardiopulmonary Resuscitation)"
+    //     ],
+    //     availability: ["Reading", "Singing", "Movies"," Books"
+    //     ],
+    //   }
+    // ],
+    avaliation: [
+      {
+        idEvaluator: "646561161561615",
+        name: "Terry Bogard",
+        imageId: "utils/Imagenpersona.jpeg",
+        valoration: 4.5,
+        area: "Rio de Janeiro",
+        country: "Brasil",
+        service: [
+          {name:"care"},
+          {name:"cleaning"},
+          {name: "walking"},
+        ],
+        detail:  "Buen servicio"
+      },
+      {
+        idEvaluator: "8716171161561615",
+        name: "Tito",
+        imageId: "utils/Imagenpersona2.jpeg",
+        valoration: 4.8,
+        area: "Rio de Janeiro",
+        country: "Brasil",
+        service: [
+          {name:"care"},
+          {name:"cleaning"},
+        ],
+        detail:  "Excelente servicio"
       }
     ],
   },
