@@ -30,6 +30,44 @@ let initialState = {  //!Contiene un obj de una persona fake
       {name:"cleaning", value: 20},
       {name: "cooking", value: 30},
       {name: "walking", value: 10},
+    ],
+    skills: [
+      {
+        education: [
+          {
+            title: 'Specialization',
+            institution: 'Harvard',
+            startDate: '2001-01-01',
+            endDate: '2002-12-31',
+            description: 'Productive year with valuable learning experiences.'
+          },
+          {
+            title: 'Master',
+            institution: 'Harvard',
+            startDate: '2003-01-01',
+            endDate: '2006-12-31',
+            description: 'Challenging years of dedicated study.'
+          }
+        ]
+      },
+      {
+        workExperience: [
+          {
+            title: 'Software Engineer Intern',
+            institution: 'Google',
+            startDate: '2003-01-01',
+            endDate: '2006-12-31',
+            description: "Contributed to the development of Google's search engine."
+          },
+          {
+            title: 'Cook',
+            institution: 'KitchenBoys',
+            startDate: '2008-01-01',
+            endDate: '2013-12-31',
+            description: 'Managed culinary responsibilities, demonstrating proficiency in cooking techniques.'
+          }
+        ]
+      }
     ]
   },
 };
