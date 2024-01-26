@@ -9,7 +9,7 @@ const Helpers = {
     ProfileProviderView: "/profileProviderView/:id", 
 
     /* Form */
-    Form: "/form", 
+    Form: "/form/:component", 
 }
 
 export default Helpers

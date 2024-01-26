@@ -1,40 +1,29 @@
 import { useSelector } from "react-redux";
-import { Link } from 'react-router-dom';
+import { Link} from "react-router-dom";
 import "./ProfileProvider.style.css";
 
 function ProfileProvider() {
   const infoUserLog = useSelector((state) => state.infoUserLog);
+//! OJO ESTO VA A CAMBIAR CUANDO CAMBIE EL OBJETO DEL ESTADO
+  const formData = {
+    imageId: infoUserLog.image || "",
+    valoracion: infoUserLog.valoration || "",
+    age: infoUserLog.age || "",
+    address: infoUserLog.address || "",
+    idLocation: infoUserLog.idLocation || null,
+    state: infoUserLog.state || "",
+    area: infoUserLog.area || "",
+    country: infoUserLog.country || "",
+    profesion: infoUserLog.profesion || "",
+    aboutMe: infoUserLog.aboutMe || "",
+    phone: infoUserLog.phone || "",
+  };
 
-  //*AQUI LO QUE RECIBIRIA DEL BACK
-  const imageId = infoUserLog.image || "";
-  const valoracion = infoUserLog.valoration || "";
-  const age = infoUserLog.age || "";
-  const address = infoUserLog.address || "";
-  const idLocation = infoUserLog.idLocation || null;
-  const state = infoUserLog.state || "";
-  const area = infoUserLog.area || "";
-  const country = infoUserLog.country || "";
-  const profesion = infoUserLog.profesion || "";
-  const aboutMe = infoUserLog.aboutMe || "";
-  const phone = infoUserLog.phone || "";
-
-  const isAllInfoFilled =
-    imageId.length !== 0 &&
-    valoracion.length !== 0 &&
-    age.length !== 0 &&
-    address.length !== 0 &&
-    idLocation !== null &&
-    area.length !== 0 &&
-    state.length !== 0 &&
-    aboutMe.length !== 0 &&
-    country.length !== 0 &&
-    phone.length !== 0;
+  const isAllInfoFilled = Object.values(formData).every(
+    (value) => value.length !== 0
+  );
 
   const Verification = isAllInfoFilled;
-
-  // const handleEditClick = () => {
-  //   history.push('/form');
-  // };
 
   return (
     <div className="container">
@@ -43,10 +32,10 @@ function ProfileProvider() {
       </div>
       <div className="profile-container">
         <div className="profile-info">
-          <img className="image" src={imageId} alt="Imagen" />
+          <img className="image" src={formData.imageId} alt="Imagen" />
           <img src="Estrella" alt="Estrella" />
-          <p>{valoracion}</p>
-          <p>{state}</p>
+          <p>{formData.valoracion}</p>
+          <p>{formData.state}</p>
         </div>
         <div>
           <div className="user-details">
@@ -57,21 +46,24 @@ function ProfileProvider() {
                 {Verification ? "Cuenta Verificada" : "Cuenta no Verificada"}
               </p>
             </div>
-            <p className="user-info">{`Edad: ${age}`}</p>
-            <p className="user-info">{`Dirección: ${address} ${area} ${country}`}</p>
+            <p className="user-info">{`Edad: ${formData.age}`}</p>
+            <p className="user-info">{`Dirección: ${formData.address} ${formData.area} ${formData.country}`}</p>
           </div>
           <div className="profession-details">
-            <h3>{profesion}</h3>
-            <p>{aboutMe}</p>
+            <h3>{formData.profesion}</h3>
+            <p>{formData.aboutMe}</p>
             <div className="contact-section">
               <p>Contactos :</p>
-              <img src={phone} alt="Teléfono" />
-              <img src={"sobre"} alt="Sobre" />
+              <img src={formData.phone} alt="Teléfono" />
+              <img src={"ruta/a/la/imagen/sobre.png"} alt="Sobre" />
             </div>
           </div>
         </div>
-        <Link to="/form">
-        <button src="editImage" alt="edit" className="edit-button"> Edit</button>
+        <Link to={{ pathname: `/form/${1}`}}>
+          <button    src="editImage" alt="edit" className="edit-button">
+            {" "}
+            Edit
+          </button>
         </Link>
       </div>
     </div>

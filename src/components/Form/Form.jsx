@@ -1,35 +1,44 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { postUserData } from "../../redux/actions/index";
+import { useParams } from "react-router-dom";
 import validation from "./validation";
 import "./Form.style.css";
 
 function Form() {
   const dispatch = useDispatch();
-  const [userData, setUserData] = useState({
-    aboutMe: "",
-    name: "",
-    address: "",
-    imageId: "utils/Imagenpersona.jpeg",
-    age: "",
-    country: "",
-    state: "",
-    profesion: "",
-    phone: "",
-  });
+  const datosPeople = useSelector((state) => state.datosPeople);
+  const { component } = useParams();
+
+  console.log("component", component)
+  const [userData, setUserData] = useState({})
+  console.log("userData", userData)
+
+  useEffect(() => {
+    if (component === "1" && datosPeople.ProfileProvider) {
+      setUserData({ ...datosPeople.ProfileProvider });
+    } else if (component === "2" && datosPeople.ServicesProviderCard) {
+      setUserData({ ...datosPeople.ServicesProviderCard });
+    } else if (component === "3" && datosPeople.EducationExperienciaProvider) {
+      setUserData({ ...datosPeople.EducationExperienciaProvider });
+    }
+     else if (component === "4" && datosPeople.InteresProviderCard) {
+      setUserData({ ...datosPeople.InteresProviderCard });
+    }
+     else if (component === "5" && datosPeople.SkillsProviderCard) {
+      setUserData({ ...datosPeople.SkillsProviderCard });
+    }
+  }, []);
 
   const [localErrors, setLocalErrors] = useState({});
 
-
-  const formFields = [
-    { label: "name", name: "name", type: "text", placeholder: "" },
-    { label: "aboutMe", name: "aboutMe", type: "text", placeholder: "" },
-    { label: "address", name: "address", type: "text", placeholder: "" },
-    { label: "age", name: "age", type: "text", placeholder: "" },
-    { label: "profesion", name: "profesion", type: "text", placeholder: "" },
-    { label: "Height Max", name: "heightMax", type: "text", placeholder: "" },
-    { label: "phone", name: "phone", type: "text", placeholder: "" },
-  ];
+  useEffect(() => {
+    if (datosPeople.ProfileProvider) {
+      setUserData((prevUserData) => ({
+        ...prevUserData,
+      }));
+    }
+  }, []);
 
   const handleChange = (event) => {
     let property = event.target.name;
@@ -63,6 +72,14 @@ function Form() {
         });
     }
   };
+
+
+  const formFields = Object.keys(userData).map((key) => ({
+    label: key,
+    name: key,
+    type: "text",
+    placeholder: "",
+  }));
 
   return (
     <div className="background">

@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux";
 import "./SkillsProviderCard.style.css";
+import { Link } from "react-router-dom";
 
 function SkillsProviderCard() {
   const infoUserLog = useSelector((state) => state.infoUserLog);
@@ -14,6 +15,12 @@ function SkillsProviderCard() {
 
   return (
     <div className="container">
+      <Link to={{ pathname: `/form/${5}` }}>
+        <button src="editImage" alt="edit" className="edit-button">
+          {" "}
+          Edit
+        </button>
+      </Link>
       {extras.map((interest, index) => (
         <div key={index} className="skillsCont">
           <h2 className="skillname">{interest}</h2>

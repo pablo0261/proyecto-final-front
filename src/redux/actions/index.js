@@ -4,6 +4,7 @@ import axios from "axios";
 export const GET_INFO_USER = "GET_INFO_USER";
 export const POST_NEW_INFO_USER = "POST_NEW_INFO_USER";
 export const SET_ERROR_BACK = "SET_ERROR_BACK";
+export const EDIT_INFO_USER = "EDIT_INFO_USER";
 
 
 //*---GET GENERALES---//
@@ -12,7 +13,7 @@ const infoDetailProveedor = (id) => {
     return async (dispatch) => {
       try {
         const { data } = await axios.get(`/people/${id}`);
-        return dispatch({
+        dispatch({
           type: GET_INFO_USER,
           payload: data,
         });
@@ -55,8 +56,24 @@ const postUserData = (userData) => {
   };
 };
 
+const handleEditProfile = (formData) => {
+  return async (dispatch) => {
+    try {
+    dispatch({
+      type: EDIT_INFO_USER,
+      payload: formData,
+    });
+  } catch (error) {
+    console.error(error);
+  }
+};
+};
+
+
+
   export {
     infoDetailProveedor,
     handleContratService,
     postUserData,
+    handleEditProfile,
   }
