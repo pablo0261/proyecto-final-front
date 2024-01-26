@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import LogIn from '../../components/AccessAccount/LogIn/LogIn'
 import SignIn from '../../components/AccessAccount/SignIn/SignIn'
 import { Link, useNavigate } from 'react-router-dom';
 import Helpers from '../../Helpers/RoutesFront';
 import StoreItem from '../../Helpers/LocalStorage';
 import { useDispatch } from 'react-redux';
-import { accessDataBase } from '../../redux/actions';
+import { logInDataBase, signInDataBase } from '../../redux/actions';
 import style from './AccessAccount.module.sass'
 
 function AccessAccount() {
@@ -22,34 +22,22 @@ function AccessAccount() {
     const navigate = useNavigate()
 
     const logInProcess = (logInData) => {
-        /* axios.post('rutadelback', logInData)
-            .then((response)=>{
-                if(response.status === 200) {
-                    navigate('/perfil')
-                }
-            }) */
         if (isProvider) {
-            dispatch(accessDataBase(logInData))
+            dispatch(logInDataBase(logInData))
             navigate(Helpers.StatsProviderView)
         } else {
-            dispatch(accessDataBase(logInData))
+            dispatch(logInDataBase(logInData))
             navigate(Helpers.HomeCustomerView)
         }
 
     }
 
     const signInProcess = (signInData) => {
-        /* axios.post('rutadelback', signInData)
-            .then((response)=>{
-                if(response.status === 200) {
-                    navigate('/perfil')
-                }
-            }) */
         if (isProvider) {
-            dispatch(accessDataBase(signInData))
+            dispatch(signInDataBase(signInData))
             navigate(Helpers.StatsProviderView)
         } else {
-            dispatch(accessDataBase(signInData))
+            dispatch(signInDataBase(signInData))
             navigate(Helpers.HomeCustomerView)
         }
     }

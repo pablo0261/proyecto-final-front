@@ -12,8 +12,7 @@ function SignIn(props) {
         email: "",
         password: "",
         typeOfPerson: isProvider ? 'provider' : 'customer',
-        price: isProvider ? 25 : null,
-        idPeople: 1
+        price: isProvider ? 25 : null
     })
 
     const [errors, setErrors] = useState({

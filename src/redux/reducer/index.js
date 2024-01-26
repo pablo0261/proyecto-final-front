@@ -25,7 +25,7 @@ let initialState = {  //!Contiene un obj de una persona fake
     aboutMe: "Passionate about crafting innovative solutions, my approach as a software engineer is to turn ideas into functional code. A challenge enthusiast, I constantly seek to learn and enhance my skills to drive projects to success.",
     state: "Active",
     area: "Rio de Janeiro",
-    idPeople: "00000001-e89b-12d3-a456-426614444001",
+    /* idPeople: "00000001-e89b-12d3-a456-426614444001", */
     name: "Terry Bogard",
     address: "123 Main Street",
     imageId: "utils/Imagenpersona.jpeg",
@@ -84,12 +84,12 @@ let initialState = {  //!Contiene un obj de una persona fake
         ],
         talents: ["Reading", "Singing", "Movies", " Books"
         ],
-        
+
       }
     ],
     geoposition: "40.7128,-74.0060",
     extras: ["Driving", "Childrens", "Pets", "Smoking", "Have a Car"
-  ],
+    ],
     avaliation: [
       {
         idEvaluator: "646561161561615",
@@ -119,7 +119,7 @@ let initialState = {  //!Contiene un obj de una persona fake
         detail: "Excelente servicio"
       }
     ],
-    schedule: [true, false, true , false, true , true, true , true, true , true, true , true, true , true, true , true, true , true, true, false]
+    schedule: [true, false, true, false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false]
   },
   //*POSTDOG//
   postUserData: [],
@@ -319,9 +319,8 @@ let initialState = {  //!Contiene un obj de una persona fake
 
 
 const rootReducer = (state = initialState, { type, payload }) => {
-  switch (
-    type 
-  ) {
+  
+  switch (type) {
 
     //*---GET GENERALES---//
     case GET_INFO_USER:
@@ -330,35 +329,35 @@ const rootReducer = (state = initialState, { type, payload }) => {
         infoUserLog: payload,
       };
 
- //*---POST---//
- case POST_NEW_INFO_USER:
-  return {
-    ...state,
-    postUserData: [...state.postUserData, payload],
-    errorsBack: payload,
-  };
-
-  //* --- MANEJO DE ERRORES DEL BACK ---//*
-  case SET_ERROR_BACK:
-    return {
-      ...state,
+    //*---POST---//
+    case POST_NEW_INFO_USER:
+      return {
+        ...state,
+        postUserData: [...state.postUserData, payload],
         errorsBack: payload,
-    };
+      };
 
- //*---POST---//
- case POST_NEW_INFO_USER:
-  return {
-    ...state,
-    postUserData: [...state.postUserData, payload],
-    errorsBack: payload,
-  };
-
-  //* --- MANEJO DE ERRORES DEL BACK ---//*
-  case SET_ERROR_BACK:
-    return {
-      ...state,
+    //* --- MANEJO DE ERRORES DEL BACK ---//*
+    case SET_ERROR_BACK:
+      return {
+        ...state,
         errorsBack: payload,
-    };
+      };
+
+    //*---POST---//
+    case POST_NEW_INFO_USER:
+      return {
+        ...state,
+        postUserData: [...state.postUserData, payload],
+        errorsBack: payload,
+      };
+
+    //* --- MANEJO DE ERRORES DEL BACK ---//*
+    case SET_ERROR_BACK:
+      return {
+        ...state,
+        errorsBack: payload,
+      };
 
     case ACCESS_BACK_SAVE_DATA:
       return {
@@ -368,7 +367,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
 
     case LOG_OUT_DELETE_DATA:
       return {
-        ...state, infoUserLog : {}
+        ...state, infoUserLog: {}
       }
 
     default:
