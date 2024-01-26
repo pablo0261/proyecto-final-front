@@ -16,6 +16,7 @@ import Form from './components/Form/Form';
 import { useEffect } from 'react';
 import StoreItem from './Helpers/LocalStorage';
 import { recoverUserLoggedData } from './redux/actions';
+import Footer from './components/Footer/Footer';
 
 function App() {
 
@@ -29,8 +30,6 @@ function App() {
   },[])
 
   const userLoggedInfo = useSelector(state => state.infoUserLog)
-  console.log(localStorage)
-  console.log(userLoggedInfo)
 
   return (
     <div>
@@ -57,6 +56,7 @@ function App() {
               {/* Rutas No Especificada */}
               <Route path='*' element={<NotFound />}></Route>
             </Routes>
+            <Footer/>
           </div>
           :
           <div>
@@ -67,6 +67,7 @@ function App() {
 
               <Route path='*' element={<NotFound />}></Route>
             </Routes>
+            <Footer/>
           </div>
       }
 
