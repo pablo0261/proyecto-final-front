@@ -5,11 +5,6 @@ import {
 
 import { GET_INFO_USER, POST_NEW_INFO_USER, SET_ERROR_BACK, EDIT_INFO_USER, } from "../actions/index";
 
-import {
-  ACCESS_BACK_SAVE_DATA,
-  LOG_OUT_DELETE_DATA,
-} from "../actions/action-types";
-
 let initialState = {
   //*GENERALES//
   infoUserLog: {
@@ -165,6 +160,7 @@ let initialState = {
 
 const rootReducer = (state = initialState, { type, payload }) => {
   switch (type) {
+
     //*---GET GENERALES---//
     case GET_INFO_USER:
       return {
@@ -194,13 +190,6 @@ const rootReducer = (state = initialState, { type, payload }) => {
         datosPeople: {
           payload,
         },
-      };
-
-    //* --- MANEJO DE ERRORES DEL BACK ---//*
-    case SET_ERROR_BACK:
-      return {
-        ...state,
-        errorsBack: payload,
       };
 
     case ACCESS_BACK_SAVE_DATA:
