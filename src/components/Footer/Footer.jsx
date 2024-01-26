@@ -1,4 +1,8 @@
 import styles from './footer.module.css';
+import sql from '../../assets/image/postgresql.png'
+import ex from '../../assets/image/expres.png'
+import react from '../../assets/image/react.png'
+import js from '../../assets/image/js.png'
 
 const Footer = () => {
     return (
@@ -36,6 +40,12 @@ const Footer = () => {
 
             <div className={styles.footer__container__tecnologias}>
                 <h3>Tecnologías</h3>
+                <div>
+                    <img src={sql} alt="sql" />
+                    <img src={ex} alt="ex" />
+                    <img src={react} alt="react"/>
+                    <img src={js} alt="js" />
+                </div>
             </div>
 
         </footer>
