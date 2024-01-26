@@ -18,7 +18,7 @@ function SignIn(props) {
 
     const [errors, setErrors] = useState({
         fullName: "*Campo Obligatorio",
-        birthDate: "*Campo Obligatorio",
+        birthDate: "*Ingresa tu fecha de nacimiento",
         email: "*Campo Obligatorio",
         password: "*Campo Obligatorio"
     })
@@ -75,7 +75,6 @@ function SignIn(props) {
                         type='date'
                         value={signInData.birthDate}
                         onChange={handleChangeLogIn}
-                        placeholder='dd-mm-aaaa'
                         max={(new Date()).toISOString().split('T')[0]}/>
                     <p className={errors.birthDate ? style.errorForm : style.nonError }>{errors.birthDate ? errors.birthDate : 'Datos Validos'}</p>
                 </div>
@@ -86,7 +85,7 @@ function SignIn(props) {
                         type='email'
                         value={signInData.email}
                         onChange={handleChangeLogIn}
-                        placeholder='example@example.com'/>
+                        placeholder='example@email.com'/>
                     <p className={errors.email ? style.errorForm : style.nonError }>{errors.email ? errors.email : 'Datos Validos'}</p>
                 </div>
                 <div className={style.inputPassword}>
@@ -96,7 +95,8 @@ function SignIn(props) {
                             name='password'
                             type={showPassword ? 'text' : 'password'}
                             value={signInData.password}
-                            onChange={handleChangeLogIn}/>
+                            onChange={handleChangeLogIn}
+                            placeholder='Constraseña'/>
                         <div onClick={handleTogglePassword} className={showPassword ? style.hidePassword : style.showPassword}></div>
                     </div>
                     <p className={errors.password ? style.errorForm : style.nonError }>{errors.password ? errors.password : 'Datos Validos'}</p>

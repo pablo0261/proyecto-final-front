@@ -60,7 +60,7 @@ function LogIn(props) {
                         type='email'
                         value={logInData.email}
                         onChange={handleChangeLogIn}
-                        placeholder='example@example.com' />
+                        placeholder='example@email.com' />
                     <p className={errors.email ? style.errorForm : style.nonError}>{errors.email ? errors.email : 'Datos Validos'}</p>
                 </div>
                 <div className={style.inputWrapper}>
@@ -70,7 +70,8 @@ function LogIn(props) {
                             name='password'
                             type={showPassword ? 'text' : 'password'}
                             value={logInData.password}
-                            onChange={handleChangeLogIn} />
+                            onChange={handleChangeLogIn} 
+                            placeholder='Constraseña'/>
                         <div onClick={handleTogglePassword} className={showPassword ? style.hidePassword : style.showPassword}></div>
                     </div>
                     <p className={errors.password ? style.errorForm : style.nonError}>{errors.password ? errors.password : 'Datos Validos'}</p>
