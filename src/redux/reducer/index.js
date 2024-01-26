@@ -5,6 +5,11 @@ import {
   EDIT_INFO_USER,
 } from "../actions/index";
 
+import {
+  ACCESS_BACK_SAVE_DATA,
+  LOG_OUT_DELETE_DATA,
+} from "../actions/action-types";
+
 let initialState = {
   //*GENERALES//
   infoUserLog: {
@@ -144,15 +149,35 @@ let initialState = {
   errorsBack: {},
   //*ESTAMOS PARA MANEJO DEL FORM//
   datosPeople: {
-    ProfileProvider: {imageId: "", valoracion: "", age: "", address: "", idLocation: "", state: "",
-      area: "", country: "", profesion: "", aboutMe: "", phone: "",
-     },
-    ServicesProviderCard: {
-      idPeople: "", fullName: "",  address: "", birthDate: "", age: "", 
+    ProfileProvider: {
+      imageId: "",
+      valoracion: "",
+      age: "",
+      address: "",
+      idLocation: "",
+      state: "",
+      area: "",
+      country: "",
+      profesion: "",
+      aboutMe: "",
+      phone: "",
     },
-    EducationExperienciaProvider: { title: "",  institution: "",  startDate: "", endDate: "", description: ""},
-    InteresProviderCard: {skills: "", talents: "", },
-    SkillsProviderCard: {fullName: "",  address: "", birthDate: "",},
+    ServicesProviderCard: {
+      idPeople: "",
+      fullName: "",
+      address: "",
+      birthDate: "",
+      age: "",
+    },
+    EducationExperienciaProvider: {
+      title: "",
+      institution: "",
+      startDate: "",
+      endDate: "",
+      description: "",
+    },
+    InteresProviderCard: { skills: "", talents: "" },
+    SkillsProviderCard: { fullName: "", address: "", birthDate: "" },
     ScheduleProviderCard: {},
     MapProviderCard: {},
     ReviewProviderCard: {},
@@ -191,6 +216,18 @@ const rootReducer = (state = initialState, { type, payload }) => {
         datosPeople: {
           payload,
         },
+      };
+
+    case ACCESS_BACK_SAVE_DATA:
+      return {
+        ...state,
+        infoUserLog: payload,
+      };
+
+    case LOG_OUT_DELETE_DATA:
+      return {
+        ...state,
+        infoUserLog: {},
       };
 
     default:
