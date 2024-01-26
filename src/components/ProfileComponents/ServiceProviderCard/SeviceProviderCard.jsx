@@ -1,9 +1,9 @@
-import {  useSelector } from "react-redux";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 // import { handleDeleteService, handleContratService } from "redux/actions";
 import "./ServiceProviderCard.style.css";
 
 function ServicesProviderCard() {
-
   // const dispatch = useDispatch();
   const infoUserLog = useSelector((state) => state.infoUserLog);
 
@@ -17,49 +17,46 @@ function ServicesProviderCard() {
   //   }
   // }, []);
 
-  const handleDeleteClick  = () => {
+  const handleDeleteClick = () => {
     //  dispatch(handleDeleteService(item)); //* enviará un put para actualizar el estado global infoDetailProveedor
   };
   const handleEditClick = () => {
     //  dispatch(handleDeleteService(item)); //* enviará un put para actualizar el estado global infoDetailProveedor
   };
 
-  const handleContratClick = () => {
-    // dispatch(handleContratService(item)); // Debes definir y exportar la acción handleContratClick
-  };
-
   return (
     <div className="container">
-        <img className="edit" src="editImage" alt="edit" />
+      <Link to={{ pathname: `/form/${2}` }}>
+        <button src="editImage" alt="edit" className="edit-button">
+          {" "}
+          Edit
+        </button>
+      </Link>
+      <img className="edit" src="editImage" alt="edit" />
       <table>
         <thead>
           <tr>
-          <th className="delete"></th>
+            <th className="delete"></th>
             <th className="service">Servicios</th>
             <th className="cost">Precio x Hora</th>
             <td>
-                <button onClick={() => handleEditClick()}>X</button>
-              </td>
+              <button onClick={() => handleEditClick()}>X</button>
+            </td>
           </tr>
         </thead>
         <tbody>
-        {infoUserLog.service.map((item, index) => (
+          {infoUserLog.service.map((item, index) => (
             <tr key={index}>
               <td>
                 <button onClick={() => handleDeleteClick(item)}>X</button>
               </td>
-              <td className="service" >{item.name}</td>
-              <td className="cost" >Pesos {item.value}</td>
-              <td>
-                <button className="buttonContract" onClick={() => handleContratClick(item)}>
-                  Contratar este Servicio
-                </button>
-              </td>
+              <td className="service">{item.name}</td>
+              <td className="cost">Pesos {item.value}</td>
+              <td></td>
             </tr>
           ))}
         </tbody>
       </table>
-    
     </div>
   );
 }

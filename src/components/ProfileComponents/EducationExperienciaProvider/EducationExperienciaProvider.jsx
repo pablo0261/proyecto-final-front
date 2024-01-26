@@ -1,4 +1,5 @@
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import "./EducationExperienciaProvider.style.css";
 
 function EducationExperienciaProvider() {
@@ -6,16 +7,21 @@ function EducationExperienciaProvider() {
 
   const skills = infoUserLog.skills || [];
 
-  const handleDeleteClick  = () => {
-    //  dispatch(handleDeleteService(item)); //* enviará un put para actualizar el estado global infoDetailProveedor
-  };
+  // const handleDeleteClick  = () => {
+  //   //  dispatch(handleDeleteService(item)); //* enviará un put para actualizar el estado global infoDetailProveedor
+  // };
   const handleEditClick = () => {
     //  dispatch(handleDeleteService(item)); //* enviará un put para actualizar el estado global infoDetailProveedor
   };
 
-
   return (
     <div className="container">
+      <Link to={{ pathname: `/form/${3}` }}>
+        <button src="editImage" alt="edit" className="edit-button">
+          {" "}
+          Edit
+        </button>
+      </Link>
       {skills.map((skill, index) => (
         <div key={index} className="skillsContainer">
           {Object.entries(skill).map(([category, titles], categoryIndex) => (
@@ -37,12 +43,6 @@ function EducationExperienciaProvider() {
                   <div>
                     <p className="user-info">{`${title.description}`}</p>
                   </div>
-                  <button
-                    onClick={() => handleDeleteClick(title)}
-                    src="editImage"
-                    alt="edit"
-                    className="delete"
-                  />
                 </div>
               ))}
             </div>

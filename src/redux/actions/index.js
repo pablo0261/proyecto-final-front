@@ -2,6 +2,49 @@ import axios from "axios";
 export const GET_INFO_USER = "GET_INFO_USER";
 export const POST_NEW_INFO_USER = "POST_NEW_INFO_USER";
 export const SET_ERROR_BACK = "SET_ERROR_BACK";
+export const EDIT_INFO_USER = "EDIT_INFO_USER";
+
+import { 
+  ACCESS_BACK_SAVE_DATA,
+  LOG_OUT_DELETE_DATA,
+ } from "./action-types";
+
+
+//AccessAccount//
+const accessDataBase = (userLoggedData) => {
+  return async (dispatch) => {
+    return dispatch({
+      type : ACCESS_BACK_SAVE_DATA,
+      payload : userLoggedData
+    })
+    /* try {
+      const { data } = await axios.post('/people', userLoggedData)
+      return dispatch({
+        type : ACCESS_BACK_SAVE_DATA,
+        payload : data
+      })
+    } catch (error) {
+      window.alert(error)
+    } */
+  }
+}
+
+const logOutDeleteData = (idPeople) => {
+  return async (dispatch) => {
+    return dispatch({
+      type : LOG_OUT_DELETE_DATA
+    })
+    /* try {
+      const { data } = await axios.post('/people', idPeople)
+      return dispatch({
+        type : ACCESS_BACK_SAVE_DATA,
+        payload : data
+      })
+    } catch (error) {
+      window.alert(error)
+    } */
+  }
+}
 
 import { 
   ACCESS_BACK_SAVE_DATA,
@@ -78,7 +121,7 @@ const infoDetailProveedor = (id) => {
     return async (dispatch) => {
       try {
         const { data } = await axios.get(`/people/${id}`);
-        return dispatch({
+        dispatch({
           type: GET_INFO_USER,
           payload: data,
         });
@@ -121,6 +164,21 @@ const postUserData = (userData) => {
   };
 };
 
+const handleEditProfile = (formData) => {
+  return async (dispatch) => {
+    try {
+    dispatch({
+      type: EDIT_INFO_USER,
+      payload: formData,
+    });
+  } catch (error) {
+    console.error(error);
+  }
+};
+};
+
+
+
   export {
     logInDataBase,
     signInDataBase,
@@ -129,4 +187,7 @@ const postUserData = (userData) => {
     infoDetailProveedor,
     handleContratService,
     postUserData,
+    handleEditProfile,
+    accessDataBase,
+    logOutDeleteData,
   }
