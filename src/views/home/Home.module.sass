@@ -3,11 +3,11 @@ $color2: #d95555
 
 .container
     display: flex
-    justify-content: space-between
+    justify-content: space-around
     gap: 1rem
 
 .mapContainer
-    width: 50%
+    
 
     h2
         font-size: 1.875rem
@@ -18,9 +18,11 @@ $color2: #d95555
     .map
         background-color: $color
         height: 490px
+        width: 490px
+        border-radius: 8px
 
 .servicesContainer
-    width: 50%
+    
 
     .filtersContainer
         display: flex
@@ -29,30 +31,33 @@ $color2: #d95555
         margin-left: 0.875rem
         margin-right: 0.875rem
     
-    .botones
-        font-family: Roboto, sans-serif
-        font-weight: 0
-        font-size: 14px
-        color: #d95555
-        background-color: #ffffff
-        padding: 4px 15px
-        border: solid #d95555 2px
-        box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px
-        border-radius: 12px
-        transition : 526ms
-        transform: translateY(0)
-        display: flex
-        flex-direction: row
-        align-items: center
-        cursor: pointer
-    .botones:hover
-        transition : 526ms
-        padding: 4px 15px
-        transform : translateY(-0px)
-        background-color: #d95555
-        color: #ffffff
-        border: solid 2px #d95555
-                
+        .botones
+            font-family: Roboto, sans-serif
+            font-weight: 0
+            font-size: 14px
+            color: #d95555
+            background-color: #ffffff
+            padding: 4px 15px
+            border: solid #d95555 2px
+            box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px
+            border-radius: 12px
+            transition : 526ms
+            transform: translateY(0)
+            display: flex
+            flex-direction: row
+            align-items: center
+            cursor: pointer
+        .botones:hover
+            transition : 526ms
+            padding: 4px 15px
+            transform : translateY(-0px)
+            background-color: #d95555
+            color: #ffffff
+            border: solid 2px #d95555
+        .filterBox
+            background-color: red
+            z-index: 10
+
 
 
 
