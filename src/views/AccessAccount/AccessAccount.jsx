@@ -4,17 +4,21 @@ import SignIn from '../../components/AccessAccount/SignIn/SignIn'
 import { Link, useNavigate } from 'react-router-dom';
 import Helpers from '../../Helpers/RoutesFront';
 import StoreItem from '../../Helpers/LocalStorage';
+import { useDispatch } from 'react-redux';
+import { accessDataBase } from '../../redux/actions';
+import style from './AccessAccount.module.sass'
 
 function AccessAccount() {
 
-    const isProvider = useState(JSON.parse(localStorage.getItem(StoreItem.isProvider)))
+    const isProvider = JSON.parse(localStorage.getItem(StoreItem.isProvider))
 
-    const [signInView, setSignInView] = useState(true)
+    const [signInView, setSignInView] = useState(false)
 
     const handleFormsVisibility = () => {
         setSignInView(!signInView)
     }
 
+    const dispatch = useDispatch()
     const navigate = useNavigate()
 
     const logInProcess = (logInData) => {
@@ -24,9 +28,14 @@ function AccessAccount() {
                     navigate('/perfil')
                 }
             }) */
-        localStorage.setItem(StoreItem.idUserLogged, 1)
-        navigate(Helpers.ProfileProveedorView.replace(':id',1))
-        window.alert('InicioSinErrores')
+        if (isProvider) {
+            dispatch(accessDataBase(logInData))
+            navigate(Helpers.StatsProviderView)
+        } else {
+            dispatch(accessDataBase(logInData))
+            navigate(Helpers.HomeCustomerView)
+        }
+
     }
 
     const signInProcess = (signInData) => {
@@ -36,32 +45,50 @@ function AccessAccount() {
                     navigate('/perfil')
                 }
             }) */
-        window.alert('RegistroSinErrores')
+        if (isProvider) {
+            dispatch(accessDataBase(signInData))
+            navigate(Helpers.StatsProviderView)
+        } else {
+            dispatch(accessDataBase(signInData))
+            navigate(Helpers.HomeCustomerView)
+        }
     }
 
     return (
-        <div className="wrapper">
+        <div className={style.wrapper}>
             {
                 isProvider != null ?
-                    <div>
+                    <div className={style.wrapperChild}>
                         {
                             signInView ?
-                                <div>
+                                <div className={style.wrapperForms}>
                                     <SignIn
                                         isProvider={isProvider}
                                         handleFormsVisibility={handleFormsVisibility}
                                         signInProcess={signInProcess}></SignIn>
-                                    <div>Componente de Stats</div>
-                                    <div>Componente de Comentario</div>
+                                    <div className={style.wrapperStats}>
+                                        <div className={style.components}>
+                                            Componente de Stats
+                                        </div>
+                                        <div className={style.components}>
+                                            Componente de Comentario
+                                        </div>
+                                    </div>
                                 </div>
                                 :
-                                <div>
+                                <div className={style.wrapperForms}>
                                     <LogIn
                                         isProvider={isProvider}
                                         handleFormsVisibility={handleFormsVisibility}
                                         logInProcess={logInProcess}></LogIn>
-                                    <div>Componente de Stats</div>
-                                    <div>Componente de Comentario</div>
+                                    <div className={style.wrapperStats}>
+                                        <div className={style.components}>
+                                            Componente de Stats
+                                        </div>
+                                        <div className={style.components}>
+                                            Componente de Comentario
+                                        </div>
+                                    </div>
                                 </div>
                         }
                     </div>

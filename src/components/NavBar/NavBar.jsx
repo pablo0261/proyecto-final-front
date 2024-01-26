@@ -1,47 +1,61 @@
 import React, { useEffect } from 'react'
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
+import style from './NavBar.module.sass';
 import Helpers from '../../Helpers/RoutesFront';
 import StoreItem from '../../Helpers/LocalStorage';
+import { useDispatch, useSelector } from 'react-redux';
+import { logOutDeleteData } from '../../redux/actions';
 
 function NavBar() {
 
     const location = useLocation()
+    const navigate = useNavigate()
+    const userLoggedInfo = useSelector(state => state.infoUserLog)
 
     /* const handleLocalStorage = (bool) => {
         localStorage.setItem('isProvider',JSON.stringify(bool))
         console.log(localStorage.getItem('isProvider'))
     } */
 
-    const isProvider = JSON.parse(localStorage.getItem(StoreItem.isProvider))
-    const idUserLogged = JSON.parse(localStorage.getItem(StoreItem.idUserLogged))
+    const dispatch = useDispatch()
+    
+    const handleLogOut = () => {
+        dispatch(logOutDeleteData())
+        navigate(Helpers.Landing)
+    }
 
     // 5 Opciones: Landing / AccessAccount / Cliente / Proveedor / Administrador
     return (
-        <div>
-            {
-                location.pathname === Helpers.Landing && <NavLink to="/#">¿Como Funciona?</NavLink>
-            }
-            {
-                location.pathname === Helpers.AccessAccount && <NavLink to="/">Volver</NavLink>
-            }
-            {
-                isProvider && location.pathname !== Helpers.AccessAccount &&
-                <div>
-                    <NavLink to="#">Mis Estadisticas</NavLink>
-                    <NavLink to="#">Mis Conexiones</NavLink>
-                    <NavLink to="#">Mis Reportes</NavLink>
-                    <NavLink to={Helpers.ProfileProveedorView.replace(':id', idUserLogged)}>Mi Perfil</NavLink>
-                </div>
-            }
-            {
-                !isProvider && location.pathname !== Helpers.AccessAccount &&
-                <div>
-                    <NavLink to="#">Ver Proveedores</NavLink>
-                    <NavLink to="#">Mis Conexiones</NavLink>
-                    <NavLink to="#">Mis Reportes</NavLink>
-                    <NavLink to="#">Mi Perfil</NavLink>
-                </div>
-            }
+        <div className={style.backWrapper}>
+            <div className={style.wrapper}>
+                <div className={style.logo}></div>
+                {
+                    location.pathname === Helpers.Landing && !userLoggedInfo.idPeople && <NavLink to="/#" className={style.link}>¿Como Funciona?</NavLink>
+                }
+                {
+                    location.pathname === Helpers.AccessAccount && !userLoggedInfo.idPeople && <NavLink to={Helpers.Landing} className={style.link}>Volver</NavLink>
+                }
+                {
+                    userLoggedInfo.typeOfPerson === 'provider' && userLoggedInfo.idPeople != null && location.pathname !== Helpers.Landing && location.pathname !== Helpers.AccessAccount &&
+                    <div>
+                        <NavLink to={Helpers.StatsProviderView} className={({ isActive }) =>  isActive ? style.active : style.link}>Mis Estadísticas</NavLink>
+                        <NavLink to={Helpers.ConnectionsProviderView} className={({ isActive }) =>  isActive ? style.active : style.link}>Mis Conexiones</NavLink>
+                        <NavLink to={Helpers.ReportsProviderView} className={({ isActive }) =>  isActive ? style.active : style.link}>Mis Reportes</NavLink>
+                        <NavLink to={Helpers.ProfileProviderView} className={({ isActive }) =>  isActive ? style.active : style.link}>Mi Perfil</NavLink>
+                        <button className={style.link} onClick={()=>handleLogOut()}>Cerrar Sesión</button>
+                    </div>
+                }
+                {
+                    userLoggedInfo.typeOfPerson === 'customer' && userLoggedInfo.idPeople != null && location.pathname !== Helpers.Landing && location.pathname !== Helpers.AccessAccount &&
+                    <div>
+                        <NavLink to={Helpers.HomeCustomerView} className={({ isActive }) =>  isActive ? style.active : style.link}>Ver Proveedores</NavLink>
+                        <NavLink to={Helpers.ConnectionsCustomerView} className={({ isActive }) =>  isActive ? style.active : style.link}>Mis Conexiones</NavLink>
+                        <NavLink to={Helpers.ReportsCustomerView} className={({ isActive }) =>  isActive ? style.active : style.link}>Mis Reportes</NavLink>
+                        <NavLink to={Helpers.ProfileCustomerView} className={({ isActive }) =>  isActive ? style.active : style.link}>Mi Perfil</NavLink>
+                        <button className={style.link} onClick={()=>handleLogOut()}>Cerrar Sesión</button>
+                    </div>
+                }
+            </div>
         </div>
     )
 }

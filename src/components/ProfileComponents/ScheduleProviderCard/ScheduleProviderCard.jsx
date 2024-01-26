@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
-import "./ScheduleProveedorCard.style.css";
+import "./ScheduleProviderCard.style.css";
 
-function ScheduleProveedorCard() {
+function ScheduleProviderCard() {
   const infoUserLog = useSelector((state) => state.infoUserLog);
 
   const handleDeleteClick = () => {
@@ -45,4 +45,4 @@ function ScheduleProveedorCard() {
   );
 }
 
-export default ScheduleProveedorCard;
+export default ScheduleProviderCard;

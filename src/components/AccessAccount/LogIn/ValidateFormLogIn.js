@@ -16,7 +16,7 @@ export const ValidateFormLogIn = (property, errors, setErrors, logInData) => {
         if (!logInData.password) {
             setErrors({ ...errors, password: "Ingresá tu constraseña" })
         } else if (!isValidPassword.test(logInData.password)) {
-            setErrors({ ...errors, password: "La contraseña debe tener entre 8 y 16 caracteres, al menos un dígito, una minúscula y una mayúscula." })
+            setErrors({ ...errors, password: "La contraseña debe tener entre 8 y 16 caracteres, al menos un número, una minúscula y una mayúscula." })
         } else {
             setErrors({ ...errors, password: "" })
         }
