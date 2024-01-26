@@ -1,9 +1,10 @@
 import styles from './landing.module.css';
-import logo from '../../assets/image/logo.svg';
+
 import nono from '../../assets/image/nono.gif';
 import quote from '../../assets/image/quote-left.png';
 import { useNavigate } from 'react-router';
 import Helpers from '../../Helpers/RoutesFront';
+import Statistics from '../../components/Statistics/Statistics'
 import Footer from '../../components/Footer/Footer';
 import StoreItem from '../../Helpers/LocalStorage';
 
@@ -12,21 +13,14 @@ const Landing = () => {
     const navigate = useNavigate()
 
     const handleLocalStorage = (bool) => {
-        JSON.stringify(localStorage.setItem(StoreItem.isProvider, bool))
-        navigate(Helpers.AccessAccount)
-    }
+        localStorage.setItem('isProvider', JSON.stringify(bool));
+        navigate(Helpers.AccessAccount);
+    };
+
 
     return (
         <>
-            <header className={styles.header}>
-                {/* Barra de navegacion */}
-                <nav className={styles.nav}>
-                    <div className={styles.nav__container}>
-                        <img className={styles.nav__logo} src={logo} alt="Logo" />
-                        <a className={styles.nav__link} href="#">¿Como funciona?</a>
-                    </div>
-                </nav>
-            </header>
+
 
             <main className={styles.main}>
 
@@ -50,6 +44,11 @@ const Landing = () => {
                     </div>
                 </section>
 
+                <article className={styles.statistics}>
+                    <Statistics></Statistics>
+                </article>
+
+
                 {/* ¿Cómo funciona? */}
                 <section className={styles.section}>
 
@@ -64,7 +63,7 @@ const Landing = () => {
                         </div>
 
                         <div className={`${styles.section__column} ${styles.section__column2}`}>
-                            <a className={styles.section__link} href="#">Registrate</a>
+                            <a className={styles.section__link} href="#" onClick={() => { handleLocalStorage(false) }}>Registrate</a>
                             <p className={styles.section__paragraph}>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Odio at, magnam quae repellat, repudiandae ipsa nam consequuntur.</p>
                         </div>
 
@@ -82,8 +81,8 @@ const Landing = () => {
                         <h2 className={styles.sectionregistro__title}>¿Cómo te gustaría registrarte?</h2>
                     </header>
                     <article className={styles.sectionregistro__article}>
-                        <button className={styles.sectionregistro__button}>Cliente</button>
-                        <button className={styles.sectionregistro__button}>Proveedor</button>
+                        <button className={styles.sectionregistro__button} onClick={() => { handleLocalStorage(false) }}>Cliente</button>
+                        <button className={styles.sectionregistro__button} onClick={() => { handleLocalStorage(true) }}>Proveedor</button>
                     </article>
 
                 </section>
