@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 
-function MapProveedorCard() {
+function MapProviderCard() {
   const infoUserLog = useSelector((state) => state.infoUserLog);
 
   const Map = infoUserLog.geoposition || [];
@@ -14,4 +14,4 @@ function MapProveedorCard() {
     </div>
   );
 }
-export default MapProveedorCard;
+export default MapProviderCard;

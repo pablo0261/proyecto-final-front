@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
-import "./ReviewProveedorCard.style.css";
+import "./ReviewProviderCard.style.css";
 
-function ReviewProveedorCard() {
+function ReviewProviderCard() {
   const infoUserLog = useSelector((state) => state.infoUserLog);
 
   const promedioPuntuacion = infoUserLog.promedioPuntuacion || 0;
@@ -38,4 +38,4 @@ function ReviewProveedorCard() {
   );
 }
 
-export default ReviewProveedorCard;
+export default ReviewProviderCard;
