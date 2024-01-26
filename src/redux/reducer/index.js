@@ -78,19 +78,12 @@ let initialState = {  //!Contiene un obj de una persona fake
         ],
         talents: ["Reading", "Singing", "Movies"," Books"
         ],
-        extras: ["Driving", "Childrens", "Pets", "Smoking", "Have a Car"
-        ],
+        
       }
     ],
     geoposition: "40.7128,-74.0060",
-    // availability: [
-    //   {
-    //     skills: ["Administering Injections", "First Aid", "CPR (Cardiopulmonary Resuscitation)"
-    //     ],
-    //     availability: ["Reading", "Singing", "Movies"," Books"
-    //     ],
-    //   }
-    // ],
+    extras: ["Driving", "Childrens", "Pets", "Smoking", "Have a Car"
+  ],
     avaliation: [
       {
         idEvaluator: "646561161561615",
