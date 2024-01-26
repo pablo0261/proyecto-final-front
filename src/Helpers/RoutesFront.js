@@ -13,6 +13,7 @@ const Helpers = {
     ConnectionsProviderView: "/connectionsProviderView",
     ReportsProviderView: "/reportsProviderView",
     StatsProviderView: "/statsProviderView", 
+    Form: "/form",
 }
 
 export default Helpers

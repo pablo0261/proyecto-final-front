@@ -1,9 +1,9 @@
 import React from 'react'
 
-function ConectionProveedorCard() {
+function ConectionProviderCard() {
   return (
     <div>ConectionProveedorCard</div>
   )
 }
 
-export default ConectionProveedorCard;
+export default ConectionProviderCard;

@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
-import "./InteresProveedorCard.style.css";
+import "./InteresProviderCard.style.css";
 
-function InteresProveedorCard() {
+function InteresProviderCard() {
   const infoUserLog = useSelector((state) => state.infoUserLog);
 
   const interests = infoUserLog.interests || [];
@@ -47,4 +47,4 @@ function InteresProveedorCard() {
   );
 }
 
-export default InteresProveedorCard;
+export default InteresProviderCard;

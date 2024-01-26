@@ -4,7 +4,7 @@ import Home from './views/home/Home';
 import NotFound from './utils/notFound/NotFound';
 import Helpers from './Helpers/RoutesFront';
 import AccessAccount from './Views/AccessAccount/AccessAccount';
-import ProfileProveedorView from './views/ProfileProveedorView/ProfileProveedorView';
+import ProfileProviderView from './views/ProfileProviderView/ProfileProviderView';
 import NavBar from './components/NavBar/NavBar';
 import ReportsCustomerView from './Views/CustomerViews/ReportsCustomerView';
 import ConnectionsCustomerView from './Views/CustomerViews/ConnectionsCustomerView';
@@ -12,6 +12,7 @@ import StatsProviderView from './Views/ProviderViews/StatsProviderView';
 import ReportsProviderView from './Views/ProviderViews/ReportsProviderView';
 import ConnectionsProviderView from './Views/ProviderViews/ConnectionsProviderView';
 import { useSelector } from 'react-redux';
+import Form from './components/Form/Form';
 
 function App() {
 
@@ -35,7 +36,10 @@ function App() {
               <Route path={Helpers.ConnectionsProviderView} element={<ConnectionsProviderView />} />
               <Route path={Helpers.ReportsProviderView} element={<ReportsProviderView />} />
               <Route path={Helpers.ProfileProviderView} element={<ProfileProveedorView />} />
-
+              <Route path={Helpers.ProfileProviderView} element={<ProfileProviderView/>}/>
+       
+        {/* Form */}
+        <Route path={Helpers.Form} element={<Form/>}/>
 
               {/* Administrador */}
 
