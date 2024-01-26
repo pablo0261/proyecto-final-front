@@ -13,6 +13,7 @@ import ReportsProviderView from './Views/ProviderViews/ReportsProviderView';
 import ConnectionsProviderView from './Views/ProviderViews/ConnectionsProviderView';
 import { useSelector } from 'react-redux';
 import Form from './components/Form/Form';
+import Footer from './components/Footer/Footer';
 
 function App() {
 
@@ -43,6 +44,7 @@ function App() {
               {/* Rutas No Especificada */}
               <Route path='*' element={<NotFound />}></Route>
             </Routes>
+            <Footer/>
           </div>
           :
           <div>
@@ -53,6 +55,7 @@ function App() {
 
               <Route path='*' element={<NotFound />}></Route>
             </Routes>
+            <Footer/>
           </div>
       }
 
