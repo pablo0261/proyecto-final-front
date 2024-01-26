@@ -7,6 +7,8 @@ const Helpers = {
     ProfileCustomerView: "/profileCustomerView",
     ConnectionsCustomerView: "/connectionsCustomerView",
     ReportsCustomerView: "/reportsCustomerView",
+
+    /* Proveedor */
     ProfileProviderView: "/profileProviderView",
     ConnectionsProviderView: "/connectionsProviderView",
     ReportsProviderView: "/reportsProviderView",

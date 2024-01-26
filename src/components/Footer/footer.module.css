@@ -19,3 +19,22 @@
     display: block;
     margin-bottom: 20px;
 }
+
+.footer__container__tecnologias{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: 38%;
+}
+
+.footer__container__tecnologias div{
+    display: flex;
+    gap: 10px;
+}
+
+.footer__container__tecnologias img{
+    background-color: white;
+    border-radius: 5px;
+    padding: 2px;
+    width: 35px;
+}

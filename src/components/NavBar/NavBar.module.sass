@@ -1,0 +1,46 @@
+@use '../../Styles/Mixins'
+@import '../../Styles/Variables'
+
+.backWrapper
+    display: flex
+    justify-content: center
+    box-shadow: 0px 0px 10px #e7e7e7
+
+.wrapper
+    width: 80%
+    height: 100px
+    display: flex
+    justify-content: space-between
+    align-items: center
+
+.logo 
+    height: 50px
+    width: 200px
+    background-image: url('../../assets/Logo/LogoPositive.png')
+    background-repeat: no-repeat
+    background-position: center
+
+
+.link
+    height: 40px
+    margin-left: 40px
+    text-decoration: none
+    border: none
+    background: none
+    cursor: pointer
+    @include Mixins.font($tertiaryColor, 22px , normal , normal)
+    transition: .2s
+
+.link:hover
+    height: 40px
+    @include Mixins.font($primaryColor, 22px , normal , normal)
+    
+.active
+    height: 40px
+    margin-left: 40px
+    text-decoration: none
+    @include Mixins.font($primaryColor, 22px , normal , normal)
+    transition: .2s
+    
+    
+        

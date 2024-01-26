@@ -1,9 +1,9 @@
 import {
-  GET_INFO_USER,
-  POST_NEW_INFO_USER,
-  SET_ERROR_BACK,
-  EDIT_INFO_USER,
-} from "../actions/index";
+   ACCESS_BACK_SAVE_DATA,
+  LOG_OUT_DELETE_DATA
+} from "../actions/action-types";
+
+import { GET_INFO_USER, POST_NEW_INFO_USER, SET_ERROR_BACK, EDIT_INFO_USER, } from "../actions/index";
 
 import {
   ACCESS_BACK_SAVE_DATA,
@@ -20,7 +20,7 @@ let initialState = {
     idGenre: 1,
     noShow: false,
     dateOfAdmission: "2022-01-01",
-    typeOfPerson: "administrator",
+    typeOfPerson: "provider",
     email: "terrybogard.doe@email.com",
     password: "haaashed_password",
     externalLogin: null,
@@ -88,12 +88,10 @@ let initialState = {
     ],
     interests: [
       {
-        skills: [
-          "Administering Injections",
-          "First Aid",
-          "CPR (Cardiopulmonary Resuscitation)",
+        skills: ["Administering Injections", "First Aid", "CPR (Cardiopulmonary Resuscitation)"
         ],
-        talents: ["Reading", "Singing", "Movies", " Books"],
+        talents: ["Reading", "Singing", "Movies", " Books"
+        ],
       },
     ],
     geoposition: "40.7128,-74.0060",
@@ -141,7 +139,6 @@ let initialState = {
       true,
       true,
       false,
-    ],
   },
   //*POSTDOG//
   postUserData: [],
@@ -229,6 +226,32 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         infoUserLog: {},
       };
+
+ //*---POST---//
+ case POST_NEW_INFO_USER:
+  return {
+    ...state,
+    postUserData: [...state.postUserData, payload],
+    errorsBack: payload,
+  };
+
+  //* --- MANEJO DE ERRORES DEL BACK ---//*
+  case SET_ERROR_BACK:
+    return {
+      ...state,
+        errorsBack: payload,
+    };
+
+    case ACCESS_BACK_SAVE_DATA:
+      return {
+        ...state,
+        infoUserLog: payload
+      }
+
+    case LOG_OUT_DELETE_DATA:
+      return {
+        ...state, infoUserLog : {}
+      }
 
     default:
       return state;
