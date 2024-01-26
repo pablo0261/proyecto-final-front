@@ -17,7 +17,6 @@ export const ValidateFormSignIn = (property, errors, setErrors, signInData) => {
         const actualDate = new Date()
         const newBirtDate = new Date(signInData.birthDate)
         const age = actualDate.getFullYear() - newBirtDate.getFullYear()
-        console.log(age)
 
         if (age < 18) {
             setErrors({ ...errors, birthDate: "Debes ser mayor de 18 años" })
@@ -40,7 +39,7 @@ export const ValidateFormSignIn = (property, errors, setErrors, signInData) => {
         if (!signInData.password) {
             setErrors({ ...errors, password: "Ingresá tu constraseña" })
         } else if (!isValidPassword.test(signInData.password)) {
-            setErrors({ ...errors, password: "La contraseña debe tener entre 8 y 16 caracteres, al menos un dígito, una minúscula y una mayúscula." })
+            setErrors({ ...errors, password: "La contraseña debe tener entre 8 y 16 caracteres, al menos un número, una minúscula y una mayúscula." })
         } else {
             setErrors({ ...errors, password: "" })
         }

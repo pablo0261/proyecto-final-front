@@ -5,13 +5,14 @@ import quote from '../../assets/image/quote-left.png';
 import { useNavigate } from 'react-router';
 import Helpers from '../../Helpers/RoutesFront';
 import Footer from '../../components/Footer/Footer';
+import StoreItem from '../../Helpers/LocalStorage';
 
 const Landing = () => {
 
     const navigate = useNavigate()
 
     const handleLocalStorage = (bool) => {
-        JSON.stringify(localStorage.setItem('isProvider', bool))
+        JSON.stringify(localStorage.setItem(StoreItem.isProvider, bool))
         navigate(Helpers.AccessAccount)
     }
 
@@ -36,8 +37,8 @@ const Landing = () => {
                         <h1 className={styles.hero__text__title}>"Amor en cada cuidado, <br />conexiones que perduran"</h1>
                         <p className={styles.hero__text__paragraph}>Nuestra plataforma intuitiva te permite explorar perfiles detallados de cuidadores, leer reseñas auténticas y conectar con aquellos que se adaptan a las necesidades únicas de tu familia.</p>
                         <div className={styles.hero__container__button}>
-                            <button className={styles.button} onClick={() => { handleLocalStorage(false) }}>Busco un cuidador</button>
-                            <button className={styles.button} onClick={() => { handleLocalStorage(true) }}>Ofrecer mis servicios</button>
+                            <button className={styles.button} onClick={() => handleLocalStorage(false)}>Busco un cuidador</button>
+                            <button className={styles.button} onClick={() => handleLocalStorage(true)}>Ofrecer mis servicios</button>
                         </div>
                     </div >
                     <div className={styles.hero__quote}>

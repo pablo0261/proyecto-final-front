@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { ValidateFormSignIn } from './ValidateFormSignIn';
+import style from './SignIn.module.sass'
 
 function SignIn(props) {
 
@@ -11,14 +12,15 @@ function SignIn(props) {
         email: "",
         password: "",
         typeOfPerson: isProvider ? 'provider' : 'customer',
-        price: isProvider ? 25 : null
+        price: isProvider ? 25 : null,
+        idPeople: 1
     })
 
     const [errors, setErrors] = useState({
-        fullName: "Ingresá su Nombre completo",
-        birthDate: "Ingresá tu fecha de nacimiento",
-        email: "Ingresá tu mail",
-        password: "Ingresá tu constraseña"
+        fullName: "*Campo Obligatorio",
+        birthDate: "*Campo Obligatorio",
+        email: "*Campo Obligatorio",
+        password: "*Campo Obligatorio"
     })
 
     const [showPassword, setShowPassword] = useState(false);
@@ -47,71 +49,73 @@ function SignIn(props) {
     }
 
     return (
-        <div>
-            <h1>Crear mi cuenta {isProvider ? <span>(Proveedor)</span> : <span>(Cliente)</span>}</h1>
+        <div className={style.wrapper}>
+            <p className={style.title}>Crear mi cuenta {isProvider ? <span className={style.text}>(Proveedor)</span> : <span className={style.text}>(Cliente)</span>}</p>
             {
                 isProvider ?
-                    <p>Para crear tu cuenta en nuestra plataforma deberas realizar el pago de una suscripcion.</p>
+                    <p className={style.text}>Para crear tu cuenta en nuestra plataforma deberás realizar el pago de una suscripción mensual.</p>
                     :
-                    <p>Únete a Care with Love para encontrar el cuidador perfecto. Tu familia merece lo mejor.</p>
+                    <p className={style.text}>Únete a Care with Love para encontrar el cuidador perfecto. Tu familia merece lo mejor.</p>
             }
             <form onSubmit={handleSumbitLogIn}>
-                <div>
+                <div className={style.inputWrapper}>
                     <input
                         id='fullName'
                         name='fullName'
                         type='text'
                         value={signInData.fullName}
                         onChange={handleChangeLogIn}
-                        placeholder='Nombre y Apellido' />
-                    {errors.fullName && <p className='errorForm'>{errors.fullName}</p>}
+                        placeholder='Nombre y Apellido'/>
+                    <p className={errors.fullName ? style.errorForm : style.nonError }>{errors.fullName ? errors.fullName : 'Datos Validos'}</p>
                 </div>
-                <div>
+                <div className={style.inputWrapper}>
                     <input
                         id='birthDate'
                         name='birthDate'
                         type='date'
                         value={signInData.birthDate}
                         onChange={handleChangeLogIn}
-                        placeholder='dd-mm-aaaa' 
+                        placeholder='dd-mm-aaaa'
                         max={(new Date()).toISOString().split('T')[0]}/>
-                    {errors.birthDate && <p className='errorForm'>{errors.birthDate}</p>}
+                    <p className={errors.birthDate ? style.errorForm : style.nonError }>{errors.birthDate ? errors.birthDate : 'Datos Validos'}</p>
                 </div>
-                <div>
+                <div className={style.inputWrapper}>
                     <input
                         id='email'
                         name='email'
                         type='email'
                         value={signInData.email}
                         onChange={handleChangeLogIn}
-                        placeholder='example@example.com' />
-                    {errors.email && <p className='errorForm'>{errors.email}</p>}
+                        placeholder='example@example.com'/>
+                    <p className={errors.email ? style.errorForm : style.nonError }>{errors.email ? errors.email : 'Datos Validos'}</p>
                 </div>
-                <div>
-                    <input
-                        id='password'
-                        name='password'
-                        type={showPassword ? 'text' : 'password'}
-                        value={signInData.password}
-                        onChange={handleChangeLogIn} />
-                    <button type='button' onClick={handleTogglePassword}>
-                        {showPassword ? 'Ocultar' : 'Mostrar'} Contraseña
-                    </button>
-                    {errors.password && <p className='errorForm'>{errors.password}</p>}
+                <div className={style.inputPassword}>
+                    <div className={style.password}>
+                        <input
+                            id='password'
+                            name='password'
+                            type={showPassword ? 'text' : 'password'}
+                            value={signInData.password}
+                            onChange={handleChangeLogIn}/>
+                        <div onClick={handleTogglePassword} className={showPassword ? style.hidePassword : style.showPassword}></div>
+                    </div>
+                    <p className={errors.password ? style.errorForm : style.nonError }>{errors.password ? errors.password : 'Datos Validos'}</p>
                 </div>
                 {
                     isProvider &&
-                    <div>
-                        <h5>Suscripcion Mensual</h5>
-                        <h5>US$ 25</h5>
+                    <div className={style.subcription}>
+                        <p>Suscripcion Mensual</p>
+                        <p>US$ 25</p>
                     </div>
                 }
                 <div>
-                    <button type='submit'>Registrarse</button>
+                    <button type='submit' className={style.buttonSubmit}>Registrarse</button>
                 </div>
             </form>
-            <h4>¿Ya tienes una cuenta?</h4>
-            <button onClick={() => { handleFormsVisibility() }}>Iniciar Sesión</button>
+            <div className={style.Questions}>
+                <p className={style.text}>¿Ya tienes una cuenta?</p>
+                <button onClick={() => { handleFormsVisibility() }} className={style.buttonHandle}>Iniciar Sesión</button>
+            </div>
         </div>
     )
 }

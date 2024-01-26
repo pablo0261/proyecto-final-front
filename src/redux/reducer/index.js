@@ -1,16 +1,21 @@
+import {
+  ACCESS_BACK_SAVE_DATA,
+  LOG_OUT_DELETE_DATA
+} from "../actions/action-types";
+
 import { GET_INFO_USER, POST_NEW_INFO_USER, SET_ERROR_BACK } from "../actions/index";
 
 let initialState = {  //!Contiene un obj de una persona fake
   //*GENERALES//
   infoUserLog: {
-   //*ESTO NO LO USE
+    //*ESTO NO LO USE
     idLocation: 1,
-    
+
     dateOfBirth: "1990-01-01T02:00:00.000Z",
     idGenre: 1,
     noShow: false,
     dateOfAdmission: "2022-01-01",
-    typeOfPerson: "administrator",
+    typeOfPerson: "provider",
     email: "terrybogard.doe@email.com",
     password: "haaashed_password",
     externalLogin: null,
@@ -30,10 +35,10 @@ let initialState = {  //!Contiene un obj de una persona fake
     profesion: "software engineer",
     phone: "219998655541",
     service: [
-      {name:"care", value: 30},
-      {name:"cleaning", value: 20},
-      {name: "cooking", value: 30},
-      {name: "walking", value: 10},
+      { name: "care", value: 30 },
+      { name: "cleaning", value: 20 },
+      { name: "cooking", value: 30 },
+      { name: "walking", value: 10 },
     ],
     skills: [
       {
@@ -77,7 +82,7 @@ let initialState = {  //!Contiene un obj de una persona fake
       {
         skills: ["Administering Injections", "First Aid", "CPR (Cardiopulmonary Resuscitation)"
         ],
-        talents: ["Reading", "Singing", "Movies"," Books"
+        talents: ["Reading", "Singing", "Movies", " Books"
         ],
         
       }
@@ -94,11 +99,11 @@ let initialState = {  //!Contiene un obj de una persona fake
         area: "Rio de Janeiro",
         country: "Brasil",
         service: [
-          {name:"care"},
-          {name:"cleaning"},
-          {name: "walking"},
+          { name: "care" },
+          { name: "cleaning" },
+          { name: "walking" },
         ],
-        detail:  "Buen servicio"
+        detail: "Buen servicio"
       },
       {
         idEvaluator: "8716171161561615",
@@ -108,10 +113,10 @@ let initialState = {  //!Contiene un obj de una persona fake
         area: "Rio de Janeiro",
         country: "Brasil",
         service: [
-          {name:"care"},
-          {name:"cleaning"},
+          { name: "care" },
+          { name: "cleaning" },
         ],
-        detail:  "Excelente servicio"
+        detail: "Excelente servicio"
       }
     ],
     schedule: [true, false, true , false, true , true, true , true, true , true, true , true, true , true, true , true, true , true, true, false]
@@ -339,6 +344,32 @@ const rootReducer = (state = initialState, { type, payload }) => {
       ...state,
         errorsBack: payload,
     };
+
+ //*---POST---//
+ case POST_NEW_INFO_USER:
+  return {
+    ...state,
+    postUserData: [...state.postUserData, payload],
+    errorsBack: payload,
+  };
+
+  //* --- MANEJO DE ERRORES DEL BACK ---//*
+  case SET_ERROR_BACK:
+    return {
+      ...state,
+        errorsBack: payload,
+    };
+
+    case ACCESS_BACK_SAVE_DATA:
+      return {
+        ...state,
+        infoUserLog: payload
+      }
+
+    case LOG_OUT_DELETE_DATA:
+      return {
+        ...state, infoUserLog : {}
+      }
 
     default:
       return state;

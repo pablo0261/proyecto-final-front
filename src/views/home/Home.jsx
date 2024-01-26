@@ -23,7 +23,6 @@ const Home = () => {
 
   return (
     <>
-      <h1 className="h-24">Nav</h1>
       <div className={styles.container}>
         <div className={styles.mapContainer}>
           <h2 className>Buscar en el mapa</h2>

@@ -1,0 +1,37 @@
+@import './Variables'
+@import url('https://fonts.googleapis.com/css2?family=K2D:ital,wght@0,100;0,400;0,700;1,100;1,400;1,700&display=swap')
+
+@mixin font($color, $font-size, $font-weight, $font-style)
+    font-family: 'K2D', sans-serif
+    font-size: $font-size
+    font-weight: $font-weight
+    font-style: $font-style
+    color: $color 
+
+@mixin buttonActive
+    background-color: $primaryColor
+    font-family: 'K2D', sans-serif
+    font-size: 20px
+    font-weight: normal
+    font-style: normal
+    color: white
+    padding: 8px 20px
+    border-radius: 10px
+    border: none
+    outline: none
+    transition: .3s
+
+@mixin buttonHover
+    background-color: $hoverColor
+    transform: scale(1.05)
+    transition: .3s
+
+@mixin alert
+    background-color: $alertColor
+    font-family: 'K2D', sans-serif
+    font-size: 12px
+    font-weight: normal
+    font-style: normal
+    color: $tertiaryColor
+    padding: 5px 20px
+    border-radius: 5px

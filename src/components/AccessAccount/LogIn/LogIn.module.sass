@@ -1,0 +1,136 @@
+@use '../../../Styles/Mixins'
+@import '../../../Styles/Variables'
+
+.wrapper
+    width: 40%
+    display: flex
+    flex-direction: column
+
+    p
+        text-align: left
+
+    form
+        margin-top: 10px
+
+.title
+    margin: 0
+    @include Mixins.font($secondaryColor, 40px , bold , normal )
+
+.text
+    margin: 0
+    @include Mixins.font($textSecondaryColor, 20px , normal , normal )
+
+.inputWrapper
+    width: 100%
+    display: flex
+    flex-direction: column
+    align-items: flex-start
+    margin-top: 10px
+
+    input
+        height: 40px
+        width: 100%
+        padding: 0px 15px
+        font-family: 'K2D', sans-serif
+        font-size: 16px
+        font-style: normal
+        font-weight: normal
+        color: $secondaryColor
+        box-sizing: border-box
+        border: 2px solid $secondaryColor
+        border-radius: 10px
+        transition: .2s
+
+    input:focus
+        outline: none
+        border: 2px solid $alertColor
+        transform: scale(1.02)
+
+.nonError
+    margin-top: 5px
+    margin-bottom: 0
+    padding-left: 20px
+    @include Mixins.font($textSuccessColor, 14px , normal , normal )
+
+.errorForm
+    margin-top: 5px
+    margin-bottom: 0
+    padding-left: 20px
+    @include Mixins.font($textFailureColor, 14px , normal , normal )
+
+.inputPassword
+    width: 100%
+    display: flex
+    flex-direction: column
+    align-items: flex-start
+    margin-top: 10px
+
+    input
+        height: 40px
+        width: 100%
+        padding: 0px 15px
+        font-family: 'K2D', sans-serif
+        font-size: 16px
+        font-style: normal
+        font-weight: normal
+        color: $secondaryColor
+        box-sizing: border-box
+        border: 2px solid $secondaryColor
+        border-radius: 10px
+        transition: .2s
+
+    input:focus
+        outline: none
+        border: 2px solid $alertColor
+        transform: scale(1.02)
+
+.password
+    position: relative
+    display: flex
+    width: 100%
+
+.showPassword
+    position: absolute
+    top: 5px
+    right: 10px
+    width: 30px
+    height: 30px
+    background-image: url('../../../assets/Icons/IconEyeOpen.png')
+    background-color: white
+    background-position: center
+    cursor: pointer
+
+.hidePassword
+    position: absolute
+    top: 5px
+    right: 10px
+    width: 30px
+    height: 30px
+    background-image: url('../../../assets/Icons/IconEyeClose.png')
+    background-color: white
+    background-position: center
+    cursor: pointer
+
+.buttonSubmit
+    width: 100%
+    margin-top: 10px
+    cursor: pointer
+    @include Mixins.buttonActive
+
+.buttonSubmit:hover
+    @include Mixins.buttonHover
+
+.Questions
+    display: flex
+    margin-top: 20px
+    gap: 5px
+
+.buttonHandle
+    background: none
+    border: none
+    cursor: pointer
+    @include Mixins.font($primaryColor, 20px , normal , normal )
+
+.buttonHandle:hover
+    color: $hoverColor
+    text-decoration: underline
