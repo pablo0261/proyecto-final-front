@@ -1,0 +1,3 @@
+export const GET_ALL = "GET_ALL";
+export const ACCESS_BACK_SAVE_DATA = "ACCESS_BACK_SAVE_DATA";
+export const LOG_OUT_DELETE_DATA = 'LOG_OUT_DELETE_DATA';

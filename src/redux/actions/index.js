@@ -1,8 +1,45 @@
 import axios from "axios";
+import { 
+  ACCESS_BACK_SAVE_DATA,
+  LOG_OUT_DELETE_DATA,
+  GET_ALL,
+ } from "./action-types";
 
+//AccessAccount//
+const accessDataBase = (userLoggedData) => {
+  return async (dispatch) => {
+    return dispatch({
+      type : ACCESS_BACK_SAVE_DATA,
+      payload : userLoggedData
+    })
+    /* try {
+      const { data } = await axios.post('/people', userLoggedData)
+      return dispatch({
+        type : ACCESS_BACK_SAVE_DATA,
+        payload : data
+      })
+    } catch (error) {
+      window.alert(error)
+    } */
+  }
+}
 
-export const GET_ALL = "GET_ALL";
-
+const logOutDeleteData = (idPeople) => {
+  return async (dispatch) => {
+    return dispatch({
+      type : LOG_OUT_DELETE_DATA
+    })
+    /* try {
+      const { data } = await axios.post('/people', idPeople)
+      return dispatch({
+        type : ACCESS_BACK_SAVE_DATA,
+        payload : data
+      })
+    } catch (error) {
+      window.alert(error)
+    } */
+  }
+}
 
 //*---GET GENERALES---//
 
@@ -32,6 +69,8 @@ const handleContratService = (item) => {
   };
 
   export {
+    accessDataBase,
+    logOutDeleteData,
     infoDetailProveedor,
     handleContratService,
   }

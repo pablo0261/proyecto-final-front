@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { ValidateFormLogIn } from './ValidateFormLogIn'
+import style from './LogIn.module.sass'
 
 function LogIn(props) {
 
@@ -7,12 +8,14 @@ function LogIn(props) {
 
     const [logInData, setLogInData] = useState({
         email: "",
-        password: ""
+        password: "",
+        idPeople: 1,
+        typeOfPerson: isProvider ? 'provider' : 'customer'
     })
 
     const [errors, setErrors] = useState({
-        email: "Ingresá tu email registrado",
-        password: "Ingresá tu constraseña"
+        email: "*Campo Obligatorio",
+        password: "*Campo Obligatorio"
     })
 
     const [showPassword, setShowPassword] = useState(false);
@@ -41,16 +44,16 @@ function LogIn(props) {
     }
 
     return (
-        <div>
-            <h1>Iniciar Sesión {isProvider ? <span>(Proveedor)</span> : <span>(Cliente)</span>}</h1>
+        <div className={style.wrapper}>
+            <p className={style.title}>Iniciar Sesión {isProvider ? <span className={style.text}>(Proveedor)</span> : <span className={style.text}>(Cliente)</span>}</p>
             {
                 isProvider ?
-                    <p>Accede al clasificado de cuidadores mas grande de Argentina. Potencia tu visibilidad.</p>
+                    <p className={style.text}>Accede al clasificado de cuidadores mas grande de Argentina. Potencia tu visibilidad.</p>
                     :
-                    <p>Accede a la atención que mereces. Descubre un mundo de cuidado personalizado.</p>
+                    <p className={style.text}>Accede a la atención que mereces. Descubre un mundo de cuidado personalizado.</p>
             }
             <form onSubmit={handleSumbitLogIn}>
-                <div>
+                <div className={style.inputWrapper}>
                     <input
                         id='email'
                         name='email'
@@ -58,26 +61,28 @@ function LogIn(props) {
                         value={logInData.email}
                         onChange={handleChangeLogIn}
                         placeholder='example@example.com' />
-                    {errors.email && <p className='errorForm'>{errors.email}</p>}
+                    <p className={errors.email ? style.errorForm : style.nonError}>{errors.email ? errors.email : 'Datos Validos'}</p>
+                </div>
+                <div className={style.inputWrapper}>
+                    <div className={style.password}>
+                        <input 
+                            id='password'
+                            name='password'
+                            type={showPassword ? 'text' : 'password'}
+                            value={logInData.password}
+                            onChange={handleChangeLogIn} />
+                        <div onClick={handleTogglePassword} className={showPassword ? style.hidePassword : style.showPassword}></div>
+                    </div>
+                    <p className={errors.password ? style.errorForm : style.nonError}>{errors.password ? errors.password : 'Datos Validos'}</p>
                 </div>
                 <div>
-                    <input
-                        id='password'
-                        name='password'
-                        type={showPassword ? 'text' : 'password'}
-                        value={logInData.password}
-                        onChange={handleChangeLogIn} />
-                    <button type='button' onClick={handleTogglePassword}>
-                        {showPassword ? 'Ocultar' : 'Mostrar'} Contraseña
-                    </button>
-                    {errors.password && <p className='errorForm'>{errors.password}</p>}
-                </div>
-                <div>
-                    <button type='submit'>Ingresar</button>
+                    <button type='submit' className={style.buttonSubmit}>Ingresar</button>
                 </div>
             </form>
-            <h4>¿No tienes cuenta aún?</h4>
-            <button onClick={() => { handleFormsVisibility() }}>Registrarse</button>
+            <div className={style.Questions}>
+                <p className={style.text}>¿No tienes cuenta aún?</p>
+                <button onClick={() => { handleFormsVisibility() }} className={style.buttonHandle}>Registrarse</button>
+            </div>
         </div>
     )
 }

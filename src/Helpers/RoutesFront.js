@@ -3,16 +3,16 @@ const Helpers = {
     AccessAccount : "/accessAccount",
 
     /* Cliente */
-    HomeCustomerView: "/homeCustomerView/:id",
-    ProfileCustomerView: "/profileCustomerView/:id",
-    ConnectionsCustomerView: "/connectionsCustomerView/:id",
-    ReportsCustomerView: "/reportsCustomerView/:id",
+    HomeCustomerView: "/homeCustomerView",
+    ProfileCustomerView: "/profileCustomerView",
+    ConnectionsCustomerView: "/connectionsCustomerView",
+    ReportsCustomerView: "/reportsCustomerView",
 
     /* Proveedor */
-    ProfileProviderView: "/profileProviderView/:id",
-    ConnectionsProviderView: "/connectionsProviderView/:id",
-    ReportsProviderView: "/reportsProviderView/:id",
-    StatsProviderView: "/statsProviderView/:id", 
+    ProfileProviderView: "/profileProviderView",
+    ConnectionsProviderView: "/connectionsProviderView",
+    ReportsProviderView: "/reportsProviderView",
+    StatsProviderView: "/statsProviderView", 
 }
 
 export default Helpers
