@@ -11,11 +11,23 @@ import ConnectionsCustomerView from './Views/CustomerViews/ConnectionsCustomerVi
 import StatsProviderView from './Views/ProviderViews/StatsProviderView';
 import ReportsProviderView from './Views/ProviderViews/ReportsProviderView';
 import ConnectionsProviderView from './Views/ProviderViews/ConnectionsProviderView';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Form from './components/Form/Form';
 import Footer from './components/Footer/Footer';
+import { useEffect } from 'react';
+import StoreItem from './Helpers/LocalStorage';
+import { recoverUserLoggedData } from './redux/actions';
 
 function App() {
+
+  const dispatch = useDispatch()
+
+  useEffect(()=>{
+    
+    if (localStorage.getItem(StoreItem.emailUserLogged)) {
+      dispatch(recoverUserLoggedData(localStorage.getItem(StoreItem.emailUserLogged)) )
+    }
+  },[])
 
   const userLoggedInfo = useSelector(state => state.infoUserLog)
 

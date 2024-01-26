@@ -1,5 +1,6 @@
 const StoreItem = {
-    isProvider : 'isProvider'
+    isProvider : 'isProvider',
+    emailUserLogged : 'emailUserLogged'
 }
 
 export default StoreItem

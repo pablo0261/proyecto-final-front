@@ -50,40 +50,68 @@ import {
   ACCESS_BACK_SAVE_DATA,
   LOG_OUT_DELETE_DATA,
  } from "./action-types";
+import StoreItem from "../../Helpers/LocalStorage";
 
 //AccessAccount//
-const accessDataBase = (userLoggedData) => {
+const logInDataBase = (userLoggedData) => {
   return async (dispatch) => {
-    return dispatch({
-      type : ACCESS_BACK_SAVE_DATA,
-      payload : userLoggedData
-    })
-    /* try {
-      const { data } = await axios.post('/people', userLoggedData)
+    try {
+      const { data } = await axios.get(`http://localhost:3001/people?email=${userLoggedData.email}`)
+      localStorage.setItem(StoreItem.emailUserLogged, userLoggedData.email)
       return dispatch({
         type : ACCESS_BACK_SAVE_DATA,
-        payload : data
+        payload : data.people.data[0].people
       })
     } catch (error) {
       window.alert(error)
-    } */
+    }    
   }
 }
 
-const logOutDeleteData = (idPeople) => {
+const signInDataBase = (userSingedData) => {
   return async (dispatch) => {
+    try {
+      const { data } = await axios.post('http://localhost:3001/people', userSingedData)
+      localStorage.setItem(StoreItem.emailUserLogged, userSingedData.email)
+      return dispatch({
+        type : ACCESS_BACK_SAVE_DATA,
+        payload : data.result
+      })
+    } catch (error) {
+      window.alert(error)
+    }    
+  }
+}
+
+const logOutDeleteData = () => {
+  return async (dispatch) => {
+    localStorage.clear()
     return dispatch({
       type : LOG_OUT_DELETE_DATA
     })
     /* try {
-      const { data } = await axios.post('/people', idPeople)
+      const { data } = await axios.get(`http://localhost:3001/people?email=${userLoggedData.email}`)
       return dispatch({
-        type : ACCESS_BACK_SAVE_DATA,
-        payload : data
+        type : LOG_OUT_DELETE_DATA,
+        payload : data.result
       })
     } catch (error) {
       window.alert(error)
-    } */
+    }  */
+  }
+}
+
+const recoverUserLoggedData = (emailUserData) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.get(`http://localhost:3001/people?email=${emailUserData}`)
+      return dispatch({
+        type : ACCESS_BACK_SAVE_DATA,
+        payload : data.people.data[0].people
+      })
+    } catch (error) {
+      window.alert(error)
+    }    
   }
 }
 
@@ -152,8 +180,10 @@ const handleEditProfile = (formData) => {
 
 
   export {
-    accessDataBase,
+    logInDataBase,
+    signInDataBase,
     logOutDeleteData,
+    recoverUserLoggedData,
     infoDetailProveedor,
     handleContratService,
     postUserData,
