@@ -30,8 +30,6 @@ function App() {
   },[])
 
   const userLoggedInfo = useSelector(state => state.infoUserLog)
-  console.log(localStorage)
-  console.log(userLoggedInfo)
 
   return (
     <div>
