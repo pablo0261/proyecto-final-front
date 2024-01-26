@@ -35,16 +35,13 @@ function App() {
               <Route path={Helpers.StatsProviderView} element={<StatsProviderView />} />
               <Route path={Helpers.ConnectionsProviderView} element={<ConnectionsProviderView />} />
               <Route path={Helpers.ReportsProviderView} element={<ReportsProviderView />} />
-              <Route path={Helpers.ProfileProviderView} element={<ProfileProveedorView />} />
-              <Route path={Helpers.ProfileProviderView} element={<ProfileProviderView/>}/>
-       
-        {/* Form */}
-        <Route path={Helpers.Form} element={<Form/>}/>
+              <Route path={Helpers.ProfileProviderView} element={<ProfileProviderView />} />
+              <Route path={Helpers.Form} element={<Form />} />
 
               {/* Administrador */}
 
               {/* Rutas No Especificada */}
-              <Route path='*' element={<NotFound/>}></Route>
+              <Route path='*' element={<NotFound />}></Route>
             </Routes>
           </div>
           :
@@ -54,7 +51,7 @@ function App() {
               <Route exact path={Helpers.Landing} element={<Landing />} />
               <Route path={Helpers.AccessAccount} element={<AccessAccount />} />
 
-              <Route path='*' element={<NotFound/>}></Route>
+              <Route path='*' element={<NotFound />}></Route>
             </Routes>
           </div>
       }
