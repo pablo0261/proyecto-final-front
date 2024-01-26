@@ -1,8 +1,8 @@
 import {  useSelector } from "react-redux";
 // import { handleDeleteService, handleContratService } from "redux/actions";
-import "./ServiceProveedorCard.style.css";
+import "./ServiceProviderCard.style.css";
 
-function ServicesProveedorCard() {
+function ServicesProviderCard() {
 
   // const dispatch = useDispatch();
   const infoUserLog = useSelector((state) => state.infoUserLog);
@@ -64,4 +64,4 @@ function ServicesProveedorCard() {
   );
 }
 
-export default ServicesProveedorCard;
+export default ServicesProviderCard;

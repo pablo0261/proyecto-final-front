@@ -5,8 +5,9 @@ import NotFound from './utils/notFound/NotFound';
 
 import Helpers from './Helpers/RoutesFront';
 import AccessAccount from './Views/AccessAccount/AccessAccount';
-import ProfileProveedorView from './views/ProfileProveedorView/ProfileProveedorView';
+import ProfileProviderView from './views/ProfileProviderView/ProfileProviderView';
 import NavBar from './components/NavBar/NavBar';
+import Form from './components/Form/Form';
 
 function App() {
   
@@ -21,8 +22,11 @@ function App() {
         {/* Cliente */}
         <Route path={Helpers.HomeCustomer} element={<Home/>}/>
 
-        {/* Proveedor */}
-        <Route path={Helpers.ProfileProveedorView} element={<ProfileProveedorView/>}/>
+        {/* Provider */}
+        <Route path={Helpers.ProfileProviderView} element={<ProfileProviderView/>}/>
+       
+        {/* Form */}
+        <Route path={Helpers.Form} element={<Form/>}/>
 
         {/* Administrador */}
 

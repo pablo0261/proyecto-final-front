@@ -1,7 +1,8 @@
 import { useSelector } from "react-redux";
-import "./ProfileProveedor.style.css";
+import { Link } from 'react-router-dom';
+import "./ProfileProvider.style.css";
 
-function ProfileProveedor() {
+function ProfileProvider() {
   const infoUserLog = useSelector((state) => state.infoUserLog);
 
   //*AQUI LO QUE RECIBIRIA DEL BACK
@@ -31,9 +32,9 @@ function ProfileProveedor() {
 
   const Verification = isAllInfoFilled;
 
-  const handleEditClick = () => {
-    //  dispatch(handleDeleteService(item)); //* enviará un put para actualizar el estado global infoDetailProveedor
-  };
+  // const handleEditClick = () => {
+  //   history.push('/form');
+  // };
 
   return (
     <div className="container">
@@ -69,9 +70,11 @@ function ProfileProveedor() {
             </div>
           </div>
         </div>
-        <button onClick={handleEditClick()} src="editImage" alt="edit" className="edit-button" />
+        <Link to="/form">
+        <button src="editImage" alt="edit" className="edit-button"> Edit</button>
+        </Link>
       </div>
     </div>
   );
 }
-export default ProfileProveedor;
+export default ProfileProvider;

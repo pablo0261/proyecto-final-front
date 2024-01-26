@@ -30,7 +30,7 @@ function NavBar() {
                     <NavLink to="#">Mis Estadisticas</NavLink>
                     <NavLink to="#">Mis Conexiones</NavLink>
                     <NavLink to="#">Mis Reportes</NavLink>
-                    <NavLink to={Helpers.ProfileProveedorView.replace(':id', idUserLogged)}>Mi Perfil</NavLink>
+                    <NavLink to={Helpers.ProfileProviderView.replace(':id', idUserLogged)}>Mi Perfil</NavLink>
                 </div>
             }
             {
