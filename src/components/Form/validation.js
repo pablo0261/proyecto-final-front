@@ -1,9 +1,9 @@
-const regexName = /^[A-Za-z\s]*$/;
-const regexAddress = /^[A-Za-z0-9\s]*$/; 
-const regexAge = /^\d+$/;
-const regexCountry = /^[A-Za-z\s]*$/; 
-const regexProfession = /^[A-Za-z\s]*$/; 
-const regexPhone = /^\d{10}$/; // Asumiendo que el número de teléfono debe tener 10 dígitos
+const regexName = /^[A-Za-z\s]*$/;// Verifica que el input contenga solo letras (mayúsculas o minúsculas) y espacios.
+const regexAddress = /^[A-Za-z0-9\s]*$/;// Verifica que el input contenga solo letras (mayúsculas o minúsculas), números y espacios.
+const regexAge = /^\d+$/;// Verifica que el input contenga solo dígitos y que haya al menos uno.
+const regexCountry = /^[A-Za-z\s]*$/;// Verifica que el input contenga solo letras (mayúsculas o minúsculas) y espacios.
+const regexProfession = /^[A-Za-z\s]*$/;// Verifica que el input contenga solo letras (mayúsculas o minúsculas) y espacios.
+const regexPhone = /^\d{10}$/;// Verifica que el input contenga exactamente 10 dígitos.
 
 const validation = (inputs, localErrors, setLocalErrors) => {
   let newLocalErrors = { ...localErrors };
