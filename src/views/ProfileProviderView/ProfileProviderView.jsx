@@ -8,26 +8,23 @@ import EducationExperienciaProvider from '../../components/ProfileComponents/Edu
 import MapProviderCard from '../../components/ProfileComponents/MapProviderCard/MapProviderCard';
 import ReviewProviderCard from '../../components/ProfileComponents/ReviewProviderCard/ReviewProviderCard';
 import ConectionProviderCard from '../../components/ProfileComponents/ConectionProviderCard/ConectionProviderCard';
+import style from './ProfileProviderView.module.sass'
 
-
-
-function profile() {
-
- 
+function ProfileProviderView() {
 
   return (
-    <div>
-      <ProfileProvider/> 
-      <ServicesProviderCard/>
-      <EducationExperienciaProvider/>
-      <InteresProviderCard/>
-      <SkillsProviderCard/>
-      <ScheduleProviderCard/>
-      <MapProviderCard/>
-      <ReviewProviderCard/>
-      <ConectionProviderCard/>
+    <div className={style.wrapper}>
+        <ProfileProvider />
+        <ServicesProviderCard />
+        <EducationExperienciaProvider />
+        <InteresProviderCard />
+        <SkillsProviderCard />
+        <ScheduleProviderCard />
+        <MapProviderCard />
+        <ReviewProviderCard />
+        <ConectionProviderCard />
     </div>
   );
 }
 
-export default profile;
+export default ProfileProviderView;
