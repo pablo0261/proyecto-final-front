@@ -26,7 +26,7 @@ let initialState = {
       "Passionate about crafting innovative solutions, my approach as a software engineer is to turn ideas into functional code. A challenge enthusiast, I constantly seek to learn and enhance my skills to drive projects to success.",
     state: "Active",
     area: "Rio de Janeiro",
-    /* idPeople: "00000001-e89b-12d3-a456-426614444001", */
+    idPeople: "00000001-e89b-12d3-a456-426614444001", 
     name: "Terry Bogard",
     address: "123 Main Street",
     imageId: "utils/Imagenpersona.jpeg",

@@ -1,10 +1,7 @@
 import Card from "../../components/CardHomeProveedor/CardHomeProveedor";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import axios from 'axios';
 import styles from "../home/Home.module.sass"
 import data from "../../../data.json";
-import MapHome from "../../components/MapHome/MapHome";
 
 
 const Home = () => {
