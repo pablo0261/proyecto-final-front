@@ -17,7 +17,7 @@ function profile() {
 
   return (
     <div>
-      <ProfileProvider/>
+      <ProfileProvider/> 
       <ServicesProviderCard/>
       <EducationExperienciaProvider/>
       <InteresProviderCard/>

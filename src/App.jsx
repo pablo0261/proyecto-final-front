@@ -1,4 +1,4 @@
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import Landing from './Views/Landing/Landing';
 import Home from './views/home/Home';
 import NotFound from './utils/notFound/NotFound';
