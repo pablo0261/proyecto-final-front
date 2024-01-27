@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import { Link} from "react-router-dom";
 import style from './ProfileProvider.module.sass';
 
+
 function ProfileProvider() {
   const infoUserLog = useSelector((state) => state.infoUserLog);
 //! OJO ESTO VA A CAMBIAR CUANDO CAMBIE EL OBJETO DEL ESTADO
@@ -18,6 +19,7 @@ function ProfileProvider() {
     aboutMe: infoUserLog.aboutMe || "",
     phone: infoUserLog.phone || "",
   };
+
 
   const isAllInfoFilled = Object.values(formData).every(
     (value) => value.length !== 0

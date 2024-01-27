@@ -1,20 +1,25 @@
 import axios from "axios";
-export const GET_INFO_USER = "GET_INFO_USER";
-export const POST_NEW_INFO_USER = "POST_NEW_INFO_USER";
-export const SET_ERROR_BACK = "SET_ERROR_BACK";
-export const EDIT_INFO_USER = "EDIT_INFO_USER";
 
 import { 
   ACCESS_BACK_SAVE_DATA,
   LOG_OUT_DELETE_DATA,
+  GET_INFO_USER,
+  POST_NEW_INFO_USER,
+  SET_ERROR_BACK,
+  EDIT_INFO_USER,
+  CONTRAT_SERVICE_USER
  } from "./action-types";
 import StoreItem from "../../Helpers/LocalStorage";
+
+const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
+
+
 
 //AccessAccount//
 const logInDataBase = (userLoggedData) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get(`http://localhost:3001/people?email=${userLoggedData.email}`)
+      const { data } = await axios.get(`${REACT_APP_API_URL}/people?email=${userLoggedData.email}`)
       localStorage.setItem(StoreItem.emailUserLogged, userLoggedData.email)
       return dispatch({
         type : ACCESS_BACK_SAVE_DATA,
@@ -29,7 +34,7 @@ const logInDataBase = (userLoggedData) => {
 const signInDataBase = (userSingedData) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.post('http://localhost:3001/people', userSingedData)
+      const { data } = await axios.post(`${REACT_APP_API_URL}/people`, userSingedData)
       localStorage.setItem(StoreItem.emailUserLogged, userSingedData.email)
       return dispatch({
         type : ACCESS_BACK_SAVE_DATA,
@@ -48,7 +53,7 @@ const logOutDeleteData = () => {
       type : LOG_OUT_DELETE_DATA
     })
     /* try {
-      const { data } = await axios.get(`http://localhost:3001/people?email=${userLoggedData.email}`)
+      const { data } = await axios.get(`${REACT_APP_API_URL}/people?email=${userLoggedData.email}`)
       return dispatch({
         type : LOG_OUT_DELETE_DATA,
         payload : data.result
@@ -62,13 +67,16 @@ const logOutDeleteData = () => {
 const recoverUserLoggedData = (emailUserData) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get(`http://localhost:3001/people?email=${emailUserData}`)
+      const  {data}  = await axios.get(`${REACT_APP_API_URL}/people?email=${emailUserData}`)
+      console.log(`${REACT_APP_API_URL}people?email=${emailUserData}`)
+      console.log({data})
       return dispatch({
         type : ACCESS_BACK_SAVE_DATA,
         payload : data.people.data[0].people
       })
     } catch (error) {
       window.alert(error)
+      console.log("error", error)
     }    
   }
 }
@@ -78,7 +86,7 @@ const recoverUserLoggedData = (emailUserData) => {
 const infoDetailProveedor = (id) => {
     return async (dispatch) => {
       try {
-        const { data } = await axios.get(`/people/${id}`);
+        const { data } = await axios.get(`${REACT_APP_API_URL}/people/${id}`);
         dispatch({
           type: GET_INFO_USER,
           payload: data,
@@ -89,11 +97,14 @@ const infoDetailProveedor = (id) => {
     };
   };
 
-const handleContratService = (item) => {
-    return async () => {
+  const handleContratService = (item) => {
+    return async (dispatch) => {
       try {
-        await axios.post(`/people/${item}`);//*Verificar si el post iria a la misma ruta
-        
+        const response = await axios.post(`${REACT_APP_API_URL}/people/${item}`);
+        dispatch({
+          type: CONTRAT_SERVICE_USER,
+          payload: response.data,
+        });
       } catch (error) {
         console.log(error);
       }
@@ -101,39 +112,38 @@ const handleContratService = (item) => {
   };
 
   //*---POST_NEW_INFO_USER---//
-const postUserData = (userData) => {
-  return async (dispatch) => {
-    try {
-      const response = await axios.post("/XXXXXX", userData);//*Verificar a que ruta enviar el post para que modifique el objeto person del back
-      dispatch({
-        type: POST_NEW_INFO_USER,
-        payload: response.data,
-      });
-      
-    } catch (error) {
-      if (error.response && error.response.data) {
+  const postUserData = (userData, item) => {
+    return async (dispatch) => {
+      try {
+        const response = await axios.post(`${REACT_APP_API_URL}/people/${item}`, userData);
         dispatch({
-          type: SET_ERROR_BACK,
-          payload: error.response.data,
+          type: POST_NEW_INFO_USER,
+          payload: response.data,
         });
-        throw error.response.data;
+      } catch (error) {
+        if (error.response && error.response.data) {
+          dispatch({
+            type: SET_ERROR_BACK,
+            payload: error.response.data,
+          });
+          throw error.response.data;
+        }
       }
-    }
+    };
   };
-};
 
-const handleEditProfile = (formData) => {
-  return async (dispatch) => {
-    try {
-    dispatch({
-      type: EDIT_INFO_USER,
-      payload: formData,
-    });
-  } catch (error) {
-    console.error(error);
-  }
-};
-};
+  const handleEditProfile = (formData) => {
+    return async (dispatch) => {
+      try {
+        dispatch({
+          type: EDIT_INFO_USER,
+          payload: formData,
+        });
+      } catch (error) {
+        console.error(error);
+      }
+    };
+  };
 
 
 
