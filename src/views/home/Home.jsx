@@ -1,65 +1,123 @@
 import Card from "../../components/CardHomeProveedor/CardHomeProveedor";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import axios from 'axios';
-import styles from "../home/Home.module.sass"
+import styles from "../home/Home.module.sass";
 import data from "../../../data.json";
 import MapHome from "../../components/MapHome/MapHome";
 
-
 const Home = () => {
   const [users, setUsers] = useState([]);
-  const [showFilters, setShowFilters] = useState(false);  
-  const [showOrder, setShowOrder] = useState(false);  
+  const [showFilters, setShowFilters] = useState(false);
+  const [showOrder, setShowOrder] = useState(false);
+  const [selectedServices, setSelectedServices] = useState([]);
+  const [selectedGender, setSelectedGender] = useState(null);
 
-
-  //* Aqui va a guardar el get en el estado local para renderizar hasta que se vea si estos valores van a ser pasados al global
-  // useEffect(async () => {
-  //   const url = '/algunaruta';
-  //   const res = await axios.get(url);
-  //   setUsers(res.data);
-  // }, []);
   useEffect(() => {
     setUsers(data.salida.data);
   }, []);
 
-
   const handleFilterButtonClick = () => {
     setShowFilters(!showFilters);
+    if (!showFilters) {
+      setShowOrder(false);
+    }
   };
+
   const handleOrderButtonClick = () => {
     setShowOrder(!showOrder);
+    if (!showOrder) {
+      setShowFilters(false);
+    }
   };
+
+  const handleServiceButtonClick = (service) => {
+    setSelectedServices((prevSelectedServices) => {
+      if (prevSelectedServices.includes(service)) {
+        return prevSelectedServices.filter((selectedService) => selectedService !== service);
+      } else {
+        return [...prevSelectedServices, service];
+      }
+    });
+  };
+
+  const handleGenderButtonClick = (gender) => {
+    setSelectedGender((prevSelectedGender) =>
+      prevSelectedGender === gender ? null : gender
+    );
+  };
+
+  const handleApplyButtonClick = () => {
+    console.log("Servicios seleccionados:", selectedServices);
+    if (selectedGender) {
+      console.log("Género seleccionado:", selectedGender);
+      setSelectedServices((prevSelectedServices) => [
+        ...prevSelectedServices,
+        selectedGender,
+      ]);
+    }
+    setShowFilters(false);
+  };
+  console.log(selectedServices)
 
   return (
     <>
       <div className={styles.container}>
         <div className={styles.mapContainer}>
-          <h2 className>Buscar en el mapa</h2>
-          <div className={styles.map}>
-            
-          </div>
+          <h2>Buscar en el mapa</h2>
+            <MapHome/>
         </div>
 
         <div className={styles.servicesContainer}>
           <div className={styles.filtersContainer}>
             <button className={styles.botones} onClick={handleFilterButtonClick}>
-                <span>Filtrar</span>
+              <span>Filtrar</span>
             </button>
+            <button className={styles.botones} onClick={handleOrderButtonClick}>
+              <span>Ordenar</span>
+            </button>
+          </div>
+          <div>
             {showFilters && (
               <div className={styles.filterBox}>
                 <h3>Servicios</h3>
-                <button className={styles.botones}>Cuidado</button>
-                <button className={styles.botones}>Cuidado + Limpieza</button>
+                <button
+                  className={`${styles.botones} ${selectedServices.includes("Cuidado") && styles.selected}`}
+                  onClick={() => handleServiceButtonClick("Cuidado")}
+                >
+                  Cuidado
+                </button>
+                <button
+                  className={`${styles.botones} ${selectedServices.includes("Cuidado + Limpieza") && styles.selected}`}
+                  onClick={() => handleServiceButtonClick("Cuidado + Limpieza")}
+                >
+                  Cuidado + Limpieza
+                </button>
                 <h3>Genero</h3>
-                <button className={styles.botones}>Masculino</button>
-                <button className={styles.botones}>Femenino</button>
+                <button
+                  className={`${styles.botones} ${
+                    selectedGender === "Masculino" && styles.selected
+                  }`}
+                  onClick={() => handleGenderButtonClick("Masculino")}
+                >
+                  Masculino
+                </button>
+                <button
+                  className={`${styles.botones} ${
+                    selectedGender === "Femenino" && styles.selected
+                  }`}
+                  onClick={() => handleGenderButtonClick("Femenino")}
+                >
+                  Femenino
+                </button>
                 <h3>Ocupacion</h3>
-                <button className={styles.botones}>Enfermero</button>
-                <button className={styles.botones}>Medico</button>
+                <button className={`${styles.botones} ${selectedServices.includes("Enfermero") && styles.selected}`}onClick={() => handleServiceButtonClick("Enfermero")}>Enfermero</button>
+                <button className={`${styles.botones} ${selectedServices.includes("Medico") && styles.selected}`}onClick={() => handleServiceButtonClick("Medico")}>Medico</button>
+
+                  <br></br>
+                <button className={styles.botones} onClick={handleApplyButtonClick}>
+                  Aplicar
+                </button>
               </div>
             )}
-            <button className={styles.botones} onClick={handleOrderButtonClick}>Ordenar</button>
             {showOrder && (
               <div className={styles.filterBox}>
                 <h3>Precio</h3>
@@ -74,9 +132,9 @@ const Home = () => {
               </div>
             )}
           </div>
-          
+
           <div className={styles.cardContainer}>
-          {users.map((user) => (
+            {users.map((user) => (
               <Card key={user.idPeople} user={user} />
             ))}
           </div>
