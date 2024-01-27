@@ -2,6 +2,7 @@ import Card from "../../components/CardHomeProveedor/CardHomeProveedor";
 import { useEffect, useState } from "react";
 import styles from "../home/Home.module.sass";
 import data from "../../../data.json";
+import MapHome from "../../components/MapHome/MapHome";
 
 const Home = () => {
   const [users, setUsers] = useState([]);
