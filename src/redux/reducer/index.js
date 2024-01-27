@@ -1,16 +1,17 @@
 import {
-   ACCESS_BACK_SAVE_DATA,
-  LOG_OUT_DELETE_DATA
+  ACCESS_BACK_SAVE_DATA,
+  LOG_OUT_DELETE_DATA,
+  GET_INFO_USER,
+  POST_NEW_INFO_USER,
+  SET_ERROR_BACK,
+  EDIT_INFO_USER,
+  // CONTRAT_SERVICE_USER
 } from "../actions/action-types";
 
-import { GET_INFO_USER, POST_NEW_INFO_USER, SET_ERROR_BACK, EDIT_INFO_USER, } from "../actions/index";
 
 let initialState = {
   //*GENERALES//
   infoUserLog: {
-    //*ESTO NO LO USE
-    idLocation: 1,
-
     dateOfBirth: "1990-01-01T02:00:00.000Z",
     idGenre: 1,
     noShow: false,
@@ -116,6 +117,7 @@ let initialState = {
     ],
     schedule: [true, false, true, false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, false]
   },
+
   //*POSTDOG//
   postUserData: [],
   //*ERRORES//
@@ -160,7 +162,6 @@ let initialState = {
 
 const rootReducer = (state = initialState, { type, payload }) => {
   switch (type) {
-
     //*---GET GENERALES---//
     case GET_INFO_USER:
       return {
@@ -195,13 +196,14 @@ const rootReducer = (state = initialState, { type, payload }) => {
     case ACCESS_BACK_SAVE_DATA:
       return {
         ...state,
-        infoUserLog: payload
-      }
+        infoUserLog: payload,
+      };
 
     case LOG_OUT_DELETE_DATA:
       return {
-        ...state, infoUserLog: {}
-      }
+        ...state,
+        infoUserLog: {},
+      };
 
     default:
       return state;
