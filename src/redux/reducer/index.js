@@ -5,6 +5,8 @@ import {
   POST_NEW_INFO_USER,
   SET_ERROR_BACK,
   EDIT_INFO_USER,
+  FILTER_CARDS,
+  GET_HOME_PROVIDER,
   // CONTRAT_SERVICE_USER
 } from "../actions/action-types";
 
@@ -140,6 +142,9 @@ let initialState = {
 
   },
   
+  //Filter and getpeople
+  FilterCards: [],
+  getAllProvider: [],
   //*POST//
   postUserData: [],
   //*ERRORES//
@@ -184,12 +189,24 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         infoUserLog: payload,
       };
+    
+    case GET_HOME_PROVIDER:
+      return {
+        ...state,
+        getAllPeople: payload,
+      };
 
     //*---POST---//
     case POST_NEW_INFO_USER:
       return {
         ...state,
         postUserData: [...state.postUserData, payload],
+      };
+
+    case FILTER_CARDS:
+      return {
+        ...state,
+        FilterCards: [...state.FilterCards, payload],
       };
 
     //* --- MANEJO DE ERRORES DEL BACK ---//*

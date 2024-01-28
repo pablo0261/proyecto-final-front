@@ -3,13 +3,17 @@ import { useEffect, useState } from "react";
 import styles from "../home/Home.module.sass";
 import data from "../../../data.json";
 import MapHome from "../../components/MapHome/MapHome";
+import { useSelector, useDispatch } from "react-redux";
+import { filter } from "../../redux/actions";
 
 const Home = () => {
   const [users, setUsers] = useState([]);
+  const dispatch = useDispatch();
   const [showFilters, setShowFilters] = useState(false);
   const [showOrder, setShowOrder] = useState(false);
   const [selectedServices, setSelectedServices] = useState([]);
   const [selectedGender, setSelectedGender] = useState(null);
+  const filtros = useSelector((state) => state.FilterCards);
 
   useEffect(() => {
     setUsers(data.salida.data);
@@ -55,8 +59,15 @@ const Home = () => {
       ]);
     }
     setShowFilters(false);
+    
   };
-  console.log(selectedServices)
+
+  const hadleClick = () => {
+    handleApplyButtonClick();
+    dispatch(filter(selectedServices, selectedGender));
+  }
+  console.log("este es el local",selectedServices)
+  console.log("este es el global",filtros)
 
   return (
     <>
@@ -113,7 +124,7 @@ const Home = () => {
                 <button className={`${styles.botones} ${selectedServices.includes("Medico") && styles.selected}`}onClick={() => handleServiceButtonClick("Medico")}>Medico</button>
 
                   <br></br>
-                <button className={styles.botones} onClick={handleApplyButtonClick}>
+                <button className={styles.botones} onClick={hadleClick}>
                   Aplicar
                 </button>
               </div>
