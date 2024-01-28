@@ -6,7 +6,7 @@ const Validation = (userData, localErrors, setLocalErrors, property, value) => {
           ...prevErrors,
           [property]: "El nombre es obligatorio",
         }));
-      } else if (!/^[A-Za-z\s]*$/.test(value)) {
+      } else if (!/^[A-Za-z0-9ÁÉÍÓÚáéíóúÜüÑñ\s]+$/.test(value)) {
         setLocalErrors((prevErrors) => ({
           ...prevErrors,
           [property]: "El nombre no puede contener símbolos ni números",
@@ -73,7 +73,7 @@ const Validation = (userData, localErrors, setLocalErrors, property, value) => {
           ...prevErrors,
           [property]: "La Calle es obligatoria",
         }));
-      } else if (!/^[A-Za-z\s]+$/.test(value)) {
+      } else if (!/^[A-Za-z0-9ÁÉÍÓÚáéíóúÜüÑñ\s]+$/.test(value)) {
         setLocalErrors((prevErrors) => ({
           ...prevErrors,
           [property]: "La Calle no puede contener símbolos",

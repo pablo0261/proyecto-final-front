@@ -200,7 +200,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
     case POST_NEW_INFO_USER:
       return {
         ...state,
-        postUserData: [...state.postUserData, payload],
+        infoUserLog:  payload,
       };
 
     case FILTER_CARDS:

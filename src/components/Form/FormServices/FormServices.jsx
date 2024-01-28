@@ -1,11 +1,8 @@
-import { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useState } from "react";
 import { postUserData } from "../../../redux/actions/index";
 import validation from "../FormProfileProvider/validationFormProfile";
 
 function Form() {
-  const dispatch = useDispatch();
-  const datosForm = useSelector((state) => state.datosForm.ServicesProviderCard);
 
   const [userData, setUserData] = useState({
     "Cuidado": "",
@@ -17,14 +14,7 @@ function Form() {
 
   const [localErrors, setLocalErrors] = useState({});
 
-  useEffect(() => {
-    if (datosForm.ServicesProviderCard) {
-      setUserData((prevUserData) => ({
-        ...prevUserData,
-      }));
-    }
-  }, [datosForm]);
-
+ 
   const handleChange = (event) => {
     let property = event.target.name;
     let value = event.target.value.trim();
