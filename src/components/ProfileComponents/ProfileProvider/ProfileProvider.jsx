@@ -1,7 +1,5 @@
 import { useSelector } from "react-redux";
 import { Link} from "react-router-dom";
-import style from './ProfileProvider.module.sass';
-
 
 function ProfileProvider() {
   const infoUserLog = useSelector((state) => state.infoUserLog);
@@ -19,7 +17,6 @@ function ProfileProvider() {
     aboutMe: infoUserLog.aboutMe || "",
     phone: infoUserLog.phone || "",
   };
-
 
   const isAllInfoFilled = Object.values(formData).every(
     (value) => value.length !== 0
@@ -42,7 +39,7 @@ function ProfileProvider() {
         <div>
           <div className="user-details">
             <div className="user-header">
-              <h2 className={style.name}>Claudia</h2>
+              <h2 className="name">Claudia</h2>
               <img src="ImagenVerificado" alt="Imagen Verificado" />
               <p>
                 {Verification ? "Cuenta Verificada" : "Cuenta no Verificada"}
