@@ -69,14 +69,12 @@ const recoverUserLoggedData = (emailUserData) => {
     try {
       const  {data}  = await axios.get(`${REACT_APP_API_URL}/people?email=${emailUserData}`)
       console.log(`${REACT_APP_API_URL}people?email=${emailUserData}`)
-      console.log({data})
       return dispatch({
         type : ACCESS_BACK_SAVE_DATA,
         payload : data.people.data[0].people
       })
     } catch (error) {
       window.alert(error)
-      console.log("error", error)
     }    
   }
 }
@@ -112,10 +110,11 @@ const infoDetailProveedor = (id) => {
   };
 
   //*---POST_NEW_INFO_USER---//
-  const postUserData = (userData, item) => {
+  const postUserData = (userData) => {
     return async (dispatch) => {
       try {
-        const response = await axios.post(`${REACT_APP_API_URL}/people/${item}`, userData);
+        const response = await axios.post(`${REACT_APP_API_URL}/people`, userData);
+        console.log(response.data)
         dispatch({
           type: POST_NEW_INFO_USER,
           payload: response.data,
@@ -126,7 +125,9 @@ const infoDetailProveedor = (id) => {
             type: SET_ERROR_BACK,
             payload: error.response.data,
           });
+          console.log(error.response.data)
           throw error.response.data;
+          
         }
       }
     };

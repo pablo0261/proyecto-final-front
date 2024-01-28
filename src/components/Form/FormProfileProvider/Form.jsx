@@ -1,23 +1,18 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { postUserData } from "../../../redux/actions/index";
-import validation from "../FormProfileProvider/validationFormProfile";
+import validation from "./validationFormProfile";
+import styles from "./FormProfile.module.sass";
 
-function Form() {
+function Form({handleClickForm}) {
   const dispatch = useDispatch();
   const datosForm = useSelector((state) => state.datosForm);
 
-  const [userData, setUserData] = useState({
-    Servicio: "", // Corregir el nombre del campo a "Servicio"
-    selectedOptions: [],
-    inputValue: "",
-    precioServicio: "", // Nuevo campo para el precio del servicio
-  });
-
+  const [userData, setUserData] = useState({});
   const [localErrors, setLocalErrors] = useState({});
 
   useEffect(() => {
-    if (datosForm.ServicesProviderCard) {
+    if (datosForm.ProfileProvider) {
       setUserData((prevUserData) => ({
         ...prevUserData,
       }));
@@ -27,31 +22,8 @@ function Form() {
   const handleChange = (event) => {
     let property = event.target.name;
     let value = event.target.value.trim();
-
     setUserData({ ...userData, [property]: value });
     validation({ ...userData, [property]: value }, localErrors, setLocalErrors);
-  };
-
-  const handleOptionSelect = (event) => {
-    const selectedOption = event.target.value;
-
-    if (!userData.selectedOptions.includes(selectedOption)) {
-      setUserData({
-        ...userData,
-        selectedOptions: [...userData.selectedOptions, selectedOption],
-      });
-    }
-  };
-
-  const handleOptionDeselect = (selectedOption) => {
-    const updatedOptions = userData.selectedOptions.filter(
-      (option) => option !== selectedOption
-    );
-
-    setUserData({
-      ...userData,
-      selectedOptions: updatedOptions,
-    });
   };
 
   const handleSubmit = (event) => {
@@ -61,13 +33,7 @@ function Form() {
     if (hasErrors) {
       alert("Please fill in all the required fields correctly.");
     } else {
-      // Actualizar el objeto userData antes de enviarlo al servidor
-      const updatedUserData = {
-        ...userData,
-        precioServicio: userData.precioServicio.trim(), // Eliminar espacios en blanco alrededor del precio
-      };
-
-      dispatch(postUserData(updatedUserData))
+      dispatch(postUserData(userData))
         .then(() => {
           alert("El Formulario se cargó correctamente");
         })
@@ -86,75 +52,136 @@ function Form() {
     }
   };
 
+  const handleReloadClick = () => {
+    setUserData({});
+    setLocalErrors({});
+  };
+
   return (
-    <div className="background">
-      <form className="Form" onSubmit={handleSubmit}>
-        <div className="DivButtonTittle">
+    <div className={styles.background}>
+      <form className={styles.Form} onSubmit={handleSubmit}>
+        <div className={styles.DivButtonTittle}>
           <button
             type="button"
-            className="DetailButtonForm"
-            onClick={() => window.history.back()}
+            className={styles.DetailButtonForm}
+            onClick={handleClickForm}
           >
-            Back
           </button>
-          <button
-            type="button"
-            className="ReloadButton"
-            onClick={() => window.location.reload()}
-          >
-            Reload
-          </button>
-          <h1 className="DetailTittle">Completa tu perfil</h1>
-        </div>
-        <div className="ContainerDivInput">
-          <div>
-            <div className="FormDivInput">
-              <label className="FormLabel">Selecciona una opción:</label>
-              <select onChange={handleOptionSelect}>
-                {datosForm.ServicesProviderCard.map((option) => (
-                  <option key={option} value={option}>
-                    {option}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div className="SelectedOptions">
-              {userData.selectedOptions.map((selectedOption) => (
-                <div key={selectedOption} className="SelectedOption">
-                  {selectedOption}
-                  <button
-                    type="button"
-                    onClick={() => handleOptionDeselect(selectedOption)}
-                  >
-                    &#x2715;
-                  </button>
-                </div>
-              ))}
-            </div>
-            {/* Nuevo campo para el precio del servicio */}
-            <div className="FormDivInput">
-              <label className="FormLabel">Precio del servicio (en pesos):</label>
+          <h1 className={styles.DetailTittle}>Completa tu perfil</h1>
+        </div >
+        <div className={styles.ContainerDivInput}>
+          <div className={styles.FormDivInput}>
+            <label className={styles.FormLabel}>Nombre:</label>
+            <input
+              className={styles.Inputs}
+              type="text"
+              name="Nombre"
+              value={userData.Nombre}
+              onChange={handleChange}
+              placeholder=""
+            />
+            <div className={styles.ErrorMessage}>{localErrors.Nombre}</div>
+          </div>
+          <div className={styles.FormDivFlex}>
+            <div className={styles.FormDivInput}>
+              <label className={styles.FormLabel}>Telefono:</label>
               <input
-                className="Inputs"
+                className={styles.Inputs}
                 type="text"
-                name="precioServicio"
-                value={userData.precioServicio}
+                name="Telefono"
+                value={userData.Telefono}
                 onChange={handleChange}
                 placeholder=""
               />
-              <div className="ErrorMessage">{localErrors.precioServicio}</div>
+              <div className={styles.ErrorMessage}>{localErrors.Telefono}</div>
+            </div>
+
+            <div className={styles.FormDivInput}>
+              <label className={styles.FormLabel}>País:</label>
+              <input
+                className={styles.Inputs}
+                type="text"
+                name="País"
+                value={userData.País}
+                onChange={handleChange}
+                placeholder=""
+              />
+              <div className={styles.ErrorMessage}>{localErrors.País}</div>
+            </div>
+
+            <div className={styles.FormDivInput}>
+              <label className={styles.FormLabel}>Provincia:</label>
+              <input
+                className={styles.Inputs}
+                type="text"
+                name="Provincia"
+                value={userData.Provincia}
+                onChange={handleChange}
+                placeholder=""
+              />
+              <div className={styles.ErrorMessage}>{localErrors.Provincia}</div>
+            </div>
+
+            <div className={styles.FormDivInput}>
+              <label className={styles.FormLabel}>Localidad:</label>
+              <input
+                className={styles.Inputs}
+                type="text"
+                name="Localidad"
+                value={userData.Localidad}
+                onChange={handleChange}
+                placeholder=""
+              />
+              <div className={styles.ErrorMessage}>{localErrors.Localidad}</div>
             </div>
           </div>
-          {Object.values(localErrors).every((error) => error === "") &&
-            Object.values(userData).some((value) => value === "") && (
-              <button className="ButtonForm" type="submit">
-                Guardar
-              </button>
-            )}
+          <div className={styles.FormDivInput}>
+            <label className={styles.FormLabel}>Calle:</label>
+            <input
+              className={styles.Inputs}
+              type="text"
+              name="Calle"
+              value={userData.Calle}
+              onChange={handleChange}
+              placeholder=""
+            />
+            <div className={styles.ErrorMessage}>{localErrors.Calle}</div>
+          </div>
+
+          <div className={styles.FormDivInput}>
+            <label className={styles.FormLabel}>Ocupación:</label>
+            <input
+              className={styles.Inputs}
+              type="text"
+              name="Ocupación"
+              value={userData.Ocupación}
+              onChange={handleChange}
+              placeholder=""
+            />
+            <div className={styles.ErrorMessage}>{localErrors.Ocupación}</div>
+          </div>
+
+          <div className={styles.FormDivInput}>
+            <label className={styles.FormLabel}>Sobre mi:</label>
+            <input
+              className={styles.Inputs}
+              type="text"
+              name="Sobre mi"
+              value={userData["Sobre mi"]}
+              onChange={handleChange}
+              placeholder=""
+            />
+            <div className={styles.ErrorMessage}>{localErrors["Sobre mi"]}</div>
+          </div>
+
         </div>
+          <button className={styles.ButtonForm} type="submit">
+            Guardar
+          </button>
       </form>
     </div>
   );
 }
+
 
 export default Form;
