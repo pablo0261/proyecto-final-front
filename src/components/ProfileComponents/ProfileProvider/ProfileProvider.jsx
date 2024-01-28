@@ -1,9 +1,15 @@
 import { useSelector } from "react-redux";
+<<<<<<< HEAD
 import { Link} from "react-router-dom";
+=======
+import { Link } from "react-router-dom";
+import style from './ProfileProvider.module.sass';
+
+>>>>>>> b71c926c02d2894f237c1f5768ae5c7fe1ac8ca3
 
 function ProfileProvider() {
   const infoUserLog = useSelector((state) => state.infoUserLog);
-//! OJO ESTO VA A CAMBIAR CUANDO CAMBIE EL OBJETO DEL ESTADO
+  //! OJO ESTO VA A CAMBIAR CUANDO CAMBIE EL OBJETO DEL ESTADO
   const formData = {
     imageId: infoUserLog.image || "",
     valoracion: infoUserLog.valoration || "",
@@ -19,12 +25,13 @@ function ProfileProvider() {
   };
 
   const isAllInfoFilled = Object.values(formData).every(
-    (value) => value.length !== 0
+    (value) => value.length !== 1
   );
 
   const Verification = isAllInfoFilled;
 
   return (
+<<<<<<< HEAD
     <div className="container">
       <div className={Verification ? "verified" : "not-verified"}>
         {Verification ? "Cuenta Verificada" : "Cuenta no Verificada"}
@@ -47,23 +54,47 @@ function ProfileProvider() {
             </div>
             <p className="user-info">{`Edad: ${formData.age}`}</p>
             <p className="user-info">{`Dirección: ${formData.address} ${formData.area} ${formData.country}`}</p>
+=======
+    <div className={style.background}>
+      <div className={style.wrapper}>
+        {
+          Verification /* && isProvider */ &&
+          <div className={style.verificationAlert}>
+            <p className={style.textAlert}>Completa tu perfil para poder verificar tu cuenta. Ten en cuenta que los perfiles no verificados
+              no son mostrados a los clientes.</p>
+>>>>>>> b71c926c02d2894f237c1f5768ae5c7fe1ac8ca3
           </div>
-          <div className="profession-details">
-            <h3>{formData.profesion}</h3>
+        }
+        <div className={style.perfilWrapper}>
+          <div className={style.imageWrapper}>
+            <div className={formData.state === 'Active' ? style.stateActive : style.stateInactive}>{formData.state}</div>
+            <img className={style.image} src={formData.imageId} alt="Imagen" />
+            <div className={style.valoration}>
+              <div className={style.star}>Star</div>
+              <p className={style.imageWrapper}>({formData.valoracion}5)</p>
+            </div>
+          </div>
+          <div>
+            <div className="user-details">
+              <p className={style.name}>Claudia</p>
+              <div className="verificacion">IconoVerificacion</div>
+              {
+                Verification ? "Cuenta Verificada" : "Cuenta no Verificada"
+              }
+              <Link to={{ pathname: `/form/${1}` }} className="edit">Editar</Link>
+            </div>
+            <p className="user-info">{`${formData.age} años | ${formData.address}, ${formData.area}, ${formData.country}`}</p>
+            <p>{formData.profesion}</p>
             <p>{formData.aboutMe}</p>
             <div className="contact-section">
               <p>Contactos :</p>
-              <img src={formData.phone} alt="Teléfono" />
-              <img src={"ruta/a/la/imagen/sobre.png"} alt="Sobre" />
+              <div className="telefono">Tel</div>
+              <p>{formData.phone}</p>
+              <div className="email">Email</div>
+              <p>{formData.email}</p>
             </div>
           </div>
         </div>
-        <Link to={{ pathname: `/form/${1}`}}>
-          <button    src="editImage" alt="edit" className="edit-button">
-            {" "}
-            Edit
-          </button>
-        </Link>
       </div>
     </div>
   );
