@@ -2,76 +2,174 @@
 @import '../../../Styles/Variables'
 
 .background
-	background-color: grey
+	background-color: #F2F2F2
 	display: flex
 	justify-content: center
-	
+
+	p
+		margin: 0
+
 .wrapper
 	width: 80%
-	height: fit-content
-
-.verified
-	border-radius: 8px
-	display: flex
-	width: 100%
-	height: 30px
-	background-color: rgba(0, 128, 0, 0.226)
-	color: green
-
-.not-verified
-	border-radius: 8px
-	display: flexbox
-	width: 100%
-	height: 30px
-	background-color: rgba(255, 0, 0, 0.24)
-	color: red
-
-.profile-container
-
-	display: flex
-	height: auto
-	display: flex
-	justify-content: space-between
-	margin-top: 2px
-	margin-inline: auto
-
-.profile-container
-
-	display: flex
-	justify-content: space-between
-	margin-top: 16px
-
-.profile-info
-	width: 30%
-	height: 200px
 	display: flex
 	flex-direction: column
+	justify-content: center
 
-.image
-	width: 100%
-	height: 200px
-	border: solid 3px black
-
-.user-details
-	margin: 0 16px
-
-.user-header
+.alertWrapper
 	display: flex
+	justify-content: center
+	align-items: center
 
-.name
-	@include Mixins.font($primaryColor, 22px, normal, normal)
-.user-info
-	margin-left: 0px
+.verificationAlert
+	margin-top: 20px
+	width: 100%
+	height: fit-content
+	@include Mixins.alert
 
-.profession-details
-	flex-grow: 1
-	margin: 0 16px
+.textAlert
+	padding: 10px 10px
+	@include Mixins.textDetail(left, none)
 
-.contact-section
+.perfilWrapper
+	display: flex
+	margin-top: 50px
+	margin-bottom: 30px
+
+.imageWrapper
 	display: flex
 	align-items: center
-	margin-top: 8px
+	flex-direction: column
+	position: relative
 
-.edit-button
-	margin-top: 5px
+.stateActive
+	@include Mixins.font(white , 15px, normal , normal)
+	padding: 5px 10px
+	background-color: $textSuccessColor
+	border-radius: 20px
+	position: absolute
+	top: -15px
+
+.stateInactive
+	@include Mixins.font(white , 15px, normal , normal)
+	padding: 5px 10px
+	background-color: grey
+	border-radius: 20px
+	position: absolute
+	top: -15px
+
+.image
+	width: 350px
+	height: 350px
+	@include Mixins.boxShadowCard
+
+.valoration
+	display: flex
+	flex-direction: column
+	justify-content: center
+	align-items: center
+	margin-top: 15px
+
+.starIcon
+	width: 40px
+	height: 40px
+	background-image: url('../../../assets/Icons/IconStar.png')
+	background-position: center
+	background-repeat: no-repeat
+
+.textStar
+	@include Mixins.textGrey(left, none)
+
+.infoWrapper
+	margin-left: 60px
+	display: flex
+	flex-direction: column
+	width: 100%
+
+.nameWrapper
+	display: flex
+	align-items: center
+	position: relative
+
+.textName
+	@include Mixins.textTitle(left, none)
+
+.iconVerified
+	margin-left: 20px
+	width: 40px
+	height: 40px
+	background-image: url('../../../assets/Icons/IconVerified.png')
+	background-position: center
+	background-repeat: no-repeat
+
+.textVerified
+	@include Mixins.font($textSuccessColor, 16px , normal , normal)
+
+.iconNotVerified
+	margin-left: 20px
+	width: 40px
+	height: 40px
+	background-image: url('../../../assets/Icons/IconNotVerified.png')
+	background-position: center
+	background-repeat: no-repeat
+
+.textNotVerified
+	@include Mixins.font(#333333, 12px , bold , normal)
+
+.editButton
+	position: absolute
+	right: 0
+	width: 40px
+	height: 40px
+	background-image: url('../../../assets/Icons/IconEdit.png')
+	background-position: center
+	background-repeat: no-repeat
+	transition: .2s
+
+.editButton:hover
+	transform: scale(1.15)
+
+.textData
+	@include Mixins.textGrey(left, none)
+
+.textOcupation
+	padding-top: 20px
+	padding-bottom: 10px
+	@include Mixins.textSubTitle(left, none)
+
+.textDetail
+	width: 800px
+	height: 120px
+	max-height: 120px
+	@include Mixins.textDetail(justify, none)
+
+.contacts
+	width: fit-content
 	height: fit-content
+	margin-top: 20px
+	display: flex
+	align-items: center
+
+.textContact
+	@include Mixins.textDetail(left, none)
+
+.textPhone
+	@include Mixins.textDetail(left, none)
+
+.iconPhone
+	margin: 0px 10px
+	width: 40px
+	height: 40px
+	background-image: url('../../../assets/Icons/IconPhone.png')
+	background-position: center
+	background-repeat: no-repeat
+
+.textEmail
+	@include Mixins.textDetail(left, none)
+
+.iconEmail
+	width: 40px
+	height: 40px
+	margin: 0px 10px
+	background-image: url('../../../assets/Icons/IconEmail.png')
+	background-position: center
+	background-repeat: no-repeat
