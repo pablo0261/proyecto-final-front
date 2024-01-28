@@ -4,7 +4,6 @@ import style from './ProfileProvider.module.sass';
 import Helpers from "../../../Helpers/RoutesFront";
 import defaultImage from '../../../assets/image/PerfilImage.png';
 
-
 function ProfileProvider() {
   const infoUserLog = useSelector((state) => state.infoUserLog);
   //! OJO ESTO VA A CAMBIAR CUANDO CAMBIE EL OBJETO DEL ESTADO
@@ -22,7 +21,6 @@ function ProfileProvider() {
     phone: infoUserLog.phone || "",
   };
 
-
   const isAllInfoFilled = Object.values(formData).every(
     (value) => value.length !== 1
   );
@@ -31,8 +29,10 @@ function ProfileProvider() {
   const component = 1
 
   return (
+
     <div className={style.background}>
       <div className={style.wrapper}>
+
         <div className={style.alertWrapper}>
           {
             !Verification /* && isProvider */ &&

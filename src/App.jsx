@@ -12,7 +12,7 @@ import StatsProviderView from './Views/ProviderViews/StatsProviderView';
 import ReportsProviderView from './Views/ProviderViews/ReportsProviderView';
 import ConnectionsProviderView from './Views/ProviderViews/ConnectionsProviderView';
 import { useDispatch, useSelector } from 'react-redux';
-import Form from './components/Form/Form';
+import Form from './components/Form/FormProfileProvider/Form';
 import Footer from './components/Footer/Footer';
 import { useEffect } from 'react';
 import StoreItem from './Helpers/LocalStorage';

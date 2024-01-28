@@ -12,6 +12,9 @@ import {
 let initialState = {
   //*GENERALES//
   infoUserLog: {
+    //*ESTO NO LO USE
+    idLocation: 1,
+  
     dateOfBirth: "1990-01-01T02:00:00.000Z",
     idGenre: 1,
     noShow: false,
@@ -21,7 +24,7 @@ let initialState = {
     password: "haaashed_password",
     externalLogin: null,
     weekCalendar: [false, true, false, true, true, false, true],
-
+  
     //*ESTO SI LO USE
     aboutMe:
       "Passionate about crafting innovative solutions, my approach as a software engineer is to turn ideas into functional code. A challenge enthusiast, I constantly seek to learn and enhance my skills to drive projects to success.",
@@ -84,12 +87,13 @@ let initialState = {
     ],
     interests: [
       {
-        skills: ["Administering Injections", "First Aid", "CPR (Cardiopulmonary Resuscitation)"
+        skills: [
+          "Administering Injections",
+          "First Aid",
+          "CPR (Cardiopulmonary Resuscitation)",
         ],
-        talents: ["Reading", "Singing", "Movies", " Books"
-        ],
-
-      }
+        talents: ["Reading", "Singing", "Movies", " Books"],
+      },
     ],
     geoposition: "40.7128,-74.0060",
     extras: ["Driving", "Childrens", "Pets", "Smoking", "Have a Car"],
@@ -115,45 +119,61 @@ let initialState = {
         detail: "Excelente servicio",
       },
     ],
-    schedule: [true, false, true, false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, false]
-  },
+    schedule: [
+      true,
+      false,
+      true,
+      false,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      false,
+      false,
+    ],
+},
 
   //*POSTDOG//
   postUserData: [],
   //*ERRORES//
   errorsBack: {},
   //*ESTAMOS PARA MANEJO DEL FORM//
-  datosPeople: {
+  datosForm: {
     ProfileProvider: {
-      imageId: "",
-      valoracion: "",
-      age: "",
-      address: "",
-      idLocation: "",
-      state: "",
-      area: "",
-      country: "",
-      profesion: "",
-      aboutMe: "",
-      phone: "",
+      Nombre: "",
+      Telefono: "",
+      País: "",
+      Provincia: "",
+      Localidad: "",
+      Calle: "",
+      Ocupación: "",
+      "Sobre mi": "",
     },
-    ServicesProviderCard: {
-      idPeople: "",
-      fullName: "",
-      address: "",
-      birthDate: "",
-      age: "",
-    },
+    ServicesProviderCard: [
+      "Cuidado", "Cuidado y Alimento",
+    "Cuidado y Limpieza"
+  ],
     EducationExperienciaProvider: {
-      title: "",
-      institution: "",
-      startDate: "",
-      endDate: "",
-      description: "",
+      Titulo: "",
+      Institución: "",
+      "Año de Inicio": "",
+      "Año de Finalización": "",
+      Descripción: "",
     },
-    InteresProviderCard: { skills: "", talents: "" },
-    SkillsProviderCard: { fullName: "", address: "", birthDate: "" },
-    ScheduleProviderCard: {},
+    InteresProviderCard: { Habilidades: "", Intereses: "" },
+    SkillsProviderCard: { "Licencia de Conducir": "", Vehículo: "", Fumador: "", Hijos: "", Mascota: "" },
+    ScheduleProviderCard: { },
     MapProviderCard: {},
     ReviewProviderCard: {},
     ConectionProviderCard: {},
