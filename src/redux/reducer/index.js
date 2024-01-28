@@ -140,7 +140,7 @@ let initialState = {
 
   },
   
-  //*POSTDOG//
+  //*POST//
   postUserData: [],
   //*ERRORES//
   errorsBack: {},
@@ -190,7 +190,6 @@ const rootReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         postUserData: [...state.postUserData, payload],
-        errorsBack: payload,
       };
 
     //* --- MANEJO DE ERRORES DEL BACK ---//*
