@@ -1,29 +1,32 @@
-import { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useState} from "react";
+import {  useDispatch } from "react-redux";
 import { postUserData } from "../../../redux/actions/index";
-import validation from "./validationFormProfile";
+import Validation from "./validationFormProfile";
 import styles from "./FormProfile.module.sass";
 
 function Form({ handleClickForm }) {
   const dispatch = useDispatch();
-  const datosForm = useSelector((state) => state.datosForm);
 
-  const [userData, setUserData] = useState({});
+
+  const [userData, setUserData] = useState({
+    Nombre: "",
+    Telefono: "",
+    País: "",
+    Provincia: "",
+    Localidad: "",
+    Calle: "",
+    Ocupación: "",
+    "Sobre mi": "",
+  });
   const [localErrors, setLocalErrors] = useState({});
 
-  useEffect(() => {
-    if (datosForm.ProfileProvider) {
-      setUserData((prevUserData) => ({
-        ...prevUserData,
-      }));
-    }
-  }, [datosForm]);
+  
 
   const handleChange = (event) => {
     let property = event.target.name;
     let value = event.target.value.trim();
+    Validation(userData, localErrors, setLocalErrors, property, value);
     setUserData({ ...userData, [property]: value });
-    validation({ ...userData, [property]: value }, localErrors, setLocalErrors);
   };
 
   const handleSubmit = (event) => {
@@ -50,11 +53,6 @@ function Form({ handleClickForm }) {
           console.error("Error al enviar el formulario", error);
         });
     }
-  };
-
-  const handleReloadClick = () => {
-    setUserData({});
-    setLocalErrors({});
   };
 
   return (
