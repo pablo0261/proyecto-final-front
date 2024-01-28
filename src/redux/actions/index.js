@@ -173,6 +173,7 @@ const handleEditProfile = (formData) => {
       console.error(error);
     }
   };
+}
 
   const filter = (selectedServices, selectedGender)=>{
     return async (dispatch) => {
