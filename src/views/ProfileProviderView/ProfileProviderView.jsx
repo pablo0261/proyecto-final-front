@@ -1,6 +1,6 @@
 
 import ProfileProvider from "../../components/ProfileComponents/ProfileProvider/ProfileProvider";
-import ServicesProviderCard from '../../components/ProfileComponents/ServiceProviderCard/SeviceProviderCard';
+// import ServicesProviderCard from '../../components/ProfileComponents/ServiceProviderCard/SeviceProviderCard';
 import InteresProviderCard from '../../components/ProfileComponents/InteresProvidercard/InteresProviderCard';
 import SkillsProviderCard from '../../components/ProfileComponents/SkillsProviderCard/SkillsProviderCard';
 import ScheduleProviderCard from '../../components/ProfileComponents/ScheduleProviderCard/ScheduleProviderCard';
@@ -15,7 +15,7 @@ function ProfileProviderView() {
   return (
     <div className={style.wrapper}>
         <ProfileProvider />
-        <ServicesProviderCard />
+        {/* <ServicesProviderCard /> */}
         <EducationExperienciaProvider />
         <InteresProviderCard />
         <SkillsProviderCard />

@@ -1,44 +1,47 @@
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { useState } from "react";
 import style from './ProfileProvider.module.sass';
-import Helpers from "../../../Helpers/RoutesFront";
+import Form from "../../Form/FormProfileProvider/Form copy"
 import defaultImage from '../../../assets/image/PerfilImage.png';
 
 function ProfileProvider() {
   const infoUserLog = useSelector((state) => state.infoUserLog);
-  //! OJO ESTO VA A CAMBIAR CUANDO CAMBIE EL OBJETO DEL ESTADO
   const formData = {
-    imageId: infoUserLog.image || "",
-    valoracion: infoUserLog.valoration || "",
+    fullName: infoUserLog.fullName || "5",
     age: infoUserLog.age || "",
-    address: infoUserLog.address || "",
-    idLocation: infoUserLog.idLocation || null,
+    address: infoUserLog.address || "Libertad 234",
     state: infoUserLog.state || "",
-    area: infoUserLog.area || "",
-    country: infoUserLog.country || "",
-    profesion: infoUserLog.profesion || "",
+    country: infoUserLog.country || "Argentina",
+    profesion: infoUserLog.profesion || "Enfermero",
     aboutMe: infoUserLog.aboutMe || "",
-    phone: infoUserLog.phone || "",
+    phone: infoUserLog.phone || "02918145869",
+    email: infoUserLog.email || "",
+    averageRating: infoUserLog.averageRating || "",
+    countRating: infoUserLog.countRating.toString() || "",
   };
 
   const isAllInfoFilled = Object.values(formData).every(
-    (value) => value.length !== 1
+    (value) => value.length > 0
   );
 
   const Verification = isAllInfoFilled
-  const component = 1
 
+  const [showForm, setShowForm] = useState(false)
+
+  const handleClikForm = () => {
+    setShowForm(!showForm)
+  }
+
+  
   return (
 
     <div className={style.background}>
       <div className={style.wrapper}>
-
         <div className={style.alertWrapper}>
           {
             !Verification /* && isProvider */ &&
             <div className={style.verificationAlert}>
-              <p className={style.textAlert}>Completa tu perfil para poder verificar tu cuenta. Ten en cuenta que los perfiles no verificados
-                no son mostrados a los clientes.</p>
+              <p className={style.textAlert}>Completa tu perfil para poder verificar tu cuenta. Ten en cuenta que los perfiles no verificados no son mostrados a los clientes.</p>
             </div>
           }
         </div>
@@ -48,32 +51,34 @@ function ProfileProvider() {
             <img className={style.image} src={defaultImage} alt="Imagen"/>
             <div className={style.valoration}>
               <div className={style.starIcon}></div>
-              <p className={style.textStar}>4.5 (40)</p>
+              <p className={style.textStar}>{formData.averageRating} ({formData.countRating})</p>
             </div>
           </div>
           <div className={style.infoWrapper}>
             <div className={style.nameWrapper}>
-              <p className={style.textName}>Claudia</p>
+              <p className={style.textName}>{formData.fullName}</p>
               <div className={Verification ? style.iconVerified : style.iconNotVerified}></div>
               {
                 Verification ? <p className={style.textVerified}>Cuenta Verificada</p> : <p className={style.textNotVerified}>Cuenta No Verificada</p>
               }
-              <Link to={Helpers.Form.replace(':component', component)} className={style.editButton}></Link>
+              <button onClick={()=>handleClikForm()} className={style.editButton}></button>
             </div>
-            <p className={style.textData}>{`${formData.age} años | ${formData.address}, ${formData.area}, ${formData.country}`}</p>
+            <p className={style.textData}>{formData.age} años |</p>
             <p className={style.textOcupation}>{formData.profesion}</p>
             <p className={style.textDetail}>{formData.aboutMe}</p>
             <div className={style.contacts}>
-              <p className={style.textContact}>Contactos:</p>
+              <p className={style.textContact}>Contactos: </p>
               <div className={style.iconEmail}></div>
-              { /* isProvider && */ <p className={style.textEmail}>claudia@email.com</p> }
+              { /* isProvider && */ <p className={style.textEmail}>{formData.email}</p> }
               <div className={style.iconPhone}></div>
-              { /* isProvider && */ <p className={style.textPhone}>+54 380 4 785215</p> }
+              { /* isProvider && */ <p className={style.textPhone}>{formData.phone}</p> }
             </div>
           </div>
         </div>
       </div>
+      { showForm &&  <Form handleClickForm={handleClikForm} /> }
     </div>
+
   );
 }
 export default ProfileProvider;

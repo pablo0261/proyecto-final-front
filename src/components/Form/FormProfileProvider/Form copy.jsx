@@ -1,16 +1,12 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { postUserData } from "../../../redux/actions/index";
-import { useParams } from "react-router-dom";
 import validation from "./../FormProfileProvider/validationFormProfile";
-import style from './FormProfile.module.sass';
 
-function Form() {
+function Form({ handleClickForm}) {
   const dispatch = useDispatch();
   const datosForm = useSelector((state) => state.datosForm);
-  const { component } = useParams();
 
-  console.log("component", component);
   const [userData, setUserData] = useState({});
   const [localErrors, setLocalErrors] = useState({});
 
@@ -55,6 +51,11 @@ function Form() {
     }
   };
 
+  const handleReloadClick = () => {
+    setUserData({});
+    setLocalErrors({});
+  };
+
   return (
     <div className="background">
       <form className="Form" onSubmit={handleSubmit}>
@@ -62,14 +63,14 @@ function Form() {
           <button
             type="button"
             className="DetailButtonForm"
-            onClick={() => window.history.back()}
+            onClick={handleClickForm}
           >
             Back
           </button>
           <button
             type="button"
             className="ReloadButton"
-            onClick={() => window.location.reload()}
+            onClick={handleReloadClick}
           >
             Reload
           </button>
