@@ -7,7 +7,9 @@ import {
   POST_NEW_INFO_USER,
   SET_ERROR_BACK,
   EDIT_INFO_USER,
-  CONTRAT_SERVICE_USER
+  CONTRAT_SERVICE_USER,
+  FILTER_CARDS,
+  GET_HOME_PROVIDER,
  } from "./action-types";
 import StoreItem from "../../Helpers/LocalStorage";
 
@@ -109,6 +111,20 @@ const infoDetailProveedor = (id) => {
     };
   };
 
+  const allPeopleProvider = (item) => {
+    return async (dispatch) => {
+      try {
+        const response = await axios.get(`${REACT_APP_API_URL}/people/${item}`);
+        dispatch({
+          type: GET_HOME_PROVIDER,
+          payload: response.data,
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+  };
+
   //*---POST_NEW_INFO_USER---//
   const postUserData = (userData) => {
     return async (dispatch) => {
@@ -146,6 +162,18 @@ const infoDetailProveedor = (id) => {
     };
   };
 
+  const filter = (selectedServices, selectedGender)=>{
+    return async (dispatch) => {
+      try {
+        dispatch({
+          type: FILTER_CARDS,
+          payload: selectedServices, selectedGender
+        });
+      } catch (error) {
+        console.error(error);
+      }
+    };
+  }
 
 
   export {
@@ -157,4 +185,6 @@ const infoDetailProveedor = (id) => {
     handleContratService,
     postUserData,
     handleEditProfile,
+    filter,
+    allPeopleProvider,
   }
