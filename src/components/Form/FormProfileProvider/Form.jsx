@@ -4,7 +4,7 @@ import { postUserData } from "../../../redux/actions/index";
 import validation from "./validationFormProfile";
 import styles from "./FormProfile.module.sass";
 
-function Form({handleClickForm}) {
+function Form({ handleClickForm }) {
   const dispatch = useDispatch();
   const datosForm = useSelector((state) => state.datosForm);
 
@@ -65,10 +65,9 @@ function Form({handleClickForm}) {
             type="button"
             className={styles.DetailButtonForm}
             onClick={handleClickForm}
-          >
-          </button>
+          ></button>
           <h1 className={styles.DetailTittle}>Completa tu perfil</h1>
-        </div >
+        </div>
         <div className={styles.ContainerDivInput}>
           <div className={styles.FormDivInput}>
             <label className={styles.FormLabel}>Nombre:</label>
@@ -83,10 +82,10 @@ function Form({handleClickForm}) {
             <div className={styles.ErrorMessage}>{localErrors.Nombre}</div>
           </div>
           <div className={styles.FormDivFlex}>
-            <div className={styles.FormDivInput}>
-              <label className={styles.FormLabel}>Telefono:</label>
+            <div className={styles.FormDivInputFlex}>
+              <label className={styles.FormLabelFlex}>Telefono:</label>
               <input
-                className={styles.Inputs}
+                className={styles.InputsFlex}
                 type="text"
                 name="Telefono"
                 value={userData.Telefono}
@@ -96,10 +95,10 @@ function Form({handleClickForm}) {
               <div className={styles.ErrorMessage}>{localErrors.Telefono}</div>
             </div>
 
-            <div className={styles.FormDivInput}>
-              <label className={styles.FormLabel}>País:</label>
+            <div className={styles.FormDivInputFlex}>
+              <label className={styles.FormLabelFlex}>País:</label>
               <input
-                className={styles.Inputs}
+                className={styles.InputsFlex}
                 type="text"
                 name="País"
                 value={userData.País}
@@ -109,10 +108,10 @@ function Form({handleClickForm}) {
               <div className={styles.ErrorMessage}>{localErrors.País}</div>
             </div>
 
-            <div className={styles.FormDivInput}>
-              <label className={styles.FormLabel}>Provincia:</label>
+            <div className={styles.FormDivInputFlex}>
+              <label className={styles.FormLabelFlex}>Provincia:</label>
               <input
-                className={styles.Inputs}
+                className={styles.InputsFlex}
                 type="text"
                 name="Provincia"
                 value={userData.Provincia}
@@ -122,10 +121,10 @@ function Form({handleClickForm}) {
               <div className={styles.ErrorMessage}>{localErrors.Provincia}</div>
             </div>
 
-            <div className={styles.FormDivInput}>
-              <label className={styles.FormLabel}>Localidad:</label>
+            <div className={styles.FormDivInputFlex}>
+              <label className={styles.FormLabelFlex}>Localidad:</label>
               <input
-                className={styles.Inputs}
+                className={styles.InputsFlex}
                 type="text"
                 name="Localidad"
                 value={userData.Localidad}
@@ -164,7 +163,7 @@ function Form({handleClickForm}) {
           <div className={styles.FormDivInput}>
             <label className={styles.FormLabel}>Sobre mi:</label>
             <input
-              className={styles.Inputs}
+              className={styles.InputsDetail}
               type="text"
               name="Sobre mi"
               value={userData["Sobre mi"]}
@@ -173,15 +172,13 @@ function Form({handleClickForm}) {
             />
             <div className={styles.ErrorMessage}>{localErrors["Sobre mi"]}</div>
           </div>
-
         </div>
-          <button className={styles.ButtonForm} type="submit">
-            Guardar
-          </button>
+        <button className={styles.ButtonForm} type="submit">
+          Guardar
+        </button>
       </form>
     </div>
   );
 }
-
 
 export default Form;

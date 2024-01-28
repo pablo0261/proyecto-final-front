@@ -27,12 +27,12 @@
   @include Mixins.boxShadowCard
   top: 10px
   height: fit-content 
-  width: 30%
+  width: 35%
   position: relative
 
 .DetailTittle
   @include Mixins.font($primaryColor, 22px, bold, normal)
-  margin: 10%
+  margin-top: 15%
 
 .DetailButtonForm
   width: 40px
@@ -46,10 +46,10 @@
   right: 10px
 
 .ContainerDivInput
-  display: flex
+  display: grid
   flex-direction: column
   gap: 10px
-  with: 90%
+  margin:8%
 
 .FormDivInput
   display: flex
@@ -60,6 +60,37 @@
 .FormDivFlex
   display: flex
   flex-wrap: wrap
-  gap:  5px
-  justify-content: center
+  justify-content: space-between
   
+  
+.FormDivInputFlex  
+  width: 48%
+  
+.Inputs
+  @include Mixins.boxShadowInputs
+  width: 100%
+  margin: auto
+
+.InputsFlex
+  @include Mixins.boxShadowInputs
+  width: 100%
+
+.InputsDetail
+  @include Mixins.boxShadowInputs
+  width: 100%
+  margin: auto
+  height: 90px  
+
+.FormLabel
+  @include Mixins.font($primaryColor, 14px, bold, normal)
+
+.FormLabelFlex
+  @include Mixins.font($primaryColor, 14px, bold, normal)
+  display: flex
+  left: 5%
+
+.ButtonForm
+  @include Mixins.buttonActive
+  width: 40%
+  height: 25% 
+  margin: 5%   
