@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import { useState } from "react";
 import style from './ProfileProvider.module.sass';
 import Form from "../../Form/FormProfileProvider/Form"
-import defaultImage from '../../../assets/image/PerfilImage.png';
+import defaultImage from '../../../assets/Icons/PerfilImage.png';
 
 function ProfileProvider() {
   const infoUserLog = useSelector((state) => state.infoUserLog);
