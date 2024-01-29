@@ -13,47 +13,16 @@ import {
   FILTER_SERVICES,
   GET_FILTER_PROVIDER,
  } from "./action-types";
-import StoreItem from "../../Helpers/LocalStorage";
 
 const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
 
 //AccessAccount//
-const logInDataBase = (userLoggedData) => {
+const addInfoUserLog = (data) => {
   return async (dispatch) => {
-    try {
-      const data = await axios.get(
-        `${REACT_APP_API_URL}/people?email=${userLoggedData.email}`
-      );
-      if (data.status === 200) {
-        localStorage.setItem(StoreItem.emailUserLogged, userLoggedData.email);
-        return dispatch({
-          type: ACCESS_BACK_SAVE_DATA,
-          payload: data.data.people.data[0].people,
-        });
-      } else {
-        throw new Error(data.error, "error from back");
-      }
-    } catch (error) {
-      window.alert(error);
-    }
-  };
-};
-
-const signInDataBase = (userSingedData) => {
-  return async (dispatch) => {
-    try {
-      const { data } = await axios.post(
-        `${REACT_APP_API_URL}/people`,
-        userSingedData
-      );
-      localStorage.setItem(StoreItem.emailUserLogged, userSingedData.email);
-      return dispatch({
-        type: ACCESS_BACK_SAVE_DATA,
-        payload: data.result,
-      });
-    } catch (error) {
-      window.alert(error);
-    }
+    return dispatch({
+      type: ACCESS_BACK_SAVE_DATA,
+      payload: data,
+    });
   };
 };
 
@@ -87,7 +56,7 @@ const recoverUserLoggedData = (emailUserData) => {
           payload: data.data.people.data[0].people,
         });
       } else {
-        throw new Error(data.error, "error from back");
+        console.log(data)
       }
     } catch (error) {
       window.alert(error);
@@ -172,24 +141,26 @@ const postUserData = (userDataEnglish) => {
   return async (dispatch) => {
     try {
       const response = await axios.post(
-        `${REACT_APP_API_URL}/people`, userDataEnglish );
+        `${REACT_APP_API_URL}/people`,
+        userDataEnglish
+      );
       console.log(response);
       dispatch({
         type: POST_NEW_INFO_USER,
         payload: response.data,
       });
     } catch (error) {
-      // if (error.response && error.response.data) {
-      //   dispatch({
-      //     type: SET_ERROR_BACK,
-      //     payload: error.response.data,
-      //   });
+      if (error.response && error.response.data) {
+        dispatch({
+          type: SET_ERROR_BACK,
+          payload: error.response.data,
+        });
         console.log(error);
         throw error.response.data;
       }
     }
   };
-
+};
 
 const handleEditProfile = (formData) => {
   return async (dispatch) => {
@@ -218,10 +189,8 @@ const handleEditProfile = (formData) => {
     };
   }
 
-
   export {
-    logInDataBase,
-    signInDataBase,
+    addInfoUserLog,
     logOutDeleteData,
     recoverUserLoggedData,
     infoDetailProveedor,

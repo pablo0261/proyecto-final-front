@@ -11,6 +11,7 @@ function NavBar() {
     const location = useLocation()
     const navigate = useNavigate()
     const userLoggedInfo = useSelector(state => state.infoUserLog)
+    const emailUserLog = localStorage.getItem(StoreItem.emailUserLogged)
 
     /* const handleLocalStorage = (bool) => {
         localStorage.setItem('isProvider',JSON.stringify(bool))
@@ -30,13 +31,13 @@ function NavBar() {
             <div className={style.wrapper}>
                 <div className={style.logo}></div>
                 {
-                    location.pathname === Helpers.Landing && !userLoggedInfo.idPeople && <NavLink to="/#" className={style.link}>¿Como Funciona?</NavLink>
+                    location.pathname === Helpers.Landing && !userLoggedInfo.idPeople && !emailUserLog && <NavLink to="/#" className={style.link}>¿Como Funciona?</NavLink>
                 }
                 {
-                    location.pathname === Helpers.AccessAccount && !userLoggedInfo.idPeople && <NavLink to={Helpers.Landing} className={style.link}>Volver</NavLink>
+                    location.pathname === Helpers.AccessAccount && !userLoggedInfo.idPeople && !emailUserLog && <NavLink to={Helpers.Landing} className={style.link}>Volver</NavLink>
                 }
                 {
-                    userLoggedInfo.typeOfPerson === 'provider' && userLoggedInfo.idPeople != null && location.pathname !== Helpers.Landing && location.pathname !== Helpers.AccessAccount &&
+                    userLoggedInfo.idPeople && userLoggedInfo.typeOfPerson === 'provider' && location.pathname !== Helpers.Landing && location.pathname !== Helpers.AccessAccount &&
                     <div>
                         <NavLink to={Helpers.StatsProviderView} className={({ isActive }) =>  isActive ? style.active : style.link}>Mis Estadísticas</NavLink>
                         <NavLink to={Helpers.ConnectionsProviderView} className={({ isActive }) =>  isActive ? style.active : style.link}>Mis Conexiones</NavLink>
@@ -46,7 +47,7 @@ function NavBar() {
                     </div>
                 }
                 {
-                    userLoggedInfo.typeOfPerson === 'customer' && userLoggedInfo.idPeople != null && location.pathname !== Helpers.Landing && location.pathname !== Helpers.AccessAccount &&
+                    userLoggedInfo.idPeople && userLoggedInfo.typeOfPerson === 'customer' && location.pathname !== Helpers.Landing && location.pathname !== Helpers.AccessAccount &&
                     <div>
                         <NavLink to={Helpers.HomeCustomerView} className={({ isActive }) =>  isActive ? style.active : style.link}>Ver Proveedores</NavLink>
                         <NavLink to={Helpers.ConnectionsCustomerView} className={({ isActive }) =>  isActive ? style.active : style.link}>Mis Conexiones</NavLink>
