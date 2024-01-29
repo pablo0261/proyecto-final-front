@@ -1,6 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import Landing from './Views/Landing/Landing';
-import Home from './views/home/Home';
+import Home from './Views/Home/Home';
 import NotFound from './utils/notFound/NotFound';
 import Helpers from './Helpers/RoutesFront';
 import AccessAccount from './Views/AccessAccount/AccessAccount';
@@ -17,6 +17,7 @@ import Footer from './components/Footer/Footer';
 import { useEffect } from 'react';
 import StoreItem from './Helpers/LocalStorage';
 import { recoverUserLoggedData } from './redux/actions';
+
 
 function App() {
 
