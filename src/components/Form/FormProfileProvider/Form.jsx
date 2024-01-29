@@ -179,7 +179,7 @@ import styles from "./FormProfile.module.sass";
 
             <div className={styles.FormDivInput}>
               <label className={styles.FormLabel}>Sobre mi:</label>
-              <input
+              <textarea
                 className={styles.InputsDetail}
                 type="text"
                 name="Sobre mi"
