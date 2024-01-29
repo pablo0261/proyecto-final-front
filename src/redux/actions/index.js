@@ -8,7 +8,10 @@ import {
   SET_ERROR_BACK,
   EDIT_INFO_USER,
   CONTRAT_SERVICE_USER,
-} from "./action-types";
+  FILTER_CARDS,
+  GET_HOME_PROVIDER,
+  FILTER_SERVICES,
+ } from "./action-types";
 import StoreItem from "../../Helpers/LocalStorage";
 
 const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
@@ -121,6 +124,34 @@ const handleContratService = (item) => {
   };
 };
 
+  const allPeopleProvider = (item) => {
+    return async (dispatch) => {
+      try {
+        const response = await axios.get(`${REACT_APP_API_URL}/people?typeOfPerson=provider`);
+        dispatch({
+          type: GET_HOME_PROVIDER,
+          payload: response.data.people.data,
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+  };
+
+  const filterservices = (item) => {
+    return async (dispatch) => {
+      try {
+        const response = await axios.get(`${REACT_APP_API_URL}/categories`);
+        dispatch({
+          type: FILTER_SERVICES,
+          payload: response.data.categories.data,
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+  };
+
 //*---POST_NEW_INFO_USER---//
 const postUserData = (userDataEnglish) => {
   return async (dispatch) => {
@@ -158,15 +189,32 @@ const handleEditProfile = (formData) => {
       console.error(error);
     }
   };
-};
+}
 
-export {
-  logInDataBase,
-  signInDataBase,
-  logOutDeleteData,
-  recoverUserLoggedData,
-  infoDetailProveedor,
-  handleContratService,
-  postUserData,
-  handleEditProfile,
-};
+  const filter = (selectedServices, selectedGender)=>{
+    return async (dispatch) => {
+      try {
+        dispatch({
+          type: FILTER_CARDS,
+          payload: [selectedServices, selectedGender]
+        });
+      } catch (error) {
+        console.error(error);
+      }
+    };
+  }
+
+
+  export {
+    logInDataBase,
+    signInDataBase,
+    logOutDeleteData,
+    recoverUserLoggedData,
+    infoDetailProveedor,
+    handleContratService,
+    postUserData,
+    handleEditProfile,
+    filter,
+    allPeopleProvider,
+    filterservices,
+  }
