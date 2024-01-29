@@ -11,6 +11,7 @@ import {
   FILTER_CARDS,
   GET_HOME_PROVIDER,
   FILTER_SERVICES,
+  GET_FILTER_PROVIDER,
  } from "./action-types";
 import StoreItem from "../../Helpers/LocalStorage";
 
@@ -138,6 +139,20 @@ const handleContratService = (item) => {
     };
   };
 
+  const geturlfiltered = (url) => {
+    return async (dispatch) => {
+      try {
+        const response = await axios.get(url);
+        dispatch({
+          type: GET_FILTER_PROVIDER,
+          payload: response.data.people.data,
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+  };
+
   const filterservices = (item) => {
     return async (dispatch) => {
       try {
@@ -192,9 +207,10 @@ const handleEditProfile = (formData) => {
   const filter = (selectedServices, selectedGender)=>{
     return async (dispatch) => {
       try {
+        // const response = await axios.post(`${REACT_APP_API_URL}/people`);
         dispatch({
           type: FILTER_CARDS,
-          payload: [selectedServices, selectedGender]
+          payload: [selectedServices]
         });
       } catch (error) {
         console.error(error);
@@ -215,4 +231,5 @@ const handleEditProfile = (formData) => {
     filter,
     allPeopleProvider,
     filterservices,
+    geturlfiltered,
   }
