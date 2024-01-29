@@ -10,6 +10,7 @@ import {
   CONTRAT_SERVICE_USER,
   FILTER_CARDS,
   GET_HOME_PROVIDER,
+  FILTER_SERVICES,
  } from "./action-types";
 import StoreItem from "../../Helpers/LocalStorage";
 
@@ -126,10 +127,10 @@ const handleContratService = (item) => {
   const allPeopleProvider = (item) => {
     return async (dispatch) => {
       try {
-        const response = await axios.get(`${REACT_APP_API_URL}/people/${item}`);
+        const response = await axios.get(`${REACT_APP_API_URL}/people?typeOfPerson=provider`);
         dispatch({
           type: GET_HOME_PROVIDER,
-          payload: response.data,
+          payload: response.data.people.data,
         });
       } catch (error) {
         console.log(error);
@@ -137,6 +138,19 @@ const handleContratService = (item) => {
     };
   };
 
+  const filterservices = (item) => {
+    return async (dispatch) => {
+      try {
+        const response = await axios.get(`${REACT_APP_API_URL}/categories`);
+        dispatch({
+          type: FILTER_SERVICES,
+          payload: response.data.categories.data,
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+  };
 
 //*---POST_NEW_INFO_USER---//
 const postUserData = (userData) => {
@@ -180,7 +194,7 @@ const handleEditProfile = (formData) => {
       try {
         dispatch({
           type: FILTER_CARDS,
-          payload: selectedServices, selectedGender
+          payload: [selectedServices, selectedGender]
         });
       } catch (error) {
         console.error(error);
@@ -200,4 +214,5 @@ const handleEditProfile = (formData) => {
     handleEditProfile,
     filter,
     allPeopleProvider,
+    filterservices,
   }
