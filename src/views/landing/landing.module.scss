@@ -79,7 +79,9 @@
         width: 35px;
         height: 35px;
         border-radius: 50%;
-        background-color: rgb(0, 0, 0);
+        background-image: url('../../assets/Icons/PerfilImage.png');
+        background-size: cover;  
+        background-repeat: no-repeat;  
     }
 }
 
