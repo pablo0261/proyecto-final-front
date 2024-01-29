@@ -71,7 +71,7 @@ const Home = () => {
     urlfiltered()
   };
 
-  
+
   const generarConsulta = (filtros) => {
     if (filtros && filtros.length > 0) {
       const serviciosSeleccionados = filtros[0];
@@ -81,7 +81,7 @@ const Home = () => {
         return url;
       }
     }
-      return 'https://carewithlove.onrender.com/people';
+    return 'https://carewithlove.onrender.com/people';
   };
   const consultaGenerada = generarConsulta(filtros);
   console.log(consultaGenerada)
@@ -89,76 +89,54 @@ const Home = () => {
   const urlfiltered = () => {
     dispatch(geturlfiltered(consultaGenerada))
   }
-  
+
 
   return (
     <div className={styles.background}>
-      <div className={styles.container}>
-        <div className={styles.mapContainer}>
-          <h2>Buscar en el mapa</h2>
+      <div className={styles.wrapper}>
+        <div className={styles.mapWrapper}>
+          <p className={styles.titleMap}>Buscar en el mapa</p>
           <MapHome />
         </div>
-
         <div className={styles.servicesContainer}>
-          <div className={styles.filtersContainer}>
-            <button
-              className={styles.botones}
-              onClick={handleFilterButtonClick}
-            >
-              <span>Filtrar</span>
-            </button>
-            <button
-              className={styles.botones}
-              onClick={handleOrderButtonClick}
-            >
-              <span>Ordenar</span>
-            </button>
+          <div className={styles.filterOrderContainer}>
+            <button className={showFilters ? styles.buttonActived : styles.button} onClick={handleFilterButtonClick}>Filtrar</button>
+            <button className={showOrder ? styles.buttonActived : styles.button} onClick={handleOrderButtonClick}>Ordenar</button>
           </div>
-          <div>
+          <div className={styles.filterOrderBox}>
             {showFilters && (
               <div className={styles.filterBox}>
                 {allServices.map((category) => (
-                  <div key={category.idCategorie}>
-                    <h3>{category.description}</h3>
-                    {category.categories_options.map((option) => (
-                      <button
-                        key={option.idOption}
-                        className={`${styles.botones} ${
-                          selectedServices.includes(option.description) &&
-                          styles.selected
-                        }`}
-                        onClick={() =>
-                          handleServiceButtonClick(option.idOption)
-                        }
-                      >
-                        {option.description}
-                      </button>
-                    ))}
+                  <div key={category.idCategorie} className={styles.categoryWrapper}>
+                    <p className={styles.titleCategory}>{category.description}</p>
+                    <div className={styles.optionsWrapper}>
+                      {category.categories_options.map((option) => (
+                        <button
+                          key={option.idOption}
+                          className={selectedServices.includes(option.description) ? styles.optionSelected : styles.optionNotSelected}
+                          onClick={() => handleServiceButtonClick(option.idOption)}
+                        >
+                          {option.description}
+                        </button>
+                      ))}
+                    </div>
                   </div>
                 ))}
                 <button
-                  className={`${styles.botones} ${
-                    selectedGender === "Masculino" && styles.selected
-                  }`}
+                  className={selectedGender === "Masculino" && styles.selected ? styles.optionSelected : styles.optionNotSelected}
                   onClick={() => handleGenderButtonClick("Masculino")}
                 >
                   Masculino
                 </button>
                 <button
-                  className={`${styles.botones} ${
-                    selectedGender === "Femenino" && styles.selected
-                  }`}
+                  className={selectedGender === "Femenino" && styles.selected ? styles.optionSelected : styles.optionNotSelected}
                   onClick={() => handleGenderButtonClick("Femenino")}
                 >
                   Femenino
                 </button>
-                <br></br>
-                <button
-                  className={styles.botones}
-                  onClick={hadleClick}
-                >
-                  Aplicar
-                </button>
+                <div className={styles.applyWrapper}>
+                  <button className={styles.button} onClick={hadleClick}>Aplicar</button>
+                </div>
               </div>
             )}
             {showOrder && (
@@ -178,7 +156,7 @@ const Home = () => {
             )}
           </div>
 
-          <div className={styles.cardContainer}>
+          <div className={styles.cardsWrapper}>
             {Array.isArray(providers) &&
               providers.map((user) => <Card key={user.people.idPeople} user={user.people} />)}
           </div>

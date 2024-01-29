@@ -3,6 +3,7 @@ import styles from "../CardHomeProveedor/CardHomeProveedor.module.sass"
 import defaultImage from '../../assets/image/PerfilImage.png';
 
 function card(props) {
+  console.log(props)
   return (
     <div className={styles.wrapper}>
       <div className={styles.profileWrapper}>
@@ -14,7 +15,7 @@ function card(props) {
       </div>
       <div className={styles.infoWrapper}>
         <div className={styles.headerWrapper}>
-          <p className={styles.textTitle}>{props.user.name}</p>
+          <p className={styles.textTitle}>{props.user.fullName}</p>
           <p className={styles.textGrey}>A partir de <span className={styles.textPrice}>US$ 10</span> x Hora</p>
         </div>
         <p className={styles.textGrey}>{props.user.address}</p>
