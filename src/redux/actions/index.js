@@ -10,7 +10,8 @@ import {
   CONTRAT_SERVICE_USER,
   FILTER_CARDS,
   GET_HOME_PROVIDER,
-} from "./action-types";
+  FILTER_SERVICES,
+ } from "./action-types";
 
 const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
 
@@ -92,28 +93,43 @@ const handleContratService = (item) => {
   };
 };
 
-const allPeopleProvider = (item) => {
-  return async (dispatch) => {
-    try {
-      const response = await axios.get(`${REACT_APP_API_URL}/people/${item}`);
-      dispatch({
-        type: GET_HOME_PROVIDER,
-        payload: response.data,
-      });
-    } catch (error) {
-      console.log(error);
-    }
+  const allPeopleProvider = (item) => {
+    return async (dispatch) => {
+      try {
+        const response = await axios.get(`${REACT_APP_API_URL}/people?typeOfPerson=provider`);
+        dispatch({
+          type: GET_HOME_PROVIDER,
+          payload: response.data.people.data,
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    };
   };
-};
 
+  const filterservices = (item) => {
+    return async (dispatch) => {
+      try {
+        const response = await axios.get(`${REACT_APP_API_URL}/categories`);
+        dispatch({
+          type: FILTER_SERVICES,
+          payload: response.data.categories.data,
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+  };
 
 //*---POST_NEW_INFO_USER---//
-const postUserData = (userData) => {
+const postUserData = (userDataEnglish) => {
   return async (dispatch) => {
     try {
       const response = await axios.post(
-        `${REACT_APP_API_URL}/people`, userData);
-      console.log(response.data);
+        `${REACT_APP_API_URL}/people`,
+        userDataEnglish
+      );
+      console.log(response);
       dispatch({
         type: POST_NEW_INFO_USER,
         payload: response.data,
@@ -124,7 +140,7 @@ const postUserData = (userData) => {
           type: SET_ERROR_BACK,
           payload: error.response.data,
         });
-        console.log(error.response.data);
+        console.log(error);
         throw error.response.data;
       }
     }
@@ -144,18 +160,18 @@ const handleEditProfile = (formData) => {
   };
 }
 
-const filter = (selectedServices, selectedGender) => {
-  return async (dispatch) => {
-    try {
-      dispatch({
-        type: FILTER_CARDS,
-        payload: selectedServices, selectedGender
-      });
-    } catch (error) {
-      console.error(error);
-    }
-  };
-}
+  const filter = (selectedServices, selectedGender)=>{
+    return async (dispatch) => {
+      try {
+        dispatch({
+          type: FILTER_CARDS,
+          payload: [selectedServices, selectedGender]
+        });
+      } catch (error) {
+        console.error(error);
+      }
+    };
+  }
 
 
 export {
