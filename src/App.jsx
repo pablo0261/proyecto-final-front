@@ -11,6 +11,9 @@ import ConnectionsCustomerView from './Views/CustomerViews/ConnectionsCustomerVi
 import StatsProviderView from './Views/ProviderViews/StatsProviderView';
 import ReportsProviderView from './Views/ProviderViews/ReportsProviderView';
 import ConnectionsProviderView from './Views/ProviderViews/ConnectionsProviderView';
+import Assistance from './views/Assistance/Assistance';
+import FAQs from './views/FAQs/FAQs';
+import ConsultReport from './views/ConsultReport/ConsultReport'
 import { useDispatch, useSelector } from 'react-redux';
 import Form from './components/Form/Form';
 import Footer from './components/Footer/Footer';
@@ -52,6 +55,11 @@ function App() {
               <Route path={Helpers.Form} element={<Form />} />
 
               {/* Administrador */}
+
+              {/* Footer */}
+              <Route path={Helpers.Assistance} element={<Assistance />} />
+              <Route path={Helpers.FAQs} element={<FAQs />} />
+              <Route path={Helpers.ConsultReport} element={<ConsultReport />} />
 
               {/* Rutas No Especificada */}
               <Route path='*' element={<NotFound />}></Route>

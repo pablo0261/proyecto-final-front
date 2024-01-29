@@ -14,6 +14,11 @@ const Helpers = {
     ReportsProviderView: "/reportsProviderView",
     StatsProviderView: "/statsProviderView", 
     Form: "/form/:component", 
+
+    /* Footer */
+    Assistance: "/assistance",
+    FAQs: "/frequently-asked-questions",
+    ConsultReport: "/consult-report",
 }
 
 export default Helpers

@@ -1,6 +1,24 @@
 @import './Variables'
 @import url('https://fonts.googleapis.com/css2?family=K2D:ital,wght@0,100;0,400;0,700;1,100;1,400;1,700&display=swap')
 
+@mixin flexbox($direction, $justify, $align) 
+  display: flex
+  flex-direction: $direction
+  justify-content: $justify
+  align-items: $align
+
+
+@mixin backgroundimg($image) 
+    background-image: url($image)
+    background-repeat: no-repeat
+    background-attachment: fixed
+    background-size: cover
+    background-position: center
+
+@mixin margin-padding()
+    margin: 0
+    padding: 0
+
 @mixin font($color, $font-size, $font-weight, $font-style)
     font-family: 'K2D', sans-serif
     font-size: $font-size
@@ -23,6 +41,24 @@
 
 @mixin buttonHover
     background-color: $hoverColor
+    transform: scale(1.02)
+    transition: .3s
+
+@mixin buttonActivesecondary
+    background-color: $fourthColor
+    font-family: 'K2D', sans-serif
+    font-size: 20px
+    font-weight: normal
+    font-style: normal
+    color: #D95555
+    padding: 8px 20px
+    border-radius: 10px
+    border: none
+    outline: none
+    transition: .3s
+
+@mixin buttonHoversecondary
+    background-color: $hoverColorSecondary
     transform: scale(1.02)
     transition: .3s
 
