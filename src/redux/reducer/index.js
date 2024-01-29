@@ -7,6 +7,7 @@ import {
   EDIT_INFO_USER,
   FILTER_CARDS,
   GET_HOME_PROVIDER,
+  FILTER_SERVICES,
   // CONTRAT_SERVICE_USER
 } from "../actions/action-types";
 
@@ -145,6 +146,7 @@ let initialState = {
   //Filter and getpeople
   FilterCards: [],
   getAllProvider: [],
+  allServices: [],
   //*POST//
   postUserData: [],
   //*ERRORES//
@@ -194,6 +196,12 @@ const rootReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         getAllPeople: payload,
+      };
+
+    case FILTER_SERVICES:
+      return {
+        ...state,
+        allServices: payload,
       };
 
     //*---POST---//
