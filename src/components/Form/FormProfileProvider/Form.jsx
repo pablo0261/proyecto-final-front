@@ -7,16 +7,17 @@ import styles from "./FormProfile.module.sass";
   function Form({ handleClickForm }) {
     const dispatch = useDispatch();
 
-    const idUserLog = useSelector(state => state.infoUserLog.idPeople);
+    const userLog = useSelector(state => state.infoUserLog);
     useEffect(() => {
       setUserData(prevUserData => ({
         ...prevUserData,
-        id: idUserLog,
+        id: userLog.idPeople,
       }));
+      console.log(userLog)
     }, []);
 
     const [userData, setUserData] = useState({
-      id: idUserLog,
+      id: userLog,
       Nombre: "",
       Telefono: "",
       País: "",
@@ -44,7 +45,7 @@ import styles from "./FormProfile.module.sass";
 
     const handleChange = (event) => {
       let property = event.target.name;
-      let value = event.target.value.trim();
+      let value = event.target.value;
       Validation(userData, localErrors, setLocalErrors, property, value);
       setUserData({ ...userData, [property]: value });
     };

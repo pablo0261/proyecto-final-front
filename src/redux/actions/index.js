@@ -126,24 +126,26 @@ const postUserData = (userDataEnglish) => {
   return async (dispatch) => {
     try {
       const response = await axios.post(
-        `${REACT_APP_API_URL}/people`, userDataEnglish );
+        `${REACT_APP_API_URL}/people`,
+        userDataEnglish
+      );
       console.log(response);
       dispatch({
         type: POST_NEW_INFO_USER,
         payload: response.data,
       });
     } catch (error) {
-      // if (error.response && error.response.data) {
-      //   dispatch({
-      //     type: SET_ERROR_BACK,
-      //     payload: error.response.data,
-      //   });
+      if (error.response && error.response.data) {
+        dispatch({
+          type: SET_ERROR_BACK,
+          payload: error.response.data,
+        });
         console.log(error);
         throw error.response.data;
       }
     }
   };
-
+};
 
 const handleEditProfile = (formData) => {
   return async (dispatch) => {
