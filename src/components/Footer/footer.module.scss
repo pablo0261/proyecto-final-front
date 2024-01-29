@@ -1,0 +1,62 @@
+@use '../../Styles/Mixins' as *;
+@import '../../Styles/Variables';
+
+.footer__container {
+    @include flexbox(row, space-around, center);
+    height: 350px;
+    background-color: $tertiaryColor;
+    text-align: left;
+}
+
+.footer__container__menu {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 60px;
+
+    ul {
+        list-style: none;
+        padding-left: 0;
+    }
+
+    a {
+        display: inline-block;
+        margin-bottom: 20px;
+        @include font($textTertiaryColor, 18px, lighter, normal);
+        text-decoration: none;
+    }
+
+    .a, p {
+        @include font($textTertiaryColor, 18px, bold, normal);
+        margin-top: 0;
+    }
+
+    a:hover{
+        @include font($hoverColor, 18px, null, normal);
+    }
+}
+
+.footer__container__tecnologias {
+    @include flexbox(column, null, left);
+
+    p {
+        @include font($textTertiaryColor, 18px, background-color, normal);
+        margin: 0 0 10px 0;
+    }
+
+    div {
+        display: flex;
+        gap: 10px;
+    }
+
+    img {
+        background-color: white;
+        border-radius: 5px;
+        padding: 2px;
+        width: 35px;
+        transition: transform 0.3s ease; 
+    }
+
+    img:hover{
+        transform: scale(1.2); 
+    } 
+}
