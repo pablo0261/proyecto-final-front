@@ -79,7 +79,10 @@
         width: 35px;
         height: 35px;
         border-radius: 50%;
-        background-color: rgb(0, 0, 0);
+        border: 1px solid rgb(176, 176, 176);
+        @include backgroundimg('../../assets/LandingImages/PerfilImage.png');
+        background-attachment: local;
+
     }
 }
 
@@ -94,7 +97,8 @@
     @include flexbox(null, center, flex-end);
     height: 168px;
     width: 100%;
-    @include margin-padding;
+
+    margin: 0 0 20px 0;
 
     h2 {
         @include font($primaryColor, 3rem, bold, normal);
@@ -102,63 +106,87 @@
     }
 }
 
+
+
 .section {
+
     display: flex;
     flex-direction: row;
     justify-content: center;
-    height: 568px;
-    width: 80%;
-}
-
-.section__row {
-    display: grid;
-    grid-template-columns: auto auto 50%;
-    ;
-    flex-direction: null;
-    justify-content: center;
     align-items: center;
-    justify-items: center;
-    align-content: center;
-    gap: 40px;
+    height: 440px;
+    width: 80%;
 
-    i{
-        @include flexbox(null, center, center);
-        width: 60px;
-        height: 60px;
-        @include font($primaryColor, 3rem, bold, normal);
-        border: 3px solid $primaryColor;
-        border-radius: 50%;
+    .section__row {
+
+        display: grid;
+        grid-template-columns: auto auto 50%;
+        justify-content: center;
+        align-items: center;
+        justify-items: center;
+        align-content: center;
+        gap: 40px;
+
+        i {
+            @include flexbox(null, center, center);
+            width: 60px;
+            height: 60px;
+            @include font($primaryColor, 3rem, bold, normal);
+            border: 3px solid $primaryColor;
+            border-radius: 50%;
+        }
+
+        h2 {
+            @include font($textPrimaryColor, 2.5rem, bold, normal);
+            text-align: left;
+        }
+
+        p {
+            @include font($textPrimaryColor, 1.5rem, normal, normal);
+            text-align: left;
+        }
+
+        iframe {
+            margin: 0;
+            height: 400px;
+            width: 400px;
+            border: 1px solid gray;
+            border-radius: 10px;
+            @include backgroundimg('../../assets/LandingImages/nono.gif');
+            background-attachment: local;
+        }
     }
 
-    h2 {
-        @include font($textPrimaryColor, 2.5rem, bold, normal);
-        text-align: left;
+    &hidden {
+        display: none;
     }
 
+    i,
+    h2,
     p {
-        @include font($textPrimaryColor, 1.5rem, normal, normal);
-        text-align: left;
+        opacity: 1;
+        transform: translateX(-20px);
+        transition: opacity 0.5s ease, transform 0.5s ease;
     }
 
-    iframe {
-        margin: 0 0 0 0;
-        height: 400px;
-        width: 400px;
-        border: 1px solid #58130E;
-        border-radius: 10px;
-        @include backgroundimg('../../assets/LandingImages/nono.gif');
-        background-attachment:local;
+
+    div:hover i,
+    div:hover h2,
+    div:hover p {
+        opacity: 1;
+        transform: translateX(0);
     }
 }
+
 
 
 
 /* section registro */
 .sectionregistro {
-    @include flexbox(column,center,center);
+    @include flexbox(column, center, center);
     height: 368px;
     width: 100%;
-    @include margin-padding;
+    margin-top: 40px;
     background-color: $secondaryColor;
 
     h2 {
@@ -175,10 +203,8 @@
         @include buttonActivesecondary;
 
     }
+
     button:hover {
         @include buttonHoversecondary;
     }
 }
-
-
-

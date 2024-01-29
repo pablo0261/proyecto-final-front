@@ -1,6 +1,6 @@
 import React from 'react'
 import styles from "../CardHomeProveedor/CardHomeProveedor.module.sass"
-import defaultImage from '../../assets/image/PerfilImage.png';
+import defaultImage from '../../assets/LandingImages/PerfilImage.png';
 
 function card(props) {
   return (
