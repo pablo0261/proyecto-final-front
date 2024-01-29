@@ -1,36 +1,31 @@
 import React from 'react'
 import styles from "../CardHomeProveedor/CardHomeProveedor.module.sass"
+import defaultImage from '../../assets/image/PerfilImage.png';
 
 function card(props) {
   return (
-    <div className={styles.container}>
-      <div className={styles.profileContainer}>
-        <div className={styles.imgContainer}></div>
-
-          <div className='flex justify-center'>
-            <p className='font-bold'>4.5(15)</p>
-          </div>
-      </div>
-
-      <div>
-        <div className={styles.sectionProfile}>
-          <div className={styles.sectionInfoProfile}>
-            <h3>{props.user.name}</h3>
-            <p>{props.user.address}</p>
-            <h4>{props.user.aboutMe}</h4>
-          </div>
-          <div className={styles.sectionCost}>
-            <p>A partir de</p><p className='font-bold'> 10 US$ x hora</p>
-          </div>
-        </div>
-        <div className={styles.sectionAbilities}>
-          <span>Cuidado</span>
-          <span>Cuidado + Limpieza</span>
-          <span>Cuidado + Cocina</span>
-          <span>Cuidado + Limpieza + Cocina</span>
+    <div className={styles.wrapper}>
+      <div className={styles.profileWrapper}>
+        <img src={defaultImage} className={styles.profileImage}></img>
+        <div className={styles.ratingWrapper}>
+          <div className={styles.iconStar}></div>
+          <p className={styles.textRating}>4.5 (15)</p>
         </div>
       </div>
-
+      <div className={styles.infoWrapper}>
+        <div className={styles.headerWrapper}>
+          <p className={styles.textTitle}>{props.user.name}</p>
+          <p className={styles.textGrey}>A partir de <span className={styles.textPrice}>US$ 10</span> x Hora</p>
+        </div>
+        <p className={styles.textGrey}>{props.user.address}</p>
+        <p className={styles.textDark}>Enfermera</p>
+        <div className={styles.servicesWrapper}>
+          <div className={styles.textServices}>Cuidado</div>
+          <div className={styles.textServices}>Cuidado + Limpieza</div>
+          <div className={styles.textServices}>Cuidado + Cocina</div>
+          <div className={styles.textServices}>Cuidado + Limpieza + Cocina</div>
+        </div>
+      </div>
     </div>
   )
 }

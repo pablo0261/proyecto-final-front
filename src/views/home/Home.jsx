@@ -70,7 +70,7 @@ const Home = () => {
   console.log("este es el global",filtros)
 
   return (
-    <>
+    <div className={styles.background}>
       <div className={styles.container}>
         <div className={styles.mapContainer}>
           <h2>Buscar en el mapa</h2>
@@ -151,7 +151,7 @@ const Home = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
