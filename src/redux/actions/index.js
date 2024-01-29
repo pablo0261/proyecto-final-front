@@ -12,47 +12,16 @@ import {
   GET_HOME_PROVIDER,
   FILTER_SERVICES,
  } from "./action-types";
-import StoreItem from "../../Helpers/LocalStorage";
 
 const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
 
 //AccessAccount//
-const logInDataBase = (userLoggedData) => {
+const addInfoUserLog = (data) => {
   return async (dispatch) => {
-    try {
-      const data = await axios.get(
-        `${REACT_APP_API_URL}/people?email=${userLoggedData.email}`
-      );
-      if (data.status === 200) {
-        localStorage.setItem(StoreItem.emailUserLogged, userLoggedData.email);
-        return dispatch({
-          type: ACCESS_BACK_SAVE_DATA,
-          payload: data.data.people.data[0].people,
-        });
-      } else {
-        throw new Error(data.error, "error from back");
-      }
-    } catch (error) {
-      window.alert(error);
-    }
-  };
-};
-
-const signInDataBase = (userSingedData) => {
-  return async (dispatch) => {
-    try {
-      const { data } = await axios.post(
-        `${REACT_APP_API_URL}/people`,
-        userSingedData
-      );
-      localStorage.setItem(StoreItem.emailUserLogged, userSingedData.email);
-      return dispatch({
-        type: ACCESS_BACK_SAVE_DATA,
-        payload: data.result,
-      });
-    } catch (error) {
-      window.alert(error);
-    }
+    return dispatch({
+      type: ACCESS_BACK_SAVE_DATA,
+      payload: data,
+    });
   };
 };
 
@@ -86,7 +55,7 @@ const recoverUserLoggedData = (emailUserData) => {
           payload: data.data.people.data[0].people,
         });
       } else {
-        throw new Error(data.error, "error from back");
+        console.log(data)
       }
     } catch (error) {
       window.alert(error);
@@ -205,16 +174,14 @@ const handleEditProfile = (formData) => {
   }
 
 
-  export {
-    logInDataBase,
-    signInDataBase,
-    logOutDeleteData,
-    recoverUserLoggedData,
-    infoDetailProveedor,
-    handleContratService,
-    postUserData,
-    handleEditProfile,
-    filter,
-    allPeopleProvider,
-    filterservices,
-  }
+export {
+  addInfoUserLog,
+  logOutDeleteData,
+  recoverUserLoggedData,
+  infoDetailProveedor,
+  handleContratService,
+  postUserData,
+  handleEditProfile,
+  filter,
+  allPeopleProvider,
+}

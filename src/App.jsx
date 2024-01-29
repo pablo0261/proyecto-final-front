@@ -23,12 +23,12 @@ function App() {
 
   const dispatch = useDispatch()
 
-  useEffect(()=>{
-    
+  useEffect(() => {
+
     if (localStorage.getItem(StoreItem.emailUserLogged)) {
-      dispatch(recoverUserLoggedData(localStorage.getItem(StoreItem.emailUserLogged)) )
+      dispatch(recoverUserLoggedData(localStorage.getItem(StoreItem.emailUserLogged)))
     }
-  },[])
+  }, [])
 
   const userLoggedInfo = useSelector(state => state.infoUserLog)
 
@@ -38,26 +38,37 @@ function App() {
         userLoggedInfo.idPeople != null ?
           <div>
             <NavBar></NavBar>
-            <Routes>
-              {/* Cliente */}
-              <Route path={Helpers.HomeCustomerView} element={<Home />} />
-              <Route path={Helpers.ConnectionsCustomerView} element={<ConnectionsCustomerView />} />
-              <Route path={Helpers.ReportsCustomerView} element={<ReportsCustomerView />} />
-              <Route path={Helpers.ProfileCustomerView} element={<Home />} />
+            {
+              userLoggedInfo.typeOfPerson === 'customer' &&
+              <Routes>
+                {/* Cliente */}
+                <Route path={Helpers.HomeCustomerView} element={<Home />} />
+                <Route path={Helpers.ConnectionsCustomerView} element={<ConnectionsCustomerView />} />
+                <Route path={Helpers.ReportsCustomerView} element={<ReportsCustomerView />} />
+                <Route path={Helpers.ProfileCustomerView} element={<ProfileProviderView />} />
 
-              {/* Proveedor */}
-              <Route path={Helpers.StatsProviderView} element={<StatsProviderView />} />
-              <Route path={Helpers.ConnectionsProviderView} element={<ConnectionsProviderView />} />
-              <Route path={Helpers.ReportsProviderView} element={<ReportsProviderView />} />
-              <Route path={Helpers.ProfileProviderView} element={<ProfileProviderView />} />
-              <Route path={Helpers.Form} element={<Form />} />
+                <Route path='*' element={<NotFound />}></Route>
+              </Routes>
+            }
+            {
+              userLoggedInfo.typeOfPerson === 'provider' &&
+              <Routes>
+                {/* Proveedor */}
+                <Route path={Helpers.StatsProviderView} element={<StatsProviderView />} />
+                <Route path={Helpers.ConnectionsProviderView} element={<ConnectionsProviderView />} />
+                <Route path={Helpers.ReportsProviderView} element={<ReportsProviderView />} />
+                <Route path={Helpers.ProfileProviderView} element={<ProfileProviderView />} />
 
-              {/* Administrador */}
-
-              {/* Rutas No Especificada */}
-              <Route path='*' element={<NotFound />}></Route>
-            </Routes>
-            <Footer/>
+                <Route path='*' element={<NotFound />}></Route>
+              </Routes>
+            }
+            {
+              userLoggedInfo.typeOfPerson === 'admin' &&
+              <Routes>
+                {/* Administrador */}
+              </Routes>
+            }
+            <Footer />
           </div>
           :
           <div>
@@ -68,7 +79,7 @@ function App() {
 
               <Route path='*' element={<NotFound />}></Route>
             </Routes>
-            <Footer/>
+            <Footer />
           </div>
       }
 
