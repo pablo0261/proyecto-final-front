@@ -1,0 +1,111 @@
+@use '../../../Styles/Mixins'
+@import '../../../Styles/Variables'
+
+.background
+  background-color: #f2f2f200
+  position: fixed
+  left: 0
+  top: 0
+  z-index: 1
+  display: flex
+  justify-content: center
+  height: 100%
+  width: 100%
+  display: flex
+  align-items: center
+
+  p
+    margin: 0
+
+.wrapper
+  width: 80%
+  display: flex
+  flex-direction: column
+  justify-content: center
+
+.Form
+  @include Mixins.boxShadowCard
+  top: 5px
+  height: 95vh
+  width: 50%
+  position: relative
+
+.DetailTittle
+  @include Mixins.font($primaryColor, 22px, bold, normal)
+  margin-top: 5%
+
+.DetailButtonForm
+  width: 40px
+  height: 40px
+  background: url('../../../assets/Icons/IconCross.png')
+  background-position: center
+  background-repeat: no-repeat
+  border: none
+  position: absolute
+  top: 10px
+  right: 10px
+
+.ContainerDivInput
+  display: grid
+  flex-direction: column
+  gap: 10px
+  margin-top: 0
+  margin-inline: 8%
+
+.FormDivInput
+  display: flex
+  width: 100%
+  flex-direction: column
+  justify-content: center
+  align-items:  start
+
+.FormDivFlex
+  display: flex
+  flex-wrap: wrap
+  justify-content: space-between
+  
+  
+.FormDivInputFlex  
+  width: 48%
+  
+.Inputs
+  @include Mixins.font($tertiaryColor, 14px, normal, normal)
+  @include Mixins.boxShadowInputs
+  width: 100%
+  margin: auto
+  height: 25px
+
+.InputsFlex
+  @include Mixins.font($tertiaryColor, 14px, normal, normal)
+  @include Mixins.boxShadowInputs
+  width: 100%
+  height: 25px
+
+.InputsDetail
+  @include Mixins.font($tertiaryColor, 14px, normal, normal)
+  @include Mixins.boxShadowInputs
+  width: 100%
+  margin-block: 5px
+  margin-inline: auto
+  padding: 0px 5px
+  height: 60px 
+  resize: none 
+  box-sizing: border-box 
+  
+.FormLabel
+  @include Mixins.font($primaryColor, 18px, bold, normal)
+
+.FormLabelFlex
+  @include Mixins.font($primaryColor, 18px, bold, normal)
+  display: flex
+
+.ButtonForm
+  @include Mixins.buttonActive
+  width: 40%
+  height: 45px 
+  margin: 2%   
+
+.ErrorMessage
+  margin-block: 0
+  padding-left: 20px
+  @include Mixins.font($textFailureColor, 14px , normal , normal )

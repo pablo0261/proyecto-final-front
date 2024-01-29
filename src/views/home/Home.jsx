@@ -1,18 +1,24 @@
 import Card from "../../components/CardHomeProveedor/CardHomeProveedor";
 import { useEffect, useState } from "react";
 import styles from "../home/Home.module.sass";
-import data from "../../../data.json";
 import MapHome from "../../components/MapHome/MapHome";
+import { useSelector, useDispatch } from "react-redux";
+import { filter, allPeopleProvider, filterservices, geturlfiltered } from "../../redux/actions";
 
 const Home = () => {
   const [users, setUsers] = useState([]);
+  const dispatch = useDispatch();
   const [showFilters, setShowFilters] = useState(false);
   const [showOrder, setShowOrder] = useState(false);
   const [selectedServices, setSelectedServices] = useState([]);
   const [selectedGender, setSelectedGender] = useState(null);
+  const filtros = useSelector((state) => state.FilterCards);
+  const providers = useSelector((state) => state.getAllPeople);
+  const allServices = useSelector((state) => state.allServices);
 
   useEffect(() => {
-    setUsers(data.salida.data);
+    dispatch(allPeopleProvider());
+    dispatch(filterservices());
   }, []);
 
   const handleFilterButtonClick = () => {
@@ -32,7 +38,9 @@ const Home = () => {
   const handleServiceButtonClick = (service) => {
     setSelectedServices((prevSelectedServices) => {
       if (prevSelectedServices.includes(service)) {
-        return prevSelectedServices.filter((selectedService) => selectedService !== service);
+        return prevSelectedServices.filter(
+          (selectedService) => selectedService !== service
+        );
       } else {
         return [...prevSelectedServices, service];
       }
@@ -56,42 +64,78 @@ const Home = () => {
     }
     setShowFilters(false);
   };
-  console.log(selectedServices)
+
+  const hadleClick = () => {
+    handleApplyButtonClick();
+    dispatch(filter(selectedServices, selectedGender));
+    urlfiltered()
+  };
+
+  
+  const generarConsulta = (filtros) => {
+    if (filtros && filtros.length > 0) {
+      const serviciosSeleccionados = filtros[0];
+      if (Array.isArray(serviciosSeleccionados)) {
+        const serviciosQuery = serviciosSeleccionados.map((servicio) => `idOption=${servicio}`).join('&');
+        const url = `https://carewithlove.onrender.com/people?${serviciosQuery}&typeOfPerson=provider`;
+        return url;
+      }
+    }
+      return 'https://carewithlove.onrender.com/people';
+  };
+  const consultaGenerada = generarConsulta(filtros);
+  console.log(consultaGenerada)
+  console.log(providers)
+  const urlfiltered = () => {
+    dispatch(geturlfiltered(consultaGenerada))
+  }
+  
 
   return (
-    <>
+    <div className={styles.background}>
       <div className={styles.container}>
         <div className={styles.mapContainer}>
           <h2>Buscar en el mapa</h2>
-            <MapHome/>
+          <MapHome />
         </div>
 
         <div className={styles.servicesContainer}>
           <div className={styles.filtersContainer}>
-            <button className={styles.botones} onClick={handleFilterButtonClick}>
+            <button
+              className={styles.botones}
+              onClick={handleFilterButtonClick}
+            >
               <span>Filtrar</span>
             </button>
-            <button className={styles.botones} onClick={handleOrderButtonClick}>
+            <button
+              className={styles.botones}
+              onClick={handleOrderButtonClick}
+            >
               <span>Ordenar</span>
             </button>
           </div>
           <div>
             {showFilters && (
               <div className={styles.filterBox}>
-                <h3>Servicios</h3>
-                <button
-                  className={`${styles.botones} ${selectedServices.includes("Cuidado") && styles.selected}`}
-                  onClick={() => handleServiceButtonClick("Cuidado")}
-                >
-                  Cuidado
-                </button>
-                <button
-                  className={`${styles.botones} ${selectedServices.includes("Cuidado + Limpieza") && styles.selected}`}
-                  onClick={() => handleServiceButtonClick("Cuidado + Limpieza")}
-                >
-                  Cuidado + Limpieza
-                </button>
-                <h3>Genero</h3>
+                {allServices.map((category) => (
+                  <div key={category.idCategorie}>
+                    <h3>{category.description}</h3>
+                    {category.categories_options.map((option) => (
+                      <button
+                        key={option.idOption}
+                        className={`${styles.botones} ${
+                          selectedServices.includes(option.description) &&
+                          styles.selected
+                        }`}
+                        onClick={() =>
+                          handleServiceButtonClick(option.idOption)
+                        }
+                      >
+                        {option.description}
+                      </button>
+                    ))}
+                  </div>
+                ))}
                 <button
                   className={`${styles.botones} ${
                     selectedGender === "Masculino" && styles.selected
@@ -108,12 +152,11 @@ const Home = () => {
                 >
                   Femenino
                 </button>
-                <h3>Ocupacion</h3>
-                <button className={`${styles.botones} ${selectedServices.includes("Enfermero") && styles.selected}`}onClick={() => handleServiceButtonClick("Enfermero")}>Enfermero</button>
-                <button className={`${styles.botones} ${selectedServices.includes("Medico") && styles.selected}`}onClick={() => handleServiceButtonClick("Medico")}>Medico</button>
-
-                  <br></br>
-                <button className={styles.botones} onClick={handleApplyButtonClick}>
+                <br></br>
+                <button
+                  className={styles.botones}
+                  onClick={hadleClick}
+                >
                   Aplicar
                 </button>
               </div>
@@ -125,7 +168,9 @@ const Home = () => {
                 <button className={styles.botones}>Menor</button>
                 <h3>Rating</h3>
                 <button className={styles.botones}>Mejor Calificacion</button>
-                <button className={styles.botones}>Menor Calificacion</button>
+                <button className={styles.botones}>
+                  Menor Calificacion
+                </button>
                 <h3>Antiguedad</h3>
                 <button className={styles.botones}>Mayor</button>
                 <button className={styles.botones}>Menor</button>
@@ -134,13 +179,12 @@ const Home = () => {
           </div>
 
           <div className={styles.cardContainer}>
-            {users.map((user) => (
-              <Card key={user.idPeople} user={user} />
-            ))}
+            {Array.isArray(providers) &&
+              providers.map((user) => <Card key={user.people.idPeople} user={user.people} />)}
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

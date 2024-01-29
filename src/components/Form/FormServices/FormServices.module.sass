@@ -1,0 +1,253 @@
+\:root
+  --color-color:rgba(97, 8, 8, 0.75)
+  --color-border:rgba(117, 34, 34, 0.665)
+  --color-shadow:0 0 8px rgb(37, 3, 3)
+  --color-text:rgb(32, 5, 5)
+  --color-background-tiped:#c4c4c4
+  --color-background-general:#f1f1f1
+  --color-error:rgb(145, 0, 0)
+
+.background
+  padding: 0
+  background-size: 100%
+  background-position: cover
+  background-repeat: no-repeat
+  display: flex
+  justify-content: center
+  align-items: center
+  height: 100vh
+
+.Form
+  position: relative
+  display: flex
+  align-items: center
+  flex-direction: column
+  width: 75vw
+  height: 100vh
+  margin: 10px 10px 10px 10px
+  border-radius: 30px
+  border: 3px solid var(--color-color)
+  box-shadow: var(--color-shadow)
+  margin: 50px
+  background-color: rgba(73, 73, 73, 0.671)
+  backdrop-filter: blur(10px)
+
+.DivButtonTittle
+  display: flex
+  margin: 10px
+  width: 100%
+  height: 60px
+
+.DetailButtonForm
+  position: absolute
+  height: 40px
+  width: 70px
+  top: 30px
+  left: 30px
+  padding: 5px 15px
+  background-image: url("../../../public/image/ButtonGoBack.jpg")
+  background-size: 130%
+  background-position: center
+  background-repeat: no-repeat
+  background-color: var(--color-color)
+  border: outset
+  border-color: var(--color-border)
+  border-radius: 25px
+  cursor: pointer
+  transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s
+
+.DetailButton
+  &:hover
+    background-color: var(--color-border)
+    transform: translateY(1px)
+    box-shadow: 0 3px 6px var(--color-shadow)
+    border: groove
+    border-color: var(--color-border)
+
+  &:active
+    transform: scale(0.95)
+    box-shadow: var(--color-shadow)
+
+.ReloadButton
+  position: absolute
+  height: 45px
+  width: 65px
+  bottom: 30px
+  right: 20%
+  background-size: 170%
+  background-position: center
+  background-repeat: no-repeat
+  background-color: var(--color-color)
+  border: outset
+  border-color: var(--color-border)
+  border-radius: 10px
+  cursor: pointer
+  transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s
+
+  &:hover
+    background-color: var(--color-border)
+    transform: translateY(1px)
+    box-shadow: 0 3px 6px var(--color-shadow)
+    border: groove
+    border-color: var(--color-border)
+
+  &:active
+    transform: scale(0.95)
+    box-shadow: var(--color-shadow)
+
+.DetailTittle
+  display: flex
+  position: relative
+  background-color: rgba(88, 88, 88, 0.5)
+  color: rgb(34, 5, 43)
+  padding: 10px
+  justify-content: center
+  left: 25%
+  top: 0px
+  width: 50%
+  height: fit-content
+  text-align: center
+  font-size: 26px
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.411)
+  border-radius: 10px
+  border: 3px solid rgba(104, 14, 14, 0.589)
+  font-family: Arial, sans-serif
+
+.ContainerDivInput
+  display: grid
+  margin-top: 30px
+  width: 100%
+  height: 400px
+  max-width: 100%
+
+.FormDivInput
+  display: flex
+  align-items: center
+  margin-bottom: 15px
+  margin-left: 0px
+  margin-top: 20px
+  font-size: 18px
+  font-weight: bold
+  font-family: Verdana, Geneva, Tahoma, sans-serif
+
+.FormLavel
+  position: absolute
+  margin-right: 2%
+  left: 10%
+
+.DivLavel
+  margin: 0px 0px 0px 0px
+
+.Inputs
+  position: absolute
+  right: 40%
+  border: 1px solid var(--color-border)
+  width: 30%
+  height: 30px
+  border-radius: 6px
+  outline: none
+  font-size: 16px
+  color: var(--color-color)
+
+.ErrorMessage
+  position: relative
+  display: flex
+  justify-content: center
+  align-items: center
+  background-color: rgba(226, 218, 218, 0.329)
+  color: var(--color-error)
+  max-width: fit-content
+  border: 2px solir rgb(100, 16, 16)
+  border-radius: 4px
+  min-height: fit-content
+  height: 20px
+  align-items: center
+  margin-left: 62%
+  margin-top: 0px
+  font-weight: bold
+  font-size: 14px
+  flex-grow: 1
+
+.FormLavelImage
+  display: block
+  margin-bottom: 5px
+  color: var(--color-color)
+
+.ButtonFomr
+  position: absolute
+  height: 45px
+  width: 90px
+  bottom: 30px
+  right: 30px
+  color: var(--color-background-fondo2)
+  font-weight: bold
+  font-size: 14px
+  background-color: var(--color-color)
+  border: outset
+  border-color: var(--color-border)
+  border-radius: 10px
+  cursor: pointer
+  transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s
+
+  &:hover
+    background-color: var(--color-border)
+    transform: translateY(1px)
+    box-shadow: 0 3px 6px var(--color-shadow)
+    border: groove
+    border-color: var(--color-border)
+
+  &:active
+    transform: scale(0.95)
+    box-shadow: var(--color-shadow)
+
+@media (max-width: 800px)
+  .FormDivInput
+    margin-bottom: 15px
+    margin-top: 10px
+
+  .Inputs
+    right: 20%
+
+  .InputsTemp
+    left: 45%
+    width: 40%
+
+  .DetailButtonForm
+    transform: scale(80%)
+    left: 2%
+
+  .DetailTittle
+    font-size: 18px
+    left: 30%
+
+  .FormDivInput, .FormDivInputTemp
+    transform: scale(90%)
+
+  .ErrorMessage
+    width: 25%
+    margin-left: 220px
+    top: 70%
+    align-items: center
+    margin-top: 10px
+    font-size: 12px
+
+  .TemperamentsList
+    margin-top: 0px
+    margin-left: 0px
+    top: -400px
+    width: 90%
+    left: 20px
+    column-count: 4
+    font-weight: 100
+
+  .ReloadButton
+    right: 40%
+    background-size: 170%
+    background-position: center
+    background-repeat: no-repeat
+    background-color: var(--color-color)
+    border: outset
+    border-color: var(--color-border)
+    border-radius: 10px
+    cursor: pointer
+    transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s

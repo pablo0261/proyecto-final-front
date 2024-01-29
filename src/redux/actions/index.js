@@ -1,54 +1,39 @@
 import axios from "axios";
-export const GET_INFO_USER = "GET_INFO_USER";
-export const POST_NEW_INFO_USER = "POST_NEW_INFO_USER";
-export const SET_ERROR_BACK = "SET_ERROR_BACK";
-export const EDIT_INFO_USER = "EDIT_INFO_USER";
 
-import { 
+import {
   ACCESS_BACK_SAVE_DATA,
   LOG_OUT_DELETE_DATA,
+  GET_INFO_USER,
+  POST_NEW_INFO_USER,
+  SET_ERROR_BACK,
+  EDIT_INFO_USER,
+  CONTRAT_SERVICE_USER,
+  FILTER_CARDS,
+  GET_HOME_PROVIDER,
+  FILTER_SERVICES,
+  GET_FILTER_PROVIDER,
  } from "./action-types";
-import StoreItem from "../../Helpers/LocalStorage";
+
+const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
 
 //AccessAccount//
-const logInDataBase = (userLoggedData) => {
+const addInfoUserLog = (data) => {
   return async (dispatch) => {
-    try {
-      const { data } = await axios.get(`http://localhost:3001/people?email=${userLoggedData.email}`)
-      localStorage.setItem(StoreItem.emailUserLogged, userLoggedData.email)
-      return dispatch({
-        type : ACCESS_BACK_SAVE_DATA,
-        payload : data.people.data[0].people
-      })
-    } catch (error) {
-      window.alert(error)
-    }    
-  }
-}
-
-const signInDataBase = (userSingedData) => {
-  return async (dispatch) => {
-    try {
-      const { data } = await axios.post('http://localhost:3001/people', userSingedData)
-      localStorage.setItem(StoreItem.emailUserLogged, userSingedData.email)
-      return dispatch({
-        type : ACCESS_BACK_SAVE_DATA,
-        payload : data.result
-      })
-    } catch (error) {
-      window.alert(error)
-    }    
-  }
-}
+    return dispatch({
+      type: ACCESS_BACK_SAVE_DATA,
+      payload: data,
+    });
+  };
+};
 
 const logOutDeleteData = () => {
   return async (dispatch) => {
-    localStorage.clear()
+    localStorage.clear();
     return dispatch({
-      type : LOG_OUT_DELETE_DATA
-    })
+      type: LOG_OUT_DELETE_DATA,
+    });
     /* try {
-      const { data } = await axios.get(`http://localhost:3001/people?email=${userLoggedData.email}`)
+      const { data } = await axios.get(`${REACT_APP_API_URL}/people?email=${userLoggedData.email}`)
       return dispatch({
         type : LOG_OUT_DELETE_DATA,
         payload : data.result
@@ -56,32 +41,66 @@ const logOutDeleteData = () => {
     } catch (error) {
       window.alert(error)
     }  */
-  }
-}
+  };
+};
 
 const recoverUserLoggedData = (emailUserData) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get(`http://localhost:3001/people?email=${emailUserData}`)
-      return dispatch({
-        type : ACCESS_BACK_SAVE_DATA,
-        payload : data.people.data[0].people
-      })
+      const data = await axios.get(
+        `${REACT_APP_API_URL}/people?email=${emailUserData}`
+      );
+      if (data.status === 200) {
+        return dispatch({
+          type: ACCESS_BACK_SAVE_DATA,
+          payload: data.data.people.data[0].people,
+        });
+      } else {
+        console.log(data)
+      }
     } catch (error) {
-      window.alert(error)
-    }    
-  }
-}
+      window.alert(error);
+    }
+  };
+};
 
 //*---GET GENERALES---//
 
 const infoDetailProveedor = (id) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.get(`${REACT_APP_API_URL}/people/${id}`);
+      dispatch({
+        type: GET_INFO_USER,
+        payload: data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+const handleContratService = (item) => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.post(`${REACT_APP_API_URL}/people/${item}`);
+      dispatch({
+        type: CONTRAT_SERVICE_USER,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+  const allPeopleProvider = (item) => {
     return async (dispatch) => {
       try {
-        const { data } = await axios.get(`/people/${id}`);
+        const response = await axios.get(`${REACT_APP_API_URL}/people?typeOfPerson=provider`);
         dispatch({
-          type: GET_INFO_USER,
-          payload: data,
+          type: GET_HOME_PROVIDER,
+          payload: response.data.people.data,
         });
       } catch (error) {
         console.log(error);
@@ -89,33 +108,54 @@ const infoDetailProveedor = (id) => {
     };
   };
 
-const handleContratService = (item) => {
-    return async () => {
+  const geturlfiltered = (url) => {
+    return async (dispatch) => {
       try {
-        await axios.post(`/people/${item}`);//*Verificar si el post iria a la misma ruta
-        
+        const response = await axios.get(url);
+        dispatch({
+          type: GET_FILTER_PROVIDER,
+          payload: response.data.people.data,
+        });
       } catch (error) {
         console.log(error);
       }
     };
   };
 
-  //*---POST_NEW_INFO_USER---//
-const postUserData = (userData) => {
+  const filterservices = (item) => {
+    return async (dispatch) => {
+      try {
+        const response = await axios.get(`${REACT_APP_API_URL}/categories`);
+        dispatch({
+          type: FILTER_SERVICES,
+          payload: response.data.categories.data,
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+  };
+
+//*---POST_NEW_INFO_USER---//
+const postUserData = (userDataEnglish) => {
   return async (dispatch) => {
     try {
-      const response = await axios.post("/XXXXXX", userData);//*Verificar a que ruta enviar el post para que modifique el objeto person del back
+      const response = await axios.post(
+        `${REACT_APP_API_URL}/people`,
+        userDataEnglish
+      );
+      console.log(response);
       dispatch({
         type: POST_NEW_INFO_USER,
         payload: response.data,
       });
-      
     } catch (error) {
       if (error.response && error.response.data) {
         dispatch({
           type: SET_ERROR_BACK,
           payload: error.response.data,
         });
+        console.log(error);
         throw error.response.data;
       }
     }
@@ -125,25 +165,40 @@ const postUserData = (userData) => {
 const handleEditProfile = (formData) => {
   return async (dispatch) => {
     try {
-    dispatch({
-      type: EDIT_INFO_USER,
-      payload: formData,
-    });
-  } catch (error) {
-    console.error(error);
+      dispatch({
+        type: EDIT_INFO_USER,
+        payload: formData,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+}
+
+  const filter = (selectedServices, selectedGender)=>{
+    return async (dispatch) => {
+      try {
+        // const response = await axios.post(`${REACT_APP_API_URL}/people`);
+        dispatch({
+          type: FILTER_CARDS,
+          payload: [selectedServices]
+        });
+      } catch (error) {
+        console.error(error);
+      }
+    };
   }
-};
-};
-
-
 
   export {
-    logInDataBase,
-    signInDataBase,
+    addInfoUserLog,
     logOutDeleteData,
     recoverUserLoggedData,
     infoDetailProveedor,
     handleContratService,
     postUserData,
     handleEditProfile,
+    filter,
+    allPeopleProvider,
+    filterservices,
+    geturlfiltered,
   }

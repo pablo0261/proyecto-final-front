@@ -1,11 +1,11 @@
 import { Routes, Route } from 'react-router-dom';
 import Landing from './Views/Landing/Landing';
-import Home from './views/home/Home';
+import Home from './Views/Home/Home';
 import NotFound from './utils/notFound/NotFound';
 import Helpers from './Helpers/RoutesFront';
 import AccessAccount from './Views/AccessAccount/AccessAccount';
-import ProfileProviderView from './views/ProfileProviderView/ProfileProviderView';
 import NavBar from './components/NavBar/NavBar';
+import ProfileProviderView from './Views/ProfileProviderView/ProfileProviderView';
 import ReportsCustomerView from './Views/CustomerViews/ReportsCustomerView';
 import ConnectionsCustomerView from './Views/CustomerViews/ConnectionsCustomerView';
 import StatsProviderView from './Views/ProviderViews/StatsProviderView';
@@ -15,22 +15,23 @@ import Assistance from './views/Assistance/Assistance';
 import FAQs from './views/FAQs/FAQs';
 import ConsultReport from './views/ConsultReport/ConsultReport'
 import { useDispatch, useSelector } from 'react-redux';
-import Form from './components/Form/Form';
+import Form from './components/Form/FormProfileProvider/Form';
 import Footer from './components/Footer/Footer';
 import { useEffect } from 'react';
 import StoreItem from './Helpers/LocalStorage';
 import { recoverUserLoggedData } from './redux/actions';
 
+
 function App() {
 
   const dispatch = useDispatch()
 
-  useEffect(()=>{
-    
+  useEffect(() => {
+
     if (localStorage.getItem(StoreItem.emailUserLogged)) {
-      dispatch(recoverUserLoggedData(localStorage.getItem(StoreItem.emailUserLogged)) )
+      dispatch(recoverUserLoggedData(localStorage.getItem(StoreItem.emailUserLogged)))
     }
-  },[])
+  }, [])
 
   const userLoggedInfo = useSelector(state => state.infoUserLog)
 
@@ -40,31 +41,42 @@ function App() {
         userLoggedInfo.idPeople != null ?
           <div>
             <NavBar></NavBar>
-            <Routes>
-              {/* Cliente */}
-              <Route path={Helpers.HomeCustomerView} element={<Home />} />
-              <Route path={Helpers.ConnectionsCustomerView} element={<ConnectionsCustomerView />} />
-              <Route path={Helpers.ReportsCustomerView} element={<ReportsCustomerView />} />
-              <Route path={Helpers.ProfileCustomerView} element={<Home />} />
+            {
+              userLoggedInfo.typeOfPerson === 'customer' &&
+              <Routes>
+                {/* Cliente */}
+                <Route path={Helpers.HomeCustomerView} element={<Home />} />
+                <Route path={Helpers.ConnectionsCustomerView} element={<ConnectionsCustomerView />} />
+                <Route path={Helpers.ReportsCustomerView} element={<ReportsCustomerView />} />
+                <Route path={Helpers.ProfileCustomerView} element={<ProfileProviderView />} />
 
-              {/* Proveedor */}
-              <Route path={Helpers.StatsProviderView} element={<StatsProviderView />} />
-              <Route path={Helpers.ConnectionsProviderView} element={<ConnectionsProviderView />} />
-              <Route path={Helpers.ReportsProviderView} element={<ReportsProviderView />} />
-              <Route path={Helpers.ProfileProviderView} element={<ProfileProviderView />} />
-              <Route path={Helpers.Form} element={<Form />} />
-
-              {/* Administrador */}
+                <Route path='*' element={<NotFound />}></Route>
+              </Routes>
+            }
+            {
+              userLoggedInfo.typeOfPerson === 'provider' &&
+              <Routes>
+                {/* Proveedor */}
+                <Route path={Helpers.StatsProviderView} element={<StatsProviderView />} />
+                <Route path={Helpers.ConnectionsProviderView} element={<ConnectionsProviderView />} />
+                <Route path={Helpers.ReportsProviderView} element={<ReportsProviderView />} />
+                <Route path={Helpers.ProfileProviderView} element={<ProfileProviderView />} />
 
               {/* Footer */}
               <Route path={Helpers.Assistance} element={<Assistance />} />
               <Route path={Helpers.FAQs} element={<FAQs />} />
               <Route path={Helpers.ConsultReport} element={<ConsultReport />} />
 
-              {/* Rutas No Especificada */}
-              <Route path='*' element={<NotFound />}></Route>
-            </Routes>
-            <Footer/>
+                <Route path='*' element={<NotFound />}></Route>
+              </Routes>
+            }
+            {
+              userLoggedInfo.typeOfPerson === 'admin' &&
+              <Routes>
+                {/* Administrador */}
+              </Routes>
+            }
+            <Footer />
           </div>
           :
           <div>
@@ -75,7 +87,7 @@ function App() {
 
               <Route path='*' element={<NotFound />}></Route>
             </Routes>
-            <Footer/>
+            <Footer />
           </div>
       }
 

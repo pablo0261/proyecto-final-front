@@ -1,0 +1,136 @@
+@use '../../../Styles/Mixins'
+@import '../../../Styles/Variables'
+
+.background
+	background-color: #F2F2F2
+	display: flex
+	justify-content: center
+
+	p
+		margin: 0
+	
+.wrapper
+	width: 90%
+	display: flex
+	flex-direction: column
+	
+.header
+	display: flex
+	height: 40px
+
+.editButton
+	position: absolute
+	right: 9%
+	width: 40px
+	height: 40px
+	background-image: url('../../../assets/Icons/IconEdit.png')
+	background-position: center
+	background-repeat: no-repeat
+	transition: .2s
+	border: none
+
+.editButton:hover
+	transform: scale(1.15)
+
+.servicesList
+	display: flex
+	justify-content: space-around
+
+.buttonList
+	display: flex
+
+.crossButton	
+	background-image: url('../../../assets/Icons/IconCross.png')
+	height: 40px
+	width: 40px
+	border: none
+	color: $secondaryColor
+	transition: .2s
+	align-items: center
+
+.serviceItem
+	display: block
+	width: 40%
+
+.serviceDescription
+	height: 40px
+	width: 100%
+	padding: 0px 15px
+	font-family: 'K2D', sans-serif
+	font-size: 16px
+	font-style: normal
+	font-weight: normal
+	color: $secondaryColor
+	box-sizing: border-box
+	border: 2px solid $secondaryColor
+	border-radius: 10px
+	transition: .2s
+	margin-block: 10px
+
+serviceDescription:focus
+	outline: none
+	border: 2px solid $alertColor
+	transform: scale(1.02)
+
+.column1
+	@include Mixins.font($primaryColor, 22px, bold, normal)
+	margin-block: 10px
+
+.priceList
+	display: block
+	width: 10%
+
+.column2
+	@include Mixins.font($primaryColor, 18px, bold, normal)
+	text-align: right
+
+	
+.contratList
+	@include Mixins.font($primaryColor, 18px, bold, normal)
+	justify-content: end
+	display: block
+	width: 30%	
+
+
+.table
+	border-collapse: collapse
+	border-color: white
+	border: none
+
+
+.serviceDescription
+	border: 2px green solid
+
+.servicePrice
+	@include Mixins.font($tertiaryColor, 14px, normal, normal)
+	@include Mixins.boxShadowInputs
+	width: 100%
+	height: 35px
+	margin-block: 20px
+	padding: auto
+
+.contratItem
+	@include Mixins.font($tertiaryColor, 14px, normal, normal)
+	@include Mixins.boxShadowInputs
+	width: 100%
+	height: 35px
+	margin-block: 20px
+	padding: auto
+
+.textData
+	@include Mixins.textGrey(left, none)
+
+.deleteIcon
+	margin: 0px 10px
+	width: 40px
+	height: 40px
+	background-image: url('../../../assets/Icons/IconCross.png')
+	background-position: center
+	background-repeat: no-repeat
+	border: none
+
+.textAlert
+	padding: 10px 10px
+	@include Mixins.textDetail(left, none)
+
+

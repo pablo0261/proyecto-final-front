@@ -5,40 +5,72 @@ import { Link, useNavigate } from 'react-router-dom';
 import Helpers from '../../Helpers/RoutesFront';
 import StoreItem from '../../Helpers/LocalStorage';
 import { useDispatch } from 'react-redux';
-import { logInDataBase, signInDataBase } from '../../redux/actions';
 import style from './AccessAccount.module.sass'
+import axios from 'axios';
+import { addInfoUserLog } from '../../redux/actions';
 
 function AccessAccount() {
 
     const isProvider = JSON.parse(localStorage.getItem(StoreItem.isProvider))
 
     const [signInView, setSignInView] = useState(false)
-
     const handleFormsVisibility = () => {
         setSignInView(!signInView)
     }
 
     const dispatch = useDispatch()
+    const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
     const navigate = useNavigate()
 
-    const logInProcess = (logInData) => {
-        if (isProvider) {
-            dispatch(logInDataBase(logInData))
-            navigate(Helpers.StatsProviderView)
-        } else {
-            dispatch(logInDataBase(logInData))
-            navigate(Helpers.HomeCustomerView)
-        }
+    const logInProcess = async (logInData) => {
+        try {
+            const response = await axios.get(
+                `${REACT_APP_API_URL}/people?email=${logInData.email}`
+            );
+            console.log(response)
+            if (response.status === 200) {
+                const user = response.data.people.data[0].people
+                localStorage.setItem(StoreItem.emailUserLogged, logInData.email);
 
+                dispatch(addInfoUserLog(user))
+
+                if (user.typeOfPerson === 'admin') {
+
+                } else if (user.typeOfPerson === 'provider') {
+                    navigate(Helpers.StatsProviderView)
+                } else {
+                    navigate(Helpers.HomeCustomerView)
+                }
+            }
+        } catch (error) {
+            window.alert(error);
+        }
     }
 
-    const signInProcess = (signInData) => {
-        if (isProvider) {
-            dispatch(signInDataBase(signInData))
-            navigate(Helpers.StatsProviderView)
-        } else {
-            dispatch(signInDataBase(signInData))
-            navigate(Helpers.HomeCustomerView)
+    const signInProcess = async (signInData) => {
+        try {
+            const response = await axios.post(
+                `${REACT_APP_API_URL}/people`, signInData
+            );
+
+            console.log(response)
+
+            if (response.status === 201) {
+                const user = response.data.people.data[0].people
+                localStorage.setItem(StoreItem.emailUserLogged, signInData.email);
+
+                dispatch(addInfoUserLog(user))
+
+                if (user.typeOfPerson === 'admin') {
+
+                } else if (user.typeOfPerson === 'provider') {
+                    navigate(Helpers.StatsProviderView)
+                } else {
+                    navigate(Helpers.HomeCustomerView)
+                }
+            }
+        } catch (error) {
+            window.alert(error);
         }
     }
 
