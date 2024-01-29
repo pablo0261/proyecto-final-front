@@ -1,17 +1,25 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { postUserData } from "../../../redux/actions/index";
+import { postUserData } from "../../../redux/actions/index"
 import validation from "../FormProfileProvider/validationFormProfile";
 
-function Form() {
+function Form({ handleClickForm }) {
   const dispatch = useDispatch();
-  const datosForm = useSelector((state) => state.datosForm);
+
+  const userLog = useSelector(state => state.infoUserLog);
+  useEffect(() => {
+    setUserData(prevUserData => ({
+      ...prevUserData,
+      id: userLog.idPeople,
+    }));
+    console.log(userLog)
+  }, []);
 
   const [userData, setUserData] = useState({
-    Servicio: "", // Corregir el nombre del campo a "Servicio"
+    Servicio: "", 
     selectedOptions: [],
     inputValue: "",
-    precioServicio: "", // Nuevo campo para el precio del servicio
+    precioServicio: "", 
   });
 
   const [localErrors, setLocalErrors] = useState({});
@@ -64,15 +72,12 @@ function Form() {
       // Actualizar el objeto userData antes de enviarlo al servidor
       const updatedUserData = {
         ...userData,
-        precioServicio: userData.precioServicio.trim(), // Eliminar espacios en blanco alrededor del precio
+        precioServicio: userData.precioServicio, // Eliminar espacios en blanco alrededor del precio
       };
 
       dispatch(postUserData(updatedUserData))
         .then(() => {
           alert("El Formulario se cargó correctamente");
-        })
-        .then(() => {
-          window.location.reload();
         })
         .catch((error) => {
           console.log(error.error);

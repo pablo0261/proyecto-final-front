@@ -1,62 +1,111 @@
-import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-// import { handleDeleteService, handleContratService } from "redux/actions";
-import "./ServiceProviderCard.style.css";
+import { useState } from "react";
+// import Form from "../../Form/FormServices/FormServices"
+import Form from "../../Form/FormProfileProvider/Form";
+import style from "./ServiceProviderCard.module.sass";
 
 function ServicesProviderCard() {
-  // const dispatch = useDispatch();
-  const infoUserLog = useSelector((state) => state.infoUserLog);
+  // const infoUserLog = useSelector((state) => state.infoUserLog);
+  const servicesData = [
+    {
+      description: "Cuidado",
+      price: "3000",
+    },
+    {
+      description: "Cuidado y Limpieza",
+      price: "5000",
+    },
+    {
+      description: "Cuidado, Limpieza y Cocina",
+      price: "6500",
+    },
+  ];
 
+  const [showForm, setShowForm] = useState(false);
+
+  const handleClikForm = () => {
+    setShowForm(!showForm);
+  };
+
+  //!AQUI TOMA LOS DATOS CUANDO EL ESTADO GLOBAL TENGA LA INFO
   // useEffect(() => {
-  //   let isProvider;
-  //   if (localStorage.getItem("isProvider") !== "undefined") {
-  //     isProvider = JSON.parse(localStorage.getItem("isProvider"));
-  //   } else {
-  //     isProvider = null;
-  //     window.alert("LocalStorage.isProvider No Existe. ¡¿Landing?!");
-  //   }
-  // }, []);
+  //   if (infoUserLog.people && infoUserLog.people.data[0] && infoUserLog.people.data[0].categories) {
+  //     const categoriesOptions = infoUserLog.people.data[0].categories.flatMap((category) => {
+  //       return category.categories_options.map((option) => {
+  //         return {
+  //           description: option.description,
+  //           price: option.people_options.length > 0 ? option.people_options[0].price : null,
+  //         };
+  //       });
+  //     });
 
-  const handleDeleteClick = () => {
-    //  dispatch(handleDeleteService(item)); //* enviará un put para actualizar el estado global infoDetailProveedor
-  };
-  const handleEditClick = () => {
-    //  dispatch(handleDeleteService(item)); //* enviará un put para actualizar el estado global infoDetailProveedor
-  };
+  //     setServicesData(categoriesOptions);
+  //   }
+  // }, [infoUserLog]);
 
   return (
-    <div className="container">
-      <Link to={{ pathname: `/form/${2}` }}>
-        <button src="editImage" alt="edit" className="edit-button">
-          {" "}
-          Edit
-        </button>
-      </Link>
-      <img className="edit" src="editImage" alt="edit" />
-      <table>
-        <thead>
-          <tr>
-            <th className="delete"></th>
-            <th className="service">Servicios</th>
-            <th className="cost">Precio x Hora</th>
-            <td>
-              <button onClick={() => handleEditClick()}>X</button>
-            </td>
-          </tr>
-        </thead>
-        <tbody>
-          {infoUserLog.service.map((item, index) => (
-            <tr key={index}>
-              <td>
-                <button onClick={() => handleDeleteClick(item)}>X</button>
-              </td>
-              <td className="service">{item.name}</td>
-              <td className="cost">Pesos {item.value}</td>
-              <td></td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+    <div className={style.background}>
+      <div className={style.wrapper}>
+        <div className={style.header}>
+          <button
+            onClick={() => handleClikForm()}
+            className={style.editButton}
+          ></button>
+        </div>
+        <div className={style.servicesList}>
+          <div className={style.serviceItem}>
+            <div className={style.column1}>Servicios</div>
+            <div className={style.buttonList}>
+              <button
+                onClick={() => handleClikForm()}
+                className={style.crossButton}
+              ></button>
+              <div className={style.serviceDescription}>
+                {servicesData[0].description}
+              </div>
+            </div>
+            <div className={style.buttonList}>
+              <button
+                onClick={() => handleClikForm()}
+                className={style.crossButton}
+              ></button>
+              <div className={style.serviceDescription}>
+                {servicesData[1].description}
+              </div>
+            </div>
+            <div className={style.buttonList}>
+              <button
+                onClick={() => handleClikForm()}
+                className={style.crossButton}
+              ></button>
+              <div className={style.serviceDescription}>
+                {servicesData[2].description}
+              </div>
+            </div>
+            
+          </div>
+
+          <div className={style.priceList}>
+            <div className={style.column2}>Precio x Hora</div>
+            <div className={style.servicePrice}>
+              Pesos {servicesData[0].price}
+            </div>
+            <div className={style.servicePrice}>
+              Pesos {servicesData[1].price}
+            </div>
+            <div className={style.servicePrice}>
+              Pesos {servicesData[2].price}
+            </div>
+          </div>
+
+          <div className={style.contratList}>
+            <div>Disponibilidad</div>
+            <div className={style.contratItem}>Contratar este Servicio </div>
+            <div className={style.contratItem}>Contratar este Servicio </div>
+            <div className={style.contratItem}>Contratar este Servicio </div>
+          </div>
+        </div>
+      </div>
+      {showForm && <Form handleClickForm={handleClikForm} />}
     </div>
   );
 }
