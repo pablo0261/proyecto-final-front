@@ -8,6 +8,7 @@ import {
   FILTER_CARDS,
   GET_HOME_PROVIDER,
   FILTER_SERVICES,
+  GET_FILTER_PROVIDER,
   // CONTRAT_SERVICE_USER
 } from "../actions/action-types";
 
@@ -194,6 +195,11 @@ const rootReducer = (state = initialState, { type, payload }) => {
       };
     
     case GET_HOME_PROVIDER:
+      return {
+        ...state,
+        getAllPeople: payload,
+      };
+    case GET_FILTER_PROVIDER:
       return {
         ...state,
         getAllPeople: payload,

@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import styles from "../home/Home.module.sass";
 import MapHome from "../../components/MapHome/MapHome";
 import { useSelector, useDispatch } from "react-redux";
-import { filter, allPeopleProvider, filterservices } from "../../redux/actions";
+import { filter, allPeopleProvider, filterservices, geturlfiltered } from "../../redux/actions";
 
 const Home = () => {
   const [users, setUsers] = useState([]);
@@ -68,10 +68,28 @@ const Home = () => {
   const hadleClick = () => {
     handleApplyButtonClick();
     dispatch(filter(selectedServices, selectedGender));
+    urlfiltered()
   };
 
-  console.log("este es el local", providers);
-
+  
+  const generarConsulta = (filtros) => {
+    if (filtros && filtros.length > 0) {
+      const serviciosSeleccionados = filtros[0];
+      if (Array.isArray(serviciosSeleccionados)) {
+        const serviciosQuery = serviciosSeleccionados.map((servicio) => `idOption=${servicio}`).join('&');
+        const url = `https://carewithlove.onrender.com/people?${serviciosQuery}&typeOfPerson=provider`;
+        return url;
+      }
+    }
+      return 'https://carewithlove.onrender.com/people';
+  };
+  const consultaGenerada = generarConsulta(filtros);
+  console.log(consultaGenerada)
+  console.log(providers)
+  const urlfiltered = () => {
+    dispatch(geturlfiltered(consultaGenerada))
+  }
+  
 
   return (
     <div className={styles.background}>
@@ -110,7 +128,7 @@ const Home = () => {
                           styles.selected
                         }`}
                         onClick={() =>
-                          handleServiceButtonClick(option.description)
+                          handleServiceButtonClick(option.idOption)
                         }
                       >
                         {option.description}
