@@ -16,7 +16,7 @@ function MapHome() {
   // var map = L.map('map').setView([51.505, -0.09], 13);
   return (
     <div>
-      <MapContainer className={styles.mapContainer} center={position} zoom={13} scrollWheelZoom={true}>
+      <MapContainer className={styles.mapWrapper} center={position} zoom={13} scrollWheelZoom={true}>
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -26,7 +26,7 @@ function MapHome() {
             A pretty CSS3 popup. <br /> Easily customizable.
           </Popup>
         </Marker>
-      </MapContainer>,
+      </MapContainer>
     </div>
   )
 }
