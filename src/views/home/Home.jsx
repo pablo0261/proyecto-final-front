@@ -18,7 +18,7 @@ const Home = () => {
 
   const [selectedServices, setSelectedServices] = useState(filterOrderSelectedGlobal.filters);
 
-  /* const [selectedGender, setSelectedGender] = useState(null); */
+  /* const [selectedGender, setSelectedGender] = useState(null) */
 
   useEffect(() => {
     if (Object.values(filterOrderSelectedGlobal).every(property => property.length === 0)) {
