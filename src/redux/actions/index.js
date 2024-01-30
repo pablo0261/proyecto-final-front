@@ -8,11 +8,11 @@ import {
   SET_ERROR_BACK,
   EDIT_INFO_USER,
   CONTRAT_SERVICE_USER,
-  FILTER_CARDS,
   GET_HOME_PROVIDER,
   FILTER_SERVICES,
   GET_FILTER_PROVIDER,
- } from "./action-types";
+  FILTER_ORDER_SELECTED,
+} from "./action-types";
 
 const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
 
@@ -94,47 +94,60 @@ const handleContratService = (item) => {
   };
 };
 
-  const allPeopleProvider = (item) => {
-    return async (dispatch) => {
-      try {
-        const response = await axios.get(`${REACT_APP_API_URL}/people?typeOfPerson=provider`);
-        dispatch({
-          type: GET_HOME_PROVIDER,
-          payload: response.data.people.data,
-        });
-      } catch (error) {
-        console.log(error);
-      }
-    };
+const allPeopleProvider = () => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.get(`${REACT_APP_API_URL}/people?typeOfPerson=provider`);
+      return dispatch({
+        type: GET_HOME_PROVIDER,
+        payload: response.data.people.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
+};
 
-  const geturlfiltered = (url) => {
-    return async (dispatch) => {
-      try {
-        const response = await axios.get(url);
-        dispatch({
-          type: GET_FILTER_PROVIDER,
-          payload: response.data.people.data,
-        });
-      } catch (error) {
-        console.log(error);
-      }
-    };
+const getPeopleFilteredOrderedPagination = (queryConstructor) => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.get(`${REACT_APP_API_URL}/people?typeOfPerson=provider&${queryConstructor}`);
+      return dispatch({
+        type: GET_FILTER_PROVIDER,
+        payload: response.data.people.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
+};
 
-  const filterservices = (item) => {
-    return async (dispatch) => {
-      try {
-        const response = await axios.get(`${REACT_APP_API_URL}/categories`);
-        dispatch({
-          type: FILTER_SERVICES,
-          payload: response.data.categories.data,
-        });
-      } catch (error) {
-        console.log(error);
-      }
-    };
+const getFiltersOrdersDB = () => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.get(`${REACT_APP_API_URL}/categories`);
+      return dispatch({
+        type: FILTER_SERVICES,
+        payload: response.data.categories.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
+};
+
+const saveSelectionsGlobal = (selectedOptions) => {
+  return async (dispatch) => {
+    try {
+      return dispatch({
+        type: FILTER_ORDER_SELECTED,
+        payload: selectedOptions
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+}
 
 //*---POST_NEW_INFO_USER---//
 const postUserData = (userDataEnglish) => {
@@ -175,30 +188,16 @@ const handleEditProfile = (formData) => {
   };
 }
 
-  const filter = (selectedServices, selectedGender)=>{
-    return async (dispatch) => {
-      try {
-        // const response = await axios.post(`${REACT_APP_API_URL}/people`);
-        dispatch({
-          type: FILTER_CARDS,
-          payload: [selectedServices]
-        });
-      } catch (error) {
-        console.error(error);
-      }
-    };
-  }
-
-  export {
-    addInfoUserLog,
-    logOutDeleteData,
-    recoverUserLoggedData,
-    infoDetailProveedor,
-    handleContratService,
-    postUserData,
-    handleEditProfile,
-    filter,
-    allPeopleProvider,
-    filterservices,
-    geturlfiltered,
-  }
+export {
+  addInfoUserLog,
+  logOutDeleteData,
+  recoverUserLoggedData,
+  infoDetailProveedor,
+  handleContratService,
+  postUserData,
+  handleEditProfile,
+  saveSelectionsGlobal,
+  allPeopleProvider,
+  getFiltersOrdersDB,
+  getPeopleFilteredOrderedPagination,
+}

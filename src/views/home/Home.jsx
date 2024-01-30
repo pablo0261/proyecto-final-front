@@ -3,23 +3,29 @@ import { useEffect, useState } from "react";
 import styles from "../home/Home.module.sass";
 import MapHome from "../../components/MapHome/MapHome";
 import { useSelector, useDispatch } from "react-redux";
-import { filter, allPeopleProvider, filterservices, geturlfiltered } from "../../redux/actions";
+import { allPeopleProvider, getPeopleFilteredOrderedPagination, saveSelectionsGlobal } from "../../redux/actions";
 
 const Home = () => {
-  const [users, setUsers] = useState([]);
-  const dispatch = useDispatch();
-  const [showFilters, setShowFilters] = useState(false);
-  const [showOrder, setShowOrder] = useState(false);
-  const [selectedServices, setSelectedServices] = useState([]);
-  const [selectedGender, setSelectedGender] = useState(null);
-  const filtros = useSelector((state) => state.FilterCards);
+  
+  const filterOrderSelectedGlobal = useSelector((state) => state.filterOrderSelected);
   const providers = useSelector((state) => state.getAllPeople);
   const allServices = useSelector((state) => state.allServices);
 
+  const dispatch = useDispatch();
+
+  const [showFilters, setShowFilters] = useState(false);
+  const [showOrder, setShowOrder] = useState(false);
+
+  const [selectedServices, setSelectedServices] = useState(filterOrderSelectedGlobal.filters);
+
+
+
   useEffect(() => {
-    dispatch(allPeopleProvider());
-    dispatch(filterservices());
+    if (filterOrderSelectedGlobal.length === 0) {
+      dispatch(allPeopleProvider());
+    }
   }, []);
+
 
   const handleFilterButtonClick = () => {// Función para manejar el clic en el botón de filtro
     setShowFilters(!showFilters);// Cambia la visibilidad de la sección de filtros
@@ -28,73 +34,46 @@ const Home = () => {
     }
   };
 
+
   const handleOrderButtonClick = () => {// Función para manejar el clic en el botón de ordenar
     setShowOrder(!showOrder);// Cambia la visibilidad de la sección de orden
     if (!showOrder) {// Si la sección de orden está visible, oculta la sección de filtros
+
       setShowFilters(false);
     }
   };
 
-  //*Agrega o quita servicios
-  const handleServiceButtonClick = (service) => {// Función para manejar el clic en un botón de servicio
-    setSelectedServices((prevSelectedServices) => {// Agrega o elimina un servicio seleccionado del estado
+
+  const handleServiceSelected = (service) => {
+    setSelectedServices((prevSelectedServices)
       if (prevSelectedServices.includes(service)) {
-        return prevSelectedServices.filter(
-          (selectedService) => selectedService !== service
-        );
+        return prevSelectedServices.filter((selectedService) => selectedService !== service);
       } else {
         return [...prevSelectedServices, service];
       }
     });
   };
 
-  const handleGenderButtonClick = (gender) => {// Función para manejar el clic en un botón de género
-    setSelectedGender((prevSelectedGender) => // Cambia el género seleccionado entre null y el género actual
-      prevSelectedGender === gender ? null : gender
-    );
+
+
+  const handleConfirmFilters = () => {
+ 
+    setShowFilters(false);
   };
 
-  const handleApplyButtonClick = (selectedGender) => {//* Función para aplicar los filtros seleccionados
-    console.log("Servicios seleccionados:", selectedServices);
-    if (selectedGender) {// Si se selecciona un género, lo agrega a la lista de servicios seleccionados
-      console.log("Género seleccionado:", selectedGender);
-      setSelectedServices((prevSelectedServices) => [
-        ...prevSelectedServices,
-        selectedGender,
-      ]);
+  const queryConstructor = () => {
+    if (selectedServices.length > 0) {
+      const queryConstruct = `idOption=${selectedServices.map((idOption) => idOption).join()}`;
+      return queryConstruct;
     }
-    setShowFilters(false); // Oculta la sección de filtros
   };
 
-  const hadleClick = () => {//* Función que se ejecuta al hacer clic en el botón de aplicar
-    handleApplyButtonClick();// Llama a la función para aplicar los filtros
-    dispatch(filter(selectedServices, selectedGender));// Despacha la acción de filtrado con los servicios y género seleccionados
-    urlfiltered()// Llama a la función para filtrar la URL
+  const handleApply = () => {
+    handleConfirmFilters();
+    queryConstructor();
+    dispatch(saveSelectionsGlobal({ filters : selectedServices }));
+    dispatch(getPeopleFilteredOrderedPagination(queryConstructor()));
   };
-
-
-  const generarConsulta = (filtros) => {//* Función para generar la consulta para la URL según los filtros
-    if (filtros && filtros.length > 0) {
-      const serviciosSeleccionados = filtros[0];
-      if (Array.isArray(serviciosSeleccionados)) {// Genera la parte de la URL con los servicios seleccionados
-        const serviciosQuery = serviciosSeleccionados.map((servicio) => `idOption=${servicio}`).join('&');
-        // Construye la URL completa
-        const url = `https://carewithlove.onrender.com/people?${serviciosQuery}&typeOfPerson=provider`;
-        return url;
-      }
-    }
-      // Si no hay filtros, devuelve la URL base
-    return 'https://carewithlove.onrender.com/people';
-  };
-  // Generar la consulta para la URL
-  const consultaGenerada = generarConsulta(filtros);
-  console.log(consultaGenerada)
-  console.log(providers)
-  // Función para despachar la acción de filtrado con la URL generada
-  const urlfiltered = () => {
-    dispatch(geturlfiltered(consultaGenerada))
-  }
-
 
   return (
     <div className={styles.background}>
@@ -105,8 +84,8 @@ const Home = () => {
         </div>
         <div className={styles.servicesContainer}>
           <div className={styles.filterOrderContainer}>
-            <button className={showFilters ? styles.buttonActived : styles.button} onClick={handleFilterButtonClick}>Filtrar</button>
-            <button className={showOrder ? styles.buttonActived : styles.button} onClick={handleOrderButtonClick}>Ordenar</button>
+            <button className={showFilters ? styles.buttonActived : styles.button} onClick={() => handleFilterVisibility()}>Filtrar</button>
+            <button className={showOrder ? styles.buttonActived : styles.button} onClick={() => handleOrderVisibility()}>Ordenar</button>
           </div>
           <div className={styles.filterOrderBox}>
             {showFilters && (
@@ -118,8 +97,8 @@ const Home = () => {
                       {category.categories_options.map((option) => (
                         <button
                           key={option.idOption}
-                          className={selectedServices.includes(option.description) ? styles.optionSelected : styles.optionNotSelected}
-                          onClick={() => handleServiceButtonClick(option.idOption)}
+                          className={selectedServices.includes(option.idOption) ? styles.optionSelected : styles.optionNotSelected}
+                          onClick={() => handleServiceSelected(option.idOption)}
                         >
                           {option.description}
                         </button>
@@ -127,7 +106,7 @@ const Home = () => {
                     </div>
                   </div>
                 ))}
-                <button
+                {/* <button
                   className={selectedGender === "Masculino" && styles.selected ? styles.optionSelected : styles.optionNotSelected}
                   onClick={() => handleGenderButtonClick("Masculino")}
                 >
@@ -138,9 +117,9 @@ const Home = () => {
                   onClick={() => handleGenderButtonClick("Femenino")}
                 >
                   Femenino
-                </button>
+                </button> */}
                 <div className={styles.applyWrapper}>
-                  <button className={styles.button} onClick={hadleClick}>Aplicar</button>
+                  <button className={styles.button} onClick={handleApply}>Aplicar</button>
                 </div>
               </div>
             )}
