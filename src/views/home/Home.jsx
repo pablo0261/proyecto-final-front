@@ -21,7 +21,7 @@ const Home = () => {
 
 
   useEffect(() => {
-    if (filterOrderSelectedGlobal.length === 0) {
+    if (Object.values(filterOrderSelectedGlobal).every(property => property.length === 0)) {
       dispatch(allPeopleProvider());
     }
   }, []);
