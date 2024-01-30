@@ -18,34 +18,30 @@ const Home = () => {
 
   const [selectedServices, setSelectedServices] = useState(filterOrderSelectedGlobal.filters);
 
-
+  /* const [selectedGender, setSelectedGender] = useState(null) */
 
   useEffect(() => {
-    if (filterOrderSelectedGlobal.length === 0) {
+    if (Object.values(filterOrderSelectedGlobal).every(property => property.length === 0)) {
       dispatch(allPeopleProvider());
     }
   }, []);
 
-
-  const handleFilterButtonClick = () => {// Función para manejar el clic en el botón de filtro
-    setShowFilters(!showFilters);// Cambia la visibilidad de la sección de filtros
-    if (!showFilters) {// Si los filtros están visibles, oculta la sección de orden
+  const handleFilterVisibility = () => {
+    setShowFilters(!showFilters);
+    if (!showFilters) {
       setShowOrder(false);
     }
   };
 
-
-  const handleOrderButtonClick = () => {// Función para manejar el clic en el botón de ordenar
-    setShowOrder(!showOrder);// Cambia la visibilidad de la sección de orden
-    if (!showOrder) {// Si la sección de orden está visible, oculta la sección de filtros
-
+  const handleOrderVisibility = () => {
+    setShowOrder(!showOrder);
+    if (!showOrder) {
       setShowFilters(false);
     }
   };
 
-
   const handleServiceSelected = (service) => {
-    setSelectedServices((prevSelectedServices)
+    setSelectedServices((prevSelectedServices) => {
       if (prevSelectedServices.includes(service)) {
         return prevSelectedServices.filter((selectedService) => selectedService !== service);
       } else {
@@ -53,11 +49,22 @@ const Home = () => {
       }
     });
   };
+  
 
-
+  /* const handleGenderButtonClick = (gender) => {
+    setSelectedGender((prevSelectedGender) =>
+      prevSelectedGender === gender ? null : gender
+    );
+  }; */
 
   const handleConfirmFilters = () => {
- 
+    /* if (selectedGender) {
+      console.log("Género seleccionado:", selectedGender);
+      setSelectedServices((prevSelectedServices) => [
+        ...prevSelectedServices,
+        selectedGender,
+      ]);
+    } */
     setShowFilters(false);
   };
 

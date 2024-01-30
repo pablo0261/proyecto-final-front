@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import "./EducationExperienciaProvider.style.css";
+import "./EducationExperienciaProvider.module.sass";
 
 function EducationExperienciaProvider() {
   const infoUserLog = useSelector((state) => state.infoUserLog);
