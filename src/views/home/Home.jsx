@@ -21,22 +21,23 @@ const Home = () => {
     dispatch(filterservices());
   }, []);
 
-  const handleFilterButtonClick = () => {
-    setShowFilters(!showFilters);
-    if (!showFilters) {
+  const handleFilterButtonClick = () => {// Función para manejar el clic en el botón de filtro
+    setShowFilters(!showFilters);// Cambia la visibilidad de la sección de filtros
+    if (!showFilters) {// Si los filtros están visibles, oculta la sección de orden
       setShowOrder(false);
     }
   };
 
-  const handleOrderButtonClick = () => {
-    setShowOrder(!showOrder);
-    if (!showOrder) {
+  const handleOrderButtonClick = () => {// Función para manejar el clic en el botón de ordenar
+    setShowOrder(!showOrder);// Cambia la visibilidad de la sección de orden
+    if (!showOrder) {// Si la sección de orden está visible, oculta la sección de filtros
       setShowFilters(false);
     }
   };
 
-  const handleServiceButtonClick = (service) => {
-    setSelectedServices((prevSelectedServices) => {
+  //*Agrega o quita servicios
+  const handleServiceButtonClick = (service) => {// Función para manejar el clic en un botón de servicio
+    setSelectedServices((prevSelectedServices) => {// Agrega o elimina un servicio seleccionado del estado
       if (prevSelectedServices.includes(service)) {
         return prevSelectedServices.filter(
           (selectedService) => selectedService !== service
@@ -47,45 +48,49 @@ const Home = () => {
     });
   };
 
-  const handleGenderButtonClick = (gender) => {
-    setSelectedGender((prevSelectedGender) =>
+  const handleGenderButtonClick = (gender) => {// Función para manejar el clic en un botón de género
+    setSelectedGender((prevSelectedGender) => // Cambia el género seleccionado entre null y el género actual
       prevSelectedGender === gender ? null : gender
     );
   };
 
-  const handleApplyButtonClick = () => {
+  const handleApplyButtonClick = (selectedGender) => {//* Función para aplicar los filtros seleccionados
     console.log("Servicios seleccionados:", selectedServices);
-    if (selectedGender) {
+    if (selectedGender) {// Si se selecciona un género, lo agrega a la lista de servicios seleccionados
       console.log("Género seleccionado:", selectedGender);
       setSelectedServices((prevSelectedServices) => [
         ...prevSelectedServices,
         selectedGender,
       ]);
     }
-    setShowFilters(false);
+    setShowFilters(false); // Oculta la sección de filtros
   };
 
-  const hadleClick = () => {
-    handleApplyButtonClick();
-    dispatch(filter(selectedServices, selectedGender));
-    urlfiltered()
+  const hadleClick = () => {//* Función que se ejecuta al hacer clic en el botón de aplicar
+    handleApplyButtonClick();// Llama a la función para aplicar los filtros
+    dispatch(filter(selectedServices, selectedGender));// Despacha la acción de filtrado con los servicios y género seleccionados
+    urlfiltered()// Llama a la función para filtrar la URL
   };
 
 
-  const generarConsulta = (filtros) => {
+  const generarConsulta = (filtros) => {//* Función para generar la consulta para la URL según los filtros
     if (filtros && filtros.length > 0) {
       const serviciosSeleccionados = filtros[0];
-      if (Array.isArray(serviciosSeleccionados)) {
+      if (Array.isArray(serviciosSeleccionados)) {// Genera la parte de la URL con los servicios seleccionados
         const serviciosQuery = serviciosSeleccionados.map((servicio) => `idOption=${servicio}`).join('&');
+        // Construye la URL completa
         const url = `https://carewithlove.onrender.com/people?${serviciosQuery}&typeOfPerson=provider`;
         return url;
       }
     }
+      // Si no hay filtros, devuelve la URL base
     return 'https://carewithlove.onrender.com/people';
   };
+  // Generar la consulta para la URL
   const consultaGenerada = generarConsulta(filtros);
   console.log(consultaGenerada)
   console.log(providers)
+  // Función para despachar la acción de filtrado con la URL generada
   const urlfiltered = () => {
     dispatch(geturlfiltered(consultaGenerada))
   }

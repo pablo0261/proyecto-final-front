@@ -44,6 +44,7 @@ function ProfileProvider() {
               <p className={style.textAlert}>Completa tu perfil para poder verificar tu cuenta. Ten en cuenta que los perfiles no verificados no son mostrados a los clientes.</p>
             </div>
           }
+          <button onClick={()=>handleClikForm()} className={style.editButton}></button>
         </div>
         <div className={style.perfilWrapper}>
           <div className={style.imageWrapper}>
@@ -61,7 +62,6 @@ function ProfileProvider() {
               {
                 Verification ? <p className={style.textVerified}>Cuenta Verificada</p> : <p className={style.textNotVerified}>Cuenta No Verificada</p>
               }
-              <button onClick={()=>handleClikForm()} className={style.editButton}></button>
             </div>
             <p className={style.textData}>{formData.age} años |</p>
             <p className={style.textOcupation}>{formData.profesion}</p>
