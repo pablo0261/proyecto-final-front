@@ -46,14 +46,14 @@ function ServicesProviderCard() {
     <div className={style.background}>
       <div className={style.wrapper}>
         <div className={style.header}>
-          <button
-            onClick={() => handleClikForm()}
-            className={style.editButton}
-          ></button>
+          
         </div>
+        
         <div className={style.servicesList}>
+          
           <div className={style.serviceItem}>
             <div className={style.column1}>Servicios</div>
+            
             <div className={style.buttonList}>
               <button
                 onClick={() => handleClikForm()}
@@ -63,6 +63,7 @@ function ServicesProviderCard() {
                 {servicesData[0].description}
               </div>
             </div>
+           
             <div className={style.buttonList}>
               <button
                 onClick={() => handleClikForm()}
@@ -72,6 +73,7 @@ function ServicesProviderCard() {
                 {servicesData[1].description}
               </div>
             </div>
+           
             <div className={style.buttonList}>
               <button
                 onClick={() => handleClikForm()}
@@ -87,18 +89,21 @@ function ServicesProviderCard() {
           <div className={style.priceList}>
             <div className={style.column2}>Precio x Hora</div>
             <div className={style.servicePrice}>
-              Pesos {servicesData[0].price}
+              $ {servicesData[0].price}
             </div>
             <div className={style.servicePrice}>
-              Pesos {servicesData[1].price}
+              $ {servicesData[1].price}
             </div>
             <div className={style.servicePrice}>
-              Pesos {servicesData[2].price}
+              $ {servicesData[2].price}
             </div>
           </div>
 
           <div className={style.contratList}>
-            <div>Disponibilidad</div>
+            <button
+            onClick={() => handleClikForm()}
+            className={style.editButton}
+            ></button>
             <div className={style.contratItem}>Contratar este Servicio </div>
             <div className={style.contratItem}>Contratar este Servicio </div>
             <div className={style.contratItem}>Contratar este Servicio </div>
