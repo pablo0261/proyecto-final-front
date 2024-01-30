@@ -160,7 +160,7 @@ const postUserData = (userDataEnglish) => {
       console.log(response);
       dispatch({
         type: POST_NEW_INFO_USER,
-        payload: response.data,
+        payload: response.data.people.data[0].people,
       });
     } catch (error) {
       if (error.response && error.response.data) {

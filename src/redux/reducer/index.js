@@ -16,7 +16,6 @@ import {
 let initialState = {
   
   infoUserLog: {
-  /*
       idPeople: '038b359a-ad7a-4bb4-8945-15cfd42b38b3',
       fullName: 'lepore diego',
       address: 'domicilio',
@@ -141,8 +140,7 @@ let initialState = {
             }
           ]
         }
-      ] */
-
+      ] 
   },
   
   //Filter and getpeople
