@@ -20,10 +20,11 @@ function card(props) {
         <p className={styles.textGrey}>{props.user.address}</p>
         <p className={styles.textDark}>{props.user.profession}</p>
         <div className={styles.servicesWrapper}>
-          <div className={styles.textServices}>Cuidado</div>
-          <div className={styles.textServices}>Cuidado + Limpieza</div>
-          <div className={styles.textServices}>Cuidado + Cocina</div>
-          <div className={styles.textServices}>Cuidado + Limpieza + Cocina</div>
+          {props.user.categories.map((categoria) => (
+              <div key={categoria.idCategorie} className={styles.textServices}>
+                {categoria.description}
+              </div>
+            ))}
         </div>
       </div>
     </div>

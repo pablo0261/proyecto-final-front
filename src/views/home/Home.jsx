@@ -55,9 +55,8 @@ const Home = () => {
   };
 
 
-
   const handleConfirmFilters = () => {
- 
+
     setShowFilters(false);
   };
 
