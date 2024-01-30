@@ -15,11 +15,10 @@ import Assistance from './views/Assistance/Assistance';
 import FAQs from './views/FAQs/FAQs';
 import ConsultReport from './views/ConsultReport/ConsultReport'
 import { useDispatch, useSelector } from 'react-redux';
-import Form from './components/Form/FormProfileProvider/Form';
 import Footer from './components/Footer/Footer';
 import { useEffect } from 'react';
 import StoreItem from './Helpers/LocalStorage';
-import { recoverUserLoggedData } from './redux/actions';
+import { getFiltersOrdersDB, recoverUserLoggedData } from './redux/actions';
 
 
 function App() {
@@ -27,9 +26,10 @@ function App() {
   const dispatch = useDispatch()
 
   useEffect(() => {
+    dispatch(getFiltersOrdersDB());
 
     if (localStorage.getItem(StoreItem.emailUserLogged)) {
-      dispatch(recoverUserLoggedData(localStorage.getItem(StoreItem.emailUserLogged)))
+      dispatch(recoverUserLoggedData(localStorage.getItem(StoreItem.emailUserLogged)))  
     }
   }, [])
 
