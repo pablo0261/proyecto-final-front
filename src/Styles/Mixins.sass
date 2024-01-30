@@ -1,14 +1,13 @@
 @import './Variables'
 @import url('https://fonts.googleapis.com/css2?family=K2D:ital,wght@0,100;0,400;0,700;1,100;1,400;1,700&display=swap')
 
-@mixin flexbox($direction, $justify, $align) 
-  display: flex
-  flex-direction: $direction
-  justify-content: $justify
-  align-items: $align
+@mixin flexbox($direction, $justify, $align)
+    display: flex
+    flex-direction: $direction
+    justify-content: $justify
+    align-items: $align
 
-
-@mixin backgroundimg($image) 
+@mixin backgroundimg($image)
     background-image: url($image)
     background-repeat: no-repeat
     background-attachment: fixed
@@ -24,7 +23,7 @@
     font-size: $font-size
     font-weight: $font-weight
     font-style: $font-style
-    color: $color 
+    color: $color
 
 @mixin buttonActive
     background-color: $primaryColor
@@ -43,6 +42,10 @@
     background-color: $hoverColor
     transform: scale(1.02)
     transition: .3s
+
+@mixin buttonPressed
+    transform: scale(0.95)
+    background-color: $alertColor
 
 @mixin buttonActivesecondary
     background-color: $fourthColor
@@ -108,7 +111,29 @@
     color: $tertiaryColor
     text-align: $text-align
     text-decoration: $text-decoration
-    
-@mixin boxShadowInputs
+
+@mixin inputsFormat
+    height: 40px
+    width: 100%
+    padding: 0px 15px
+    font-family: 'K2D', sans-serif
+    font-size: 16px
+    font-style: normal
+    font-weight: normal
+    color: $secondaryColor
+    box-sizing: border-box
     border: 2px solid $secondaryColor
-    border-radius: 6px
+    border-radius: 10px
+    transition: .2s
+
+@mixin inputsFormat_Hover
+    outline: none
+    border: 2px solid $alertColor
+    transform: scale(1.02)
+
+@mixin inputsFormat_Placeholder
+    font-family: 'K2D', sans-serif
+    font-size: 16px
+    font-style: italic
+    font-weight: normal
+    color: #969696
