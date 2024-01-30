@@ -7,7 +7,7 @@ import StoreItem from '../../Helpers/LocalStorage';
 
 import React, { useEffect, useState } from 'react';
 import { Link, Button, Element, Events, animateScroll as scroll, scrollSpy } from 'react-scroll';
-import gsap from 'gsap'; // Importar GSAP
+import gsap from 'gsap'; 
 
 const Landing = () => {
     const [visibleSection, setVisibleSection] = useState('row1');
@@ -19,10 +19,10 @@ const Landing = () => {
     };
 
     useEffect(() => {
-        // Actualizar el scrollSpy
+        
         scrollSpy.update();
 
-        // Manejar el evento de scroll
+        
         const handleScroll = () => {
             const scrollPosition = window.scrollY;
 
@@ -37,27 +37,28 @@ const Landing = () => {
 
         };
 
-        // Escuchar el evento de scroll
+        
         window.addEventListener('scroll', handleScroll);
 
-        // Limpiar eventos al desmontar el componente
+        
         return () => {
             window.removeEventListener('scroll', handleScroll);
         };
     }, []);
 
+    
     useEffect(() => {
-        // Animar la entrada y salida de las secciones con GSAP
         const tl = gsap.timeline();
 
         if (visibleSection === 'row1') {
             tl.to('.row2, .row3', { opacity: 0, duration: 0.5 }).to('.row1', { opacity: 1, duration: 0.5 });
         } else if (visibleSection === 'row2') {
-            tl.to(' .row3', { opacity: 0, duration: 0.5 }).to('.row2', { opacity: 1, duration: 0.5 });
+            tl.to('.row3', { opacity: 0, duration: 0.5 }).to('.row2', { opacity: 1, duration: 0.5 });
         } else {
-            tl.to(' .row3', { opacity: 1, duration: 0.5 });
+            tl.to('.row3', { opacity: 1, duration: 0.5 });
         }
     }, [visibleSection]);
+
 
 
     return (
@@ -106,9 +107,9 @@ const Landing = () => {
 
 
                 {/* evento scroll 1*/}
-                <Element name="row1" className={`${styles.section} row1`}>
-                    <section className={`${styles.__row} row1`}>
-                        {/* row 1 */}
+                <Element name="row1" className={`${styles.section}  row1`}>
+                    <section className={`${styles.__row}  row1`}>
+                      
                         <div className={styles.section__row}>
                             <div>
                                 <i>1</i>
@@ -123,15 +124,15 @@ const Landing = () => {
                 </Element>
 
                 {/* evento scroll 2*/}
-                <Element name="row2" className={`${styles.section} row2`}>
+                <Element name="row2" className={`${styles.section} row2 `}>
                     <section className={`${styles.__row} row2`}>
-                        {/* row 1 */}
+                      
                         <div className={styles.section__row}>
-                            <div>
+                            <div >
                                 <i>2</i>
                             </div>
                             <div>
-                                <h2>Registrate</h2>
+                                <h2>Magnam quae</h2>
                                 <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Odio at, magnam quae repellat, repudiandae ipsa nam consequuntur.</p>
                             </div>
                             <iframe className={styles.iframe}></iframe>
@@ -139,16 +140,17 @@ const Landing = () => {
                     </section>
                 </Element>
 
-                {/* evento scroll 3*/}
-                <Element name="row3" className={`${styles.section} row3`}>
-                    <section className={`${styles.__row} row3`}>
-                        {/* row 1 */}
+               
+               {/* evento scroll 3*/}
+               <Element name="row3" className={`${styles.section}  row3`}>
+                    <section className={`${styles.__row}  row3`}>
+                       
                         <div className={styles.section__row}>
                             <div>
                                 <i>3</i>
                             </div>
                             <div>
-                                <h2>Registrate</h2>
+                                <h2>Adipisicing elit</h2>
                                 <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Odio at, magnam quae repellat, repudiandae ipsa nam consequuntur.</p>
                             </div>
                             <iframe className={styles.iframe}></iframe>
@@ -158,7 +160,7 @@ const Landing = () => {
 
 
                 {/* fin evento scroll */}
-                {/* fin sectionpasosregistro */}
+             
 
 
                 {/* ¿Cómo te gustaría registrarte? */}
