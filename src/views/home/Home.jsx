@@ -3,93 +3,83 @@ import { useEffect, useState } from "react";
 import styles from "../home/Home.module.sass";
 import MapHome from "../../components/MapHome/MapHome";
 import { useSelector, useDispatch } from "react-redux";
-import { filter, allPeopleProvider, filterservices, geturlfiltered } from "../../redux/actions";
+import { allPeopleProvider, getPeopleFilteredOrderedPagination, saveSelectionsGlobal } from "../../redux/actions";
 
 const Home = () => {
-  const [users, setUsers] = useState([]);
-  const dispatch = useDispatch();
-  const [showFilters, setShowFilters] = useState(false);
-  const [showOrder, setShowOrder] = useState(false);
-  const [selectedServices, setSelectedServices] = useState([]);
-  const [selectedGender, setSelectedGender] = useState(null);
-  const filtros = useSelector((state) => state.FilterCards);
+  
+  const filterOrderSelectedGlobal = useSelector((state) => state.filterOrderSelected);
   const providers = useSelector((state) => state.getAllPeople);
   const allServices = useSelector((state) => state.allServices);
 
+  const dispatch = useDispatch();
+
+  const [showFilters, setShowFilters] = useState(false);
+  const [showOrder, setShowOrder] = useState(false);
+
+  const [selectedServices, setSelectedServices] = useState(filterOrderSelectedGlobal.filters);
+
+  /* const [selectedGender, setSelectedGender] = useState(null); */
+
   useEffect(() => {
-    dispatch(allPeopleProvider());
-    dispatch(filterservices());
+    if (filterOrderSelectedGlobal.length === 0) {
+      dispatch(allPeopleProvider());
+    }
   }, []);
 
-  const handleFilterButtonClick = () => {
+  const handleFilterVisibility = () => {
     setShowFilters(!showFilters);
     if (!showFilters) {
       setShowOrder(false);
     }
   };
 
-  const handleOrderButtonClick = () => {
+  const handleOrderVisibility = () => {
     setShowOrder(!showOrder);
     if (!showOrder) {
       setShowFilters(false);
     }
   };
 
-  const handleServiceButtonClick = (service) => {
+  const handleServiceSelected = (service) => {
     setSelectedServices((prevSelectedServices) => {
       if (prevSelectedServices.includes(service)) {
-        return prevSelectedServices.filter(
-          (selectedService) => selectedService !== service
-        );
+        return prevSelectedServices.filter((selectedService) => selectedService !== service);
       } else {
         return [...prevSelectedServices, service];
       }
     });
   };
 
-  const handleGenderButtonClick = (gender) => {
+  /* const handleGenderButtonClick = (gender) => {
     setSelectedGender((prevSelectedGender) =>
       prevSelectedGender === gender ? null : gender
     );
-  };
+  }; */
 
-  const handleApplyButtonClick = () => {
-    console.log("Servicios seleccionados:", selectedServices);
-    if (selectedGender) {
+  const handleConfirmFilters = () => {
+    /* if (selectedGender) {
       console.log("Género seleccionado:", selectedGender);
       setSelectedServices((prevSelectedServices) => [
         ...prevSelectedServices,
         selectedGender,
       ]);
-    }
+    } */
     setShowFilters(false);
   };
 
-  const hadleClick = () => {
-    handleApplyButtonClick();
-    dispatch(filter(selectedServices, selectedGender));
-    urlfiltered()
-  };
-
-
-  const generarConsulta = (filtros) => {
-    if (filtros && filtros.length > 0) {
-      const serviciosSeleccionados = filtros[0];
-      if (Array.isArray(serviciosSeleccionados)) {
-        const serviciosQuery = serviciosSeleccionados.map((servicio) => `idOption=${servicio}`).join('&');
-        const url = `https://carewithlove.onrender.com/people?${serviciosQuery}&typeOfPerson=provider`;
-        return url;
-      }
+  const queryConstructor = () => {
+    if (selectedServices.length > 0) {
+      const queryConstruct = `idOption=${selectedServices.map((idOption) => idOption).join()}`;
+      return queryConstruct;
     }
-    return 'https://carewithlove.onrender.com/people';
   };
-  const consultaGenerada = generarConsulta(filtros);
-  console.log(consultaGenerada)
-  console.log(providers)
-  const urlfiltered = () => {
-    dispatch(geturlfiltered(consultaGenerada))
-  }
 
+  const handleApply = () => {
+    handleConfirmFilters();
+    queryConstructor();
+    dispatch(saveSelectionsGlobal({ filters : selectedServices }));
+    dispatch(getPeopleFilteredOrderedPagination(queryConstructor()));
+  };
 
   return (
     <div className={styles.background}>
@@ -100,8 +90,8 @@ const Home = () => {
         </div>
         <div className={styles.servicesContainer}>
           <div className={styles.filterOrderContainer}>
-            <button className={showFilters ? styles.buttonActived : styles.button} onClick={handleFilterButtonClick}>Filtrar</button>
-            <button className={showOrder ? styles.buttonActived : styles.button} onClick={handleOrderButtonClick}>Ordenar</button>
+            <button className={showFilters ? styles.buttonActived : styles.button} onClick={() => handleFilterVisibility()}>Filtrar</button>
+            <button className={showOrder ? styles.buttonActived : styles.button} onClick={() => handleOrderVisibility()}>Ordenar</button>
           </div>
           <div className={styles.filterOrderBox}>
             {showFilters && (
@@ -113,8 +103,8 @@ const Home = () => {
                       {category.categories_options.map((option) => (
                         <button
                           key={option.idOption}
-                          className={selectedServices.includes(option.description) ? styles.optionSelected : styles.optionNotSelected}
-                          onClick={() => handleServiceButtonClick(option.idOption)}
+                          className={selectedServices.includes(option.idOption) ? styles.optionSelected : styles.optionNotSelected}
+                          onClick={() => handleServiceSelected(option.idOption)}
                         >
                           {option.description}
                         </button>
@@ -122,7 +112,7 @@ const Home = () => {
                     </div>
                   </div>
                 ))}
-                <button
+                {/* <button
                   className={selectedGender === "Masculino" && styles.selected ? styles.optionSelected : styles.optionNotSelected}
                   onClick={() => handleGenderButtonClick("Masculino")}
                 >
@@ -133,9 +123,9 @@ const Home = () => {
                   onClick={() => handleGenderButtonClick("Femenino")}
                 >
                   Femenino
-                </button>
+                </button> */}
                 <div className={styles.applyWrapper}>
-                  <button className={styles.button} onClick={hadleClick}>Aplicar</button>
+                  <button className={styles.button} onClick={handleApply}>Aplicar</button>
                 </div>
               </div>
             )}
