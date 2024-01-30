@@ -110,7 +110,7 @@ function ServicesProviderCard() {
           </div>
         </div>
       </div>
-      {showForm && <Form handleClickForm={handleClikForm} />}
+      {/* {showForm && <Form handleClickForm={handleClikForm} />} */}
     </div>
   );
 }

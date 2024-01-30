@@ -1,20 +1,23 @@
-const Validation = (userData, localErrors, setLocalErrors, property, value) => {
+const isValidName = /^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]+(?:\s+[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]+){1,5}(?:\s+[-\sa-zA-ZáéíóúÁÉÍÓÚüÜñÑ]+)?$/
+const isFromArgentina = /^(?:(?:00)?549?)?0?(?:11|[2368]\d)(?:(?=\d{0,2}15)\d{2})??\d{8}$/
+
+const Validation = (property, setLocalErrors, userData) => {
   switch (property) {
     case "Nombre":
-      if (value.trim() === "") {
+      if (userData[property].trim() === "") {
         setLocalErrors((prevErrors) => ({
           ...prevErrors,
-          [property]: "El nombre es obligatorio",
+          [property]: "*Ingresa tu nombre completo",
         }));
-      } else if (!/^[A-Za-z0-9ÁÉÍÓÚáéíóúÜüÑñ\s]+$/.test(value)) {
+      } else if (!isValidName.test(userData[property])) {
         setLocalErrors((prevErrors) => ({
           ...prevErrors,
-          [property]: "El nombre no puede contener símbolos ni números",
+          [property]: "*Tu nombre completo no puede contener símbolos ni números",
         }));
-      } else if (value.length > 20) {
+      } else if (userData[property].length > 30) {
         setLocalErrors((prevErrors) => ({
           ...prevErrors,
-          [property]: "El nombre excede el límite de caracteres permitido",
+          [property]: "*Tu nombre completo excede el límite de caracteres permitido",
         }));
       } else {
         setLocalErrors((prevErrors) => ({
@@ -25,15 +28,15 @@ const Validation = (userData, localErrors, setLocalErrors, property, value) => {
       break;
 
     case "Telefono":
-      if (!/^\d+$/.test(value)) {
+      if (!userData[property]) {
         setLocalErrors((prevErrors) => ({
           ...prevErrors,
-          [property]: "El número de teléfono debe contener solo números",
+          [property]: "*Ingrese un número de teléfono",
         }));
-      } else if (value.length < 9 || value.length > 14) {
+      } else if (!isFromArgentina.test(userData[property])) {
         setLocalErrors((prevErrors) => ({
           ...prevErrors,
-          [property]: "Número de teléfono incorrecto",
+          [property]: "*El número de teléfono debe ser válido",
         }));
       } else {
         setLocalErrors((prevErrors) => ({
@@ -44,20 +47,20 @@ const Validation = (userData, localErrors, setLocalErrors, property, value) => {
       break;
 
     case "País":
-      if (value.trim() === "") {
+      if (userData[property].trim() === "") {
         setLocalErrors((prevErrors) => ({
           ...prevErrors,
-          [property]: "El país es obligatorio",
+          [property]: "*Ingrese su pais de residencia",
         }));
-      } else if (!/^[A-Za-z\s]+$/.test(value)) {
+      } else if (!/^[A-Za-z\s]+$/.test(userData[property])) {
         setLocalErrors((prevErrors) => ({
           ...prevErrors,
-          [property]: "El país no puede contener símbolos",
+          [property]: "*El país no puede contener símbolos",
         }));
-      } else if (value.length > 15) {
+      } else if (userData[property].length > 15) {
         setLocalErrors((prevErrors) => ({
           ...prevErrors,
-          [property]: "Introduzca un país valido",
+          [property]: "*Introduzca un país valido",
         }));
       } else {
         setLocalErrors((prevErrors) => ({
@@ -68,21 +71,20 @@ const Validation = (userData, localErrors, setLocalErrors, property, value) => {
       break;
 
     case "Calle":
-      if (value.trim() === "") {
+      if (userData[property].trim() === "") {
         setLocalErrors((prevErrors) => ({
           ...prevErrors,
-          [property]: "La Calle es obligatoria",
+          [property]: "*Ingrese su domicilio sin el número de casa, piso y/o depto.",
         }));
-      } else if (!/^[A-Za-z0-9ÁÉÍÓÚáéíóúÜüÑñ\s]+$/.test(value)) {
+      } else if (!/^[A-Za-z0-9ÁÉÍÓÚáéíóúÜüÑñ\s]+$/.test(userData[property])) {
         setLocalErrors((prevErrors) => ({
           ...prevErrors,
-          [property]: "La Calle no puede contener símbolos",
+          [property]: "*La Calle no puede contener símbolos",
         }));
-      } else if (value.length > 20) {
+      } else if (userData[property].length > 20) {
         setLocalErrors((prevErrors) => ({
           ...prevErrors,
-          [property]:
-            "Introduzca una calle valida",
+          [property]: "*Introduzca una calle valida",
         }));
       } else {
         setLocalErrors((prevErrors) => ({
@@ -93,21 +95,20 @@ const Validation = (userData, localErrors, setLocalErrors, property, value) => {
       break;
 
     case "Localidad":
-      if (value.trim() === "") {
+      if (userData[property].trim() === "") {
         setLocalErrors((prevErrors) => ({
           ...prevErrors,
-          [property]: "La Localidad es obligatoria",
+          [property]: "*Ingrese su localidad de residencia",
         }));
-      } else if (!/^[A-Za-z\s]+$/.test(value)) {
+      } else if (!/^[A-Za-z\s]+$/.test(userData[property])) {
         setLocalErrors((prevErrors) => ({
           ...prevErrors,
-          [property]: "La Localidad no puede contener símbolos",
+          [property]: "*Este campo no puede contener símbolos",
         }));
-      } else if (value.length > 15) {
+      } else if (userData[property].length > 25) {
         setLocalErrors((prevErrors) => ({
           ...prevErrors,
-          [property]:
-            "Introduzca una localidad valida",
+          [property]: "*Campo demasiado extenso",
         }));
       } else {
         setLocalErrors((prevErrors) => ({
@@ -118,21 +119,20 @@ const Validation = (userData, localErrors, setLocalErrors, property, value) => {
       break;
 
     case "Provincia":
-      if (value.trim() === "") {
+      if (userData[property].trim() === "") {
         setLocalErrors((prevErrors) => ({
           ...prevErrors,
-          [property]: "La Provincia es obligatoria",
+          [property]: "*Ingrese su provincia de residencia",
         }));
-      } else if (!/^[A-Za-z\s]+$/.test(value)) {
+      } else if (!/^[A-Za-z\s]+$/.test(userData[property])) {
         setLocalErrors((prevErrors) => ({
           ...prevErrors,
-          [property]: "La Provincia no puede contener símbolos",
+          [property]: "*Este campo no puede contener símbolos",
         }));
-      } else if (value.length > 15) {
+      } else if (userData[property].length > 15) {
         setLocalErrors((prevErrors) => ({
           ...prevErrors,
-          [property]:
-            "Introduzca una provincia valida",
+          [property]: "*Campo demasiado extenso",
         }));
       } else {
         setLocalErrors((prevErrors) => ({
@@ -143,21 +143,20 @@ const Validation = (userData, localErrors, setLocalErrors, property, value) => {
       break;
 
     case "Ocupación":
-      if (value.trim() === "") {
+      if (userData[property].trim() === "") {
         setLocalErrors((prevErrors) => ({
           ...prevErrors,
-          [property]: "La Ocupación es obligatoria",
+          [property]: "*Ingrese su profesión/ocupación",
         }));
-      } else if (!/^[A-Za-z\s]+$/.test(value)) {
+      } else if (!/^[A-Za-z\s]+$/.test(userData[property])) {
         setLocalErrors((prevErrors) => ({
           ...prevErrors,
-          [property]: "La Ocupación no puede contener símbolos",
+          [property]: "*Este campo no puede contener símbolos",
         }));
-      } else if (value.length > 15) {
+      } else if (userData[property].length > 25) {
         setLocalErrors((prevErrors) => ({
           ...prevErrors,
-          [property]:
-            "Introduzca una ocupación valida",
+          [property]: "*Campo demasiado extenso",
         }));
       } else {
         setLocalErrors((prevErrors) => ({
@@ -168,15 +167,15 @@ const Validation = (userData, localErrors, setLocalErrors, property, value) => {
       break;
 
     case "Sobre mi":
-      if (value.trim() === "") {
+      if (userData[property].trim() === "") {
         setLocalErrors((prevErrors) => ({
           ...prevErrors,
-          [property]: "Este campo es obligatorio",
+          [property]: "*Tu descripcion es obligatoria",
         }));
-      } else if (value.length > 200) {
+      } else if (userData[property].length > 200) {
         setLocalErrors((prevErrors) => ({
           ...prevErrors,
-          [property]: "Texto demasiado extenso",
+          [property]: "*Texto demasiado extenso",
         }));
       } else {
         setLocalErrors((prevErrors) => ({

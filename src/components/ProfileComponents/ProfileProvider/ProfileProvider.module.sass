@@ -5,10 +5,6 @@
 	background-color: #F2F2F2
 	display: flex
 	justify-content: center
-	margin-bottom: -30px
-	
-	p
-		margin: 0
 
 .wrapper
 	width: 80%
@@ -28,11 +24,12 @@
 	@include Mixins.alert
 
 .textAlert
+	margin: 0
 	padding: 10px 10px
 	@include Mixins.textDetail(left, none)
 
 .perfilWrapper
-	
+	width: 100%
 	display: flex
 	margin-top: 50px
 	margin-bottom: 30px
@@ -44,6 +41,7 @@
 	position: relative
 
 .stateActive
+	margin: 0
 	@include Mixins.font(white , 15px, normal , normal)
 	padding: 5px 10px
 	background-color: $textSuccessColor
@@ -52,6 +50,7 @@
 	top: -15px
 
 .stateInactive
+	margin: 0
 	@include Mixins.font(white , 15px, normal , normal)
 	padding: 5px 10px
 	background-color: grey
@@ -79,20 +78,23 @@
 	background-repeat: no-repeat
 
 .textStar
+	margin: 0
 	@include Mixins.textGrey(left, none)
 
 .infoWrapper
+	width: 100%
 	margin-left: 60px
 	display: flex
 	flex-direction: column
-	width: 100%
 
 .nameWrapper
+	width: 100%
 	display: flex
 	align-items: center
 	position: relative
 
 .textName
+	margin: 0
 	@include Mixins.textTitle(left, none)
 
 .iconVerified
@@ -104,6 +106,7 @@
 	background-repeat: no-repeat
 
 .textVerified
+	margin: 0
 	@include Mixins.font($textSuccessColor, 16px , normal , normal)
 
 .iconNotVerified
@@ -115,33 +118,35 @@
 	background-repeat: no-repeat
 
 .textNotVerified
+	margin: 0
 	@include Mixins.font(#333333, 16px , bold , normal)
 
 .editButton
-	position: relative
+	position: absolute
+	right: 0px
 	width: 40px
-	top: 80px
-	right: 30px
 	height: 40px
 	background-image: url('../../../assets/Icons/IconEdit.png')
 	background-position: center
 	background-repeat: no-repeat
 	transition: .2s
 	border: none
+	cursor: pointer
 
 .editButton:hover
 	transform: scale(1.15)
 
 .textData
+	margin: 0
 	@include Mixins.textGrey(left, none)
 
 .textOcupation
-	padding-top: 20px
-	padding-bottom: 10px
+	margin: 20px 0 10px 0
 	@include Mixins.textSubTitle(left, none)
 
 .textDetail
-	width: 800px
+	margin: 0
+	width: 75%
 	height: 120px
 	max-height: 120px
 	@include Mixins.textDetail(justify, none)
@@ -154,9 +159,11 @@
 	align-items: center
 
 .textContact
+	margin: 0
 	@include Mixins.textDetail(left, none)
 
 .textPhone
+	margin: 0
 	@include Mixins.textDetail(left, none)
 
 .iconPhone
@@ -168,6 +175,7 @@
 	background-repeat: no-repeat
 
 .textEmail
+	margin: 0
 	@include Mixins.textDetail(left, none)
 
 .iconEmail
