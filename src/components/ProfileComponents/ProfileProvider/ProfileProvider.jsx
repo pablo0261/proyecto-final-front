@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import { useState } from "react";
 import style from './ProfileProvider.module.sass';
 import Form from "../../Form/FormProfileProvider/Form"
-import defaultImage from '../../../assets/LandingImages/PerfilImage.png';
+import defaultImage from '../../../assets/Icons/PerfilImage.png';
 
 function ProfileProvider() {
   const infoUserLog = useSelector((state) => state.infoUserLog);
@@ -44,6 +44,7 @@ function ProfileProvider() {
               <p className={style.textAlert}>Completa tu perfil para poder verificar tu cuenta. Ten en cuenta que los perfiles no verificados no son mostrados a los clientes.</p>
             </div>
           }
+          <button onClick={()=>handleClikForm()} className={style.editButton}></button>
         </div>
         <div className={style.perfilWrapper}>
           <div className={style.imageWrapper}>
@@ -61,7 +62,6 @@ function ProfileProvider() {
               {
                 Verification ? <p className={style.textVerified}>Cuenta Verificada</p> : <p className={style.textNotVerified}>Cuenta No Verificada</p>
               }
-              <button onClick={()=>handleClikForm()} className={style.editButton}></button>
             </div>
             <p className={style.textData}>{formData.age} años |</p>
             <p className={style.textOcupation}>{formData.profesion}</p>

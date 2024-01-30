@@ -29,7 +29,7 @@ const Statistics = () => {
             <Element name="container" className={styles.container}>
                 <div className={`${styles.container}  ${scrolled ? styles.scrolled : ''}`}>
                     <img src={connection} alt="" />
-                    <h2>%78</h2>
+                    <h2>%89</h2>
                     <p>Conexiones Exitosas</p>
                 </div>
                 <div className={`${styles.container}  ${scrolled ? styles.scrolled : ''}`}>
