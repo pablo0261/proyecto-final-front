@@ -50,20 +50,7 @@ const Home = () => {
     });
   };
 
-  /* const handleGenderButtonClick = (gender) => {
-    setSelectedGender((prevSelectedGender) =>
-      prevSelectedGender === gender ? null : gender
-    );
-  }; */
-
   const handleConfirmFilters = () => {
-    /* if (selectedGender) {
-      console.log("Género seleccionado:", selectedGender);
-      setSelectedServices((prevSelectedServices) => [
-        ...prevSelectedServices,
-        selectedGender,
-      ]);
-    } */
     setShowFilters(false);
   };
 
