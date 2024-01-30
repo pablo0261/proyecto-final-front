@@ -45,7 +45,7 @@ const Home = () => {
 
 
   const handleServiceSelected = (service) => {
-    setSelectedServices((prevSelectedServices)
+    setSelectedServices((prevSelectedServices) => {
       if (prevSelectedServices.includes(service)) {
         return prevSelectedServices.filter((selectedService) => selectedService !== service);
       } else {
@@ -53,6 +53,7 @@ const Home = () => {
       }
     });
   };
+  
 
 
   const handleConfirmFilters = () => {
