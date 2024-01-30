@@ -153,15 +153,13 @@ const saveSelectionsGlobal = (selectedOptions) => {
 const postUserData = (userDataEnglish) => {
   return async (dispatch) => {
     try {
-      const response = await axios.post(
-        `${REACT_APP_API_URL}/people`,
-        userDataEnglish
-      );
-      console.log(response);
-      dispatch({
-        type: POST_NEW_INFO_USER,
-        payload: response.data,
-      });
+      const response = await axios.post(`${REACT_APP_API_URL}/people`, userDataEnglish);
+      if (response.status === 200) {
+        return dispatch({
+          type: POST_NEW_INFO_USER,
+          payload: response.data.people.data[0].people,
+        });
+      }
     } catch (error) {
       if (error.response && error.response.data) {
         dispatch({

@@ -2,6 +2,8 @@
 @import '../../../Styles/Variables'
 
 .background
+  width: 100%
+  height: 100%
   background-color: #f2f2f200
   position: fixed
   left: 0
@@ -9,32 +11,19 @@
   z-index: 1
   display: flex
   justify-content: center
-  height: 100%
-  width: 100%
-  display: flex
   align-items: center
 
-  p
-    margin: 0
-
 .wrapper
-  width: 80%
+  @include Mixins.boxShadowCard
+  width: 45%
+  height: fit-content
   display: flex
   flex-direction: column
   justify-content: center
-
-.Form
-  @include Mixins.boxShadowCard
-  top: 5px
-  height: 95vh
-  width: 50%
+  align-items: center
   position: relative
 
-.DetailTittle
-  @include Mixins.font($primaryColor, 22px, bold, normal)
-  margin-top: 5%
-
-.DetailButtonForm
+.closeButton
   width: 40px
   height: 40px
   background: url('../../../assets/Icons/IconCross.png')
@@ -44,68 +33,90 @@
   position: absolute
   top: 10px
   right: 10px
+  cursor: pointer
+  transition: .2s
 
-.ContainerDivInput
-  display: grid
-  flex-direction: column
-  gap: 10px
-  margin-top: 0
-  margin-inline: 8%
+.closeButton:hover
+  transform: scale(1.1)
+
+.textTitle
+  margin: 30px 0px 20px 0px
+  @include Mixins.font($primaryColor, 25px, bold, normal)
+
+.Form
+  width: 85%
 
 .FormDivInput
-  display: flex
   width: 100%
+  display: flex
   flex-direction: column
-  justify-content: center
-  align-items:  start
+  align-items: flex-start
 
 .FormDivFlex
   display: flex
   flex-wrap: wrap
   justify-content: space-between
-  
-  
-.FormDivInputFlex  
-  width: 48%
-  
-.Inputs
-  @include Mixins.font($tertiaryColor, 14px, normal, normal)
-  @include Mixins.boxShadowInputs
-  width: 100%
-  margin: auto
-  height: 25px
 
-.InputsFlex
-  @include Mixins.font($tertiaryColor, 14px, normal, normal)
-  @include Mixins.boxShadowInputs
-  width: 100%
-  height: 25px
-
-.InputsDetail
-  @include Mixins.font($tertiaryColor, 14px, normal, normal)
-  @include Mixins.boxShadowInputs
-  width: 100%
-  margin-block: 5px
-  margin-inline: auto
-  padding: 0px 5px
-  height: 60px 
-  resize: none 
-  box-sizing: border-box 
-  
-.FormLabel
-  @include Mixins.font($primaryColor, 18px, bold, normal)
-
-.FormLabelFlex
-  @include Mixins.font($primaryColor, 18px, bold, normal)
+.FormDivInputFlex
   display: flex
+  flex-direction: column
+  width: 48%
 
-.ButtonForm
+.inputs
+  @include Mixins.inputsFormat
+
+.inputs:focus
+  @include Mixins.inputsFormat_Hover
+
+.inputs::placeholder
+  @include Mixins.inputsFormat_Placeholder
+
+.inputDetail
+  height: 100px
+  width: 100%
+  padding: 10px 15px
+  font-family: 'K2D', sans-serif
+  font-size: 16px
+  font-style: normal
+  font-weight: normal
+  color: $secondaryColor
+  box-sizing: border-box
+  border: 2px solid $secondaryColor
+  border-radius: 10px
+  transition: .2s
+  resize: none
+
+.inputDetail:focus
+  @include Mixins.inputsFormat_Hover
+
+.inputDetail::placeholder
+  @include Mixins.inputsFormat_Placeholder
+
+.labels
+  text-align: left
+  margin: 0px 0px 5px 0px
+  @include Mixins.font($secondaryColor, 18px , normal , normal )
+
+.buttonSave
+  margin: 20px 0px 30px 0px
   @include Mixins.buttonActive
-  width: 40%
-  height: 45px 
-  margin: 2%   
+  cursor: pointer
+  transition: .2s
 
-.ErrorMessage
-  margin-block: 0
-  padding-left: 20px
+.buttonSave:hover
+  @include Mixins.buttonHover
+
+.buttonSave:active
+  @include Mixins.buttonPressed
+
+.errorMessage
+  margin: 5px 0px
+  padding-left: 15px
+  text-align: left
   @include Mixins.font($textFailureColor, 14px , normal , normal )
+
+.errorNotMessage
+  margin: 5px 0px
+  padding-left: 15px
+  text-align: left
+  @include Mixins.font($textSuccessColor, 14px , normal , normal )
