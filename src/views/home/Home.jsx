@@ -68,24 +68,22 @@ const Home = () => {
     setShowOrder(false);
     setShowFilters(false);
   };
- 
 
   const queryConstructor = () => {
-    if (selectedOrder.length === 0){
-      if (selectedServices.length > 0) {
-        const queryConstruct = `idOption=${selectedServices.map((idOption) => idOption).join()}`;
-        return queryConstruct;
+    if (selectedOrder){
+      const queryConstruct = `idOption=${selectedServices.map((idOption) => idOption).join()}`;
+      const queryConstructOrder = `&order=${selectedOrder.map((option) => option).join(';')}`;
+      const finalQuery = `${queryConstruct}${queryConstructOrder}`;
+      return finalQuery;
       } else {
-        const queryConstruct = `idOption=${selectedServices.map((idOption) => idOption).join()}`;
-        const queryConstructOrder = `&order=${selectedOrder.map((option) => option.replace(',', ',')).join(';')}`;
-        const finalQuery = `${queryConstruct}${queryConstructOrder}`;
-        console.log(queryConstructOrder)
-        console.log(finalQuery)
-        return finalQuery;
+        if (selectedServices.length > 0) {
+          const queryConstruct = `idOption=${selectedServices.map((idOption) => idOption).join()}`;
+          return queryConstruct;
       }
     }
   };
-console.log(selectedOrder)
+  console.log(selectedOrder)
+
   const handleApply = () => {
     handleConfirmFilters();
     queryConstructor();
@@ -110,7 +108,6 @@ console.log(selectedOrder)
       setSelectedOrder([...updatedOrder, order]);
     }
   };
-  console.log(queryConstructor())
 
   return (
     <div className={styles.background}>
