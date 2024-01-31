@@ -4,7 +4,7 @@ import style from "./EducationProvider.module.sass";
 
 function EducationProvider() {
   const categoriesData = useSelector((state) => {
-    return state.allServices[0].categories_options;  //*segúrate de devolver el valor// A
+    return state.allServices[0].categories_options;  
   });
   // console.log("Redux State:", categoriesData);//* aqui estan los 3 servicios
 
@@ -24,7 +24,6 @@ function EducationProvider() {
         <button onClick={() => handleClikForm()} className={style.editButton}></button>
         <h2>{category.description}</h2>
         <p>{option.description}</p>
-        {/* Agrega aquí el resto de la información según tus necesidades */}
       </div>
     ));
   };
