@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import styles from "../home/Home.module.sass";
 import MapHome from "../../components/MapHome/MapHome";
 import { useSelector, useDispatch } from "react-redux";
-import { allPeopleProvider, getPeopleFilteredOrderedPagination, saveSelectionsGlobal } from "../../redux/actions";
+import { allPeopleProvider, getPeopleFilteredOrderedPagination, saveSelectionsGlobal, saveOrderGlobal } from "../../redux/actions";
 
 const Home = () => {
   
@@ -17,6 +17,7 @@ const Home = () => {
   const [showOrder, setShowOrder] = useState(false);
 
   const [selectedServices, setSelectedServices] = useState(filterOrderSelectedGlobal.filters);
+  const [selectedOrder, setSelectedOrder] = useState(filterOrderSelectedGlobal.orders);
 
   /* const [selectedGender, setSelectedGender] = useState(null) */
 
@@ -50,11 +51,11 @@ const Home = () => {
     });
   };
 
-  /* const handleGenderButtonClick = (gender) => {
-    setSelectedGender((prevSelectedGender) =>
-      prevSelectedGender === gender ? null : gender
-    );
-  }; */
+//  const handleOrderButtonClick = (order) => {
+//     setSelectedOrder((prevSelectedOrder) =>
+//       prevSelectedOrder === order ? null : order
+//     );
+//   };
 
   const handleConfirmFilters = () => {
     /* if (selectedGender) {
@@ -64,22 +65,52 @@ const Home = () => {
         selectedGender,
       ]);
     } */
+    setShowOrder(false);
     setShowFilters(false);
   };
+ 
 
   const queryConstructor = () => {
-    if (selectedServices.length > 0) {
-      const queryConstruct = `idOption=${selectedServices.map((idOption) => idOption).join()}`;
-      return queryConstruct;
+    if (selectedOrder.length === 0){
+      if (selectedServices.length > 0) {
+        const queryConstruct = `idOption=${selectedServices.map((idOption) => idOption).join()}`;
+        return queryConstruct;
+      } else {
+        const queryConstruct = `idOption=${selectedServices.map((idOption) => idOption).join()}`;
+        const queryConstructOrder = `&order=${selectedOrder.map((option) => option.replace(',', ',')).join(';')}`;
+        const finalQuery = `${queryConstruct}${queryConstructOrder}`;
+        console.log(queryConstructOrder)
+        console.log(finalQuery)
+        return finalQuery;
+      }
     }
   };
-
+console.log(selectedOrder)
   const handleApply = () => {
     handleConfirmFilters();
     queryConstructor();
     dispatch(saveSelectionsGlobal({ filters : selectedServices }));
+    dispatch(saveOrderGlobal({ orders : selectedOrder }));
     dispatch(getPeopleFilteredOrderedPagination(queryConstructor()));
   };
+
+
+  const PruebaDeOrden = (order) => {
+    if (selectedOrder.includes(order)) {
+      setSelectedOrder(selectedOrder.filter((selected) => selected !== order));
+    } else {
+      let updatedOrder;
+      if (order.includes('price,')) {
+        updatedOrder = selectedOrder.filter((selected) => !selected.includes('price,'));
+      } else if (order.includes('averageRating,')) {
+        updatedOrder = selectedOrder.filter((selected) => !selected.includes('averageRating,'));
+      } else if (order.includes('dateOfAdmission,')) {
+        updatedOrder = selectedOrder.filter((selected) => !selected.includes('dateOfAdmission,'));
+      }
+      setSelectedOrder([...updatedOrder, order]);
+    }
+  };
+  console.log(queryConstructor())
 
   return (
     <div className={styles.background}>
@@ -88,6 +119,7 @@ const Home = () => {
           <p className={styles.titleMap}>Buscar en el mapa</p>
           <MapHome />
         </div>
+        
         <div className={styles.servicesContainer}>
           <div className={styles.filterOrderContainer}>
             <button className={showFilters ? styles.buttonActived : styles.button} onClick={() => handleFilterVisibility()}>Filtrar</button>
@@ -112,38 +144,57 @@ const Home = () => {
                     </div>
                   </div>
                 ))}
-                {/* <button
-                  className={selectedGender === "Masculino" && styles.selected ? styles.optionSelected : styles.optionNotSelected}
-                  onClick={() => handleGenderButtonClick("Masculino")}
-                >
-                  Masculino
-                </button>
-                <button
-                  className={selectedGender === "Femenino" && styles.selected ? styles.optionSelected : styles.optionNotSelected}
-                  onClick={() => handleGenderButtonClick("Femenino")}
-                >
-                  Femenino
-                </button> */}
                 <div className={styles.applyWrapper}>
                   <button className={styles.button} onClick={handleApply}>Aplicar</button>
                 </div>
               </div>
             )}
-            {showOrder && (
-              <div className={styles.filterBox}>
-                <h3>Precio</h3>
-                <button className={styles.botones}>Mayor</button>
-                <button className={styles.botones}>Menor</button>
-                <h3>Rating</h3>
-                <button className={styles.botones}>Mejor Calificacion</button>
-                <button className={styles.botones}>
-                  Menor Calificacion
-                </button>
-                <h3>Antiguedad</h3>
-                <button className={styles.botones}>Mayor</button>
-                <button className={styles.botones}>Menor</button>
-              </div>
-            )}
+              {showOrder && (
+                <div className={styles.filterBox}>
+                  <h3>Precio</h3>
+                  <button
+                    onClick={() => PruebaDeOrden('price,ASC')}
+                    className={selectedOrder.includes('price,ASC') ? 'selected' && styles.optionSelected : styles.optionNotSelected}
+                  >
+                    Precio Mayor
+                  </button>
+                  <button
+                    onClick={() => PruebaDeOrden('price,DESC')}
+                    className={selectedOrder.includes('price,DESC')  ? 'selected' && styles.optionSelected : styles.optionNotSelected}
+                  >
+                    Precio Menor
+                  </button>
+                  <h3>Rating</h3>
+                  <button
+                    onClick={() => PruebaDeOrden('averageRating,ASC')}
+                    className={selectedOrder.includes('averageRating,ASC') ? 'selected' && styles.optionSelected : styles.optionNotSelected}
+                  >
+                    Rating Más Alto
+                  </button>
+                  <button
+                    onClick={() => PruebaDeOrden('averageRating,DES')}
+                    className={selectedOrder.includes('averageRating,DES') ? 'selected' && styles.optionSelected : styles.optionNotSelected}
+                  >
+                    Rating Más Bajo
+                  </button>
+                  <h3>Antiguedad</h3>
+                  <button
+                    onClick={() => PruebaDeOrden('dateOfAdmission,ASC')}
+                    className={selectedOrder.includes('dateOfAdmission,ASC') ? 'selected' && styles.optionSelected : styles.optionNotSelected}
+                  >
+                    Mas nuevo
+                  </button>
+                  <button
+                    onClick={() => PruebaDeOrden('dateOfAdmission,DES')}
+                    className={selectedOrder.includes('dateOfAdmission,DES') ? 'selected' && styles.optionSelected : styles.optionNotSelected}
+                  >
+                    Mas antiguo
+                  </button>
+                  <div className={styles.applyWrapper}>
+                    <button className={styles.button} onClick={handleApply}>Aplicar</button>
+                  </div>
+                </div>
+              )}
           </div>
 
           <div className={styles.cardsWrapper}>
