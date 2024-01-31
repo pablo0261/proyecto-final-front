@@ -19,7 +19,7 @@ function InteresProviderCard() {
       <Link to={{ pathname: `/form/${4}` }}>
         <button src="editImage" alt="edit" className="edit-button">
           {" "}
-          Edit
+          Edit interes provider
         </button>
       </Link>
       {interests.map((interest, index) => (

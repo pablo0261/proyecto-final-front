@@ -1,112 +1,85 @@
-import { useState } from "react";
+import { useSelector } from "react-redux";
+import { useState, useEffect } from "react";
 // import Form from "../../Form/FormServices/FormServices"
 import Form from "../../Form/FormProfileProvider/Form";
 import style from "./ServiceProviderCard.module.sass";
 
 function ServicesProviderCard() {
-  // const infoUserLog = useSelector((state) => state.infoUserLog);
-  const servicesData = [
-    {
-      description: "Cuidado",
-      price: "3000",
-    },
-    {
-      description: "Cuidado y Limpieza",
-      price: "5000",
-    },
-    {
-      description: "Cuidado, Limpieza y Cocina",
-      price: "6500",
-    },
-  ];
+  const infoUserLog = useSelector((state) => state.infoUserLog);
 
   const [showForm, setShowForm] = useState(false);
+  const [servicesData, setServicesData] = useState([]); //* Aqui guarda los sericios que ofrece la persona
 
   const handleClikForm = () => {
     setShowForm(!showForm);
   };
 
-  //!AQUI TOMA LOS DATOS CUANDO EL ESTADO GLOBAL TENGA LA INFO
-  // useEffect(() => {
-  //   if (infoUserLog.people && infoUserLog.people.data[0] && infoUserLog.people.data[0].categories) {
-  //     const categoriesOptions = infoUserLog.people.data[0].categories.flatMap((category) => {
-  //       return category.categories_options.map((option) => {
-  //         return {
-  //           description: option.description,
-  //           price: option.people_options.length > 0 ? option.people_options[0].price : null,
-  //         };
-  //       });
-  //     });
+  useEffect(() => {
+    //*Todo esto recorre y valida la info del usuario para ver los servicios y precios
+    if (infoUserLog.categories && infoUserLog.categories.length > 0) {
+      const firstCategory = infoUserLog.categories[0];
+      if (
+        firstCategory.categories_options &&
+        firstCategory.categories_options.length > 0
+      ) {
+        const categoriesOptions = firstCategory.categories_options.flatMap(
+          (option) => {
+            if (option.people_options && option.people_options.length > 0) {
+              return {
+                description: option.description || "No description",
+                price: option.people_options[0].price || null,
+              };
+            } else {
+              return {
+                description: option.description || "No description",
+                price: null,
+              };
+            }
+          }
+        );
 
-  //     setServicesData(categoriesOptions);
-  //   }
-  // }, [infoUserLog]);
+        setServicesData(categoriesOptions);
+      }
+    }
+  }, [infoUserLog]);
 
   return (
     <div className={style.background}>
       <div className={style.wrapper}>
-        <div className={style.header}>
-          
-        </div>
-        
+        <div className={style.header}></div>
         <div className={style.servicesList}>
-          
           <div className={style.serviceItem}>
             <div className={style.column1}>Servicios</div>
-            
-            <div className={style.buttonList}>
-              <button
-                onClick={() => handleClikForm()}
-                className={style.crossButton}
-              ></button>
-              <div className={style.serviceDescription}>
-                {servicesData[0].description}
+            {servicesData.slice(0, 3).map((service, index) => (
+              <div key={index} className={style.buttonList}>
+                <button
+                  onClick={() => handleClikForm()}
+                  className={style.crossButton}
+                ></button>
+                <div className={style.serviceDescription}>
+                  {service.description}
+                </div>
               </div>
-            </div>
-           
-            <div className={style.buttonList}>
-              <button
-                onClick={() => handleClikForm()}
-                className={style.crossButton}
-              ></button>
-              <div className={style.serviceDescription}>
-                {servicesData[1].description}
-              </div>
-            </div>
-           
-            <div className={style.buttonList}>
-              <button
-                onClick={() => handleClikForm()}
-                className={style.crossButton}
-              ></button>
-              <div className={style.serviceDescription}>
-                {servicesData[2].description}
-              </div>
-            </div>
-            
+            ))}
           </div>
-
           <div className={style.priceList}>
             <div className={style.column2}>Precio x Hora</div>
-            <div className={style.servicePrice}>
-              $ {servicesData[0].price}
-            </div>
-            <div className={style.servicePrice}>
-              $ {servicesData[1].price}
-            </div>
-            <div className={style.servicePrice}>
-              $ {servicesData[2].price}
-            </div>
+            {servicesData.slice(0, 3).map((service, index) => (
+              <div key={index} className={style.servicePrice}>
+                $ {service.price ? service.price : "N/A"}
+              </div>
+            ))}
           </div>
-
           <div className={style.contratList}>
             <button
-            onClick={() => handleClikForm()}
-            className={style.editButton}
+              onClick={() => handleClikForm()}
+              className={style.editButton}
             ></button>
-            <div className={style.contratItem}>Contratar este Servicio </div>
-            <div className={style.contratItem}>Contratar este Servicio </div>
-            <div className={style.contratItem}>Contratar este Servicio </div>
+            {servicesData.map((_, index) => (
+              <div key={index} className={style.contratItem}>
+                Contratar este Servicio{" "}
+              </div>
+            ))}
           </div>
         </div>
       </div>
@@ -114,5 +87,4 @@ function ServicesProviderCard() {
     </div>
   );
 }
-
 export default ServicesProviderCard;

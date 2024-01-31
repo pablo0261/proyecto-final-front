@@ -1,56 +1,46 @@
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { useState } from "react";
 import "./EducationExperienciaProvider.module.sass";
 
 function EducationExperienciaProvider() {
   const infoUserLog = useSelector((state) => state.infoUserLog);
+  const [showForm, setShowForm] = useState(false);
 
-  const skills = infoUserLog.skills || [];
+  const renderCategorySection = (category) => {
+    if (!category.categories_options) {
+      return null;
+    }
 
-  // const handleDeleteClick  = () => {
-  //   //  dispatch(handleDeleteService(item)); //* enviará un put para actualizar el estado global infoDetailProveedor
-  // };
-  const handleEditClick = () => {
-    //  dispatch(handleDeleteService(item)); //* enviará un put para actualizar el estado global infoDetailProveedor
+    const handleClikForm = () => {
+      setShowForm(!showForm);
+    };
+
+    return category.categories_options.map((option) => (
+      <div key={option.idOption}>
+        <button onClick={() => handleClikForm()} className={style.editButton}></button>
+        <h2>{category.description}</h2>
+        <p>{option.description}</p>
+        <p>Instituto: {option.people_options?.[0]?.institution || 'No especificado'}</p>
+        <p>Año de inicio: {option.people_options?.[0]?.year || 'No especificado'}</p>
+        <p>Año de fin: {option.people_options?.[0]?.date || 'No especificado'}</p>
+        <p>Comentarios: {option.people_options?.[0]?.comment || 'No especificado'}</p>
+      </div>
+    ));
   };
 
-  return (
-    <div className="container">
-      <Link to={{ pathname: `/form/${3}` }}>
-        <button src="editImage" alt="edit" className="edit-button">
-          {" "}
-          Edit
-        </button>
-      </Link>
-      {skills.map((skill, index) => (
-        <div key={index} className="skillsContainer">
-          {Object.entries(skill).map(([category, titles], categoryIndex) => (
-            <div key={categoryIndex}>
-              <h2>{category}</h2>
-              <button
-                onClick={() => handleEditClick(skill)}
-                src="editImage"
-                alt="edit"
-                className="edit"
-              />
-              {titles.map((title, titleIndex) => (
-                <div key={titleIndex} className="userDetails">
-                  <div className="user-header">
-                    <h2 className="name">{`${title.title}`}</h2>
-                    <p>{`${title.institution}`} </p>
-                    <p>{`${title.startDate} - ${title.endDate}`} </p>
-                  </div>
-                  <div>
-                    <p className="user-info">{`${title.description}`}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          ))}
-        </div>
-      ))}
-    </div>
-  );
+  const renderSections = () => {
+    if (!infoUserLog?.people?.categories) {
+      return null;
+    }
+
+    return infoUserLog.people.categories.map((category) => (
+      <div key={category.idCategorie}>
+        {renderCategorySection(category)}
+      </div>
+    ));
+  };
+
+  return <div>{renderSections()}</div>;
 }
 
 export default EducationExperienciaProvider;

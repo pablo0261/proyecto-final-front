@@ -4,7 +4,7 @@ import ServicesProviderCard from '../../components/ProfileComponents/ServiceProv
 import InteresProviderCard from '../../components/ProfileComponents/InteresProvidercard/InteresProviderCard';
 import SkillsProviderCard from '../../components/ProfileComponents/SkillsProviderCard/SkillsProviderCard';
 import ScheduleProviderCard from '../../components/ProfileComponents/ScheduleProviderCard/ScheduleProviderCard';
-import EducationExperienciaProvider from '../../components/ProfileComponents/EducationExperienciaProvider/EducationExperienciaProvider';
+import EducationProvider from '../../components/ProfileComponents/EducationProvider/EducationProvider';
 import MapProviderCard from '../../components/ProfileComponents/MapProviderCard/MapProviderCard';
 import ReviewProviderCard from '../../components/ProfileComponents/ReviewProviderCard/ReviewProviderCard';
 import ConectionProviderCard from '../../components/ProfileComponents/ConectionProviderCard/ConectionProviderCard';
@@ -16,7 +16,7 @@ function ProfileProviderView() {
     <div className={style.wrapper}>
         <ProfileProvider />
         <ServicesProviderCard />
-        <EducationExperienciaProvider />
+        <EducationProvider />
         <InteresProviderCard />
         <SkillsProviderCard />
         <ScheduleProviderCard />

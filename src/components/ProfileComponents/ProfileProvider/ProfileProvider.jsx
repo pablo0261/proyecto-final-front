@@ -12,7 +12,7 @@ function ProfileProvider() {
     address: infoUserLog.address || "Libertad 234",
     state: infoUserLog.state || "",
     country: infoUserLog.country || "Argentina",
-    profesion: infoUserLog.profesion || "Enfermero",
+    profesion: infoUserLog.profession || "Enferme",
     aboutMe: infoUserLog.aboutMe || "",
     phone: infoUserLog.phone || "02918145869",
     email: infoUserLog.email || "",
