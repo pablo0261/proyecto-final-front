@@ -16,131 +16,131 @@ import {
 let initialState = {
   
   infoUserLog: {
-      idPeople: '038b359a-ad7a-4bb4-8945-15cfd42b38b3',
-      fullName: 'lepore diego',
-      address: 'domicilio',
-      idLocation: null,
-      geoposition: null,
-      birthDate: '1999-10-05',
-      age: 24,
-      idGenre: null,
-      state: 'Active',
-      aboutMe: null,
-      dateOfAdmission: '2024-01-24',
-      typeOfPerson: 'provider',
-      email: 'diegolepore@gmail.com',
-      externalLogin: null,
-      weekCalendar: null,
-      averageRating: '0.00',
-      countRating: 0,
-      logged: false,
-      categories: [
-        {
-          idCategorie: 1,
-          description: 'Servicios',
-          isGenre: null,
-          isEducation: null,
-          isSkill: null,
-          isService: true,
-          isInterest: null,
-          isExperience: null,
-          isExtra: null,
-          includeCustomer: null,
-          includeProvider: true,
-          categories_options: [
-            {
-              idOption: 1,
-              description: 'Cuidado',
-              people_options: [
-                {
-                  idOption: '5ce19fac-72d6-45ac-b6ac-e67f072d85fd',
-                  description: null,
-                  price: '10.00',
-                  date: null,
-                  year: null,
-                  institution: null,
-                  comment: null
-                }
-              ]
-            },
-            {
-              idOption: 2,
-              description: 'Cuidado y Alimento',
-              people_options: [
-                {
-                  idOption: '19e8cd37-8d40-4780-8493-d5d50aa0da0d',
-                  description: null,
-                  price: '15.00',
-                  date: null,
-                  year: null,
-                  institution: null,
-                  comment: null
-                }
-              ]
-            }
-          ]
-        },
-        {
-          idCategorie: 2,
-          description: 'Educacion',
-          isGenre: null,
-          isEducation: null,
-          isSkill: true,
-          isService: null,
-          isInterest: null,
-          isExperience: null,
-          isExtra: null,
-          includeCustomer: null,
-          includeProvider: true,
-          categories_options: [
-            {
-              idOption: 4,
-              description: 'Primaria',
-              people_options: [
-                {
-                  idOption: 'c3ef3e19-b0b6-48cf-9133-2099fa4896fe',
-                  description: 'coelgio',
-                  price: '0.00',
-                  date: null,
-                  year: null,
-                  institution: null,
-                  comment: null
-                }
-              ]
-            }
-          ]
-        },
-        {
-          idCategorie: 3,
-          description: 'Habilidades',
-          isGenre: null,
-          isEducation: true,
-          isSkill: null,
-          isService: null,
-          isInterest: null,
-          isExperience: null,
-          isExtra: null,
-          includeCustomer: null,
-          includeProvider: true,
-          categories_options: [
-            {
-              idOption: 6,
-              description: 'Ajedrez',
-              people_options: [
-                {
-                  idOption: 'd2a14cac-18d1-4347-a046-1aceda2376f7',
-                  description: 'nivel avanzado',
-                  price: '0.00',
-                  date: null,
-                  year: null,
-                  institution: null,
-                  comment: null
-                }
-              ]
-            }
-          ]
-        }
-      ] 
+      // idPeople: '038b359a-ad7a-4bb4-8945-15cfd42b38b3',
+      // fullName: 'lepore diego',
+      // address: 'domicilio',
+      // idLocation: null,
+      // geoposition: null,
+      // birthDate: '1999-10-05',
+      // age: 24,
+      // idGenre: null,
+      // state: 'Active',
+      // aboutMe: null,
+      // dateOfAdmission: '2024-01-24',
+      // typeOfPerson: 'provider',
+      // email: 'diegolepore@gmail.com',
+      // externalLogin: null,
+      // weekCalendar: null,
+      // averageRating: '0.00',
+      // countRating: 0,
+      // logged: false,
+      // categories: [
+      //   {
+      //     idCategorie: 1,
+      //     description: 'Servicios',
+      //     isGenre: null,
+      //     isEducation: null,
+      //     isSkill: null,
+      //     isService: true,
+      //     isInterest: null,
+      //     isExperience: null,
+      //     isExtra: null,
+      //     includeCustomer: null,
+      //     includeProvider: true,
+      //     categories_options: [
+      //       {
+      //         idOption: 1,
+      //         description: 'Cuidado',
+      //         people_options: [
+      //           {
+      //             idOption: '5ce19fac-72d6-45ac-b6ac-e67f072d85fd',
+      //             description: null,
+      //             price: '10.00',
+      //             date: null,
+      //             year: null,
+      //             institution: null,
+      //             comment: null
+      //           }
+      //         ]
+      //       },
+      //       {
+      //         idOption: 2,
+      //         description: 'Cuidado y Alimento',
+      //         people_options: [
+      //           {
+      //             idOption: '19e8cd37-8d40-4780-8493-d5d50aa0da0d',
+      //             description: null,
+      //             price: '15.00',
+      //             date: null,
+      //             year: null,
+      //             institution: null,
+      //             comment: null
+      //           }
+      //         ]
+      //       }
+      //     ]
+      //   },
+      //   {
+      //     idCategorie: 2,
+      //     description: 'Educacion',
+      //     isGenre: null,
+      //     isEducation: null,
+      //     isSkill: true,
+      //     isService: null,
+      //     isInterest: null,
+      //     isExperience: null,
+      //     isExtra: null,
+      //     includeCustomer: null,
+      //     includeProvider: true,
+      //     categories_options: [
+      //       {
+      //         idOption: 4,
+      //         description: 'Primaria',
+      //         people_options: [
+      //           {
+      //             idOption: 'c3ef3e19-b0b6-48cf-9133-2099fa4896fe',
+      //             description: 'coelgio',
+      //             price: '0.00',
+      //             date: null,
+      //             year: null,
+      //             institution: null,
+      //             comment: null
+      //           }
+      //         ]
+      //       }
+      //     ]
+      //   },
+      //   {
+      //     idCategorie: 3,
+      //     description: 'Habilidades',
+      //     isGenre: null,
+      //     isEducation: true,
+      //     isSkill: null,
+      //     isService: null,
+      //     isInterest: null,
+      //     isExperience: null,
+      //     isExtra: null,
+      //     includeCustomer: null,
+      //     includeProvider: true,
+      //     categories_options: [
+      //       {
+      //         idOption: 6,
+      //         description: 'Ajedrez',
+      //         people_options: [
+      //           {
+      //             idOption: 'd2a14cac-18d1-4347-a046-1aceda2376f7',
+      //             description: 'nivel avanzado',
+      //             price: '0.00',
+      //             date: null,
+      //             year: null,
+      //             institution: null,
+      //             comment: null
+      //           }
+      //         ]
+      //       }
+      //     ]
+      //   }
+      // ] 
   },
   
   //Filter and getpeople
