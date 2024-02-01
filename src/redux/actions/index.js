@@ -148,6 +148,18 @@ const saveSelectionsGlobal = (selectedOptions) => {
     }
   };
 }
+const saveOrderGlobal = (orders) => {
+  return async (dispatch) => {
+    try {
+      return dispatch({
+        type: FILTER_ORDER_SELECTED,
+        payload: orders
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+}
 
 //*---POST_NEW_INFO_USER---//
 const postUserData = (userDataEnglish) => {
@@ -199,4 +211,5 @@ export {
   allPeopleProvider,
   getFiltersOrdersDB,
   getPeopleFilteredOrderedPagination,
+  saveOrderGlobal,
 }
