@@ -77,15 +77,11 @@ const Home = () => {
       const queryConstruct = `idOption=${selectedServices.map((idOption) => idOption).join()}`;
       const queryConstructOrder = `&order=${selectedOrder.map((option) => option).join(';')}`;
       const finalQuery = `${queryConstruct}${queryConstructOrder}`;
-      console.log(finalQuery)
-      console.log("dentro del order y el filtro")
       return finalQuery;
       } else if(selectedServices.length > 0) {
-        console.log("dentro del filtro")
           const queryConstruct = `idOption=${selectedServices.map((idOption) => idOption).join()}`;
           return queryConstruct;
       } else{
-        console.log("dentro del order")
         const queryConstructOrder = `&order=${selectedOrder.map((option) => option).join(';')}`;
         return queryConstructOrder;
       };
