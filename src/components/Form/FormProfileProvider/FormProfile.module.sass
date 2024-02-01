@@ -120,3 +120,18 @@
   padding-left: 15px
   text-align: left
   @include Mixins.font($textSuccessColor, 14px , normal , normal )
+
+.inputsStatic
+  @include Mixins.font(black, 18px , normal , normal )
+  display: flex
+  align-items: center
+  justify-content: flex-start 
+  pointer-events: none
+
+.errorMessageStatic
+  display: flex
+  justify-content: end
+  margin-bottom: -10px
+  margin-right: -60%
+  text-align: right
+  @include Mixins.font($textFailureColor, 14px , normal , normal )
