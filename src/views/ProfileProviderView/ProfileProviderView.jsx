@@ -16,7 +16,7 @@ function ProfileProviderView() {
     <div className={style.wrapper}>
         <ProfileProvider />
         <ServicesProviderCard />
-        <EducationProvider />
+        {/* <EducationProvider /> */}
         <InteresProviderCard />
         <SkillsProviderCard />
         <ScheduleProviderCard />

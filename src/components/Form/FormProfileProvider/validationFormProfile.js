@@ -166,24 +166,19 @@ const Validation = (property, setLocalErrors, userData) => {
       }
       break;
 
-    case "Sobre mi":
-      if (userData[property].trim() === "") {
-        setLocalErrors((prevErrors) => ({
-          ...prevErrors,
-          [property]: "*Tu descripcion es obligatoria",
-        }));
-      } else if (userData[property].length > 200) {
-        setLocalErrors((prevErrors) => ({
-          ...prevErrors,
-          [property]: "*Texto demasiado extenso",
-        }));
-      } else {
-        setLocalErrors((prevErrors) => ({
-          ...prevErrors,
-          [property]: "",
-        }));
-      }
-      break;
+      case "Sobre mi":
+        if (userData[property].length > 200) {
+          setLocalErrors((prevErrors) => ({
+            ...prevErrors,
+            [property]: "*Texto demasiado extenso",
+          }));
+        } else {
+          setLocalErrors((prevErrors) => ({
+            ...prevErrors,
+            [property]: "",
+          }));
+        }
+        break;
 
     default:
       break;

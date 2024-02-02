@@ -12,6 +12,7 @@ import {
   FILTER_SERVICES,
   GET_FILTER_PROVIDER,
   FILTER_ORDER_SELECTED,
+  POST_NEW_SERVICE_USER,
 } from "./action-types";
 
 const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
@@ -161,15 +162,40 @@ const saveOrderGlobal = (orders) => {
   };
 }
 
-//*---POST_NEW_INFO_USER---//
-const postUserData = (userDataEnglish) => {
+//*---POST_NEW_INFO_USER---// (Pablo --> Lo uso para enviar las modificaciones del perfil de los proveedores)
+const postUserData = (userData) => {
   return async (dispatch) => {
     try {
-      const response = await axios.post(`${REACT_APP_API_URL}/people`, userDataEnglish);
+      const response = await axios.post(`${REACT_APP_API_URL}/people`, userData);
+      console.log("response",response)
       if (response.status === 200) {
         return dispatch({
           type: POST_NEW_INFO_USER,
           payload: response.data.people.data[0].people,
+        });
+      }
+    } catch (error) {
+      if (error.response && error.response.data) {
+        dispatch({
+          type: SET_ERROR_BACK,
+          payload: error.response.data,
+        });
+        console.log(error);
+        throw error.response.data;
+      }
+    }
+  };
+};
+
+const postUserServices = (userData) => {//*(Pablo --> Lo uso para enviar las modificaciones de los servicios de los proveedores)
+  return async (dispatch) => {
+    try {
+      const response = await axios.post(`${REACT_APP_API_URL}/people/options`, userData);
+      console.log("response",response)
+      if (response.status === 200) {
+        return dispatch({
+          type: POST_NEW_SERVICE_USER,
+          payload: response.data.people.data[0].people,//! FALTA revisar la respuesta cuando este la ruta ok
         });
       }
     } catch (error) {
@@ -211,5 +237,6 @@ export {
   allPeopleProvider,
   getFiltersOrdersDB,
   getPeopleFilteredOrderedPagination,
+  postUserServices,
   saveOrderGlobal,
 }
