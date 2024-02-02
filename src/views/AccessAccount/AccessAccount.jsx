@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import LogIn from '../../components/AccessAccount/LogIn/LogIn'
 import SignIn from '../../components/AccessAccount/SignIn/SignIn'
 import { Link, useNavigate } from 'react-router-dom';
@@ -11,8 +11,14 @@ import { addInfoUserLog } from '../../redux/actions';
 
 function AccessAccount() {
 
+    useEffect(() => {
+        google.accounts.id.renderButton(
+            document.getElementById("buttonDiv"),
+            { theme: "outline", size: "medium" }
+        );
+    }, [])
+    
     const isProvider = JSON.parse(localStorage.getItem(StoreItem.isProvider))
-
     const [signInView, setSignInView] = useState(false)
     const handleFormsVisibility = () => {
         setSignInView(!signInView)
@@ -27,7 +33,6 @@ function AccessAccount() {
             const response = await axios.get(
                 `${REACT_APP_API_URL}/people?email=${logInData.email}`
             );
-            console.log(response)
             if (response.status === 200) {
                 const user = response.data.people.data[0].people
                 localStorage.setItem(StoreItem.emailUserLogged, logInData.email);
@@ -53,17 +58,13 @@ function AccessAccount() {
                 `${REACT_APP_API_URL}/people`, signInData
             );
 
-            console.log(response)
-
             if (response.status === 201) {
                 const user = response.data.people.data[0].people
                 localStorage.setItem(StoreItem.emailUserLogged, signInData.email);
 
                 dispatch(addInfoUserLog(user))
 
-                if (user.typeOfPerson === 'admin') {
-
-                } else if (user.typeOfPerson === 'provider') {
+                if (user.typeOfPerson === 'provider') {
                     navigate(Helpers.StatsProviderView)
                 } else {
                     navigate(Helpers.HomeCustomerView)
@@ -111,6 +112,7 @@ function AccessAccount() {
                                     </div>
                                 </div>
                         }
+                        <div id="buttonDiv" className={style.btnCustom}></div>
                     </div>
                     :
                     <Link to={Helpers.Landing}>Volver a Landing</Link>
