@@ -12,7 +12,7 @@ import {
   FILTER_SERVICES,
   GET_FILTER_PROVIDER,
   FILTER_ORDER_SELECTED,
-  POST_NEW_SERVICE_USER
+  POST_NEW_SERVICE_USER,
 } from "./action-types";
 
 const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
