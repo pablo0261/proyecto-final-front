@@ -149,6 +149,18 @@ const saveSelectionsGlobal = (selectedOptions) => {
     }
   };
 }
+const saveOrderGlobal = (orders) => {
+  return async (dispatch) => {
+    try {
+      return dispatch({
+        type: FILTER_ORDER_SELECTED,
+        payload: orders
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+}
 
 //*---POST_NEW_INFO_USER---// (Pablo --> Lo uso para enviar las modificaciones del perfil de los proveedores)
 const postUserData = (userData) => {
@@ -226,4 +238,5 @@ export {
   getFiltersOrdersDB,
   getPeopleFilteredOrderedPagination,
   postUserServices,
+  saveOrderGlobal,
 }
