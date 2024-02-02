@@ -7,17 +7,17 @@ import defaultImage from '../../../assets/Icons/PerfilImage.png';
 function ProfileProvider() {
   const infoUserLog = useSelector((state) => state.infoUserLog);
   const formData = {
-    fullName: infoUserLog.fullName || "5",
-    age: infoUserLog.age || "",
-    address: infoUserLog.address || "Libertad 234",
-    state: infoUserLog.state || "",
+    fullName: infoUserLog.fullName || "Diego Lepore",
+    age: infoUserLog.age || "43",
+    address: infoUserLog.address || "Emilio Rosas 3057",
+    state: infoUserLog.state || "Activo",
     country: infoUserLog.country || "Argentina",
-    profesion: infoUserLog.profession || "Enferme",
-    aboutMe: infoUserLog.aboutMe || "",
+    profesion: infoUserLog.profession || "Enfermero",
+    aboutMe: infoUserLog.aboutMe || "Predispuesto y Dedicado",
     phone: infoUserLog.phone || "02918145869",
-    email: infoUserLog.email || "",
-    averageRating: infoUserLog.averageRating || "",
-    countRating: infoUserLog.countRating.toString() || "",
+    email: infoUserLog.email || "diegolepore@gmail.com",
+    averageRating: infoUserLog.averageRating || "4.9",
+    countRating: infoUserLog.countRating.toString() || "127",
   };
 
   const isAllInfoFilled = Object.values(formData).every(
