@@ -1,163 +1,170 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { postUserData } from "../../../redux/actions/index"
-import validation from "../FormProfileProvider/validationFormProfile";
+import { postUserData } from "../../../redux/actions/index";
+import Validation from "../FormProfileProvider/validationFormProfile";
+import styles from "./FormServices.module.sass";
 
-function Form({ handleClickForm }) {
+function Form({ handleShowForm }) {
+  const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
   const dispatch = useDispatch();
+  const userLog = useSelector((state) => state.infoUserLog);
 
-  const userLog = useSelector(state => state.infoUserLog);
+  const [userData, setUserData] = useState({
+    id: userLog,
+    precio: "",
+    idOption: "",
+  });
+  console.log("userData", userData);
+
   useEffect(() => {
-    setUserData(prevUserData => ({
+    setUserData((prevUserData) => ({
       ...prevUserData,
       id: userLog.idPeople,
     }));
-    console.log(userLog)
   }, []);
 
-  const [userData, setUserData] = useState({
-    Servicio: "", 
-    selectedOptions: [],
-    inputValue: "",
-    precioServicio: "", 
-  });
-
-  const [localErrors, setLocalErrors] = useState({});
+  const [services, setServices] = useState([]);
 
   useEffect(() => {
-    if (datosForm.ServicesProviderCard) {
-      setUserData((prevUserData) => ({
-        ...prevUserData,
-      }));
-    }
-  }, [datosForm]);
+    const fetchServices = async () => {
+      try {
+        const response = await fetch(`${REACT_APP_API_URL}/categories`);
+        const data = await response.json();
+        const serviceOptions = data.categories.data[0].categories_options.map(
+          (option) => {
+            return{description: option.description, idOption: option.idOption}
+          }
+          )
+            setServices(serviceOptions);
+        console.log("services", services);
+      } catch (error) {
+        console.error("Error al obtener las opciones de servicios:", error);
+      }
+    };
 
-  const handleChange = (event) => {
-    let property = event.target.name;
-    let value = event.target.value.trim();
+    fetchServices();
+  }, []);
 
-    setUserData({ ...userData, [property]: value });
-    validation({ ...userData, [property]: value }, localErrors, setLocalErrors);
-  };
-
-  const handleOptionSelect = (event) => {
-    const selectedOption = event.target.value;
-
-    if (!userData.selectedOptions.includes(selectedOption)) {
-      setUserData({
-        ...userData,
-        selectedOptions: [...userData.selectedOptions, selectedOption],
-      });
-    }
-  };
-
-  const handleOptionDeselect = (selectedOption) => {
-    const updatedOptions = userData.selectedOptions.filter(
-      (option) => option !== selectedOption
-    );
-
-    setUserData({
-      ...userData,
-      selectedOptions: updatedOptions,
-    });
-  };
-
-  const handleSubmit = (event) => {
+  const handleServicesAdd = (event) => {
     event.preventDefault();
-    const hasErrors = Object.values(localErrors).some((error) => error !== "");
-
-    if (hasErrors) {
-      alert("Please fill in all the required fields correctly.");
-    } else {
-      // Actualizar el objeto userData antes de enviarlo al servidor
+    try {
       const updatedUserData = {
         ...userData,
-        precioServicio: userData.precioServicio, // Eliminar espacios en blanco alrededor del precio
+        precio: userData.precio,
+        idOption: userData.idOption,
       };
 
-      dispatch(postUserData(updatedUserData))
-        .then(() => {
-          alert("El Formulario se cargó correctamente");
-        })
-        .catch((error) => {
-          console.log(error.error);
-          if (error.error) {
-            alert(error.error);
-          } else {
-            alert("No fue posible cargar su formulario");
-          }
-          console.error("Error al enviar el formulario", error);
-        });
+      dispatch(postUserData(updatedUserData));
+    } catch (error) {
+      console.error("Error al guardar los servicios y preciso:", error);
     }
   };
 
+  const [localErrors, setLocalErrors] = useState({
+    servicio: "",
+    precio: "",
+  });
+
+
+
+  const handleChange = (event) => {
+    const property = event.target.name;
+    const value = event.target.value;
+
+    Validation(property, setLocalErrors, { ...userData, [property]: value });
+    setUserData({ ...userData, [property]: value });
+  };
+
+  // const handleSubmit = (event) => {
+  //   event.preventDefault();
+  //   const hasErrors = Object.values(localErrors).some((error) => error !== "");
+
+  //   if (!hasErrors) {
+  //     dispatch(postUserData(userDataEnglish));
+  //     handleShowForm();
+  //   } else {
+  //     window.alert("Formulario con Errores");
+  //   }
+  // };
+
   return (
-    <div className="background">
-      <form className="Form" onSubmit={handleSubmit}>
-        <div className="DivButtonTittle">
-          <button
-            type="button"
-            className="DetailButtonForm"
-            onClick={() => window.history.back()}
-          >
-            Back
-          </button>
-          <button
-            type="button"
-            className="ReloadButton"
-            onClick={() => window.location.reload()}
-          >
-            Reload
-          </button>
-          <h1 className="DetailTittle">Completa tu perfil</h1>
-        </div>
-        <div className="ContainerDivInput">
-          <div>
-            <div className="FormDivInput">
-              <label className="FormLabel">Selecciona una opción:</label>
-              <select onChange={handleOptionSelect}>
-                {datosForm.ServicesProviderCard.map((option) => (
-                  <option key={option} value={option}>
-                    {option}
+    <div className={styles.background}>
+      <div className={styles.wrapper}>
+        <button
+          type="button"
+          className={styles.closeButton}
+          onClick={() => handleShowForm()}
+        ></button>
+        <p className={styles.textTitle}>Agregue los Servicios que ofrece</p>
+        <form className={styles.Form} onSubmit={handleServicesAdd}>
+          <div className={styles.FormDivFlex}>
+            <div className={styles.FormDivInputFlex}>
+              <label className={styles.labels}>Servicios:</label>
+              <select
+                className={styles.inputs}
+                name="idOption"
+                value={userData.servicio}
+                onChange = {handleChange}
+              >
+                <option value="" disabled>
+                  Selecciona los servicios que ofreces
+                </option>
+                {services.map((service) => (
+                  <option key={service.idOption} value={service.idOption}>
+                    {service.description}
                   </option>
                 ))}
               </select>
+              <div
+                className={
+                  userData.servicio &&
+                  (localErrors.servicio
+                    ? styles.errorMessage
+                    : styles.errorNotMessage)
+                }
+              >
+                {userData.servicio
+                  ? localErrors.servicio
+                    ? localErrors.servicio
+                    : "Datos Válidos"
+                  : null}
+              </div>
             </div>
-            <div className="SelectedOptions">
-              {userData.selectedOptions.map((selectedOption) => (
-                <div key={selectedOption} className="SelectedOption">
-                  {selectedOption}
-                  <button
-                    type="button"
-                    onClick={() => handleOptionDeselect(selectedOption)}
-                  >
-                    &#x2715;
-                  </button>
-                </div>
-              ))}
-            </div>
-            {/* Nuevo campo para el precio del servicio */}
-            <div className="FormDivInput">
-              <label className="FormLabel">Precio del servicio (en pesos):</label>
+
+            <div className={styles.FormDivInputFlex}>
+              <label className={styles.labels}>Precio x Hora:</label>
               <input
-                className="Inputs"
+                className={styles.inputs}
                 type="text"
-                name="precioServicio"
-                value={userData.precioServicio}
+                name="precio"
+                value={userData.precio}
                 onChange={handleChange}
-                placeholder=""
+                placeholder="$ ARG"
               />
-              <div className="ErrorMessage">{localErrors.precioServicio}</div>
+              <div
+                className={
+                  userData.precio &&
+                  (localErrors.precio
+                    ? styles.errorMessage
+                    : styles.errorNotMessage)
+                }
+              >
+                {userData.precio
+                  ? localErrors.precio
+                    ? localErrors.precio
+                    : "Datos Validos"
+                  : null}
+              </div>
             </div>
           </div>
-          {Object.values(localErrors).every((error) => error === "") &&
-            Object.values(userData).some((value) => value === "") && (
-              <button className="ButtonForm" type="submit">
-                Guardar
-              </button>
-            )}
-        </div>
-      </form>
+          <button
+            className={styles.buttonSave}
+            type="submit"
+          >
+            Guardar
+          </button>
+        </form>
+      </div>
     </div>
   );
 }

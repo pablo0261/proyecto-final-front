@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 // import Form from "../../Form/FormServices/FormServices"
-import Form from "../../Form/FormProfileProvider/Form";
+import Form from "../../Form/FormServices/Form";
 import style from "./ServiceProviderCard.module.sass";
 
 function ServicesProviderCard() {
@@ -10,9 +10,9 @@ function ServicesProviderCard() {
   const [showForm, setShowForm] = useState(false);
   const [servicesData, setServicesData] = useState([]); //* Aqui guarda los sericios que ofrece la persona
 
-  const handleClikForm = () => {
-    setShowForm(!showForm);
-  };
+  const handleShowForm = () => {
+    setShowForm(!showForm)
+  }
 
   useEffect(() => {
     //*Todo esto recorre y valida la info del usuario para ver los servicios y precios
@@ -53,7 +53,7 @@ function ServicesProviderCard() {
             {servicesData.slice(0, 3).map((service, index) => (
               <div key={index} className={style.buttonList}>
                 <button
-                  onClick={() => handleClikForm()}
+                  onClick={() => handleDeleteForm()}
                   className={style.crossButton}
                 ></button>
                 <div className={style.serviceDescription}>
@@ -72,7 +72,7 @@ function ServicesProviderCard() {
           </div>
           <div className={style.contratList}>
             <button
-              onClick={() => handleClikForm()}
+              onClick={() => handleShowForm()}
               className={style.editButton}
             ></button>
             {servicesData.map((_, index) => (
@@ -83,7 +83,7 @@ function ServicesProviderCard() {
           </div>
         </div>
       </div>
-      {/* {showForm && <Form handleClickForm={handleClikForm} />} */}
+      {showForm && <Form handleShowForm={handleShowForm} />}
     </div>
   );
 }
