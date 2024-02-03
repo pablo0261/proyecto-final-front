@@ -145,6 +145,8 @@ let initialState = {
   
   //Filter and getpeople
   homeCustomerProviders: [],
+  getAllPeople: [],
+  paginacionData: [],
   allServices: [],
   filterOrderSelected : {
     filters : [],
