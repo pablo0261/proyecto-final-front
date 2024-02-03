@@ -6,10 +6,15 @@ import Statistics from '../../components/Statistics/Statistics';
 import StoreItem from '../../Helpers/LocalStorage';
 
 import Slide from '../../components/Slide/Slide'
+import { useEffect } from 'react';
 
 const Landing = () => {
     
     const navigate = useNavigate();
+
+    useEffect(()=>{
+        localStorage.removeItem(StoreItem.dataUserSignIn)
+    },[])
 
     const handleLocalStorage = (bool) => {
         localStorage.setItem('isProvider', JSON.stringify(bool));

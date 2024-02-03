@@ -25,7 +25,7 @@
     "redux": "4.2.1",
     "redux-thunk": "2.4.2",
     "sass": "1.70.0",
-    "@mercadopago/sdk-react": "0.0.16",
+    "@mercadopago/sdk-react": "0.0.16"
   },
   "devDependencies": {
     "@types/react": "18.2.43",
