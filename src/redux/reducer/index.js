@@ -9,6 +9,7 @@ import {
   FILTER_SERVICES,
   GET_FILTER_PROVIDER,
   FILTER_ORDER_SELECTED,
+  POST_NEW_INFO_USER,
   // CONTRAT_SERVICE_USER
 } from "../actions/action-types";
 
@@ -220,11 +221,12 @@ const rootReducer = (state = initialState, { type, payload }) => {
       }
 
     //*---POST---//
-    // case POST_NEW_INFO_USER:
-    //   return {
-    //     ...state,
-    //     infoUserLog:  payload,
-    //   };
+    case POST_NEW_INFO_USER:
+      return {
+        ...state,
+        infoUserLog:  payload,
+      };
+
     case POST_NEW_SERVICE_USER:
     return {
           ...state,
