@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { ValidateFormSignIn } from './ValidateFormSignIn';
 import style from './SignIn.module.sass'
+import StoreItem from '../../../Helpers/LocalStorage';
 
 function SignIn(props) {
 
@@ -12,8 +13,16 @@ function SignIn(props) {
         email: "",
         password: "",
         typeOfPerson: isProvider ? 'provider' : 'customer',
-        price: isProvider ? 25 : null
+        /* price: isProvider ? 25 : null */
     })
+
+    useEffect(() => {
+        localStorage.setItem(StoreItem.dataUserSignIn, JSON.stringify(signInData));
+
+        return () => {
+            localStorage.removeItem(StoreItem.dataUserSignIn)
+        }
+    }, []);
 
     const [errors, setErrors] = useState({
         fullName: "*Campo Obligatorio",
@@ -28,9 +37,14 @@ function SignIn(props) {
         const property = event.target.name
         const value = event.target.value
 
-        setSignInData({ ...signInData, [property]: value })
-
         ValidateFormSignIn(property, errors, setErrors, { ...signInData, [property]: value })
+        setSignInData({ ...signInData, [property]: value })
+        // Actualiza el objeto almacenado en localStorage con los nuevos datos
+        const updatedUserData = { ...JSON.parse(localStorage.getItem(StoreItem.dataUserSignIn)), [property]: value };
+        localStorage.setItem(StoreItem.dataUserSignIn, JSON.stringify(updatedUserData));
+
+        // Muestra en la consola el objeto almacenado en localStorage (opcional)
+        console.log(JSON.parse(localStorage.getItem(StoreItem.dataUserSignIn)));
     }
 
     const handleTogglePassword = () => {
@@ -64,8 +78,8 @@ function SignIn(props) {
                         type='text'
                         value={signInData.fullName}
                         onChange={handleChangeLogIn}
-                        placeholder='Nombre y Apellido'/>
-                    <p className={errors.fullName ? style.errorForm : style.nonError }>{errors.fullName ? errors.fullName : 'Datos Validos'}</p>
+                        placeholder='Nombre y Apellido' />
+                    <p className={errors.fullName ? style.errorForm : style.nonError}>{errors.fullName ? errors.fullName : 'Datos Validos'}</p>
                 </div>
                 <div className={style.inputWrapper}>
                     <input
@@ -74,8 +88,8 @@ function SignIn(props) {
                         type='date'
                         value={signInData.birthDate}
                         onChange={handleChangeLogIn}
-                        max={(new Date()).toISOString().split('T')[0]}/>
-                    <p className={errors.birthDate ? style.errorForm : style.nonError }>{errors.birthDate ? errors.birthDate : 'Datos Validos'}</p>
+                        max={(new Date()).toISOString().split('T')[0]} />
+                    <p className={errors.birthDate ? style.errorForm : style.nonError}>{errors.birthDate ? errors.birthDate : 'Datos Validos'}</p>
                 </div>
                 <div className={style.inputWrapper}>
                     <input
@@ -84,8 +98,8 @@ function SignIn(props) {
                         type='email'
                         value={signInData.email}
                         onChange={handleChangeLogIn}
-                        placeholder='example@email.com'/>
-                    <p className={errors.email ? style.errorForm : style.nonError }>{errors.email ? errors.email : 'Datos Validos'}</p>
+                        placeholder='example@email.com' />
+                    <p className={errors.email ? style.errorForm : style.nonError}>{errors.email ? errors.email : 'Datos Validos'}</p>
                 </div>
                 <div className={style.inputPassword}>
                     <div className={style.password}>
@@ -95,21 +109,28 @@ function SignIn(props) {
                             type={showPassword ? 'text' : 'password'}
                             value={signInData.password}
                             onChange={handleChangeLogIn}
-                            placeholder='Constraseña'/>
+                            placeholder='Constraseña' />
                         <div onClick={handleTogglePassword} className={showPassword ? style.hidePassword : style.showPassword}></div>
                     </div>
-                    <p className={errors.password ? style.errorForm : style.nonError }>{errors.password ? errors.password : 'Datos Validos'}</p>
+                    <p className={errors.password ? style.errorForm : style.nonError}>{errors.password ? errors.password : 'Datos Validos'}</p>
                 </div>
                 {
-                    isProvider &&
-                    <div className={style.subcription}>
-                        <p>Suscripcion Mensual</p>
-                        <p>US$ 25</p>
-                    </div>
+                    isProvider ?
+                        <div>
+                            <div className={style.subcription}>
+                                <p>Suscripcion Mensual</p>
+                                <p>US$ 25</p>
+                            </div>
+                            {
+                                Object.values(errors).every(error => error === '') &&
+                                {/* Componente Mercado Pago */ }
+                            }
+                        </div>
+                        :
+                        <div>
+                            <button type='submit' className={style.buttonSubmit}>Registrarse</button>
+                        </div>
                 }
-                <div>
-                    <button type='submit' className={style.buttonSubmit}>Registrarse</button>
-                </div>
             </form>
             <div className={style.Questions}>
                 <p className={style.text}>¿Ya tienes una cuenta?</p>
