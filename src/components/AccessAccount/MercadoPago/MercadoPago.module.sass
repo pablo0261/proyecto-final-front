@@ -1,0 +1,14 @@
+@use '../../../Styles/Mixins'
+@import '../../../Styles/Variables'
+
+.buttonPay
+    width: 100%
+    margin-top: 10px
+    cursor: pointer
+    @include Mixins.buttonActive
+
+.buttonPay:hover
+    @include Mixins.buttonHover
+
+.buttonPay:active
+    @include Mixins.buttonPressed

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { ValidateFormSignIn } from './ValidateFormSignIn';
 import style from './SignIn.module.sass'
 import StoreItem from '../../../Helpers/LocalStorage';
+import MercadoPago from '../MercadoPago/MercadoPago';
 
 function SignIn(props) {
 
@@ -13,15 +14,17 @@ function SignIn(props) {
         email: "",
         password: "",
         typeOfPerson: isProvider ? 'provider' : 'customer',
-        /* price: isProvider ? 25 : null */
+    })
+
+    const [ subscription, setSubscription ] = useState({
+        description: "Subscripción",
+        price: 1200,
+        quantity: 1,
+        currency_id: "$ARG",
     })
 
     useEffect(() => {
         localStorage.setItem(StoreItem.dataUserSignIn, JSON.stringify(signInData));
-
-        return () => {
-            localStorage.removeItem(StoreItem.dataUserSignIn)
-        }
     }, []);
 
     const [errors, setErrors] = useState({
@@ -39,12 +42,6 @@ function SignIn(props) {
 
         ValidateFormSignIn(property, errors, setErrors, { ...signInData, [property]: value })
         setSignInData({ ...signInData, [property]: value })
-        // Actualiza el objeto almacenado en localStorage con los nuevos datos
-        const updatedUserData = { ...JSON.parse(localStorage.getItem(StoreItem.dataUserSignIn)), [property]: value };
-        localStorage.setItem(StoreItem.dataUserSignIn, JSON.stringify(updatedUserData));
-
-        // Muestra en la consola el objeto almacenado en localStorage (opcional)
-        console.log(JSON.parse(localStorage.getItem(StoreItem.dataUserSignIn)));
     }
 
     const handleTogglePassword = () => {
@@ -57,7 +54,7 @@ function SignIn(props) {
         if (Object.values(errors).every(error => error === '')) {
             signInProcess(signInData)
         } else {
-            window.alert('Datos con errores')
+            window.alert('Por favor completa el formulario sin errores')
         }
     }
 
@@ -118,13 +115,10 @@ function SignIn(props) {
                     isProvider ?
                         <div>
                             <div className={style.subcription}>
-                                <p>Suscripcion Mensual</p>
-                                <p>US$ 25</p>
+                                <p>{subscription.description}</p>
+                                <p>ARS ${subscription.price}</p>
                             </div>
-                            {
-                                Object.values(errors).every(error => error === '') &&
-                                {/* Componente Mercado Pago */ }
-                            }
+                            <MercadoPago userData={signInData} errors={errors} subscription={subscription}></MercadoPago>
                         </div>
                         :
                         <div>
