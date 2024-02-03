@@ -5,6 +5,7 @@ import Validation from "./validationFormProfile";
 import styles from "./FormProfile.module.sass";
 
 function Form({ handleShowForm }) {
+  const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
   const dispatch = useDispatch();
   const userLog = useSelector((state) => state.infoUserLog);
 
@@ -14,6 +15,59 @@ function Form({ handleShowForm }) {
       id: userLog.idPeople,
     }));
   }, []);
+
+  const [provincias, setProvincias] = useState([
+    "Ciudad Autónoma de Buenos Aires",
+    "Neuquén",
+    "San Luis",
+    "Santa Fe",
+    "La Rioja",
+    "Catamarca",
+    "Tucumán",
+    "Chaco",
+    "Formosa",
+    "Santa Cruz",
+    "Chubut",
+    "Mendoza",
+    "Entre Ríos",
+    "San Juan",
+    "Jujuy",
+    "Santiago del Estero",
+    "Río Negro",
+    "Corrientes",
+    "Misiones",
+    "Salta",
+    "Córdoba",
+    "Buenos Aires",
+    "La Pampa",
+    "Tierra del Fuego, Antártida e Islas del Atlántico Sur",
+  ]);
+  const [ciudades, setCiudades] = useState([]); // Estado para guardar las ciudades que trae de handleProvinciaChange segun la provincia
+  console.log("ciudades", ciudades);
+  const handleProvinciaChange = async (event) => {
+    // Trae las ciudades segun al provincia seleccionada
+    const provincia = event.target.value.toLowerCase();
+    console.log("provincia", provincia);
+    setUserData({ ...userData, Provincia: provincia });
+    try {
+      const response = await fetch(
+        `${REACT_APP_API_URL}/municipalities?province=${encodeURIComponent(
+          provincia
+        )}`
+      );
+      console.log(
+        "URL",
+        `${REACT_APP_API_URL}/municipalities?province=${encodeURIComponent(
+          provincia
+        )}`
+      );
+      const data = await response.json();
+      setCiudades(data);
+      console.log("data", data);
+    } catch (error) {
+      console.error("Error al obtener las ciudades:", error);
+    }
+  };
 
   const [userData, setUserData] = useState({
     id: userLog,
@@ -26,6 +80,8 @@ function Form({ handleShowForm }) {
     Ocupación: "",
     "Sobre mi": "",
   });
+
+  console.log("userData",userData)
 
   const [localErrors, setLocalErrors] = useState({
     Nombre: "",
@@ -44,8 +100,7 @@ function Form({ handleShowForm }) {
     fullName: userData.Nombre,
     phone: userData.Telefono,
     country: userData.País,
-    provinceName: userData.Provincia,
-    locationName: userData.Localidad,
+    idLocation: userData.Localidad,
     address: userData.Calle,
     profession: userData.Ocupación,
     aboutMe: userData["Sobre mi"],
@@ -107,6 +162,7 @@ function Form({ handleShowForm }) {
                 : null}
             </div>
           </div>
+
           <div className={styles.FormDivFlex}>
             <div className={styles.FormDivInputFlex}>
               <label className={styles.labels}>* Teléfono:</label>
@@ -137,12 +193,12 @@ function Form({ handleShowForm }) {
             <div className={styles.FormDivInputFlex}>
               <label className={styles.labels}>País:</label>
               <span
-  className={`${styles.inputs} ${styles.inputsStatic}`}
-  role="button"
-  tabIndex="0"
->
-  {userData.País || "Argentina"}
-</span>
+                className={`${styles.inputs} ${styles.inputsStatic}`}
+                role="button"
+                tabIndex="0"
+              >
+                {userData.País || "Argentina"}
+              </span>
               <div
                 className={
                   userData.País &&
@@ -161,54 +217,72 @@ function Form({ handleShowForm }) {
 
             <div className={styles.FormDivInputFlex}>
               <label className={styles.labels}>* Provincia:</label>
-              <input
+              <select
                 className={styles.inputs}
-                type="text"
                 name="Provincia"
                 value={userData.Provincia}
-                onChange={handleChange}
-                placeholder="Ej: Cordoba"
-              />
-              <div
-                className={
-                  userData.Provincia &&
-                  (localErrors.Provincia
-                    ? styles.errorMessage
-                    : styles.errorNotMessage)
-                }
+                onChange={handleProvinciaChange}
               >
-                {userData.Provincia
-                  ? localErrors.Provincia
+                <option value="" disabled>
+                  Selecciona una provincia
+                </option>
+                {provincias.map((provincia) => (
+                  <option key={provincia} value={provincia}>
+                    {provincia}
+                  </option>
+                ))}
+              </select>
+              {/* <div
+                  className={
+                    userData.Provincia &&
+                    (localErrors.Provincia
+                      ? styles.errorMessage
+                      : styles.errorNotMessage)
+                  }
+                >
+                  {userData.Provincia
                     ? localErrors.Provincia
-                    : "Datos Válidos"
-                  : null}
-              </div>
+                      ? localErrors.Provincia
+                      : "Datos Válidos"
+                    : null}
+                </div> */}
             </div>
 
             <div className={styles.FormDivInputFlex}>
-              <label className={styles.labels}>* Localidad:</label>
-              <input
+              <label className={styles.labels}>* Ciudad:</label>
+              <select
                 className={styles.inputs}
-                type="text"
                 name="Localidad"
                 value={userData.Localidad}
                 onChange={handleChange}
-                placeholder="Ej: Capital"
-              />
-              <div
-                className={
-                  userData.Localidad &&
-                  (localErrors.Localidad
-                    ? styles.errorMessage
-                    : styles.errorNotMessage)
-                }
               >
-                {userData.Localidad
-                  ? localErrors.Localidad
+                <option value="" disabled>
+                  Selecciona una ciudad
+                </option>
+                {Array.isArray(ciudades.data) &&
+                  ciudades.data.map((ciudad) => (
+                    <option
+                      key={ciudad.idLocalidad}
+                      value={ciudad.idLocalidad}
+                    >
+                      {ciudad.nombreLocalidad}
+                    </option>
+                  ))}
+              </select>
+              {/* <div
+                  className={
+                    userData.Localidad &&
+                    (localErrors.Localidad
+                      ? styles.errorMessage
+                      : styles.errorNotMessage)
+                  }
+                >
+                  {userData.Localidad
                     ? localErrors.Localidad
-                    : "Datos Válidos"
-                  : null}
-              </div>
+                      ? localErrors.Localidad
+                      : "Datos Válidos"
+                    : null}
+                </div> */}
             </div>
           </div>
           <div className={styles.FormDivInput}>
@@ -264,7 +338,7 @@ function Form({ handleShowForm }) {
           </div>
 
           <div className={styles.FormDivInput}>
-            <label className={styles.labels}>* Sobre mi:</label>
+            <label className={styles.labels}>Sobre mi:</label>
             <textarea
               className={styles.inputDetail}
               type="text"

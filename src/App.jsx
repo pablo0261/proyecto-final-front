@@ -103,12 +103,12 @@ function App() {
                 <Route path={Helpers.ConnectionsProviderView} element={<ConnectionsProviderView />} />
                 <Route path={Helpers.ReportsProviderView} element={<ReportsProviderView />} />
                 <Route path={Helpers.ProfileProviderView} element={<ProfileProviderView />} />
-
+                  
                 {/* Footer */}
                 <Route path={Helpers.Assistance} element={<Assistance />} />
                 <Route path={Helpers.FAQs} element={<FAQs />} />
                 <Route path={Helpers.ConsultReport} element={<ConsultReport />} />
-
+                  
                 <Route path='*' element={<NotFound />}></Route>
               </Routes>
             }
@@ -126,8 +126,12 @@ function App() {
             <Routes>
               <Route exact path={Helpers.Landing} element={<Landing />} />
               <Route path={Helpers.AccessAccount} element={<AccessAccount />} />
+              <Route path={Helpers.Assistance} element={<Assistance />} />
+              <Route path={Helpers.FAQs} element={<FAQs />} />
+              <Route path={Helpers.ConsultReport} element={<ConsultReport />} />
 
-              <Route path='*' element={<NotFound />}></Route>
+              <Route path='*' element={<NotFound />} />
+
             </Routes>
             <Footer />
           </div>

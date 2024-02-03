@@ -4,11 +4,13 @@ import styles from "../home/Home.module.sass";
 import MapHome from "../../components/MapHome/MapHome";
 import { useSelector, useDispatch } from "react-redux";
 import { allPeopleProvider, getPeopleFilteredOrderedPagination, saveSelectionsGlobal, saveOrderGlobal } from "../../redux/actions";
+import Pagination from "../../components/Pagination/Pagination";
 
 const Home = () => {
   
   const filterOrderSelectedGlobal = useSelector((state) => state.filterOrderSelected);
-  const providers = useSelector((state) => state.getAllPeople);
+  const providers = useSelector((state) => state.getAllPeople.data);
+  const InfoPag = useSelector((state) => state.getAllPeople);
   const allServices = useSelector((state) => state.allServices);
 
   const dispatch = useDispatch();
@@ -23,7 +25,7 @@ const Home = () => {
 
   useEffect(() => {
     if (Object.values(filterOrderSelectedGlobal).every(property => property.length === 0)) {
-      dispatch(allPeopleProvider());
+      dispatch(allPeopleProvider(""));
     }
   }, []);
 
@@ -71,7 +73,7 @@ const Home = () => {
   };
 
 
-
+  
 
   const queryConstructor = () => {
     if (selectedOrder.length > 0 && selectedServices.length > 0){
@@ -87,6 +89,7 @@ const Home = () => {
         return queryConstructOrder;
       };
   };
+  const queryProps = queryConstructor();
 
   const handleApply = () => {
     handleConfirmFilters();
@@ -112,6 +115,9 @@ const Home = () => {
       setSelectedOrder([...updatedOrder, order]);
     }
   };
+
+  // console.log(providers)
+  // console.log(InfoPag)
 
   return (
     <div className={styles.background}>
@@ -202,6 +208,9 @@ const Home = () => {
             {Array.isArray(providers) &&
               providers.map((user) => <Card key={user.people.idPeople} user={user.people} />)}
           </div>
+           <div className={styles.pagination}>
+              <Pagination count={InfoPag.pageSize} pageNumber={InfoPag.pageNumber} totalCount={InfoPag.totalCount} totalOfPages={InfoPag.totalOfPages} queryProps={queryProps}/>
+            </div>
         </div>
       </div>
     </div>

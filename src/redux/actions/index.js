@@ -12,6 +12,7 @@ import {
   FILTER_SERVICES,
   GET_FILTER_PROVIDER,
   FILTER_ORDER_SELECTED,
+  POST_NEW_SERVICE_USER,
 } from "./action-types";
 
 const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
@@ -94,13 +95,27 @@ const handleContratService = (item) => {
   };
 };
 
-const allPeopleProvider = () => {
+// const allPeopleProvider = () => {
+//   return async (dispatch) => {
+//     try {
+//       const response = await axios.get(`${REACT_APP_API_URL}/people?typeOfPerson=provider`);
+//       return dispatch({
+//         type: GET_HOME_PROVIDER,
+//         payload:  response.data.people,
+//       });
+//     } catch (error) {
+//       console.log(error);
+//     }
+//   };
+// };
+const allPeopleProvider = (query) => {
+
   return async (dispatch) => {
     try {
-      const response = await axios.get(`${REACT_APP_API_URL}/people?typeOfPerson=provider`);
+      const response = await axios.get(`${REACT_APP_API_URL}/people?typeOfPerson=provider${query}`);
       return dispatch({
         type: GET_HOME_PROVIDER,
-        payload: response.data.people.data,
+        payload:  response.data.people,
       });
     } catch (error) {
       console.log(error);
@@ -108,19 +123,24 @@ const allPeopleProvider = () => {
   };
 };
 
-const getPeopleFilteredOrderedPagination = (queryConstructor) => {
+const getPeopleFilteredOrderedPagination = (queryConstructor, queryPagination) => {
   return async (dispatch) => {
     try {
-      const response = await axios.get(`${REACT_APP_API_URL}/people?typeOfPerson=provider&${queryConstructor}`);
+      const response = await axios.get(
+        `${REACT_APP_API_URL}/people?typeOfPerson=provider&${queryConstructor}${queryPagination ? `${queryPagination}` : ""}`
+        );
+        console.log("action",`${REACT_APP_API_URL}/people?typeOfPerson=provider&${queryConstructor}${queryPagination ? `&${queryPagination}` : ""}`)
+        console.log(response);
       return dispatch({
         type: GET_FILTER_PROVIDER,
-        payload: response.data.people.data,
+        payload: response.data.people,
       });
     } catch (error) {
       console.log(error);
     }
   };
 };
+
 
 const getFiltersOrdersDB = () => {
   return async (dispatch) => {
@@ -161,15 +181,42 @@ const saveOrderGlobal = (orders) => {
   };
 }
 
-//*---POST_NEW_INFO_USER---//
+//*---POST_NEW_INFO_USER---// (Pablo --> Lo uso para enviar las modificaciones del perfil de los proveedores)
 const postUserData = (userDataEnglish) => {
   return async (dispatch) => {
     try {
       const response = await axios.post(`${REACT_APP_API_URL}/people`, userDataEnglish);
+      console.log("response",response)
+      console.log("URL-POST",(`${REACT_APP_API_URL}/people`, userDataEnglish))
+      
       if (response.status === 200) {
         return dispatch({
           type: POST_NEW_INFO_USER,
           payload: response.data.people.data[0].people,
+        });
+      }
+    } catch (error) {
+      if (error.response && error.response.data) {
+        dispatch({
+          type: SET_ERROR_BACK,
+          payload: error.response.data,
+        });
+        console.log(error);
+        throw error.response.data;
+      }
+    }
+  };
+};
+
+const postUserServices = (userData) => {//*(Pablo --> Lo uso para enviar las modificaciones de los servicios de los proveedores)
+  return async (dispatch) => {
+    try {
+      const response = await axios.post(`${REACT_APP_API_URL}/people/options`, userData);
+      console.log("response",response)
+      if (response.status === 200) {
+        return dispatch({
+          type: POST_NEW_SERVICE_USER,
+          payload: response.data.people.data[0].people,//! FALTA revisar la respuesta cuando este la ruta ok
         });
       }
     } catch (error) {
@@ -211,5 +258,6 @@ export {
   allPeopleProvider,
   getFiltersOrdersDB,
   getPeopleFilteredOrderedPagination,
+  postUserServices,
   saveOrderGlobal,
 }

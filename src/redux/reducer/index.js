@@ -2,13 +2,14 @@ import {
   ACCESS_BACK_SAVE_DATA,
   LOG_OUT_DELETE_DATA,
   GET_INFO_USER,
-  POST_NEW_INFO_USER,
+  POST_NEW_SERVICE_USER,
   SET_ERROR_BACK,
   EDIT_INFO_USER,
   GET_HOME_PROVIDER,
   FILTER_SERVICES,
   GET_FILTER_PROVIDER,
   FILTER_ORDER_SELECTED,
+  POST_NEW_INFO_USER,
   // CONTRAT_SERVICE_USER
 } from "../actions/action-types";
 
@@ -145,6 +146,8 @@ let initialState = {
   
   //Filter and getpeople
   homeCustomerProviders: [],
+  getAllPeople: [],
+  paginacionData: [],
   allServices: [],
   filterOrderSelected : {
     filters : [],
@@ -154,7 +157,7 @@ let initialState = {
   postUserData: [],
   //*ERRORES//
   errorsBack: {},
-  //*ESTAMOS PARA MANEJO DEL FORM//
+  //*ESTAMOS PARA MANEJO DEL FORM// <--// dejo de utilizarlo cuando funcionene todas las rutas del back (Pablo)
   datosForm: {
     ProfileProvider: {
       Nombre: "",
@@ -225,6 +228,12 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         infoUserLog:  payload,
       };
+
+    case POST_NEW_SERVICE_USER:
+    return {
+          ...state,
+          infoUserLog:  payload,
+        };
 
     //* --- MANEJO DE ERRORES DEL BACK ---//*
     case SET_ERROR_BACK:

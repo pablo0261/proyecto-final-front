@@ -106,61 +106,11 @@
     }
 }
 
-.section {
-
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    height: 440px;
-    width: 80%;
-
-    .section__row {
-
-        display: grid;
-        grid-template-columns: auto auto 50%;
-        justify-content: center;
-        align-items: center;
-        justify-items: center;
-        align-content: center;
-        gap: 40px;
-
-        i {
-            @include flexbox(null, center, center);
-            width: 60px;
-            height: 60px;
-            @include font($primaryColor, 3rem, bold, normal);
-            border: 3px solid $primaryColor;
-            border-radius: 50%;
-        }
-
-        h2 {
-            @include font($textPrimaryColor, 2.5rem, bold, normal);
-            text-align: left;
-        }
-
-        p {
-            @include font($textPrimaryColor, 1.5rem, normal, normal);
-            text-align: left;
-        }
-
-        iframe {
-            margin: 0;
-            height: 350px;
-            width: 350px;
-            border: 1px solid gray;
-            border-radius: 10px;
-            /* @include backgroundimg('../../assets/LandingImages/nono.gif');
-            background-attachment: local; */ 
-        }
-    }
-
+/* slide */
+.slide{
+    @include flexbox(null, center, center);
+    width: 100%
 }
-
-
-
-
-
 
 /* section registro */
 .sectionregistro {

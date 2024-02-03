@@ -7,17 +7,19 @@ import defaultImage from '../../../assets/Icons/PerfilImage.png';
 function ProfileProvider() {
   const infoUserLog = useSelector((state) => state.infoUserLog);
   const formData = {
-    fullName: infoUserLog.fullName || "5",
-    age: infoUserLog.age || "",
-    address: infoUserLog.address || "Libertad 234",
-    state: infoUserLog.state || "",
+    fullName: infoUserLog.fullName || "Diego Lepore",
+    age: infoUserLog.age || "43",
+    address: infoUserLog.address || "Emilio Rosas 3057",
+    location: infoUserLog.locationName || "Bahia Blanca",
+    province: infoUserLog.provinceName || "Buenos Aires",
+    state: infoUserLog.state || "Activo",
     country: infoUserLog.country || "Argentina",
-    profesion: infoUserLog.profession || "Enferme",
-    aboutMe: infoUserLog.aboutMe || "",
+    profesion: infoUserLog.profession || "Enfermero",
+    aboutMe: infoUserLog.aboutMe || "Predispuesto y Dedicado",
     phone: infoUserLog.phone || "02918145869",
-    email: infoUserLog.email || "",
-    averageRating: infoUserLog.averageRating || "",
-    countRating: infoUserLog.countRating.toString() || "",
+    email: infoUserLog.email || "diegolepore@gmail.com",
+    averageRating: infoUserLog.averageRating || "4.9",
+    countRating: infoUserLog.countRating.toString() || "127",
   };
 
   const isAllInfoFilled = Object.values(formData).every(
@@ -63,7 +65,7 @@ function ProfileProvider() {
               }
               <button onClick={() => handleShowForm()} className={style.editButton}></button>
             </div>
-            <p className={style.textData}>{formData.age} años |</p>
+            <p className={style.textData}>{formData.age} años | {formData.address}, {formData.location}, {formData.province}, {formData.country}</p>
             <p className={style.textOcupation}>{formData.profesion}</p>
             <p className={style.textDetail}>{formData.aboutMe}</p>
             <div className={style.contacts}>
