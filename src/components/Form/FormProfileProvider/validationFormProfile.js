@@ -94,55 +94,7 @@ const Validation = (property, setLocalErrors, userData) => {
       }
       break;
 
-    case "Localidad":
-      if (userData[property].trim() === "") {
-        setLocalErrors((prevErrors) => ({
-          ...prevErrors,
-          [property]: "*Ingrese su localidad de residencia",
-        }));
-      } else if (!/^[A-Za-z\s]+$/.test(userData[property])) {
-        setLocalErrors((prevErrors) => ({
-          ...prevErrors,
-          [property]: "*Este campo no puede contener símbolos",
-        }));
-      } else if (userData[property].length > 25) {
-        setLocalErrors((prevErrors) => ({
-          ...prevErrors,
-          [property]: "*Campo demasiado extenso",
-        }));
-      } else {
-        setLocalErrors((prevErrors) => ({
-          ...prevErrors,
-          [property]: "",
-        }));
-      }
-      break;
-
-    case "Provincia":
-      if (userData[property].trim() === "") {
-        setLocalErrors((prevErrors) => ({
-          ...prevErrors,
-          [property]: "*Ingrese su provincia de residencia",
-        }));
-      } else if (!/^[A-Za-z\s]+$/.test(userData[property])) {
-        setLocalErrors((prevErrors) => ({
-          ...prevErrors,
-          [property]: "*Este campo no puede contener símbolos",
-        }));
-      } else if (userData[property].length > 15) {
-        setLocalErrors((prevErrors) => ({
-          ...prevErrors,
-          [property]: "*Campo demasiado extenso",
-        }));
-      } else {
-        setLocalErrors((prevErrors) => ({
-          ...prevErrors,
-          [property]: "",
-        }));
-      }
-      break;
-
-    case "Ocupación":
+        case "Ocupación":
       if (userData[property].trim() === "") {
         setLocalErrors((prevErrors) => ({
           ...prevErrors,
