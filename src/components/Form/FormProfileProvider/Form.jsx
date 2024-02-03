@@ -5,6 +5,7 @@ import Validation from "./validationFormProfile";
 import styles from "./FormProfile.module.sass";
 
 function Form({ handleShowForm }) {
+  const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
   const dispatch = useDispatch();
   const userLog = useSelector((state) => state.infoUserLog);
 
@@ -14,6 +15,49 @@ function Form({ handleShowForm }) {
       id: userLog.idPeople,
     }));
   }, []);
+
+  const [provincias, setProvincias] = useState([
+    "Ciudad Autónoma de Buenos Aires",
+    "Neuquén",
+    "San Luis",
+    "Santa Fe",
+    "La Rioja",
+    "Catamarca",
+    "Tucumán",
+    "Chaco",
+    "Formosa",
+    "Santa Cruz",
+    "Chubut",
+    "Mendoza",
+    "Entre Ríos",
+    "San Juan",
+    "Jujuy",
+    "Santiago del Estero",
+    "Río Negro",
+    "Corrientes",
+    "Misiones",
+    "Salta",
+    "Córdoba",
+    "Buenos Aires",
+    "La Pampa",
+    "Tierra del Fuego, Antártida e Islas del Atlántico Sur",
+  ]);
+  const [ciudades, setCiudades] = useState([]); // Estado para guardar las ciudades que trae de handleProvinciaChange segun la provincia
+  console.log("ciudades", ciudades);
+  const handleProvinciaChange = async (event) => {
+    // Trae las ciudades segun al provincia seleccionada
+    const provincia = event.target.value;
+    setUserData({ ...userData, Provincia: provincia });
+    try {
+      const response = await fetch(
+        `${REACT_APP_API_URL}/municipalities/${encodeURIComponent(provincia)}`
+      );
+      const data = await response.json();
+      setCiudades(data);
+    } catch (error) {
+      console.error("Error al obtener las ciudades:", error);
+    }
+  };
 
   const [userData, setUserData] = useState({
     id: userLog,
@@ -107,6 +151,7 @@ function Form({ handleShowForm }) {
                 : null}
             </div>
           </div>
+
           <div className={styles.FormDivFlex}>
             <div className={styles.FormDivInputFlex}>
               <label className={styles.labels}>* Teléfono:</label>
@@ -137,12 +182,12 @@ function Form({ handleShowForm }) {
             <div className={styles.FormDivInputFlex}>
               <label className={styles.labels}>País:</label>
               <span
-  className={`${styles.inputs} ${styles.inputsStatic}`}
-  role="button"
-  tabIndex="0"
->
-  {userData.País || "Argentina"}
-</span>
+                className={`${styles.inputs} ${styles.inputsStatic}`}
+                role="button"
+                tabIndex="0"
+              >
+                {userData.País || "Argentina"}
+              </span>
               <div
                 className={
                   userData.País &&
@@ -161,14 +206,21 @@ function Form({ handleShowForm }) {
 
             <div className={styles.FormDivInputFlex}>
               <label className={styles.labels}>* Provincia:</label>
-              <input
+              <select
                 className={styles.inputs}
-                type="text"
                 name="Provincia"
                 value={userData.Provincia}
-                onChange={handleChange}
-                placeholder="Ej: Cordoba"
-              />
+                onChange={handleProvinciaChange}
+              >
+                <option value="" disabled>
+                  Selecciona una provincia
+                </option>
+                {provincias.map((provincia) => (
+                  <option key={provincia} value={provincia}>
+                    {provincia}
+                  </option>
+                ))}
+              </select>
               <div
                 className={
                   userData.Provincia &&
@@ -186,15 +238,22 @@ function Form({ handleShowForm }) {
             </div>
 
             <div className={styles.FormDivInputFlex}>
-              <label className={styles.labels}>* Localidad:</label>
-              <input
+              <label className={styles.labels}>* Ciudad:</label>
+              <select
                 className={styles.inputs}
-                type="text"
                 name="Localidad"
                 value={userData.Localidad}
                 onChange={handleChange}
-                placeholder="Ej: Capital"
-              />
+              >
+                <option value="" disabled>
+                  Selecciona una ciudad
+                </option>
+                {ciudades.map((ciudad) => (
+                  <option key={ciudad} value={ciudad}>
+                    {ciudad}
+                  </option>
+                ))}
+              </select>
               <div
                 className={
                   userData.Localidad &&
@@ -264,7 +323,7 @@ function Form({ handleShowForm }) {
           </div>
 
           <div className={styles.FormDivInput}>
-            <label className={styles.labels}>* Sobre mi:</label>
+            <label className={styles.labels}>Sobre mi:</label>
             <textarea
               className={styles.inputDetail}
               type="text"
