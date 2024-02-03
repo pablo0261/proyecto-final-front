@@ -94,13 +94,27 @@ const handleContratService = (item) => {
   };
 };
 
-const allPeopleProvider = () => {
+// const allPeopleProvider = () => {
+//   return async (dispatch) => {
+//     try {
+//       const response = await axios.get(`${REACT_APP_API_URL}/people?typeOfPerson=provider`);
+//       return dispatch({
+//         type: GET_HOME_PROVIDER,
+//         payload:  response.data.people,
+//       });
+//     } catch (error) {
+//       console.log(error);
+//     }
+//   };
+// };
+const allPeopleProvider = (query) => {
+
   return async (dispatch) => {
     try {
-      const response = await axios.get(`${REACT_APP_API_URL}/people?typeOfPerson=provider`);
+      const response = await axios.get(`${REACT_APP_API_URL}/people?typeOfPerson=provider${query}`);
       return dispatch({
         type: GET_HOME_PROVIDER,
-        payload: response.data.people.data,
+        payload:  response.data.people,
       });
     } catch (error) {
       console.log(error);
@@ -108,19 +122,24 @@ const allPeopleProvider = () => {
   };
 };
 
-const getPeopleFilteredOrderedPagination = (queryConstructor) => {
+const getPeopleFilteredOrderedPagination = (queryConstructor, queryPagination) => {
   return async (dispatch) => {
     try {
-      const response = await axios.get(`${REACT_APP_API_URL}/people?typeOfPerson=provider&${queryConstructor}`);
+      const response = await axios.get(
+        `${REACT_APP_API_URL}/people?typeOfPerson=provider&${queryConstructor}${queryPagination ? `${queryPagination}` : ""}`
+        );
+        console.log("action",`${REACT_APP_API_URL}/people?typeOfPerson=provider&${queryConstructor}${queryPagination ? `&${queryPagination}` : ""}`)
+        console.log(response);
       return dispatch({
         type: GET_FILTER_PROVIDER,
-        payload: response.data.people.data,
+        payload: response.data.people,
       });
     } catch (error) {
       console.log(error);
     }
   };
 };
+
 
 const getFiltersOrdersDB = () => {
   return async (dispatch) => {
