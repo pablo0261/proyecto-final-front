@@ -57,7 +57,7 @@ const recoverUserLoggedData = (emailUserData) => {
           payload: data.data.people.data[0].people,
         });
       } else {
-        console.log(data)
+        window.alert(data)
       }
     } catch (error) {
       window.alert(error);

@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import Landing from './Views/Landing/Landing';
 import Home from './Views/Home/Home';
 import NotFound from './utils/notFound/NotFound';
@@ -18,18 +18,60 @@ import { useDispatch, useSelector } from 'react-redux';
 import Footer from './components/Footer/Footer';
 import { useEffect } from 'react';
 import StoreItem from './Helpers/LocalStorage';
-import { getFiltersOrdersDB, recoverUserLoggedData } from './redux/actions';
+import { addInfoUserLog, getFiltersOrdersDB, recoverUserLoggedData } from './redux/actions';
+import { jwtDecode } from "jwt-decode";
+import axios from 'axios';
 
 
 function App() {
 
   const dispatch = useDispatch()
+  const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
+  const navigate = useNavigate()
+
+  // GOOGLE AUTH
+  const handleCallbackResponse = async (response) => {
+    const userObject = jwtDecode(response.credential)
+    try {
+      const response = await axios.get(
+        `${REACT_APP_API_URL}/people?email=${userObject.email}`
+      );
+      if (response.data.people.count > 0) {
+        const user = response.data.people.data[0].people
+        localStorage.setItem(StoreItem.emailUserLogged, userObject.email);
+
+        dispatch(addInfoUserLog(user))
+
+        if (user.typeOfPerson === 'admin') {
+
+        } else if (user.typeOfPerson === 'provider') {
+          navigate(Helpers.StatsProviderView)
+        } else {
+          navigate(Helpers.HomeCustomerView)
+        }
+      }
+      if (response.data.people.count === 0) {
+        window.alert("Usuario no existe.")
+      }
+    } catch (error) {
+      window.alert(error);
+    }
+  }
+
+  useEffect(() => {
+    google.accounts.id.initialize({
+      client_id: "554332329432-0b6a0dh2ihgrkj5obs34lmnngpfvrq4j.apps.googleusercontent.com",
+      callback: handleCallbackResponse
+    })
+
+    google.accounts.id.prompt();
+  }, [])
 
   useEffect(() => {
     dispatch(getFiltersOrdersDB());
 
     if (localStorage.getItem(StoreItem.emailUserLogged)) {
-      dispatch(recoverUserLoggedData(localStorage.getItem(StoreItem.emailUserLogged)))  
+      dispatch(recoverUserLoggedData(localStorage.getItem(StoreItem.emailUserLogged)))
     }
   }, [])
 
@@ -61,7 +103,12 @@ function App() {
                 <Route path={Helpers.ConnectionsProviderView} element={<ConnectionsProviderView />} />
                 <Route path={Helpers.ReportsProviderView} element={<ReportsProviderView />} />
                 <Route path={Helpers.ProfileProviderView} element={<ProfileProviderView />} />
-
+                  
+                {/* Footer */}
+                <Route path={Helpers.Assistance} element={<Assistance />} />
+                <Route path={Helpers.FAQs} element={<FAQs />} />
+                <Route path={Helpers.ConsultReport} element={<ConsultReport />} />
+                  
                 <Route path='*' element={<NotFound />}></Route>
               </Routes>
             }
