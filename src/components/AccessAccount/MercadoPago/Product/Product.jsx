@@ -3,6 +3,8 @@
   import axios from "axios";
   import abuela from "../../assets/abuela.jpg";
 
+  //! OJO SE DEBE INSTALAR ESTA VERSION ==> npm i mercadopago@1.5.16  ("Si no NO funcionará")
+
   import "./Product.css";
 
   const Product = () => {
