@@ -163,11 +163,13 @@ const saveOrderGlobal = (orders) => {
 }
 
 //*---POST_NEW_INFO_USER---// (Pablo --> Lo uso para enviar las modificaciones del perfil de los proveedores)
-const postUserData = (userData) => {
+const postUserData = (userDataEnglish) => {
   return async (dispatch) => {
     try {
-      const response = await axios.post(`${REACT_APP_API_URL}/people`, userData);
+      const response = await axios.post(`${REACT_APP_API_URL}/people`, userDataEnglish);
       console.log("response",response)
+      console.log("URL-POST",(`${REACT_APP_API_URL}/people`, userDataEnglish))
+      
       if (response.status === 200) {
         return dispatch({
           type: POST_NEW_INFO_USER,

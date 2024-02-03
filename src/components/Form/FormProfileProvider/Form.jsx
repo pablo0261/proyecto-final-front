@@ -46,14 +46,24 @@ function Form({ handleShowForm }) {
   console.log("ciudades", ciudades);
   const handleProvinciaChange = async (event) => {
     // Trae las ciudades segun al provincia seleccionada
-    const provincia = event.target.value;
+    const provincia = event.target.value.toLowerCase();
+    console.log("provincia", provincia);
     setUserData({ ...userData, Provincia: provincia });
     try {
       const response = await fetch(
-        `${REACT_APP_API_URL}/municipalities/${encodeURIComponent(provincia)}`
+        `${REACT_APP_API_URL}/municipalities?province=${encodeURIComponent(
+          provincia
+        )}`
+      );
+      console.log(
+        "URL",
+        `${REACT_APP_API_URL}/municipalities?province=${encodeURIComponent(
+          provincia
+        )}`
       );
       const data = await response.json();
       setCiudades(data);
+      console.log("data", data);
     } catch (error) {
       console.error("Error al obtener las ciudades:", error);
     }
@@ -221,20 +231,20 @@ function Form({ handleShowForm }) {
                   </option>
                 ))}
               </select>
-              <div
-                className={
-                  userData.Provincia &&
-                  (localErrors.Provincia
-                    ? styles.errorMessage
-                    : styles.errorNotMessage)
-                }
-              >
-                {userData.Provincia
-                  ? localErrors.Provincia
+              {/* <div
+                  className={
+                    userData.Provincia &&
+                    (localErrors.Provincia
+                      ? styles.errorMessage
+                      : styles.errorNotMessage)
+                  }
+                >
+                  {userData.Provincia
                     ? localErrors.Provincia
-                    : "Datos Válidos"
-                  : null}
-              </div>
+                      ? localErrors.Provincia
+                      : "Datos Válidos"
+                    : null}
+                </div> */}
             </div>
 
             <div className={styles.FormDivInputFlex}>
@@ -248,26 +258,30 @@ function Form({ handleShowForm }) {
                 <option value="" disabled>
                   Selecciona una ciudad
                 </option>
-                {ciudades.map((ciudad) => (
-                  <option key={ciudad} value={ciudad}>
-                    {ciudad}
-                  </option>
-                ))}
+                {Array.isArray(ciudades.data) &&
+                  ciudades.data.map((ciudad) => (
+                    <option
+                      key={ciudad.nombreLocalidad}
+                      value={ciudad.nombreLocalidad}
+                    >
+                      {ciudad.nombreLocalidad}
+                    </option>
+                  ))}
               </select>
-              <div
-                className={
-                  userData.Localidad &&
-                  (localErrors.Localidad
-                    ? styles.errorMessage
-                    : styles.errorNotMessage)
-                }
-              >
-                {userData.Localidad
-                  ? localErrors.Localidad
+              {/* <div
+                  className={
+                    userData.Localidad &&
+                    (localErrors.Localidad
+                      ? styles.errorMessage
+                      : styles.errorNotMessage)
+                  }
+                >
+                  {userData.Localidad
                     ? localErrors.Localidad
-                    : "Datos Válidos"
-                  : null}
-              </div>
+                      ? localErrors.Localidad
+                      : "Datos Válidos"
+                    : null}
+                </div> */}
             </div>
           </div>
           <div className={styles.FormDivInput}>
