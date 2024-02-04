@@ -100,7 +100,7 @@ const Validation = (property, setLocalErrors, userData) => {
           ...prevErrors,
           [property]: "*Ingrese su profesión/ocupación",
         }));
-      } else if (!/^[A-Za-z\s]+$/.test(userData[property])) {
+      } else if (!/^[A-Za-z\u00C0-\u024F\s]+$/.test(userData[property])) {
         setLocalErrors((prevErrors) => ({
           ...prevErrors,
           [property]: "*Este campo no puede contener símbolos",
