@@ -29,6 +29,29 @@ function ProfileProvider() {
   const Verification = isAllInfoFilled
 
   const [showForm, setShowForm] = useState(false)
+  //* DESDE AQUI ESTOY HACIENDO LOS ESTADOS PARA PROBAR LA SUBIDA DE IMAGENES
+  const [image, setImage] = useState("")
+  const [loading, setLoading] = useState(false)
+
+  const uploadImage = async (e) => {
+    const files = e.target.files;
+    const data = new FormData();
+    data.append("file", files[0]);
+    data.append("upload_preset", "p7bxy5ug");//* aqui va en el segundo atributo el nombre del preset de las imagenes
+    setLoading(true)
+    const res = await fetch(
+      "https://api.cloudinary.com/v1_1/dn3kedyer/image/upload",//* dn3kedyer es el del user de cloudinary
+      {
+        method: "POST",
+        body: data,
+      }
+    )
+    const file = await res.json()
+    console.log(res)
+    setImage(file.secure_url)
+    console.log(file.secure_url)//*esta es la url de la imagen subida
+    setLoading(false)
+  }
 
   const handleShowForm = () => {
     setShowForm(!showForm)
@@ -51,6 +74,11 @@ function ProfileProvider() {
           <div className={style.imageWrapper}>
             <div className={formData.state === 'Active' ? style.stateActive : style.stateInactive}>{formData.state}</div>
             <img className={style.image} src={defaultImage} alt="Imagen" />
+            //* Aqui empece a hacer cambios para cloudinary**/
+            <h1>subir imagen</h1>
+            <input type="file" name="file" placeholder="Sube tu imagen" onChange={uploadImage}/>
+            {loading ? (<h1>Subiendo imagen</h1>) : (<img className={style.image} src={image ? image : defaultImage} alt="Imagen" />)}
+            //****************************************** */
             <div className={style.valoration}>
               <div className={style.starIcon}></div>
               <p className={style.textStar}>{formData.averageRating} ({formData.countRating})</p>
