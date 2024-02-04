@@ -1,8 +1,12 @@
 import { useSelector } from "react-redux";
 import { useState } from "react";
+import { Cloudinary } from "@cloudinary/url-gen";
+import { AdvancedImage, responsive, placeholder } from "@cloudinary/react";
 import style from './ProfileProvider.module.sass';
 import Form from "../../Form/FormProfileProvider/Form"
 import defaultImage from '../../../assets/Icons/PerfilImage.png';
+import CloudinaryUploadWidget from "../../CloudinaryWidget/CloudinaryWidget";
+
 
 function ProfileProvider() {
   const infoUserLog = useSelector((state) => state.infoUserLog);
@@ -29,34 +33,58 @@ function ProfileProvider() {
   const Verification = isAllInfoFilled
 
   const [showForm, setShowForm] = useState(false)
-  //* DESDE AQUI ESTOY HACIENDO LOS ESTADOS PARA PROBAR LA SUBIDA DE IMAGENES
-  const [image, setImage] = useState("")
-  const [loading, setLoading] = useState(false)
 
-  const uploadImage = async (e) => {
-    const files = e.target.files;
-    const data = new FormData();
-    data.append("file", files[0]);
-    data.append("upload_preset", "p7bxy5ug");//* aqui va en el segundo atributo el nombre del preset de las imagenes
-    setLoading(true)
-    const res = await fetch(
-      "https://api.cloudinary.com/v1_1/dn3kedyer/image/upload",//* dn3kedyer es el del user de cloudinary
-      {
-        method: "POST",
-        body: data,
-      }
-    )
-    const file = await res.json()
-    console.log(res)
-    setImage(file.secure_url)
-    console.log(file.secure_url)//*esta es la url de la imagen subida
-    setLoading(false)
-  }
 
   const handleShowForm = () => {
     setShowForm(!showForm)
   }
 
+//? DESDE AQUI ESTOY USANDO CLOUDINARY CON WIDGETS
+  const [publicId, setPublicId] = useState("");
+  const [cloudName] = useState("dn3kedyer");  // es el del user de cloudinary
+  const [uploadPreset] = useState("p7bxy5ug");  // aqui va en el segundo atributo el nombre del preset de las imagenes
+  //   https://cloudinary.com/documentation/upload_widget_reference
+
+  const [uwConfig] = useState({ // revisar https://demo.cloudinary.com/uw/#/ para cambiar las paletas de colores o otras cosas
+    cloudName,
+    uploadPreset,
+    // cropping: true, //add a cropping step
+    // showAdvancedOptions: true,  //add advanced options (public_id and tag)
+    sources: [ "local", "url"], // restrict the upload sources to URL and local files
+    // multiple: false,  //restrict upload to a single file
+    // folder: "user_images", //upload files to the specified folder
+    // tags: ["users", "profile"], //add the given tags to the uploaded files
+    // context: {alt: "user_uploaded"}, //add the given context data to the uploaded files
+    // clientAllowedFormats: ["images"], //restrict uploading to image files only
+    // maxImageFileSize: 2000000,  //restrict file size to less than 2MB
+    // maxImageWidth: 2000, //Scales the image down to a width of 2000 pixels before uploading
+    // theme: "purple", //change to a purple theme
+    styles: { 
+      palette: {
+          window: "#464040",
+          sourceBg: "#292222",
+          windowBorder: "#c7a49f",
+          tabIcon: "#2500EA",
+          inactiveTabIcon: "#E8D5BB",
+          menuIcons: "#ebe5db",
+          link: "#54492F",
+          action: "#ffcc00",
+          inProgress: "#99cccc",
+          complete: "#78b3b4",
+          error: "#ff6666",
+          textDark: "#4C2F1A",
+          textLight: "#D8CFCF"
+      }}
+  });
+
+  // Create a Cloudinary instance and set your cloud name.
+  const cld = new Cloudinary({
+    cloud: {
+      cloudName,
+    },
+  });
+
+  const myImage = cld.image(publicId);
 
   return (
 
@@ -73,12 +101,24 @@ function ProfileProvider() {
         <div className={style.perfilWrapper}>
           <div className={style.imageWrapper}>
             <div className={formData.state === 'Active' ? style.stateActive : style.stateInactive}>{formData.state}</div>
-            <img className={style.image} src={defaultImage} alt="Imagen" />
-            //* Aqui empece a hacer cambios para cloudinary**/
-            <h1>subir imagen</h1>
-            <input type="file" name="file" placeholder="Sube tu imagen" onChange={uploadImage}/>
-            {loading ? (<h1>Subiendo imagen</h1>) : (<img className={style.image} src={image ? image : defaultImage} alt="Imagen" />)}
-            //****************************************** */
+                <AdvancedImage
+                  className={style.image}
+                  cldImg={myImage}
+                  plugins={[responsive(), placeholder()]}
+                />
+            {/* <img className={style.image}  src={defaultImage} alt="Imagen" /> */}
+              <CloudinaryUploadWidget uwConfig={uwConfig} setPublicId={setPublicId} />
+            {/* //? ESTO ES UNA SEPARACION DE CODIGO  */}
+            {/* <div className="CLOUDINARY">
+              <div style={{ width: "800px" }}>
+                <AdvancedImage
+                  style={{ maxWidth: "100%" }}
+                  cldImg={myImage}
+                  plugins={[responsive(), placeholder()]}
+                />
+              </div>
+            </div> */}
+            {/* //?  Aqui termina la separacion  */}
             <div className={style.valoration}>
               <div className={style.starIcon}></div>
               <p className={style.textStar}>{formData.averageRating} ({formData.countRating})</p>
