@@ -1,16 +1,22 @@
 import { useSelector } from "react-redux";
-import { useState } from "react";
-import { Cloudinary } from "@cloudinary/url-gen";
-import { AdvancedImage, responsive, placeholder } from "@cloudinary/react";
+import { useState, useEffect } from "react";
 import style from './ProfileProvider.module.sass';
 import Form from "../../Form/FormProfileProvider/Form"
-import defaultImage from '../../../assets/Icons/PerfilImage.png';
-import CloudinaryUploadWidget from "../../CloudinaryWidget/CloudinaryWidget";
+import UploadWidget from "../../CloudinaryWidget/UploadWidget";
 
 
 function ProfileProvider() {
   const infoUserLog = useSelector((state) => state.infoUserLog);
+
+  // useEffect(() => {
+  //   setUserData((prevUserData) => ({
+  //     ...prevUserData,
+  //     image: infoUserLog.image,
+  //   }));
+  // }, [infoUserLog.image]);
+
   const formData = {
+    idPeople: infoUserLog.idPeople,
     fullName: infoUserLog.fullName || "Diego Lepore",
     age: infoUserLog.age || "43",
     address: infoUserLog.address || "Emilio Rosas 3057",
@@ -24,6 +30,7 @@ function ProfileProvider() {
     email: infoUserLog.email || "diegolepore@gmail.com",
     averageRating: infoUserLog.averageRating || "4.9",
     countRating: infoUserLog.countRating.toString() || "127",
+    image: infoUserLog.image || "https://res.cloudinary.com/dn3kedyer/image/upload/v1707141615/image/g08drlndxzjhmpbtxbdw.png",
   };
 
   const isAllInfoFilled = Object.values(formData).every(
@@ -31,60 +38,21 @@ function ProfileProvider() {
   );
 
   const Verification = isAllInfoFilled
-
+  
+  const [userData, setUserData] = useState(formData);
   const [showForm, setShowForm] = useState(false)
-
-
+  const [publicId, setPublicId] = useState(""); //este estado esta guardando la url de la imagen subida a cloudinary
+ 
   const handleShowForm = () => {
     setShowForm(!showForm)
   }
 
-//? DESDE AQUI ESTOY USANDO CLOUDINARY CON WIDGETS
-  const [publicId, setPublicId] = useState("");
-  const [cloudName] = useState("dn3kedyer");  // es el del user de cloudinary
-  const [uploadPreset] = useState("p7bxy5ug");  // aqui va en el segundo atributo el nombre del preset de las imagenes
-  //   https://cloudinary.com/documentation/upload_widget_reference
-
-  const [uwConfig] = useState({ // revisar https://demo.cloudinary.com/uw/#/ para cambiar las paletas de colores o otras cosas
-    cloudName,
-    uploadPreset,
-    // cropping: true, //add a cropping step
-    // showAdvancedOptions: true,  //add advanced options (public_id and tag)
-    sources: [ "local", "url"], // restrict the upload sources to URL and local files
-    // multiple: false,  //restrict upload to a single file
-    // folder: "user_images", //upload files to the specified folder
-    // tags: ["users", "profile"], //add the given tags to the uploaded files
-    // context: {alt: "user_uploaded"}, //add the given context data to the uploaded files
-    // clientAllowedFormats: ["images"], //restrict uploading to image files only
-    // maxImageFileSize: 2000000,  //restrict file size to less than 2MB
-    // maxImageWidth: 2000, //Scales the image down to a width of 2000 pixels before uploading
-    // theme: "purple", //change to a purple theme
-    styles: { 
-      palette: {
-          window: "#464040",
-          sourceBg: "#292222",
-          windowBorder: "#c7a49f",
-          tabIcon: "#2500EA",
-          inactiveTabIcon: "#E8D5BB",
-          menuIcons: "#ebe5db",
-          link: "#54492F",
-          action: "#ffcc00",
-          inProgress: "#99cccc",
-          complete: "#78b3b4",
-          error: "#ff6666",
-          textDark: "#4C2F1A",
-          textLight: "#D8CFCF"
-      }}
-  });
-
-  // Create a Cloudinary instance and set your cloud name.
-  const cld = new Cloudinary({
-    cloud: {
-      cloudName,
-    },
-  });
-
-  const myImage = cld.image(publicId);
+  useEffect(() => {
+    setUserData((prevUserData) => ({
+      ...prevUserData,
+      image: publicId || formData.image,
+    }));
+  }, [publicId]);
 
   return (
 
@@ -101,24 +69,8 @@ function ProfileProvider() {
         <div className={style.perfilWrapper}>
           <div className={style.imageWrapper}>
             <div className={formData.state === 'Active' ? style.stateActive : style.stateInactive}>{formData.state}</div>
-                <AdvancedImage
-                  className={style.image}
-                  cldImg={myImage}
-                  plugins={[responsive(), placeholder()]}
-                />
-            {/* <img className={style.image}  src={defaultImage} alt="Imagen" /> */}
-              <CloudinaryUploadWidget uwConfig={uwConfig} setPublicId={setPublicId} />
-            {/* //? ESTO ES UNA SEPARACION DE CODIGO  */}
-            {/* <div className="CLOUDINARY">
-              <div style={{ width: "800px" }}>
-                <AdvancedImage
-                  style={{ maxWidth: "100%" }}
-                  cldImg={myImage}
-                  plugins={[responsive(), placeholder()]}
-                />
-              </div>
-            </div> */}
-            {/* //?  Aqui termina la separacion  */}
+            <img className={style.image}  src={publicId || formData.image} alt="Imagen" />
+                <UploadWidget setPublicId={setPublicId} user={formData.idPeople}/>
             <div className={style.valoration}>
               <div className={style.starIcon}></div>
               <p className={style.textStar}>{formData.averageRating} ({formData.countRating})</p>

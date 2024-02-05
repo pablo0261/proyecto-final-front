@@ -8,7 +8,7 @@ function Card(props) {
   return (
     <div className={styles.wrapper}>
       <div className={styles.profileWrapper}>
-        <img src={defaultImage} className={styles.profileImage} alt="Profile"></img>
+        <img src={props.user.image ? props.user.image : defaultImage} className={styles.profileImage} alt="Profile"></img>
         <div className={styles.ratingWrapper}>
           <div className={styles.iconStar}></div>
           <p className={styles.textRating}>{props.user.averageRating} ({props.user.countRating})</p>
