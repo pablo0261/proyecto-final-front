@@ -11,9 +11,9 @@ import ConnectionsCustomerView from './Views/CustomerViews/ConnectionsCustomerVi
 import StatsProviderView from './Views/ProviderViews/StatsProviderView';
 import ReportsProviderView from './Views/ProviderViews/ReportsProviderView';
 import ConnectionsProviderView from './Views/ProviderViews/ConnectionsProviderView';
-import Assistance from './views/Assistance/Assistance';
-import FAQs from './views/FAQs/FAQs';
-import ConsultReport from './views/ConsultReport/ConsultReport'
+import Assistance from './Views/Assistance/Assistance';
+import FAQs from './Views/FAQs/FAQs';
+import ConsultReport from './Views/ConsultReport/ConsultReport'
 import { useDispatch, useSelector } from 'react-redux';
 import Footer from './components/Footer/Footer';
 import { useEffect } from 'react';
