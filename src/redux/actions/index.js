@@ -209,17 +209,11 @@ const postUserData = (userDataEnglish) => {
   };
 };
 
-const postUserServices = (userData) => {//*(Pablo --> Lo uso para enviar las modificaciones de los servicios de los proveedores)
+const postUserServices = (updatedUserData) => {//*(Pablo --> Lo uso para enviar las modificaciones de los servicios de los proveedores)
   return async (dispatch) => {
     try {
-      const response = await axios.post(`${REACT_APP_API_URL}/people/options`, userData);
+      const response = await axios.post(`${REACT_APP_API_URL}/people/options`, updatedUserData);
       console.log("response", response)
-      if (response.status === 200) {
-        return dispatch({
-          type: POST_NEW_SERVICE_USER,
-          payload: response.data.people.data[0].people,//! FALTA revisar la respuesta cuando este la ruta ok
-        });
-      }
     } catch (error) {
       if (error.response && error.response.data) {
         dispatch({

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { postUserData } from "../../../redux/actions/index";
+import { postUserServices } from "../../../redux/actions/index";
 import Validation from "../FormProfileProvider/validationFormProfile";
 import styles from "./FormServices.module.sass";
 
@@ -54,7 +54,7 @@ function Form({ handleShowForm }) {
         idOption: userData.idOption,
       };
 
-      dispatch(postUserData(updatedUserData));
+      dispatch(postUserServices(updatedUserData));
     } catch (error) {
       console.error("Error al guardar los servicios y preciso:", error);
     }
