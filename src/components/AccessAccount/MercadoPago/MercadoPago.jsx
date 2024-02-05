@@ -12,7 +12,7 @@ const MercadoPago = (props) => {
 
   const createPreference = async () => {
     try {
-      const response = await axios.post("http://localhost:8080/create_preference", subscription)
+      const response = await axios.post("https://carewithlove.onrender.com/payments", subscription)
       const { id } = response.data;
       return id;
     } catch (error) {

@@ -10,12 +10,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@mercadopago/sdk-react": "0.0.16",
     "axios": "1.6.5",
     "dotenv": "16.3.2",
     "gsap": "^3.12.5",
     "jwt-decode": "^4.0.0",
     "leaflet": "1.9.4",
     "leaflet-geosearch": "3.11.0",
+    "mercadopago": "^1.5.16",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-leaflet": "4.2.1",
@@ -24,8 +26,7 @@
     "react-scroll": "^1.9.0",
     "redux": "4.2.1",
     "redux-thunk": "2.4.2",
-    "sass": "1.70.0",
-    "@mercadopago/sdk-react": "0.0.16"
+    "sass": "1.70.0"
   },
   "devDependencies": {
     "@types/react": "18.2.43",
