@@ -1,0 +1,141 @@
+@use '../../Styles/Mixins' as *;
+@import '../../Styles/Variables';
+
+.main {
+    @include flexbox(column, center, center);
+}
+
+.hero__container {
+    @include flexbox(row, space-around, flex-start);
+    height: 568px;
+    @include backgroundimg('../../assets/LandingImages/recurso.png');
+}
+
+.hero__text {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 70px;
+
+    h2 {
+        @include font($textTertiaryColor, 1.5rem, normal, normal);
+        @include margin-padding;
+    }
+
+    h1 {
+        @include font($textTertiaryColor, 2.5rem, bold, normal);
+        @include margin-padding;
+    }
+
+    p {
+        @include font($textTertiaryColor, 1.2rem, lighter, normal);
+        text-align: justify;
+        margin: 20px 0 20px 0;
+    }
+}
+
+.hero__container__button {
+    display: flex;
+    margin-top: 20px;
+    gap: 20px;
+
+    button {
+        @include buttonActive;
+    }
+
+    button:hover {
+        @include buttonHover;
+    }
+}
+
+.hero__quote {
+    @include flexbox(column, center, flex-start);
+    height: 100%;
+
+    img {
+        margin: 0 0 0 20px;
+    }
+
+    blockquote {
+        width: 280px;
+        background-color: rgb(255, 255, 255);
+        @include flexbox(column, null, null);
+        @include font($textPrimaryColor, 1rem, normal, normal);
+        text-align: left;
+        margin: 0;
+        padding: 20px 20px 0 20px;
+        gap: 10px;
+        border-radius: 10px;
+        box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.5)
+    }
+
+    cite {
+        @include flexbox(row, flex-start, center);
+        gap: 5px;
+    }
+
+    .photo {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        border: 1px solid rgb(176, 176, 176);
+        @include backgroundimg('../../assets/LandingImages/PerfilImage.png');
+        background-attachment: local;
+
+    }
+}
+
+/* section statistics */
+.statistics {
+    width: 90%;
+    margin-top: -3rem;
+}
+
+/* section ¿como funciona? */
+.header {
+    @include flexbox(null, center, flex-end);
+    height: 168px;
+    width: 100%;
+
+    margin: 0 0 20px 0;
+
+    h2 {
+        @include font($primaryColor, 3rem, bold, normal);
+        @include margin-padding;
+    }
+}
+
+/* slide */
+.slide{
+    @include flexbox(null, center, center);
+    width: 100%
+}
+
+/* section registro */
+.sectionregistro {
+    @include flexbox(column, center, center);
+    height: 368px;
+    width: 100%;
+    margin-top: 40px;
+    background-color: $secondaryColor;
+
+    h2 {
+        @include font($textTertiaryColor, 2.5rem, bold, normal);
+        margin: 0 0 20px 0;
+    }
+}
+
+.sectionregistro__button {
+    display: flex;
+    gap: 50px;
+
+    button {
+        @include buttonActivesecondary;
+
+    }
+
+    button:hover {
+        @include buttonHoversecondary;
+    }
+}
