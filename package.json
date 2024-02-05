@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@mercadopago/sdk-react": "0.0.16",
+    "@cloudinary/react": "1.12.0",
+    "@cloudinary/url-gen": "1.16.0",
     "axios": "1.6.5",
     "dotenv": "16.3.2",
     "gsap": "^3.12.5",
