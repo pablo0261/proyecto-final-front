@@ -65,8 +65,6 @@ function Form({ handleShowForm }) {
     precio: "",
   });
 
-
-
   const handleChange = (event) => {
     const property = event.target.name;
     const value = event.target.value;
@@ -74,18 +72,6 @@ function Form({ handleShowForm }) {
     Validation(property, setLocalErrors, { ...userData, [property]: value });
     setUserData({ ...userData, [property]: value });
   };
-
-  // const handleSubmit = (event) => {
-  //   event.preventDefault();
-  //   const hasErrors = Object.values(localErrors).some((error) => error !== "");
-
-  //   if (!hasErrors) {
-  //     dispatch(postUserData(userDataEnglish));
-  //     handleShowForm();
-  //   } else {
-  //     window.alert("Formulario con Errores");
-  //   }
-  // };
 
   return (
     <div className={styles.background}>
@@ -136,7 +122,7 @@ function Form({ handleShowForm }) {
               <input
                 className={styles.inputs}
                 type="text"
-                name="precio"
+                name="price"
                 value={userData.price}
                 onChange={handleChange}
                 placeholder="$ ARG"
