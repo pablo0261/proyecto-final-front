@@ -11,7 +11,7 @@ function Form({ handleShowForm }) {
 
   const [userData, setUserData] = useState({
     id: userLog,
-    precio: "",
+    precio: "", ///* cambiar a price
     idOption: "",
   });
   console.log("userData", userData);
