@@ -8,7 +8,7 @@
 .hero__container {
     @include flexbox(row, space-around, flex-start);
     height: 568px;
-    @include backgroundimg('../../assets/LandingImages/recurso.png');
+    @include backgroundimg('../../assets/LandingImages/Recurso.png');
 }
 
 .hero__text {
