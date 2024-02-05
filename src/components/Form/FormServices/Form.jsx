@@ -11,7 +11,7 @@ function Form({ handleShowForm }) {
 
   const [userData, setUserData] = useState({
     id: userLog,
-    price: "", ///* cambiar a price
+    price: "",
     idOption: "",
   });
   console.log("userData", userData);
@@ -137,19 +137,19 @@ function Form({ handleShowForm }) {
                 className={styles.inputs}
                 type="text"
                 name="precio"
-                value={userData.precio}
+                value={userData.price}
                 onChange={handleChange}
                 placeholder="$ ARG"
               />
               <div
                 className={
-                  userData.precio &&
+                  userData.price &&
                   (localErrors.precio
                     ? styles.errorMessage
                     : styles.errorNotMessage)
                 }
               >
-                {userData.precio
+                {userData.price
                   ? localErrors.precio
                     ? localErrors.precio
                     : "Datos Validos"
