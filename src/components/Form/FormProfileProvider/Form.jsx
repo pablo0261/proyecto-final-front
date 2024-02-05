@@ -81,6 +81,8 @@ function Form({ handleShowForm }) {
     "Sobre mi": "",
   });
 
+  console.log("userData",userData)
+
   const [localErrors, setLocalErrors] = useState({
     Nombre: "",
     Telefono: "",
@@ -98,8 +100,7 @@ function Form({ handleShowForm }) {
     fullName: userData.Nombre,
     phone: userData.Telefono,
     country: userData.País,
-    provinceName: userData.Provincia,
-    locationName: userData.Localidad,
+    idLocation: userData.Localidad,
     address: userData.Calle,
     profession: userData.Ocupación,
     aboutMe: userData["Sobre mi"],
@@ -261,8 +262,8 @@ function Form({ handleShowForm }) {
                 {Array.isArray(ciudades.data) &&
                   ciudades.data.map((ciudad) => (
                     <option
-                      key={ciudad.nombreLocalidad}
-                      value={ciudad.nombreLocalidad}
+                      key={ciudad.idLocalidad}
+                      value={ciudad.idLocalidad}
                     >
                       {ciudad.nombreLocalidad}
                     </option>

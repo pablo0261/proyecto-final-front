@@ -11,9 +11,9 @@ import ConnectionsCustomerView from './Views/CustomerViews/ConnectionsCustomerVi
 import StatsProviderView from './Views/ProviderViews/StatsProviderView';
 import ReportsProviderView from './Views/ProviderViews/ReportsProviderView';
 import ConnectionsProviderView from './Views/ProviderViews/ConnectionsProviderView';
-import Assistance from './views/Assistance/Assistance';
-import FAQs from './views/FAQs/FAQs';
-import ConsultReport from './views/ConsultReport/ConsultReport'
+import Assistance from './Views/Assistance/Assistance';
+import FAQs from './Views/FAQs/FAQs';
+import ConsultReport from './Views/ConsultReport/ConsultReport'
 import { useDispatch, useSelector } from 'react-redux';
 import Footer from './components/Footer/Footer';
 import { useEffect } from 'react';
@@ -28,6 +28,15 @@ function App() {
   const dispatch = useDispatch()
   const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
   const navigate = useNavigate()
+  const userLoggedInfo = useSelector(state => state.infoUserLog)
+
+  useEffect(() => {
+    dispatch(getFiltersOrdersDB());
+
+    if (localStorage.getItem(StoreItem.emailUserLogged)) {
+      dispatch(recoverUserLoggedData(localStorage.getItem(StoreItem.emailUserLogged)))
+    }
+  }, [])
 
   // GOOGLE AUTH
   const handleCallbackResponse = async (response) => {
@@ -59,23 +68,16 @@ function App() {
   }
 
   useEffect(() => {
-    google.accounts.id.initialize({
-      client_id: "554332329432-0b6a0dh2ihgrkj5obs34lmnngpfvrq4j.apps.googleusercontent.com",
-      callback: handleCallbackResponse
-    })
+    if (!localStorage.getItem(StoreItem.emailUserLogged)) {
+      console.log("No hay nada")
+      google.accounts.id.initialize({
+        client_id: "554332329432-0b6a0dh2ihgrkj5obs34lmnngpfvrq4j.apps.googleusercontent.com",
+        callback: handleCallbackResponse
+      })
 
-    google.accounts.id.prompt();
-  }, [])
-
-  useEffect(() => {
-    dispatch(getFiltersOrdersDB());
-
-    if (localStorage.getItem(StoreItem.emailUserLogged)) {
-      dispatch(recoverUserLoggedData(localStorage.getItem(StoreItem.emailUserLogged)))
+      google.accounts.id.prompt();
     }
   }, [])
-
-  const userLoggedInfo = useSelector(state => state.infoUserLog)
 
   return (
     <div>
@@ -103,12 +105,12 @@ function App() {
                 <Route path={Helpers.ConnectionsProviderView} element={<ConnectionsProviderView />} />
                 <Route path={Helpers.ReportsProviderView} element={<ReportsProviderView />} />
                 <Route path={Helpers.ProfileProviderView} element={<ProfileProviderView />} />
-                  
+
                 {/* Footer */}
                 <Route path={Helpers.Assistance} element={<Assistance />} />
                 <Route path={Helpers.FAQs} element={<FAQs />} />
                 <Route path={Helpers.ConsultReport} element={<ConsultReport />} />
-                  
+
                 <Route path='*' element={<NotFound />}></Route>
               </Routes>
             }

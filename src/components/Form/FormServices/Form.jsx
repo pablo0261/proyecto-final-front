@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { postUserData } from "../../../redux/actions/index";
+import { postUserServices } from "../../../redux/actions/index";
 import Validation from "../FormProfileProvider/validationFormProfile";
 import styles from "./FormServices.module.sass";
 
@@ -10,8 +10,8 @@ function Form({ handleShowForm }) {
   const userLog = useSelector((state) => state.infoUserLog);
 
   const [userData, setUserData] = useState({
-    id: userLog,
-    precio: "",
+    idPeople: userLog,
+    price: "",
     idOption: "",
   });
   console.log("userData", userData);
@@ -19,7 +19,7 @@ function Form({ handleShowForm }) {
   useEffect(() => {
     setUserData((prevUserData) => ({
       ...prevUserData,
-      id: userLog.idPeople,
+      idPeople: userLog.idPeople,
     }));
   }, []);
 
@@ -50,11 +50,11 @@ function Form({ handleShowForm }) {
     try {
       const updatedUserData = {
         ...userData,
-        precio: userData.precio,
+        price: userData.price,
         idOption: userData.idOption,
       };
 
-      dispatch(postUserData(updatedUserData));
+      dispatch(postUserServices(updatedUserData));
     } catch (error) {
       console.error("Error al guardar los servicios y preciso:", error);
     }
@@ -65,8 +65,6 @@ function Form({ handleShowForm }) {
     precio: "",
   });
 
-
-
   const handleChange = (event) => {
     const property = event.target.name;
     const value = event.target.value;
@@ -74,18 +72,6 @@ function Form({ handleShowForm }) {
     Validation(property, setLocalErrors, { ...userData, [property]: value });
     setUserData({ ...userData, [property]: value });
   };
-
-  // const handleSubmit = (event) => {
-  //   event.preventDefault();
-  //   const hasErrors = Object.values(localErrors).some((error) => error !== "");
-
-  //   if (!hasErrors) {
-  //     dispatch(postUserData(userDataEnglish));
-  //     handleShowForm();
-  //   } else {
-  //     window.alert("Formulario con Errores");
-  //   }
-  // };
 
   return (
     <div className={styles.background}>
@@ -136,20 +122,20 @@ function Form({ handleShowForm }) {
               <input
                 className={styles.inputs}
                 type="text"
-                name="precio"
-                value={userData.precio}
+                name="price"
+                value={userData.price}
                 onChange={handleChange}
                 placeholder="$ ARG"
               />
               <div
                 className={
-                  userData.precio &&
+                  userData.price &&
                   (localErrors.precio
                     ? styles.errorMessage
                     : styles.errorNotMessage)
                 }
               >
-                {userData.precio
+                {userData.price
                   ? localErrors.precio
                     ? localErrors.precio
                     : "Datos Validos"

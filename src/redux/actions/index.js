@@ -13,6 +13,7 @@ import {
   GET_FILTER_PROVIDER,
   FILTER_ORDER_SELECTED,
   POST_NEW_SERVICE_USER,
+  SET_CHAT,
 } from "./action-types";
 
 const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
@@ -115,7 +116,7 @@ const allPeopleProvider = (query) => {
       const response = await axios.get(`${REACT_APP_API_URL}/people?typeOfPerson=provider${query}`);
       return dispatch({
         type: GET_HOME_PROVIDER,
-        payload:  response.data.people,
+        payload: response.data.people,
       });
     } catch (error) {
       console.log(error);
@@ -128,9 +129,8 @@ const getPeopleFilteredOrderedPagination = (queryConstructor, queryPagination) =
     try {
       const response = await axios.get(
         `${REACT_APP_API_URL}/people?typeOfPerson=provider&${queryConstructor}${queryPagination ? `${queryPagination}` : ""}`
-        );
-        console.log("action",`${REACT_APP_API_URL}/people?typeOfPerson=provider&${queryConstructor}${queryPagination ? `&${queryPagination}` : ""}`)
-        console.log(response);
+      );
+      console.log("action", `${REACT_APP_API_URL}/people?typeOfPerson=provider&${queryConstructor}${queryPagination ? `&${queryPagination}` : ""}`)
       return dispatch({
         type: GET_FILTER_PROVIDER,
         payload: response.data.people,
@@ -186,9 +186,6 @@ const postUserData = (userDataEnglish) => {
   return async (dispatch) => {
     try {
       const response = await axios.post(`${REACT_APP_API_URL}/people`, userDataEnglish);
-      console.log("response",response)
-      console.log("URL-POST",(`${REACT_APP_API_URL}/people`, userDataEnglish))
-      
       if (response.status === 200) {
         return dispatch({
           type: POST_NEW_INFO_USER,
@@ -208,17 +205,11 @@ const postUserData = (userDataEnglish) => {
   };
 };
 
-const postUserServices = (userData) => {//*(Pablo --> Lo uso para enviar las modificaciones de los servicios de los proveedores)
+const postUserServices = (updatedUserData) => {//*(Pablo --> Lo uso para enviar las modificaciones de los servicios de los proveedores)
   return async (dispatch) => {
     try {
-      const response = await axios.post(`${REACT_APP_API_URL}/people/options`, userData);
-      console.log("response",response)
-      if (response.status === 200) {
-        return dispatch({
-          type: POST_NEW_SERVICE_USER,
-          payload: response.data.people.data[0].people,//! FALTA revisar la respuesta cuando este la ruta ok
-        });
-      }
+      const response = await axios.post(`${REACT_APP_API_URL}/people/options`, updatedUserData);
+      console.log("response", response)
     } catch (error) {
       if (error.response && error.response.data) {
         dispatch({
@@ -245,6 +236,53 @@ const handleEditProfile = (formData) => {
   };
 }
 
+const setDataChat = (id) => {
+  return async (dispatch) => {
+    if (id === 1) {
+      const Chat = [
+        {
+          idPeople: 1,
+          propio: true,
+          message: "Hola, podrias decirme si vas a ir o no?",
+          date: "Ayer"
+        },
+        {
+          idPeople: 2,
+          propio: false,
+          message: "No al final, no quiero ir.",
+          date: "Hoy"
+        }
+      ]
+
+      dispatch({
+        type: SET_CHAT,
+        payload: Chat
+      })
+    }
+
+    if (id === 2) {
+      const Chat = [
+        {
+          idPeople: 1,
+          propio: true,
+          message: "¿Te parece si quedamos para el Miercoles?",
+          date: "Ayer"
+        },
+        {
+          idPeople: 2,
+          propio: false,
+          message: "Dale dale, te agendo",
+          date: "Hoy"
+        }
+      ]
+
+      dispatch({
+        type: SET_CHAT,
+        payload: Chat
+      })
+    }
+  }
+}
 
 export {
   addInfoUserLog,
@@ -260,4 +298,5 @@ export {
   getPeopleFilteredOrderedPagination,
   postUserServices,
   saveOrderGlobal,
+  setDataChat
 }

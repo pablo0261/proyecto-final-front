@@ -1,6 +1,6 @@
 import Card from "../../components/CardHomeProveedor/CardHomeProveedor";
 import { useEffect, useState } from "react";
-import styles from "../home/Home.module.sass";
+import styles from "./Home.module.sass";
 import MapHome from "../../components/MapHome/MapHome";
 import { useSelector, useDispatch } from "react-redux";
 import { allPeopleProvider, getPeopleFilteredOrderedPagination, saveSelectionsGlobal, saveOrderGlobal } from "../../redux/actions";

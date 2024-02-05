@@ -9,6 +9,8 @@ import {
   FILTER_SERVICES,
   GET_FILTER_PROVIDER,
   FILTER_ORDER_SELECTED,
+  POST_NEW_INFO_USER,
+  SET_CHAT,
   // CONTRAT_SERVICE_USER
 } from "../actions/action-types";
 
@@ -186,6 +188,9 @@ let initialState = {
     ReviewProviderCard: {},
     ConectionProviderCard: {},
   },
+
+  //CHAT
+  data_Chat:[]
 };
 
 const rootReducer = (state = initialState, { type, payload }) => {
@@ -222,11 +227,12 @@ const rootReducer = (state = initialState, { type, payload }) => {
       }
 
     //*---POST---//
-    // case POST_NEW_INFO_USER:
-    //   return {
-    //     ...state,
-    //     infoUserLog:  payload,
-    //   };
+    case POST_NEW_INFO_USER:
+      return {
+        ...state,
+        infoUserLog:  payload,
+      };
+
     case POST_NEW_SERVICE_USER:
     return {
           ...state,
@@ -260,6 +266,12 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         infoUserLog: {},
       };
+
+    // CHAT
+    case SET_CHAT:
+      return {
+        ...state, data_Chat: payload
+      }
 
     default:
       return state;
