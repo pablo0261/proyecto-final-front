@@ -16,14 +16,13 @@ function SignIn(props) {
   });
 
   const [subscription, setSubscription] = useState({
-    items: [
+    items: 
       {
         description: "Subscripción",
-        price: 1200,
-        quantity: 1,
+        price: Number(1200),
+        quantity: Number(1),
         currency_id: "$ARG",
       },
-    ],
     payer: {
         name: signInData.fullName,
         email: signInData.email,
@@ -154,8 +153,8 @@ function SignIn(props) {
         {isProvider ? (
           <div>
             <div className={style.subcription}>
-              <p>{subscription.description}</p>
-              <p>ARS ${subscription.price}</p>
+              <p>{subscription.items.description}</p>
+              <p>ARS ${subscription.items.price}</p>
             </div>
             <MercadoPago
               userData={signInData}
