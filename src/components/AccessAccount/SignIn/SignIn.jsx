@@ -21,7 +21,7 @@ function SignIn(props) {
         description: "Subscripción",
         price: Number(1200),
         quantity: Number(1),
-        currency_id: "$ARG",
+        currency_id: "ARG",
       },
     payer: {
         name: signInData.fullName,
