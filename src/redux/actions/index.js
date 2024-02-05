@@ -131,7 +131,6 @@ const getPeopleFilteredOrderedPagination = (queryConstructor, queryPagination) =
         `${REACT_APP_API_URL}/people?typeOfPerson=provider&${queryConstructor}${queryPagination ? `${queryPagination}` : ""}`
       );
       console.log("action", `${REACT_APP_API_URL}/people?typeOfPerson=provider&${queryConstructor}${queryPagination ? `&${queryPagination}` : ""}`)
-      console.log(response);
       return dispatch({
         type: GET_FILTER_PROVIDER,
         payload: response.data.people,
@@ -187,9 +186,6 @@ const postUserData = (userDataEnglish) => {
   return async (dispatch) => {
     try {
       const response = await axios.post(`${REACT_APP_API_URL}/people`, userDataEnglish);
-      console.log("response", response)
-      console.log("URL-POST", (`${REACT_APP_API_URL}/people`, userDataEnglish))
-
       if (response.status === 200) {
         return dispatch({
           type: POST_NEW_INFO_USER,
