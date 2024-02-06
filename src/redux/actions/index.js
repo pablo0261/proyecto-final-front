@@ -77,7 +77,7 @@ const infoDetailProveedor = (id) => {
         payload: data,
       });
     } catch (error) {
-      console.log(error);
+      window.alert(error);
     }
   };
 };
@@ -91,7 +91,7 @@ const handleContratService = (item) => {
         payload: response.data,
       });
     } catch (error) {
-      console.log(error);
+      window.alert(error);
     }
   };
 };
@@ -105,7 +105,7 @@ const handleContratService = (item) => {
 //         payload:  response.data.people,
 //       });
 //     } catch (error) {
-//       console.log(error);
+//       window.alert(error);
 //     }
 //   };
 // };
@@ -120,7 +120,7 @@ const allPeopleProvider = (query) => {
         payload: response.data.people,
       });
     } catch (error) {
-      console.log(error);
+      window.alert(error);
     }
   };
 };
@@ -136,18 +136,12 @@ const getPeopleFilteredOrderedPagination = (
           queryPagination ? `${queryPagination}` : ""
         }`
       );
-      console.log(
-        "action",
-        `${REACT_APP_API_URL}/people?typeOfPerson=provider&${queryConstructor}${
-          queryPagination ? `&${queryPagination}` : ""
-        }`
-      );
       return dispatch({
         type: GET_FILTER_PROVIDER,
         payload: response.data.people,
       });
     } catch (error) {
-      console.log(error);
+      window.alert(error);
     }
   };
 };
@@ -161,7 +155,7 @@ const getFiltersOrdersDB = () => {
         payload: response.data.categories.data,
       });
     } catch (error) {
-      console.log(error);
+      window.alert(error);
     }
   };
 };
@@ -202,7 +196,7 @@ const postUserData = (userDataEnglish) => {
       if (response.status === 200) {
         return dispatch({
           type: POST_NEW_INFO_USER,
-          payload: response.data.people.data[0].people,
+          payload: response.result.people.data[0].people,
         });
       }
     } catch (error) {
@@ -211,7 +205,7 @@ const postUserData = (userDataEnglish) => {
           type: SET_ERROR_BACK,
           payload: error.response.data,
         });
-        console.log(error);
+        window.alert(error);
         throw error.response.data;
       }
     }
@@ -226,11 +220,10 @@ const postUserServices = (updatedUserData) => {
         `${REACT_APP_API_URL}/people/options`,
         updatedUserData
       );
-      console.log("response", response);
       if (response.status === 200) {
         return dispatch({
           type: POST_NEW_SERVICE_USER,
-          payload: response.result.people.data[0].people,
+          payload: response.data.result.people.data[0].people,
         });
       }
     } catch (error) {
@@ -239,7 +232,7 @@ const postUserServices = (updatedUserData) => {
           type: SET_ERROR_BACK,
           payload: error.response.data,
         });
-        console.log(error);
+        window.alert(error);
         throw error.response.data;
       }
     }

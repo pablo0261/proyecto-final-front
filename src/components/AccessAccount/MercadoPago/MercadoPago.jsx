@@ -16,7 +16,7 @@ const MercadoPago = (props) => {
       const { id } = response.data;
       return id;
     } catch (error) {
-      console.log("error createPreference:", error)
+      window.alert("Error createPreference:", error)
     }
   }
 
