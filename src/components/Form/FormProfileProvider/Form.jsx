@@ -18,29 +18,29 @@ function Form({ handleShowForm }) {
 
   const [provincias, setProvincias] = useState([
     "Ciudad Autónoma de Buenos Aires",
-    "Neuquén",
-    "San Luis",
-    "Santa Fe",
-    "La Rioja",
     "Catamarca",
-    "Tucumán",
     "Chaco",
-    "Formosa",
-    "Santa Cruz",
     "Chubut",
-    "Mendoza",
-    "Entre Ríos",
-    "San Juan",
-    "Jujuy",
-    "Santiago del Estero",
-    "Río Negro",
-    "Corrientes",
-    "Misiones",
-    "Salta",
+    "Ciudad Autónoma de Buenos Aires",
     "Córdoba",
-    "Buenos Aires",
+    "Corrientes",
+    "Entre Ríos",
+    "Formosa",
+    "Jujuy",
     "La Pampa",
+    "La Rioja",
+    "Mendoza",
+    "Misiones",
+    "Neuquén",
+    "Río Negro",
+    "Salta",
+    "San Juan",
+    "San Luis",
+    "Santa Cruz",
+    "Santa Fe",
+    "Santiago del Estero",
     "Tierra del Fuego, Antártida e Islas del Atlántico Sur",
+    "Tucumán"
   ]);
   const [ciudades, setCiudades] = useState([]); // Estado para guardar las ciudades que trae de handleProvinciaChange segun la provincia
   console.log("ciudades", ciudades);
@@ -62,8 +62,31 @@ function Form({ handleShowForm }) {
         )}`
       );
       const data = await response.json();
-      setCiudades(data);
-      console.log("data", data);
+      const sortedCiudades = data.data.sort((a, b) =>
+      a.nombreLocalidad.localeCompare(b.nombreLocalidad)
+    );
+      setCiudades(sortedCiudades);
+      console.log("sortedCiudades", sortedCiudades);
+    } catch (error) {
+      console.error("Error al obtener las ciudades:", error);
+    }
+  };~
+  setUserData({ ...userData, Ocupación: profession });
+
+  const handleProfessionChange = async (event) => {
+    // Trae las ciudades segun al provincia seleccionada
+    try {
+      const response = await fetch(`${REACT_APP_API_URL}/categories`);
+      console.log(
+        "URL",
+        `${REACT_APP_API_URL}/categories`
+      );
+      const data = await response.json();
+      const sortedCiudades = data.data.sort((a, b) =>
+      a.nombreLocalidad.localeCompare(b.nombreLocalidad)
+    );
+      setCiudades(sortedCiudades);
+      console.log("sortedCiudades", sortedCiudades);
     } catch (error) {
       console.error("Error al obtener las ciudades:", error);
     }

@@ -53,7 +53,7 @@ function ServicesProviderCard() {
             {servicesData.slice(0, 3).map((service, index) => (
               <div key={index} className={style.buttonList}>
                 <button
-                  onClick={() => handleDeleteForm()}
+                  onClick={() => handleDeleteService()}
                   className={style.crossButton}
                 ></button>
                 <div className={style.serviceDescription}>
@@ -76,9 +76,9 @@ function ServicesProviderCard() {
               className={style.editButton}
             ></button>
             {servicesData.map((_, index) => (
-              <div key={index} className={style.contratItem}>
+              <button key={index} className={style.contratItem}>
                 Contratar este Servicio{" "}
-              </div>
+              </button>
             ))}
           </div>
         </div>
