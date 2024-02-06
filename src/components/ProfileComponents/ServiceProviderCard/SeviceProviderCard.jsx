@@ -11,8 +11,8 @@ function ServicesProviderCard() {
   const [servicesData, setServicesData] = useState([]); //* Aqui guarda los sericios que ofrece la persona
 
   const handleShowForm = () => {
-    setShowForm(!showForm)
-  }
+    setShowForm(!showForm);
+  };
 
   useEffect(() => {
     //*Todo esto recorre y valida la info del usuario para ver los servicios y precios
@@ -74,11 +74,11 @@ function ServicesProviderCard() {
             <button
               onClick={() => handleShowForm()}
               className={style.editButton}
-              ></button>
-              {servicesData.slice(0, 3).map((service, index) => (
-                <button key={index} className={style.contratItem}>
-                  Contratar este Servicio{" "}
-                </button>
+            ></button>
+            {servicesData.slice(0, 3).map((service, index) => (
+              <button key={index} className={style.contratItem}>
+                Contratar este Servicio{" "}
+              </button>
             ))}
           </div>
         </div>
