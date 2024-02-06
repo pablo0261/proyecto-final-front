@@ -210,6 +210,10 @@ const postUserServices = (updatedUserData) => {//*(Pablo --> Lo uso para enviar 
     try {
       const response = await axios.post(`${REACT_APP_API_URL}/people/options`, updatedUserData);
       console.log("response", response)
+      return dispatch({
+        type: POST_NEW_INFO_USER,
+        payload: response.result.people.data[0].people,
+      });
     } catch (error) {
       if (error.response && error.response.data) {
         dispatch({
