@@ -40,7 +40,7 @@
   transform: scale(1.1)
 
 .textTitle
-  margin: 30px 0px 10px 0px
+  margin: 30px 0px 30px 0px
   @include Mixins.font($primaryColor, 25px, bold, normal)
 
 .Form
@@ -60,7 +60,7 @@
 .FormDivInputFlex
   display: flex
   flex-direction: column
-  width: 45%
+  width: 48%
 
 .inputs
   @include Mixins.inputsFormat
@@ -92,9 +92,23 @@
 .inputDetail::placeholder
   @include Mixins.inputsFormat_Placeholder
 
+.inputSelect
+  @include Mixins.inputsFormat
+  -webkit-appearance: none
+  -moz-appearance: none
+  appearance: none
+  background: url('../../../assets/Icons/ArrowSelect.png') no-repeat right center
+  background-size: 30px
+
+.inputSelect:focus
+  @include Mixins.inputsFormat_Hover
+
+.inputSelect::placeholder
+  @include Mixins.inputsFormat_Placeholder
+
 .labels
   text-align: left
-  margin: 0px 0px 5px 0px
+  margin: 10px 0px 5px 0px
   @include Mixins.font($secondaryColor, 18px , normal , normal )
 
 .buttonSave
@@ -122,16 +136,14 @@
   @include Mixins.font($textSuccessColor, 14px , normal , normal )
 
 .inputsStatic
-  @include Mixins.font(black, 18px , normal , normal )
+  @include Mixins.font($secondaryColor, 16px , normal , normal )
   display: flex
   align-items: center
-  justify-content: flex-start 
+  justify-content: flex-start
   pointer-events: none
 
 .errorMessageStatic
-  display: flex
-  justify-content: end
-  margin-bottom: -10px
-  margin-right: -60%
-  text-align: right
-  @include Mixins.font($textFailureColor, 14px , normal , normal )
+  width: 100%
+  text-align: left
+  margin: 0
+  @include Mixins.font($textSecondaryColor, 14px , normal , normal )

@@ -62,7 +62,6 @@ const Home = () => {
 
   const handleConfirmFilters = () => {
     /* if (selectedGender) {
-      console.log("Género seleccionado:", selectedGender);
       setSelectedServices((prevSelectedServices) => [
         ...prevSelectedServices,
         selectedGender,
@@ -115,9 +114,6 @@ const Home = () => {
       setSelectedOrder([...updatedOrder, order]);
     }
   };
-
-  // console.log(providers)
-  // console.log(InfoPag)
 
   return (
     <div className={styles.background}>

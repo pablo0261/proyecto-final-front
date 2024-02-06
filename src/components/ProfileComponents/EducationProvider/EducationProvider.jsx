@@ -3,10 +3,10 @@ import { useState } from "react";
 import style from "./EducationProvider.module.sass";
 
 function EducationProvider() {
+  
   const categoriesData = useSelector((state) => {
     return state.allServices[0].categories_options;  
   });
-  // console.log("Redux State:", categoriesData);//* aqui estan los 3 servicios
 
   const [showForm, setShowForm] = useState(false);
 
