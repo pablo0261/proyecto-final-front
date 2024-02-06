@@ -87,6 +87,7 @@ function ServicesProviderCard() {
       </div>
       {showForm && <Form handleShowForm={handleShowForm} />}
     </div>
+    </div>
   );
 }
 export default ServicesProviderCard;
