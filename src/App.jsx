@@ -68,12 +68,12 @@ function App() {
   }
 
   useEffect(() => {
-    if (!localStorage.getItem(StoreItem.emailUserLogged)) {
-      console.log("No hay nada")
-      google.accounts.id.initialize({
-        client_id: "554332329432-0b6a0dh2ihgrkj5obs34lmnngpfvrq4j.apps.googleusercontent.com",
-        callback: handleCallbackResponse
-      })
+    google.accounts.id.initialize({
+      client_id: "554332329432-0b6a0dh2ihgrkj5obs34lmnngpfvrq4j.apps.googleusercontent.com",
+      callback: handleCallbackResponse
+    })
+
+    if (!localStorage.getItem(StoreItem.emailUserLogged)) {   
 
       google.accounts.id.prompt();
     }
