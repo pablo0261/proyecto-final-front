@@ -50,7 +50,7 @@ function ServicesProviderCard() {
           <div className={style.column1}>
             <p className={style.column1title}>Servicios</p>
           </div>
-          {servicesData.slice(0, 3).map((service, index) => (
+          {servicesData.slice(0, 4).map((service, index) => (
             <div key={index} className={style.items}>
               <button
                 onClick={() => handleDeleteService()}
@@ -64,7 +64,7 @@ function ServicesProviderCard() {
           <div className={style.column2}>
             <p className={style.column2title}>Precio x Hora</p>
           </div>
-          {servicesData.slice(0, 3).map((service, index) => (
+          {servicesData.slice(0, 4).map((service, index) => (
             <div key={index} className={style.priceBox}>
               $ {service.price ? service.price : "N/A"}
             </div>
@@ -76,7 +76,7 @@ function ServicesProviderCard() {
               onClick={() => handleShowForm()}
               className={style.editButton}
             ></button>
-            {servicesData.slice(0, 3).map((service, index) => (
+            {servicesData.slice(0, 4).map((service, index) => (
               <button key={index} className={style.contratItem}>
                 Contratar este Servicio{" "}
               </button>
