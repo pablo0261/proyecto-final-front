@@ -25,10 +25,10 @@ function ServicesProviderCard() {
         const categoriesOptions = firstCategory.categories_options.flatMap(
           (option) => {
             if (option.people_options && option.people_options.length > 0) {
-              return {
+              return option.people_options.map((personOption) => ({
                 description: option.description || "No description",
-                price: option.people_options[0].price || null,
-              };
+                price: personOption.price || null,
+              }));
             } else {
               return {
                 description: option.description || "No description",
@@ -74,11 +74,11 @@ function ServicesProviderCard() {
             <button
               onClick={() => handleShowForm()}
               className={style.editButton}
-            ></button>
-            {servicesData.map((_, index) => (
-              <button key={index} className={style.contratItem}>
-                Contratar este Servicio{" "}
-              </button>
+              ></button>
+              {servicesData.slice(0, 3).map((service, index) => (
+                <button key={index} className={style.contratItem}>
+                  Contratar este Servicio{" "}
+                </button>
             ))}
           </div>
         </div>
