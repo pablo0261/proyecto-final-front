@@ -9,14 +9,11 @@ function Form({ handleShowForm }) {
   const dispatch = useDispatch();
   const userLog = useSelector((state) => state.infoUserLog);
 
-  console.log("useLog:",userLog)
-
   const [userData, setUserData] = useState({
     idPeople: userLog,
     price: "",
     idOption: "",
   });
-  console.log("userData", userData);
 
   useEffect(() => {
     setUserData((prevUserData) => ({
@@ -34,11 +31,10 @@ function Form({ handleShowForm }) {
         const data = await response.json();
         const serviceOptions = data.categories.data[0].categories_options.map(
           (option) => {
-            return{description: option.description, idOption: option.idOption}
+            return { description: option.description, idOption: option.idOption }
           }
-          )
-            setServices(serviceOptions);
-        console.log("services", services);
+        )
+        setServices(serviceOptions);
       } catch (error) {
         console.error("Error al obtener las opciones de servicios:", error);
       }
@@ -47,7 +43,7 @@ function Form({ handleShowForm }) {
     fetchServices();
   }, []);
 
-  const handleServicesAdd = async(event) => {
+  const handleServicesAdd = async (event) => {
     event.preventDefault();
     try {
       const updatedUserData = {
@@ -93,7 +89,7 @@ function Form({ handleShowForm }) {
                 className={styles.inputs}
                 name="idOption"
                 value={userData.servicio}
-                onChange = {handleChange}
+                onChange={handleChange}
               >
                 <option value="" disabled>
                   Selecciona los servicios que ofreces

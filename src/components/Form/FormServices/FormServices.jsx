@@ -64,7 +64,6 @@ function Form() {
           window.location.reload();
         })
         .catch((error) => {
-          console.log(error.error);
           if (error.error) {
             alert(error.error);
           } else {
