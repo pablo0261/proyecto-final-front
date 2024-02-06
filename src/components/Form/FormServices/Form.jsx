@@ -9,6 +9,8 @@ function Form({ handleShowForm }) {
   const dispatch = useDispatch();
   const userLog = useSelector((state) => state.infoUserLog);
 
+  console.log("useLog:",userLog)
+
   const [userData, setUserData] = useState({
     idPeople: userLog,
     price: "",
@@ -45,7 +47,7 @@ function Form({ handleShowForm }) {
     fetchServices();
   }, []);
 
-  const handleServicesAdd = (event) => {
+  const handleServicesAdd = async(event) => {
     event.preventDefault();
     try {
       const updatedUserData = {
@@ -54,7 +56,8 @@ function Form({ handleShowForm }) {
         idOption: userData.idOption,
       };
 
-      dispatch(postUserServices(updatedUserData));
+      await dispatch(postUserServices(updatedUserData));
+      handleShowForm()
     } catch (error) {
       console.error("Error al guardar los servicios y preciso:", error);
     }
