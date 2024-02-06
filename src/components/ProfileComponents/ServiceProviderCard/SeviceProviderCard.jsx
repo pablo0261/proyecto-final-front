@@ -45,32 +45,35 @@ function ServicesProviderCard() {
 
   return (
     <div className={style.background}>
-      <div className={style.wrapper}>
-        <div className={style.header}></div>
-        <div className={style.servicesList}>
-          <div className={style.serviceItem}>
-            <div className={style.column1}>Servicios</div>
-            {servicesData.slice(0, 3).map((service, index) => (
-              <div key={index} className={style.buttonList}>
-                <button
-                  onClick={() => handleDeleteService()}
-                  className={style.crossButton}
-                ></button>
-                <div className={style.serviceDescription}>
-                  {service.description}
-                </div>
-              </div>
-            ))}
+      <div className={style.servicesWrapper}>
+        <div className={style.serviceItem}>
+          <div className={style.column1}>
+            <p className={style.column1title}>Servicios</p>
           </div>
-          <div className={style.priceList}>
-            <div className={style.column2}>Precio x Hora</div>
-            {servicesData.slice(0, 3).map((service, index) => (
-              <div key={index} className={style.servicePrice}>
-                $ {service.price ? service.price : "N/A"}
+          {servicesData.slice(0, 3).map((service, index) => (
+            <div key={index} className={style.items}>
+              <button
+                onClick={() => handleDeleteService()}
+                className={style.crossButton}
+              ></button>
+              <div className={style.descriptionBox}>
+                {service.description}
               </div>
-            ))}
+            </div>
+          ))}
+        </div>
+        <div className={style.priceList}>
+          <div className={style.column2}>
+            <p className={style.column2title}>Precio x Hora</p>
           </div>
-          <div className={style.contratList}>
+          {servicesData.slice(0, 3).map((service, index) => (
+            <div key={index} className={style.priceBox}>
+              $ {service.price ? service.price : "N/A"}
+            </div>
+          ))}
+        </div>
+        <div className={style.contratList}>
+          <div className={style.column3}>
             <button
               onClick={() => handleShowForm()}
               className={style.editButton}
@@ -80,7 +83,6 @@ function ServicesProviderCard() {
                 Contratar este Servicio{" "}
               </button>
             ))}
-          </div>
         </div>
       </div>
       {showForm && <Form handleShowForm={handleShowForm} />}
