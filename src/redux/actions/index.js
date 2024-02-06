@@ -189,7 +189,7 @@ const postUserData = (userDataEnglish) => {
       if (response.status === 200) {
         return dispatch({
           type: POST_NEW_INFO_USER,
-          payload: response.data.people.data[0].people,
+          payload: response.result.people.data[0].people,
         });
       }
     } catch (error) {
