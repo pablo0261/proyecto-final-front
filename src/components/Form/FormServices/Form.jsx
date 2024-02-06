@@ -47,7 +47,7 @@ function Form({ handleShowForm }) {
     fetchServices();
   }, []);
 
-  const handleServicesAdd = async(event) => {
+  const handleServicesAdd = (event) => {
     event.preventDefault();
     try {
       const updatedUserData = {
@@ -56,7 +56,7 @@ function Form({ handleShowForm }) {
         idOption: userData.idOption,
       };
 
-      await dispatch(postUserServices(updatedUserData));
+      dispatch(postUserServices(updatedUserData));
       handleShowForm()
     } catch (error) {
       console.error("Error al guardar los servicios y preciso:", error);
