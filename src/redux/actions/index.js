@@ -58,7 +58,7 @@ const recoverUserLoggedData = (emailUserData) => {
           payload: data.data.people.data[0].people,
         });
       } else {
-        window.alert(data)
+        window.alert(data);
       }
     } catch (error) {
       window.alert(error);
@@ -110,10 +110,11 @@ const handleContratService = (item) => {
 //   };
 // };
 const allPeopleProvider = (query) => {
-
   return async (dispatch) => {
     try {
-      const response = await axios.get(`${REACT_APP_API_URL}/people?typeOfPerson=provider${query}`);
+      const response = await axios.get(
+        `${REACT_APP_API_URL}/people?typeOfPerson=provider${query}`
+      );
       return dispatch({
         type: GET_HOME_PROVIDER,
         payload: response.data.people,
@@ -124,13 +125,23 @@ const allPeopleProvider = (query) => {
   };
 };
 
-const getPeopleFilteredOrderedPagination = (queryConstructor, queryPagination) => {
+const getPeopleFilteredOrderedPagination = (
+  queryConstructor,
+  queryPagination
+) => {
   return async (dispatch) => {
     try {
       const response = await axios.get(
-        `${REACT_APP_API_URL}/people?typeOfPerson=provider&${queryConstructor}${queryPagination ? `${queryPagination}` : ""}`
+        `${REACT_APP_API_URL}/people?typeOfPerson=provider&${queryConstructor}${
+          queryPagination ? `${queryPagination}` : ""
+        }`
       );
-      console.log("action", `${REACT_APP_API_URL}/people?typeOfPerson=provider&${queryConstructor}${queryPagination ? `&${queryPagination}` : ""}`)
+      console.log(
+        "action",
+        `${REACT_APP_API_URL}/people?typeOfPerson=provider&${queryConstructor}${
+          queryPagination ? `&${queryPagination}` : ""
+        }`
+      );
       return dispatch({
         type: GET_FILTER_PROVIDER,
         payload: response.data.people,
@@ -140,7 +151,6 @@ const getPeopleFilteredOrderedPagination = (queryConstructor, queryPagination) =
     }
   };
 };
-
 
 const getFiltersOrdersDB = () => {
   return async (dispatch) => {
@@ -161,31 +171,34 @@ const saveSelectionsGlobal = (selectedOptions) => {
     try {
       return dispatch({
         type: FILTER_ORDER_SELECTED,
-        payload: selectedOptions
+        payload: selectedOptions,
       });
     } catch (error) {
       console.error(error);
     }
   };
-}
+};
 const saveOrderGlobal = (orders) => {
   return async (dispatch) => {
     try {
       return dispatch({
         type: FILTER_ORDER_SELECTED,
-        payload: orders
+        payload: orders,
       });
     } catch (error) {
       console.error(error);
     }
   };
-}
+};
 
 //*---POST_NEW_INFO_USER---// (Pablo --> Lo uso para enviar las modificaciones del perfil de los proveedores)
 const postUserData = (userDataEnglish) => {
   return async (dispatch) => {
     try {
-      const response = await axios.post(`${REACT_APP_API_URL}/people`, userDataEnglish);
+      const response = await axios.post(
+        `${REACT_APP_API_URL}/people`,
+        userDataEnglish
+      );
       if (response.status === 200) {
         return dispatch({
           type: POST_NEW_INFO_USER,
@@ -205,11 +218,21 @@ const postUserData = (userDataEnglish) => {
   };
 };
 
-const postUserServices = (updatedUserData) => {//*(Pablo --> Lo uso para enviar las modificaciones de los servicios de los proveedores)
+const postUserServices = (updatedUserData) => {
+  //*(Pablo --> Lo uso para enviar las modificaciones de los servicios de los proveedores)
   return async (dispatch) => {
     try {
-      const response = await axios.post(`${REACT_APP_API_URL}/people/options`, updatedUserData);
-      console.log("response", response)
+      const response = await axios.post(
+        `${REACT_APP_API_URL}/people/options`,
+        updatedUserData
+      );
+      console.log("response", response);
+      if (response.status === 200) {
+        return dispatch({
+          type: POST_NEW_SERVICE_USER,
+          payload: response.result.people.data[0].people,
+        });
+      }
     } catch (error) {
       if (error.response && error.response.data) {
         dispatch({
@@ -234,7 +257,7 @@ const handleEditProfile = (formData) => {
       console.error(error);
     }
   };
-}
+};
 
 const setDataChat = (id) => {
   return async (dispatch) => {
@@ -244,20 +267,20 @@ const setDataChat = (id) => {
           idPeople: 1,
           propio: true,
           message: "Hola, podrias decirme si vas a ir o no?",
-          date: "Ayer"
+          date: "Ayer",
         },
         {
           idPeople: 2,
           propio: false,
           message: "No al final, no quiero ir.",
-          date: "Hoy"
-        }
-      ]
+          date: "Hoy",
+        },
+      ];
 
       dispatch({
         type: SET_CHAT,
-        payload: Chat
-      })
+        payload: Chat,
+      });
     }
 
     if (id === 2) {
@@ -266,23 +289,23 @@ const setDataChat = (id) => {
           idPeople: 1,
           propio: true,
           message: "¿Te parece si quedamos para el Miercoles?",
-          date: "Ayer"
+          date: "Ayer",
         },
         {
           idPeople: 2,
           propio: false,
           message: "Dale dale, te agendo",
-          date: "Hoy"
-        }
-      ]
+          date: "Hoy",
+        },
+      ];
 
       dispatch({
         type: SET_CHAT,
-        payload: Chat
-      })
+        payload: Chat,
+      });
     }
-  }
-}
+  };
+};
 
 export {
   addInfoUserLog,
@@ -298,5 +321,5 @@ export {
   getPeopleFilteredOrderedPagination,
   postUserServices,
   saveOrderGlobal,
-  setDataChat
-}
+  setDataChat,
+};
