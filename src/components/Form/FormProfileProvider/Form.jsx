@@ -21,7 +21,6 @@ function Form({ handleShowForm }) {
     "Catamarca",
     "Chaco",
     "Chubut",
-    "Ciudad Autónoma de Buenos Aires",
     "Córdoba",
     "Corrientes",
     "Entre Ríos",
@@ -70,27 +69,27 @@ function Form({ handleShowForm }) {
     } catch (error) {
       console.error("Error al obtener las ciudades:", error);
     }
-  };~
-  setUserData({ ...userData, Ocupación: profession });
+  }
+  // setUserData({ ...userData, Ocupación: profession });
 
-  const handleProfessionChange = async (event) => {
-    // Trae las ciudades segun al provincia seleccionada
-    try {
-      const response = await fetch(`${REACT_APP_API_URL}/categories`);
-      console.log(
-        "URL",
-        `${REACT_APP_API_URL}/categories`
-      );
-      const data = await response.json();
-      const sortedCiudades = data.data.sort((a, b) =>
-      a.nombreLocalidad.localeCompare(b.nombreLocalidad)
-    );
-      setCiudades(sortedCiudades);
-      console.log("sortedCiudades", sortedCiudades);
-    } catch (error) {
-      console.error("Error al obtener las ciudades:", error);
-    }
-  };
+  // const handleProfessionChange = async (event) => {
+  //   // Trae las ciudades segun al provincia seleccionada
+  //   try {
+  //     const response = await fetch(`${REACT_APP_API_URL}/categories`);
+  //     console.log(
+  //       "URL",
+  //       `${REACT_APP_API_URL}/categories`
+  //     );
+  //     const data = await response.json();
+  //     const sortedCiudades = data.data.sort((a, b) =>
+  //     a.nombreLocalidad.localeCompare(b.nombreLocalidad)
+  //   );
+  //     setCiudades(sortedCiudades);
+  //     console.log("sortedCiudades", sortedCiudades);
+  //   } catch (error) {
+  //     console.error("Error al obtener las ciudades:", error);
+  //   }
+  // };
 
   const [userData, setUserData] = useState({
     id: userLog,
@@ -100,7 +99,6 @@ function Form({ handleShowForm }) {
     Provincia: "",
     Localidad: "",
     Calle: "",
-    Ocupación: "",
     "Sobre mi": "",
   });
 
@@ -113,7 +111,6 @@ function Form({ handleShowForm }) {
     Provincia: "",
     Localidad: "",
     Calle: "",
-    Ocupación: "",
     "Sobre mi": "",
   });
 
@@ -125,7 +122,6 @@ function Form({ handleShowForm }) {
     country: userData.País,
     idLocation: userData.Localidad,
     address: userData.Calle,
-    profession: userData.Ocupación,
     aboutMe: userData["Sobre mi"],
   };
 
@@ -282,8 +278,8 @@ function Form({ handleShowForm }) {
                 <option value="" disabled>
                   Selecciona una ciudad
                 </option>
-                {Array.isArray(ciudades.data) &&
-                  ciudades.data.map((ciudad) => (
+                {Array.isArray(ciudades) &&
+                  ciudades.map((ciudad) => (
                     <option
                       key={ciudad.idLocalidad}
                       value={ciudad.idLocalidad}
