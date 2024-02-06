@@ -12,8 +12,9 @@ function Form({ handleShowForm }) {
   const [userData, setUserData] = useState({
     idPeople: userLog,
     price: "",
-    idOption: "",
+    idOption: "" | "1",
   });
+  console.log("userData", userData)
 
   useEffect(() => {
     setUserData((prevUserData) => ({

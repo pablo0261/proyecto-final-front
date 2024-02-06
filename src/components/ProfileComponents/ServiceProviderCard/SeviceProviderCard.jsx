@@ -11,8 +11,8 @@ function ServicesProviderCard() {
   const [servicesData, setServicesData] = useState([]); //* Aqui guarda los sericios que ofrece la persona
 
   const handleShowForm = () => {
-    setShowForm(!showForm)
-  }
+    setShowForm(!showForm);
+  };
 
   useEffect(() => {
     //*Todo esto recorre y valida la info del usuario para ver los servicios y precios
@@ -25,10 +25,10 @@ function ServicesProviderCard() {
         const categoriesOptions = firstCategory.categories_options.flatMap(
           (option) => {
             if (option.people_options && option.people_options.length > 0) {
-              return {
+              return option.people_options.map((personOption) => ({
                 description: option.description || "No description",
-                price: option.people_options[0].price || null,
-              };
+                price: personOption.price || null,
+              }));
             } else {
               return {
                 description: option.description || "No description",
@@ -50,15 +50,13 @@ function ServicesProviderCard() {
           <div className={style.column1}>
             <p className={style.column1title}>Servicios</p>
           </div>
-          {servicesData.slice(0, 3).map((service, index) => (
+          {servicesData.slice(0, 4).map((service, index) => (
             <div key={index} className={style.items}>
               <button
                 onClick={() => handleDeleteService()}
                 className={style.crossButton}
               ></button>
-              <div className={style.descriptionBox}>
-                {service.description}
-              </div>
+              <div className={style.descriptionBox}>{service.description}</div>
             </div>
           ))}
         </div>
@@ -66,7 +64,7 @@ function ServicesProviderCard() {
           <div className={style.column2}>
             <p className={style.column2title}>Precio x Hora</p>
           </div>
-          {servicesData.slice(0, 3).map((service, index) => (
+          {servicesData.slice(0, 4).map((service, index) => (
             <div key={index} className={style.priceBox}>
               $ {service.price ? service.price : "N/A"}
             </div>
@@ -78,15 +76,15 @@ function ServicesProviderCard() {
               onClick={() => handleShowForm()}
               className={style.editButton}
             ></button>
+            {servicesData.slice(0, 4).map((service, index) => (
+              <button key={index} className={style.contratItem}>
+                Contratar este Servicio{" "}
+              </button>
+            ))}
           </div>
-          {servicesData.map((_, index) => (
-            <button key={index} className={style.contratItem}>
-              Contratar este Servicio{" "}
-            </button>
-          ))}
         </div>
+        {showForm && <Form handleShowForm={handleShowForm} />}
       </div>
-      {showForm && <Form handleShowForm={handleShowForm} />}
     </div>
   );
 }
