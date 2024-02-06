@@ -56,9 +56,7 @@ function ServicesProviderCard() {
                 onClick={() => handleDeleteService()}
                 className={style.crossButton}
               ></button>
-              <div className={style.descriptionBox}>
-                {service.description}
-              </div>
+              <div className={style.descriptionBox}>{service.description}</div>
             </div>
           ))}
         </div>
@@ -83,10 +81,10 @@ function ServicesProviderCard() {
                 Contratar este Servicio{" "}
               </button>
             ))}
+          </div>
         </div>
+        {showForm && <Form handleShowForm={handleShowForm} />}
       </div>
-      {showForm && <Form handleShowForm={handleShowForm} />}
-    </div>
     </div>
   );
 }
