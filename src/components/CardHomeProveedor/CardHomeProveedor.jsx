@@ -3,8 +3,7 @@ import styles from "../CardHomeProveedor/CardHomeProveedor.module.sass";
 import defaultImage from '../../assets/Icons/PerfilImage.png';
 
 function Card(props) {
-  // console.log(props)
-  // console.log(props.user.categories[0]?.categories_options);
+  
   return (
     <div className={styles.wrapper}>
       <div className={styles.profileWrapper}>

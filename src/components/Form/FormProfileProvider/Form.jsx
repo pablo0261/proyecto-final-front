@@ -16,12 +16,13 @@ function Form({ handleShowForm }) {
     }));
   }, []);
 
-  const [provincias, setProvincias] = useState([
+  const [ isProvinciaSelected , setIsProvinciaSelected ] = useState("Selecciona una provincia")
+
+  const provincias = [
     "Ciudad Autónoma de Buenos Aires",
     "Catamarca",
     "Chaco",
     "Chubut",
-    "Ciudad Autónoma de Buenos Aires",
     "Córdoba",
     "Corrientes",
     "Entre Ríos",
@@ -41,13 +42,13 @@ function Form({ handleShowForm }) {
     "Santiago del Estero",
     "Tierra del Fuego, Antártida e Islas del Atlántico Sur",
     "Tucumán"
-  ]);
+  ]
+
   const [ciudades, setCiudades] = useState([]); // Estado para guardar las ciudades que trae de handleProvinciaChange segun la provincia
-  console.log("ciudades", ciudades);
   const handleProvinciaChange = async (event) => {
+    setIsProvinciaSelected(event.target.value)
     // Trae las ciudades segun al provincia seleccionada
     const provincia = event.target.value.toLowerCase();
-    console.log("provincia", provincia);
     setUserData({ ...userData, Provincia: provincia });
     try {
       const response = await fetch(
@@ -55,42 +56,30 @@ function Form({ handleShowForm }) {
           provincia
         )}`
       );
-      console.log(
-        "URL",
-        `${REACT_APP_API_URL}/municipalities?province=${encodeURIComponent(
-          provincia
-        )}`
-      );
       const data = await response.json();
       const sortedCiudades = data.data.sort((a, b) =>
-      a.nombreLocalidad.localeCompare(b.nombreLocalidad)
-    );
+        a.nombreLocalidad.localeCompare(b.nombreLocalidad)
+      );
       setCiudades(sortedCiudades);
-      console.log("sortedCiudades", sortedCiudades);
     } catch (error) {
-      console.error("Error al obtener las ciudades:", error);
+      window.alert("Error al obtener las ciudades:", error);
     }
-  };~
-  setUserData({ ...userData, Ocupación: profession });
+  }
+  // setUserData({ ...userData, Ocupación: profession });
 
-  const handleProfessionChange = async (event) => {
-    // Trae las ciudades segun al provincia seleccionada
-    try {
-      const response = await fetch(`${REACT_APP_API_URL}/categories`);
-      console.log(
-        "URL",
-        `${REACT_APP_API_URL}/categories`
-      );
-      const data = await response.json();
-      const sortedCiudades = data.data.sort((a, b) =>
-      a.nombreLocalidad.localeCompare(b.nombreLocalidad)
-    );
-      setCiudades(sortedCiudades);
-      console.log("sortedCiudades", sortedCiudades);
-    } catch (error) {
-      console.error("Error al obtener las ciudades:", error);
-    }
-  };
+  // const handleProfessionChange = async (event) => {
+  //   // Trae las ciudades segun al provincia seleccionada
+  //   try {
+  //     const response = await fetch(`${REACT_APP_API_URL}/categories`);
+  //     const data = await response.json();
+  //     const sortedCiudades = data.data.sort((a, b) =>
+  //     a.nombreLocalidad.localeCompare(b.nombreLocalidad)
+  //   );
+  //     setCiudades(sortedCiudades);
+  //   } catch (error) {
+  //     window.alert("Error al obtener las ciudades:", error);
+  //   }
+  // };
 
   const [userData, setUserData] = useState({
     id: userLog,
@@ -100,11 +89,8 @@ function Form({ handleShowForm }) {
     Provincia: "",
     Localidad: "",
     Calle: "",
-    Ocupación: "",
     "Sobre mi": "",
   });
-
-  console.log("userData",userData)
 
   const [localErrors, setLocalErrors] = useState({
     Nombre: "",
@@ -113,7 +99,6 @@ function Form({ handleShowForm }) {
     Provincia: "",
     Localidad: "",
     Calle: "",
-    Ocupación: "",
     "Sobre mi": "",
   });
 
@@ -125,7 +110,6 @@ function Form({ handleShowForm }) {
     country: userData.País,
     idLocation: userData.Localidad,
     address: userData.Calle,
-    profession: userData.Ocupación,
     aboutMe: userData["Sobre mi"],
   };
 
@@ -145,7 +129,7 @@ function Form({ handleShowForm }) {
       dispatch(postUserData(userDataEnglish));
       handleShowForm();
     } else {
-      window.alert("Formulario con Errores");
+      window.alert("Complete el formulario sin errores");
     }
   };
 
@@ -158,10 +142,12 @@ function Form({ handleShowForm }) {
           onClick={() => handleShowForm()}
         ></button>
         <p className={styles.textTitle}>Completa tus datos personales</p>
-        <p className={styles.errorMessageStatic}>* Campos Obligatorios</p>
         <form className={styles.Form} onSubmit={handleSubmit}>
+          {
+            Object.values(userData).some((data) => data !== "") && <p className={styles.errorMessageStatic}>(*)Rellene los campos obligatorios</p>
+          }
           <div className={styles.FormDivInput}>
-            <label className={styles.labels}>* Nombre y Apellido:</label>
+            <label className={styles.labels}>*Nombre y Apellido:</label>
             <input
               className={styles.inputs}
               type="text"
@@ -188,7 +174,7 @@ function Form({ handleShowForm }) {
 
           <div className={styles.FormDivFlex}>
             <div className={styles.FormDivInputFlex}>
-              <label className={styles.labels}>* Teléfono:</label>
+              <label className={styles.labels}>*Teléfono:</label>
               <input
                 className={styles.inputs}
                 type="text"
@@ -239,14 +225,14 @@ function Form({ handleShowForm }) {
             </div>
 
             <div className={styles.FormDivInputFlex}>
-              <label className={styles.labels}>* Provincia:</label>
+              <label className={styles.labels}>*Provincia:</label>
               <select
-                className={styles.inputs}
+                className={styles.inputSelect}
                 name="Provincia"
-                value={userData.Provincia}
+                value={isProvinciaSelected}
                 onChange={handleProvinciaChange}
               >
-                <option value="" disabled>
+                <option value="Selecciona una provincia" disabled>
                   Selecciona una provincia
                 </option>
                 {provincias.map((provincia) => (
@@ -272,9 +258,9 @@ function Form({ handleShowForm }) {
             </div>
 
             <div className={styles.FormDivInputFlex}>
-              <label className={styles.labels}>* Ciudad:</label>
+              <label className={styles.labels}>*Ciudad:</label>
               <select
-                className={styles.inputs}
+                className={styles.inputSelect}
                 name="Localidad"
                 value={userData.Localidad}
                 onChange={handleChange}
@@ -282,8 +268,8 @@ function Form({ handleShowForm }) {
                 <option value="" disabled>
                   Selecciona una ciudad
                 </option>
-                {Array.isArray(ciudades.data) &&
-                  ciudades.data.map((ciudad) => (
+                {Array.isArray(ciudades) &&
+                  ciudades.map((ciudad) => (
                     <option
                       key={ciudad.idLocalidad}
                       value={ciudad.idLocalidad}
@@ -309,7 +295,7 @@ function Form({ handleShowForm }) {
             </div>
           </div>
           <div className={styles.FormDivInput}>
-            <label className={styles.labels}>* Calle:</label>
+            <label className={styles.labels}>*Calle:</label>
             <input
               className={styles.inputs}
               type="text"
@@ -335,7 +321,7 @@ function Form({ handleShowForm }) {
           </div>
 
           <div className={styles.FormDivInput}>
-            <label className={styles.labels}>* Profesión:</label>
+            <label className={styles.labels}>*Profesión:</label>
             <input
               className={styles.inputs}
               type="text"

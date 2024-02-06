@@ -27,7 +27,6 @@ const Pagination = ({ pageNumber, totalOfPages , queryProps}) => {
   const onSpeficPage = (pageNumber) => {
     const queryConstructOrder = `&pageNumber=${pageNumber}`;
     handlerPagination(queryConstructOrder)
-    console.log(queryConstructOrder)
   };
 
   return (

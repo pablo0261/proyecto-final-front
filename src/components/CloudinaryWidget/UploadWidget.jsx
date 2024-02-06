@@ -45,7 +45,6 @@ const UploadWidget = ({setPublicId, user}) => {
       },
       function (error, result) {
         if (!error && result && result.event === "success") {
-          // console.log("Imagen subida a Cloudinary:", result.info.url);
           const imageUrl = result.info.url;
           setPublicId(imageUrl);
           axios.put(`${REACT_APP_API_URL}/people`, {
