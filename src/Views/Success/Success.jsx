@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useHistory } from 'react-router-dom'; 
+import { useHistory } from 'react-router-dom';
 
 function SubscriptionSuccessBanner() {
   const history = useHistory(); 
@@ -11,7 +11,7 @@ function SubscriptionSuccessBanner() {
 
     return () => clearTimeout(redirectTimer);
   }, []); 
-  
+
   return (
     <div>
       <h2>¡Se realizó su suscripción exitosamente!</h2>

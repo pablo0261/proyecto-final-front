@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { ValidateFormSignIn } from "./ValidateFormSignIn";
 import style from "./SignIn.module.sass";
 import StoreItem from "../../../Helpers/LocalStorage";
-import MercadoPago from "../MercadoPago/MercadoPago";
+// import MercadoPago from "../MercadoPago/MercadoPago";
 
 function SignIn(props) {
   const { isProvider, handleFormsVisibility, signInProcess } = props;
@@ -156,11 +156,11 @@ function SignIn(props) {
               <p>{subscription.items.description}</p>
               <p>ARS ${subscription.items.price}</p>
             </div>
-            <MercadoPago
+            {/* <MercadoPago
               userData={signInData}
               errors={errors}
               subscription={subscription}
-            ></MercadoPago>
+            ></MercadoPago> */}
           </div>
         ) : (
           <div>
