@@ -40,7 +40,7 @@ function AccessAccount() {
                 dispatch(addInfoUserLog(user))
 
                 if (user.typeOfPerson === 'admin') {
-
+                    navigate(Helpers.HomeCustomerView)//* <== Esta ruta hay que cambiarla cuando este lista la view del Admin !!
                 } else if (user.typeOfPerson === 'provider') {
                     navigate(Helpers.StatsProviderView)
                 } else {
@@ -55,21 +55,21 @@ function AccessAccount() {
     const signInProcess = async (signInData) => {
         try {
             const response = await axios.post(
-                `${REACT_APP_API_URL}/people`, signInData
+                `${REACT_APP_API_URL}/payment`, signInData.email
             );
 
-            if (response.status === 201) {
-                const user = response.data.people.data[0].people
+            if (response.status >= 201) {
+                navigate(Helpers.Success)
+                const user = response //! Aqui ver como llega la respuesta para guardar la info en el localStorage
                 localStorage.setItem(StoreItem.emailUserLogged, signInData.email);
 
-                dispatch(addInfoUserLog(user))
+                // dispatch(addInfoUserLog(user))
 
-                if (user.typeOfPerson === 'provider') {
-                    navigate(Helpers.StatsProviderView)
+                // if (user.typeOfPerson === 'provider') {
+                //     navigate(Helpers.StatsProviderView)
                 } else {
-                    navigate(Helpers.HomeCustomerView)
+                    navigate(Helpers.Failure)
                 }
-            }
         } catch (error) {
             window.alert(error);
         }

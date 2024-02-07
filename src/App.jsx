@@ -12,6 +12,8 @@ import StatsProviderView from './Views/ProviderViews/StatsProviderView';
 import ReportsProviderView from './Views/ProviderViews/ReportsProviderView';
 import ConnectionsProviderView from './Views/ProviderViews/ConnectionsProviderView';
 import Assistance from './Views/Assistance/Assistance';
+import Success from './Views/Success/Success';
+import Failure from './Views/Failure/Failure';
 import FAQs from './Views/FAQs/FAQs';
 import ConsultReport from './Views/ConsultReport/ConsultReport'
 import { useDispatch, useSelector } from 'react-redux';
@@ -52,7 +54,7 @@ function App() {
         dispatch(addInfoUserLog(user))
 
         if (user.typeOfPerson === 'admin') {
-
+          navigate(Helpers.StatsProviderView)
         } else if (user.typeOfPerson === 'provider') {
           navigate(Helpers.StatsProviderView)
         } else {
@@ -99,6 +101,9 @@ function App() {
             {
               userLoggedInfo.typeOfPerson === 'provider' &&
               <Routes>
+                {/* Enrutador de MercadoPago */}
+                <Route path={Helpers.Success} element={<Success />} />
+                <Route path={Helpers.Failure} element={<Failure />} />
                 {/* Proveedor */}
                 <Route path={Helpers.StatsProviderView} element={<StatsProviderView />} />
                 <Route path={Helpers.ConnectionsProviderView} element={<ConnectionsProviderView />} />
