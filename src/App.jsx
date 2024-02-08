@@ -11,7 +11,6 @@ import ConnectionsCustomerView from './Views/CustomerViews/ConnectionsCustomerVi
 import StatsProviderView from './Views/ProviderViews/StatsProviderView';
 import ReportsProviderView from './Views/ProviderViews/ReportsProviderView';
 import ConnectionsProviderView from './Views/ProviderViews/ConnectionsProviderView';
-import Assistance from './Views/Assistance/Assistance';
 import Success from './Views/Success/Success';
 import Failure from './Views/Failure/Failure';
 import FAQs from './Views/FAQs/FAQs';
@@ -111,7 +110,6 @@ function App() {
                 <Route path={Helpers.ProfileProviderView} element={<ProfileProviderView />} />
 
                 {/* Footer */}
-                <Route path={Helpers.Assistance} element={<Assistance />} />
                 <Route path={Helpers.FAQs} element={<FAQs />} />
                 <Route path={Helpers.ConsultReport} element={<ConsultReport />} />
 
@@ -132,7 +130,6 @@ function App() {
             <Routes>
               <Route exact path={Helpers.Landing} element={<Landing />} />
               <Route path={Helpers.AccessAccount} element={<AccessAccount />} />
-              <Route path={Helpers.Assistance} element={<Assistance />} />
               <Route path={Helpers.FAQs} element={<FAQs />} />
               <Route path={Helpers.ConsultReport} element={<ConsultReport />} />
 

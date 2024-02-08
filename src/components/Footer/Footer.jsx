@@ -13,7 +13,7 @@ const Footer = () => {
             <div className={styles.footer__container__menu}>
                 <ul>
                     <li>
-                        <a className={styles.a} href={Helpers.Assistance}>Ayuda</a>
+                    <p>Ayuda</p>
                     </li>
                     <li>
                         <a className={styles.a} href={Helpers.FAQs}>Frequently Asked Questions</a>

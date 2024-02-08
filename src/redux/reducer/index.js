@@ -11,6 +11,7 @@ import {
   FILTER_ORDER_SELECTED,
   POST_NEW_INFO_USER,
   SET_CHAT,
+  CREATE_REPORT,
   // CONTRAT_SERVICE_USER
 } from "../actions/action-types";
 
@@ -190,7 +191,10 @@ let initialState = {
   },
 
   //CHAT
-  data_Chat:[]
+  data_Chat:[],
+
+  /* Create report */
+  createReport:[]
 };
 
 const rootReducer = (state = initialState, { type, payload }) => {
@@ -271,7 +275,14 @@ const rootReducer = (state = initialState, { type, payload }) => {
     case SET_CHAT:
       return {
         ...state, data_Chat: payload
-      }
+      };
+
+      /* Create report */
+      case CREATE_REPORT:
+        return {
+            ...state,
+            createReport: action.payload,
+        };
 
     default:
       return state;

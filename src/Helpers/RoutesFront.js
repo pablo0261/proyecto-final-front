@@ -20,7 +20,6 @@ const Helpers = {
     Form: "/form/:component", 
 
     /* Footer */
-    Assistance: "/assistance",
     FAQs: "/frequently-asked-questions",
     ConsultReport: "/consult-report",
 }
