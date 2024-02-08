@@ -96,19 +96,21 @@ const handleContratService = (item) => {
   };
 };
 
-// const allPeopleProvider = () => {
-//   return async (dispatch) => {
-//     try {
-//       const response = await axios.get(`${REACT_APP_API_URL}/people?typeOfPerson=provider`);
-//       return dispatch({
-//         type: GET_HOME_PROVIDER,
-//         payload:  response.data.people,
-//       });
-//     } catch (error) {
-//       window.alert(error);
-//     }
-//   };
-// };
+const allPeople = () => {
+  //** Esta ruta solo llama a todos los registrados en la tabla people*/
+  return async (dispatch) => {
+    try {
+      const response = await axios.get(`${REACT_APP_API_URL}/people`);
+      return dispatch({
+        type: GET_PEOPLE,
+        payload:  response.data.people,
+      });
+    } catch (error) {
+      window.alert(error);
+    }
+  };
+};
+
 const allPeopleProvider = (query) => {
   return async (dispatch) => {
     try {

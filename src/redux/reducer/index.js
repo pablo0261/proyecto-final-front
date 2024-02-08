@@ -146,6 +146,7 @@ let initialState = {
   },
   
   //Filter and getpeople
+  peopleForAdmin: [], /** El estado contiene los people que la tabla del admin*/
   homeCustomerProviders: [],
   getAllPeople: [],
   paginacionData: [],
@@ -200,6 +201,12 @@ const rootReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         infoUserLog: payload,
+      };
+
+    case GET_PEOPLE:
+      return {
+        ...state,
+        peopleForAdmin: payload,
       };
     
     case GET_HOME_PROVIDER:
