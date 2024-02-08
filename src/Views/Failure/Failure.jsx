@@ -1,14 +1,5 @@
 import React, { useEffect } from 'react';
-<<<<<<< HEAD
-import { useHistory } from 'react-router-dom'; 
 
-function SubscriptionFailureBanner() {
-  const history = useHistory(); 
-
-  useEffect(() => {
-    const redirectTimer = setTimeout(() => {
-      history.push('/accessAccount');
-=======
 import { useNavigate } from 'react-router-dom'; 
 
 function SubscriptionFailureBanner() {
@@ -17,7 +8,6 @@ function SubscriptionFailureBanner() {
   useEffect(() => {
     const redirectTimer = setTimeout(() => {
       navigate.push('/accessAccount');
->>>>>>> pabloMercadoPago
     }, 3000); 
 
     return () => clearTimeout(redirectTimer);

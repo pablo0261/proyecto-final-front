@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-import React, { useEffect, useState } from "react";
-=======
 import { useEffect, useState } from "react";
->>>>>>> pabloMercadoPago
 import LogIn from "../../components/AccessAccount/LogIn/LogIn";
 import SignIn from "../../components/AccessAccount/SignIn/SignIn";
 import { Link, useNavigate } from "react-router-dom";
@@ -14,15 +10,7 @@ import axios from "axios";
 import { addInfoUserLog } from "../../redux/actions";
 
 function AccessAccount() {
-<<<<<<< HEAD
-  const history = useHistory();
 
-  useEffect(() => {
-    google.accounts.id.renderButton(document.getElementById("buttonDiv"), {
-      theme: "outline",
-      size: "medium",
-    });
-=======
   useEffect(() => {
     // Carga la biblioteca de Google Sign-In
     const script = document.createElement("script");
@@ -37,7 +25,6 @@ function AccessAccount() {
         size: "medium",
       });
     };
->>>>>>> pabloMercadoPago
   }, []);
 
   const isProvider = JSON.parse(localStorage.getItem(StoreItem.isProvider));
@@ -55,10 +42,6 @@ function AccessAccount() {
       const response = await axios.get(
         `${REACT_APP_API_URL}/people?email=${logInData.email}`
       );
-<<<<<<< HEAD
-=======
-      console.log("response", response);
->>>>>>> pabloMercadoPago
       if (response.status === 200) {
         const user = response.data.people.data[0].people;
         localStorage.setItem(StoreItem.emailUserLogged, logInData.email);
@@ -78,20 +61,14 @@ function AccessAccount() {
     }
   };
 
-<<<<<<< HEAD
-  const signInProcess = async (signInData) => {
-=======
+
   const signInProcess = async (signInData) => {//*componente para manejar el post de MP y recibir el link a MP
->>>>>>> pabloMercadoPago
     try {
       const response = await axios.post(
         `${REACT_APP_API_URL}/payment`,
         signInData
       );
-<<<<<<< HEAD
-      const paymentLink = response.data.paymentLink;
-      history.push(paymentLink);
-=======
+
       console.log("signInData", signInData);
       if (response.status <= 201) {
         const paymentLink = response.data.paymentLink;
@@ -99,17 +76,12 @@ function AccessAccount() {
       } else {
         window.alert(`Error: ${response.status} - ${response.statusText}`);
       }
->>>>>>> pabloMercadoPago
     } catch (error) {
       window.alert(error);
     }
   };
 
-<<<<<<< HEAD
-  
 
-=======
->>>>>>> pabloMercadoPago
   return (
     <div className={style.wrapper}>
       {isProvider != null ? (
