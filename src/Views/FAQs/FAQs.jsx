@@ -1,3 +1,4 @@
+import styles from './FAQs.module.scss';
 import { useState } from 'react';
 import FormFAQs from '../../components/Form/FormFAQs/FormFAQs';
 
@@ -6,8 +7,10 @@ const FAQs = () => {
   const [clientFaqList, setClientFaqList] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [faqType, setFaqType] = useState('');
-  const [editMode, setEditMode] = useState(false); 
-  const [editIndex, setEditIndex] = useState(null); 
+  const [editMode, setEditMode] = useState(false);
+  const [editIndex, setEditIndex] = useState(null);
+
+  const [expanded, setExpanded] = useState(false); // Estado para controlar la expansión de la respuesta
 
   const handleAddQuestion = (newQuestion, newAnswer) => {
     if (faqType === 'provider') {
@@ -33,7 +36,7 @@ const FAQs = () => {
     }
     setShowForm(false); // Oculta el formulario después de agregar una pregunta
   };
-  
+
 
   const handleToggleForm = (type) => {
     setShowForm(!showForm); // Alternar la visibilidad del formulario
@@ -54,45 +57,88 @@ const FAQs = () => {
     }
   };
 
-  // Función para entrar en el modo de edición
+  /* Función para entrar en el modo de edición */
   const handleEditQuestion = (index, type) => {
     setEditMode(true);
     setEditIndex(index);
     handleToggleForm(type);
   };
 
+  /* Función para cambiar el estado de visibilidad de answer */
+  const toggleAnswer = () => {
+    setExpanded(!expanded);
+  };
+
+
+
   return (
-    <div className="faq-container">
+    <div className={styles.wrap}>
+
       {/* FAQs proveedor */}
       <h2>FAQs proveedor</h2>
       {providerFaqList.map((faq, index) => (
-        <div key={index} className="faq-item">
-          <h3>{faq.question}</h3>
-          <p>{faq.answer}</p>
+        <div className={styles.container__item} key={index}>
 
-          <button onClick={() => handleDeleteQuestion(index, 'provider')}>Eliminar</button>
-          <button onClick={() => handleEditQuestion(index, 'provider')}>Editar</button> {/* Botón para editar */}
+          {/* Pregunta y respuesta */}
+          <div className={styles.item}>
+            <div className={styles.question}>
+              <h3>{faq.question}</h3>
+              <div className={styles.more} onClick={toggleAnswer}>
+                <p>{expanded ? '-' : '+'}</p></div>
+            </div>
+
+            <div className={`${styles.answer} ${expanded ? styles.expanded : ''}`}>
+              <p>{faq.answer}</p>
+            </div>
+          </div>
+          <hr/>
+
+          <div className={styles.container__buttons}>
+            <button onClick={() => handleDeleteQuestion(index, 'provider')}>Eliminar</button>
+            <button onClick={() => handleEditQuestion(index, 'provider')}>Editar</button>
+          </div>
+
+
         </div>
       ))}
       {/* Mostrar el botón de edición para alternar la visibilidad del formulario */}
-      <button onClick={() => handleToggleForm('provider')}>
+      <button className={styles.buttons} onClick={() => handleToggleForm('provider')}>
         {showForm && faqType === 'provider' ? 'Cancelar' : 'Crear Pregunta'}
       </button>
       {showForm && faqType === 'provider' && <FormFAQs onAddQuestion={handleAddQuestion} />}
 
+
+
       {/* FAQs Cliente */}
       <h2>FAQs cliente</h2>
-      {clientFaqList.map((faq, index) => (
-        <div key={index} className="faq-item">
-          <h3>{faq.question}</h3>
-          <p>{faq.answer}</p>
 
-          <button onClick={() => handleDeleteQuestion(index, 'client')}>Eliminar</button>
-          <button onClick={() => handleEditQuestion(index, 'client')}>Editar</button> 
+      {clientFaqList.map((faq, index) => (
+        <div className={styles.container__item} key={index}>
+
+        {/* Pregunta y respuesta */}
+        <div className={styles.item}>
+          <div className={styles.question}>
+            <h3>{faq.question}</h3>
+            <div className={styles.more} onClick={toggleAnswer}>
+              <p>{expanded ? '-' : '+'}</p></div>
+          </div>
+
+          <div className={`${styles.answer} ${expanded ? styles.expanded : ''}`}>
+            <p>{faq.answer}</p>
+          </div>
         </div>
+        <hr/>
+
+        <div className={styles.container__buttons}>
+          <button onClick={() => handleDeleteQuestion(index, 'provider')}>Eliminar</button>
+          <button onClick={() => handleEditQuestion(index, 'provider')}>Editar</button>
+        </div>
+
+
+      </div>
       ))}
-      
-      <button onClick={() => handleToggleForm('client')}>
+
+      <button className={styles.buttons} onClick={() => handleToggleForm('client')}>
         {showForm && faqType === 'client' ? 'Cancelar' : 'Crear Pregunta'}
       </button>
       {showForm && faqType === 'client' && <FormFAQs onAddQuestion={handleAddQuestion} />}
