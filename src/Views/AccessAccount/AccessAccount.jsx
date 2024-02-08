@@ -70,8 +70,8 @@ function AccessAccount() {
       );
 
       console.log("signInData", signInData);
-      if (response.status <= 201) {
-        const paymentLink = response.data.paymentLink;
+      if (response.status === 200) {
+        const paymentLink = response.data.urlPayment;
         window.location.href = paymentLink;
       } else {
         window.alert(`Error: ${response.status} - ${response.statusText}`);
