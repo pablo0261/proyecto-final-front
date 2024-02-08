@@ -18,7 +18,7 @@ function SkillsProviderCard() {
       <Link to={{ pathname: `/form/${5}` }}>
         <button src="editImage" alt="edit" className="edit-button">
           {" "}
-          Edit
+          SkillsProviderCard
         </button>
       </Link>
       {extras.map((interest, index) => (
