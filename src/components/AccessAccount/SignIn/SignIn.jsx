@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { ValidateFormSignIn } from "./ValidateFormSignIn";
 import style from "./SignIn.module.sass";
 import StoreItem from "../../../Helpers/LocalStorage";
@@ -150,7 +150,7 @@ function SignIn(props) {
             {errors.password ? errors.password : "Datos Validos"}
           </p>
         </div>
-        {isProvider ? (
+        {/* {isProvider ? (
           <div>
             <div className={style.subcription}>
               <p>{subscription.items.description}</p>
@@ -162,13 +162,13 @@ function SignIn(props) {
               subscription={subscription}
             ></MercadoPago> */}
           </div>
-        ) : (
+        ) : ( */}
           <div>
             <button type="submit" className={style.buttonSubmit}>
               Registrarse
             </button>
           </div>
-        )}
+        {/* )} */}
       </form>
       <div className={style.Questions}>
         <p className={style.text}>¿Ya tienes una cuenta?</p>
