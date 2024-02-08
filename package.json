@@ -10,9 +10,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@mercadopago/sdk-react": "0.0.16",
     "@cloudinary/react": "1.12.0",
     "@cloudinary/url-gen": "1.16.0",
+    "@mercadopago/sdk-react": "0.0.16",
     "axios": "1.6.5",
     "dotenv": "16.3.2",
     "gsap": "^3.12.5",
@@ -22,6 +22,7 @@
     "mercadopago": "^1.5.16",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-google-recaptcha": "^3.1.0",
     "react-leaflet": "4.2.1",
     "react-redux": "8.1.2",
     "react-router-dom": "6.21.3",

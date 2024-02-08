@@ -11,7 +11,6 @@ import ConnectionsCustomerView from './Views/CustomerViews/ConnectionsCustomerVi
 import StatsProviderView from './Views/ProviderViews/StatsProviderView';
 import ReportsProviderView from './Views/ProviderViews/ReportsProviderView';
 import ConnectionsProviderView from './Views/ProviderViews/ConnectionsProviderView';
-import Assistance from './Views/Assistance/Assistance';
 import FAQs from './Views/FAQs/FAQs';
 import ConsultReport from './Views/ConsultReport/ConsultReport'
 import { useDispatch, useSelector } from 'react-redux';
@@ -106,7 +105,6 @@ function App() {
                 <Route path={Helpers.ProfileProviderView} element={<ProfileProviderView />} />
 
                 {/* Footer */}
-                <Route path={Helpers.Assistance} element={<Assistance />} />
                 <Route path={Helpers.FAQs} element={<FAQs />} />
                 <Route path={Helpers.ConsultReport} element={<ConsultReport />} />
 
@@ -127,7 +125,6 @@ function App() {
             <Routes>
               <Route exact path={Helpers.Landing} element={<Landing />} />
               <Route path={Helpers.AccessAccount} element={<AccessAccount />} />
-              <Route path={Helpers.Assistance} element={<Assistance />} />
               <Route path={Helpers.FAQs} element={<FAQs />} />
               <Route path={Helpers.ConsultReport} element={<ConsultReport />} />
 

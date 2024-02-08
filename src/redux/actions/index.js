@@ -14,6 +14,7 @@ import {
   FILTER_ORDER_SELECTED,
   POST_NEW_SERVICE_USER,
   SET_CHAT,
+  CREATE_REPORT,
 } from "./action-types";
 
 const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
@@ -300,6 +301,18 @@ const setDataChat = (id) => {
   };
 };
 
+/* Create report */
+const createReport = (formData) => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.post(`${REACT_APP_API_URL}/xxxx/xxxx`, formData);
+      dispatch({ type: CREATE_REPORT, payload: response.data }); 
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
 export {
   addInfoUserLog,
   logOutDeleteData,
@@ -315,4 +328,5 @@ export {
   postUserServices,
   saveOrderGlobal,
   setDataChat,
+  createReport,
 };
