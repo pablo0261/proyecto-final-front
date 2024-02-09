@@ -11,7 +11,8 @@ import ConnectionsCustomerView from './Views/CustomerViews/ConnectionsCustomerVi
 import StatsProviderView from './Views/ProviderViews/StatsProviderView';
 import ReportsProviderView from './Views/ProviderViews/ReportsProviderView';
 import ConnectionsProviderView from './Views/ProviderViews/ConnectionsProviderView';
-import Assistance from './Views/Assistance/Assistance';
+import Success from './Views/Success/Success';
+import Failure from './Views/Failure/Failure';
 import FAQs from './Views/FAQs/FAQs';
 import ConsultReport from './Views/ConsultReport/ConsultReport'
 import { useDispatch, useSelector } from 'react-redux';
@@ -53,7 +54,7 @@ function App() {
         dispatch(addInfoUserLog(user))
 
         if (user.typeOfPerson === 'admin') {
-
+          navigate(Helpers.StatsProviderView)
         } else if (user.typeOfPerson === 'provider') {
           navigate(Helpers.StatsProviderView)
         } else {
@@ -101,6 +102,9 @@ function App() {
             {
               userLoggedInfo.typeOfPerson === 'provider' &&
               <Routes>
+                {/* Enrutador de MercadoPago */}
+                <Route path={Helpers.Success} element={<Success />} />
+                <Route path={Helpers.Failure} element={<Failure />} />
                 {/* Proveedor */}
                 <Route path={Helpers.StatsProviderView} element={<StatsProviderView />} />
                 <Route path={Helpers.ConnectionsProviderView} element={<ConnectionsProviderView />} />
@@ -108,7 +112,6 @@ function App() {
                 <Route path={Helpers.ProfileProviderView} element={<ProfileProviderView />} />
 
                 {/* Footer */}
-                <Route path={Helpers.Assistance} element={<Assistance />} />
                 <Route path={Helpers.FAQs} element={<FAQs />} />
                 <Route path={Helpers.ConsultReport} element={<ConsultReport />} />
 
@@ -129,7 +132,6 @@ function App() {
             <Routes>
               <Route exact path={Helpers.Landing} element={<Landing />} />
               <Route path={Helpers.AccessAccount} element={<AccessAccount />} />
-              <Route path={Helpers.Assistance} element={<Assistance />} />
               <Route path={Helpers.FAQs} element={<FAQs />} />
               <Route path={Helpers.ConsultReport} element={<ConsultReport />} />
 

@@ -14,6 +14,7 @@ import {
   FILTER_ORDER_SELECTED,
   POST_NEW_SERVICE_USER,
   SET_OPPORTUNITIE,
+  CREATE_REPORT,
 } from "./action-types";
 
 const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
@@ -239,6 +240,7 @@ const postUserServices = (updatedUserData) => {
   };
 };
 
+
 const handleEditProfile = (formData) => {
   return async (dispatch) => {
     try {
@@ -280,6 +282,18 @@ const getOpportunities = (filter) => {
   }
 }
 
+/* Create report */
+const createReport = (formData) => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.post(`${REACT_APP_API_URL}/xxxx/xxxx`, formData);
+      dispatch({ type: CREATE_REPORT, payload: response.data }); 
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
 export {
   addInfoUserLog,
   logOutDeleteData,
@@ -295,4 +309,5 @@ export {
   postUserServices,
   saveOrderGlobal,
   getOpportunities,
+  createReport,
 };

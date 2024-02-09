@@ -53,16 +53,6 @@
   flex-direction: column
   align-items: flex-start
 
-.FormDivFlex
-  display: flex
-  flex-wrap: wrap
-  justify-content: space-between
-
-.FormDivInputFlex
-  display: flex
-  flex-direction: column
-  width: 45%
-
 .inputs
   @include Mixins.inputsFormat
 
@@ -73,7 +63,7 @@
   @include Mixins.inputsFormat_Placeholder
 
 .inputDetail
-  height: 100px
+  height: 40px
   width: 100%
   padding: 10px 15px
   font-family: 'K2D', sans-serif
@@ -91,6 +81,27 @@
   @include Mixins.inputsFormat_Hover
 
 .inputDetail::placeholder
+  @include Mixins.inputsFormat_Placeholder
+
+.inputDetailObservation
+  height: 90px
+  width: 100%
+  padding: 10px 15px
+  font-family: 'K2D', sans-serif
+  font-size: 16px
+  font-style: normal
+  font-weight: normal
+  color: $secondaryColor
+  box-sizing: border-box
+  border: 2px solid $secondaryColor
+  border-radius: 10px
+  transition: .2s
+  resize: none
+
+.inputDetailObservation:focus
+  @include Mixins.inputsFormat_Hover
+
+.inputDetailObservation::placeholder
   @include Mixins.inputsFormat_Placeholder
 
 .labels
@@ -121,13 +132,6 @@
   padding-left: 15px
   text-align: left
   @include Mixins.font($textSuccessColor, 14px , normal , normal )
-
-.inputsStatic
-  @include Mixins.font(black, 18px , normal , normal )
-  display: flex
-  align-items: center
-  justify-content: flex-start 
-  pointer-events: none
 
 .errorMessageStatic
   display: flex
