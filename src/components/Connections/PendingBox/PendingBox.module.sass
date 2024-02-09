@@ -49,8 +49,8 @@
     border: 2px solid $alertColor
 
 .buttonChat
-    width: 10%
-    height: 100%
+    width: fit-content
+    height: 60%
     @include Mixins.font(white, 16px, bold, normal)
     background-color: $primaryColor
     padding: 5px 10px
@@ -73,3 +73,11 @@
     align-items: center
     @include Mixins.font($tertiaryColor, 18px, normal, normal)
     margin: 0
+
+.divButtons
+    width: 100%
+    height: 100%
+    display: flex
+    justify-content: center
+    align-items: center
+    gap: 40px

@@ -21,6 +21,7 @@ import StoreItem from './Helpers/LocalStorage';
 import { addInfoUserLog, getFiltersOrdersDB, recoverUserLoggedData } from './redux/actions';
 import { jwtDecode } from "jwt-decode";
 import axios from 'axios';
+import ProviderDetail from './Views/CustomerViews/ProviderDetail';
 
 
 function App() {
@@ -92,6 +93,7 @@ function App() {
                 <Route path={Helpers.ConnectionsCustomerView} element={<ConnectionsCustomerView />} />
                 <Route path={Helpers.ReportsCustomerView} element={<ReportsCustomerView />} />
                 <Route path={Helpers.ProfileCustomerView} element={<ProfileProviderView />} />
+                <Route path={Helpers.ProviderDetail} element={<ProviderDetail/>}></Route>
 
                 <Route path='*' element={<NotFound />}></Route>
               </Routes>
