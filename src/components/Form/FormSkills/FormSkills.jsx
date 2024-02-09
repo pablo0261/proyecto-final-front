@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { postUserServices } from "../../../redux/actions/index";
 import Validation from "../FormEducation/validationFormEducation";
-import styles from "./FormEducation.module.sass"
+import styles from "./FormSkills.module.sass";
 
 function Form({ handleShowForm }) {
   const dispatch = useDispatch();

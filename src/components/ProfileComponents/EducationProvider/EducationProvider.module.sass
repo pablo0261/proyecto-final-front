@@ -37,19 +37,34 @@
 
 .educationdetailContainer
     display: flex
-    flex-direction: row
+    flex-direction: column
     justify-content: space-between
     margin-inline: auto
-    margin-top: 5px
+    margin-block: 5px
     padding-block: 15px
     height: 90%
     @include Mixins.font($tertiaryColor, 18px, normal, normal)
     @include Mixins.boxShadowCard
-    border-bottom: 4px solid $secondaryColor
+
+.educationdetailbox
+    display: flex
+    flex-direction: row
+    justify-content: space-between
+    width: 90%
+    height: 90px
+    margin-inline: auto
+    margin-top: 5px
+    padding-block: 15px
+    @include Mixins.font($tertiaryColor, 18px, normal, normal)
+
+.line
+    width: 90%    
+    margin-inline: auto
+    border-bottom: 2px solid $primaryColor
 
     
 .infoContainerLeft
-    margin-inline: 3% 
+    margin-inline: 0 
     margin-top: 0
     width: 35%
     height: fit-content
@@ -80,7 +95,7 @@
     padding-bottom: 0
     width: 65%
     height: fit-content
-    @include Mixins.font($tertiaryColor, 20px, normal, normal)
+    @include Mixins.font($tertiaryColor, 20px, bold, normal)
     text-align: left
    
 
@@ -98,7 +113,7 @@
     width: 40px
     border: none
     position: relative
-    left: -30px
+    left: 0px
     margin-block: auto
     transition: .2s
     cursor: pointer
