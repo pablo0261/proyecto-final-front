@@ -72,7 +72,7 @@ function App() {
       callback: handleCallbackResponse
     })
 
-    if (!localStorage.getItem(StoreItem.emailUserLogged)) {   
+    if (!localStorage.getItem(StoreItem.emailUserLogged)) {
       google.accounts.id.prompt();
     }
   }, [])
@@ -104,7 +104,6 @@ function App() {
                 <Route path={Helpers.ReportsProviderView} element={<ReportsProviderView />} />
                 <Route path={Helpers.ProfileProviderView} element={<ProfileProviderView />} />
 
-                {/* Footer */}
                 <Route path={Helpers.FAQs} element={<FAQs />} />
                 <Route path={Helpers.ConsultReport} element={<ConsultReport />} />
 
