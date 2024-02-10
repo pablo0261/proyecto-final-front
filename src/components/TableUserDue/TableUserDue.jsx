@@ -6,6 +6,7 @@ function TableUserDue() {
   return (
     <div>
       <h2>Usuarios en deuda</h2>
+      
     <div className={styles.container}>
       <table classname={styles.customTable}>
         <thead>
