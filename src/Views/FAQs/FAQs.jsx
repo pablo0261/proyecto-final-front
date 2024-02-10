@@ -1,4 +1,4 @@
-import styles from './FAQs.module.scss';
+import styles from './faqs.module.scss';
 import { useState } from 'react';
 import FormFAQs from '../../components/Form/FormFAQs/FormFAQs';
 
@@ -48,7 +48,7 @@ const FAQs = () => {
         dispatch(addInfoUserLog(user)); 
 
        
-        if (user.typeOfPerson === 'admin') {
+        if (user.typeOfPerson === 'administrator') {
 
         } else {
 
@@ -169,7 +169,7 @@ const FAQs = () => {
         </div>
       ))}
       {/* Mostrar el botón de edición para alternar la visibilidad del formulario */}
-      {userLoggedInfo.typeOfPerson === 'admin' && (
+      {userLoggedInfo.typeOfPerson === 'administrator' && (
         <>
           <button className={styles.buttons} onClick={() => handleToggleForm('provider')}>
             {showForm && faqType === 'provider' ? 'Cancelar' : 'Crear Pregunta'}
@@ -210,7 +210,7 @@ const FAQs = () => {
         </div>
       ))}
 
-      {userLoggedInfo.typeOfPerson === 'admin' && (
+      {userLoggedInfo.typeOfPerson === 'administrator' && (
         <>
           <button className={styles.buttons} onClick={() => handleToggleForm('client')}>
             {showForm && faqType === 'client' ? 'Cancelar' : 'Crear Pregunta'}

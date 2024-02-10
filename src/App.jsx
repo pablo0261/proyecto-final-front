@@ -116,9 +116,10 @@ function App() {
               </Routes>
             }
             {
-              userLoggedInfo.typeOfPerson === 'admin' &&
+              userLoggedInfo.typeOfPerson === 'administrator' &&
               <Routes>
-                {/* Administrador */}
+                <Route path={Helpers.FAQs} element={<FAQs />} />
+                <Route path={Helpers.ConsultReport} element={<ConsultReport />} />
               </Routes>
             }
             <Footer />
