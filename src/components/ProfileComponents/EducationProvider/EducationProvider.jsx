@@ -1,11 +1,12 @@
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
+import { deleteService } from "../../../redux/actions/index";
 import Form from "../../Form/FormEducation/FormEducation";
 import style from "./EducationProvider.module.sass";
 
 function EducationProvider() {
+  const dispatch = useDispatch();
   const infoUserLog = useSelector((state) => state.infoUserLog);
-
   const [showForm, setShowForm] = useState(false);
   const [education, setEducation] = useState([]);
 
@@ -23,23 +24,30 @@ function EducationProvider() {
 
       if (educationOptions && educationOptions.length > 0) {
         const educationData = educationOptions.map((option) => ({
+          idPeople: infoUserLog.idPeople,
           idOption: option.idOption,
-          education: option.description || "No description",
-          institution: option.people_options[0].institution || "Escuela N-7",
-          year: option.people_options[0]?.year || "2004",
-          observaciones:
-            option.people_options[0]?.comment || "orientacion técnica",
+          education: option.description || "No informado",
+          institution: option.people_options[0].institution || "No informado",
+          year: option.people_options[0]?.year || "No informado",
+          comment:
+            option.people_options[0]?.comment || "No informado",
         }));
 
         setEducation(educationData);
       }
     }
-  }, []);
+  }, [infoUserLog]);
 
-  const handleDeleteService = () => {
-    dispatchEvent(deleteEducation(education));
+  const handleDeleteService = (idOption, event) => {
+    event.preventDefault();
+    const deleteData = {
+      "idPeople": infoUserLog.idPeople,
+      "idOption": idOption,
+    };
+    console.log("Valor de deleteData:", deleteData); 
+    dispatch(deleteService(deleteData));
   };
-
+  
   return (
     <div className={style.container}>
       <div className={style.titleContainer}>
@@ -61,11 +69,11 @@ function EducationProvider() {
               </div>
               <div className={style.infoContainerRight}>
                 <p className={style.observationInfo}>
-                  Observaciones: {option.observaciones}
+                  {option.comment}
                 </p>
               </div>
               <button
-                onClick={handleDeleteService}
+                 onClick={(event) => handleDeleteService(option.idOption, event)}
                 className={style.crossButton}
               ></button>
               {showForm && <Form handleShowForm={handleShowForm} />}

@@ -213,8 +213,8 @@ const postUserData = (userDataEnglish) => {
   };
 };
 
-const postUserServices = (updatedUserData) => {
-  //*(Pablo --> Lo uso para enviar las modificaciones de los servicios de los proveedores)
+const postUserServices = (updatedUserData, option) => {
+  //*(Pablo --> Lo uso para enviar las modificaciones del perfil de los proveedores)
   return async (dispatch) => {
     try {
       const response = await axios.post(
@@ -222,12 +222,51 @@ const postUserServices = (updatedUserData) => {
         updatedUserData
       );
       if (response.status === 200) {
+        if(option === "services")
         return dispatch({
           type: POST_NEW_SERVICE_USER,
           payload: response.data.result.people.data[0].people,
         });
+        if(option === "education")
+        return dispatch({
+          type: POST_NEW_SERVICE_USER,
+          payload: response.data.result.people.data[1].people,
+        });
+        if(option === "skills")
+        return dispatch({
+          type: POST_NEW_SERVICE_USER,
+          payload: response.data.result.people.data[2].people,
+        });
       }
     } catch (error) {
+      if (error.response && error.response.data) {
+        dispatch({
+          type: SET_ERROR_BACK,
+          payload: error.response.data,
+        });
+        window.alert(error);
+        throw error.response.data;
+      }
+    }
+  };
+};
+
+const deleteService = (deleteData) => {
+  //*(Pablo --> Lo uso para enviar las modificaciones del perfil de los proveedores)
+  return async (dispatch) => {
+    try {
+      const response = await axios.delete(
+        `${REACT_APP_API_URL}/people/options`,
+        { data: deleteData } 
+        );
+        if (response.status === 200) {
+          return dispatch({
+            type: POST_NEW_SERVICE_USER,
+            payload: response.data,
+          })
+        }
+      } catch (error) {
+        console.log("deleteData", deleteData)
       if (error.response && error.response.data) {
         dispatch({
           type: SET_ERROR_BACK,
@@ -330,4 +369,5 @@ export {
   saveOrderGlobal,
   setDataChat,
   createReport,
+  deleteService,
 };

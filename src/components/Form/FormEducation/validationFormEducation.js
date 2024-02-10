@@ -1,34 +1,16 @@
 const Validation = (property, setLocalErrors, userData) => {
   switch (property) {
     case "education":
+    case "institution":
       if (userData[property].trim() === "") {
         setLocalErrors((prevErrors) => ({
           ...prevErrors,
           [property]: "*Ingrese el nivel de educación",
         }));
-      } else if (!/^[a-zA-Z0-9áéíóúÁÉÍÓÚüÜñÑ\s]{1,25}$/.test(userData[property])) {
+      } else if (!/^[\w\sáéíóúÁÉÍÓÚüÜñÑ.,]{1,25}$/.test(userData[property])) {
         setLocalErrors((prevErrors) => ({
           ...prevErrors,
-          [property]: "*El nivel de educación solo puede contener letras, números y espacios, y debe tener hasta 25 caracteres",
-        }));
-      } else {
-        setLocalErrors((prevErrors) => ({
-          ...prevErrors,
-          [property]: "",
-        }));
-      }
-      break;
-
-    case "institution":
-      if (userData[property].trim() === "") {
-        setLocalErrors((prevErrors) => ({
-          ...prevErrors,
-          [property]: "*Ingrese la institución",
-        }));
-      } else if (!/^[a-zA-Z0-9áéíóúÁÉÍÓÚüÜñÑ\s]{1,25}$/.test(userData[property])) {
-        setLocalErrors((prevErrors) => ({
-          ...prevErrors,
-          [property]: "*La institución solo puede contener letras, números y espacios, y debe tener hasta 25 caracteres",
+          [property]: "*El campo solo puede contener letras, números, espacios, acentos, comas, puntos y debe tener hasta 25 caracteres",
         }));
       } else {
         setLocalErrors((prevErrors) => ({
@@ -65,10 +47,10 @@ const Validation = (property, setLocalErrors, userData) => {
           ...prevErrors,
           [property]: "*El texto es demasiado largo (máximo 200 caracteres)",
         }));
-      } else if (!/^[a-zA-Z0-9\s]+$/.test(userData[property])) {
+      } else if (!/^[\w\sáéíóúÁÉÍÓÚüÜñÑ.,]+$/.test(userData[property])) {
         setLocalErrors((prevErrors) => ({
           ...prevErrors,
-          [property]: "*Las observaciones solo pueden contener letras y números, sin símbolos",
+          [property]: "*Las observaciones solo pueden contener letras, números, espacios, acentos, comas, puntos y puntos finales",
         }));
       } else {
         setLocalErrors((prevErrors) => ({

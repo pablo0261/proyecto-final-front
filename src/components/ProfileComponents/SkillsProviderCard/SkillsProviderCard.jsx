@@ -21,14 +21,14 @@ function SkillsProviderCard() {
     ) {
       const skillsOptions = infoUserLog.categories[2].categories_options;
 
-      console.log("skillsOptions", skillsOptions)
+      
       
       if (skillsOptions && skillsOptions.length > 0) {
         const skillData = skillsOptions.map((option) => ({
           idOption: option.idOption,
-          Skill: option.description || "Ajedrez",
+          Skill: option.description 
         }));
-        console.log("skillData", skillData)
+       
         
         setSkills(skillData);
       }
@@ -37,40 +37,25 @@ function SkillsProviderCard() {
  
   return (
     <div className={style.container}>
-      {/* <div className={style.titleContainer}>
-        <h1 className={style.title}>Educación</h1>
+       <div className={style.titleContainer}>
+        <h1 className={style.title}>Habilidades</h1>
         <button
           onClick={() => handleShowForm()}
           className={style.editButton}
         ></button>
       </div>
 
-      <div >
-        {education.map((option) => (
-          <div className={style.educationdetailContainer} key={option.idOption}>
-            <div className={style.infoContainerLeft}>
-              <h2 className={style.education}>{option.education}</h2>
-              <p className={style.detailInfo}>
-                {option.institution}
-                <br />
-                {option.year}
-              </p>
-            </div>
-
-            <div className={style.infoContainerRight}>
-              <p className={style.observationInfo} >
-                Observaciones: {option.observaciones}
-              </p>
-            </div>
-
+      <div className={style.containerCard}>
+        {skills.map((option) => (
+          <div className={style.skillsdetailContainer} key={option.idOption}>
             <button
-              onClick={() => handleDeleteService()}
-              className={style.crossButton}
-            ></button>
+              className={style.skillFalseButton}
+            > {option.Skill}</button>
+            
             {showForm && <Form handleShowForm={handleShowForm} />}
           </div>
         ))}
-      </div> */}
+      </div> 
     </div>
   );
 }

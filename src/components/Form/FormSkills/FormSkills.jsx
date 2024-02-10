@@ -5,17 +5,16 @@ import Validation from "../FormEducation/validationFormEducation";
 import styles from "./FormSkills.module.sass";
 
 function Form({ handleShowForm }) {
+  const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
   const dispatch = useDispatch();
   const userLog = useSelector((state) => state.infoUserLog);
 
+
   const [userData, setUserData] = useState({
     idPeople: userLog,
-    idOption: "" | "1",
-    education: "",
-    institution: "",
-    year: "",
-    observaciones: "",
-
+    idOption: "",
+    description: "",
+    
   });
   console.log("userData", userData)
 
@@ -26,48 +25,45 @@ function Form({ handleShowForm }) {
     }));
   }, []);
 
-//   const [education, setEducation] = useState([]);
+  const [skills, setSkills] = useState([]);
 
-//   useEffect(() => {
-//     const fetchServices = async () => {
-//       try {
-//         const response = await fetch(`${REACT_APP_API_URL}/categories`);
-//         const data = await response.json();
-//         const educationOptions = data.categories.data[0].categories_options.map(
-//           (option) => {
-//             return { description: option.description, idOption: option.idOption }
-//           }
-//         )
-//         setEducation(educationOptions);
-//       } catch (error) {
-//         console.error("Error al obtener las opciones de servicios:", error);
-//       }
-//     };
+  useEffect(() => {
+    const fetchServices = async () => {
+      try {
+        const response = await fetch(`${REACT_APP_API_URL}/categories`);
+        const data = await response.json();
+        const skillsOptions = data.categories.data[2].categories_options.map(
+          (option) => {
+            return { description: option.description, idOption: option.idOption }
+          }
+        )
+        setSkills(skillsOptions);
+      } catch (error) {
+        console.error("Error al obtener las opciones de servicios:", error);
+      }
+    };
 
-//     fetchServices();
-//   }, []);
+    fetchServices();
+  }, []);
 
-  const handleEducationAdd = async (event) => {
+  const handleServicesAdd = async (event) => {
     event.preventDefault();
     try {
       const updatedUserData = {
         ...userData,
-        price: userData.price,
+        description: userData.description,
         idOption: userData.idOption,
       };
 
       dispatch(postUserServices(updatedUserData));
       handleShowForm()
     } catch (error) {
-      console.error("Error al guardar la educación", error);
+      console.error("Error al guardar las habilidades:", error);
     }
   };
 
   const [localErrors, setLocalErrors] = useState({
-    education: "",
-    institution: "",
-    year: "",
-    observaciones: "",
+    description: "",
   });
 
   const handleChange = (event) => {
@@ -86,120 +82,52 @@ function Form({ handleShowForm }) {
           className={styles.closeButton}
           onClick={() => handleShowForm()}
         ></button>
+        <p className={styles.textTitle}>Agregue sus habilidades</p>
+        <form className={styles.Form} onSubmit={handleServicesAdd}>
+          <div className={styles.FormDivFlex}>
+            <div className={styles.FormDivInputFlex}>
+              <label className={styles.labels}>Opciones:</label>
+              <select
+                className={styles.inputs}
+                name="idOption"
+                value={userData.description}
+                onChange={handleChange}
+              >
+                <option value="" disabled>
+                  Selecciona tus habilidades
+                </option>
+                {skills.map((skill) => (
+                  <option key={skill.idOption} value={skill.idOption}>
+                    {skill.description}
+                  </option>
+                ))}
+              </select>
+              <div
+                className={
+                  userData.description &&
+                  (localErrors.description
+                    ? styles.errorMessage
+                    : styles.errorNotMessage)
+                }
+              >
+                {userData.description
+                  ? localErrors.description
+                    ? localErrors.description
+                    : "Datos Válidos"
+                  : null}
+              </div>
+            </div>
 
-<form className={styles.Form} onSubmit={handleEducationAdd}>
-  <div className={styles.FormDivInput}>
-    <div className={styles.FormDivInput}>
-      <label className={styles.labels}>Nivel de Educación</label>
-      <input
-        className={styles.inputDetail}
-        type="text"
-        name="education"
-        value={userData.education}
-        onChange={handleChange}
-        placeholder=""
-      />
-      <div
-        className={
-          userData.education &&
-          (localErrors.education
-            ? styles.errorMessage
-            : styles.errorNotMessage)
-        }
-      >
-        {userData.education
-          ? localErrors.education
-            ? localErrors.education
-            : "Datos Válidos"
-          : null}
+            
+          </div>
+          <button
+            className={styles.buttonSave}
+            type="submit"
+          >
+            Guardar
+          </button>
+        </form>
       </div>
-    </div>
-
-    <div className={styles.FormDivInput}>
-      <label className={styles.labels}>Institución:</label>
-      <input
-        className={styles.inputDetail}
-        type="text"
-        name="institution"
-        value={userData.institution}
-        onChange={handleChange}
-        placeholder=""
-      />
-      <div
-        className={
-          userData.institution &&
-          (localErrors.institution
-            ? styles.errorMessage
-            : styles.errorNotMessage)
-        }
-      >
-        {userData.institution
-          ? localErrors.institution
-            ? localErrors.institution
-            : "Datos Válidos"
-          : null}
-      </div>
-    </div>
-  </div>
-
-  <div className={styles.FormDivInput}>
-    <div className={styles.FormDivInput}>
-      <label className={styles.labels}>Año:</label>
-      <input
-        className={styles.inputs}
-        type="text"
-        name="year"
-        value={userData.year}
-        onChange={handleChange}
-        placeholder=""
-      />
-      <div
-        className={
-          userData.year &&
-          (localErrors.year
-            ? styles.errorMessage
-            : styles.errorNotMessage)
-        }
-      >
-        {userData.year
-          ? localErrors.year
-            ? localErrors.year
-            : "Datos Válidos"
-          : null}
-      </div>
-    </div>
-
-    <div className={styles.FormDivInput}>
-      <label className={styles.labels}>Observaciones:</label>
-      <textarea
-        className={styles.inputDetailObservation}
-        type="text"
-        name="observaciones"
-        value={userData.observaciones}
-        onChange={handleChange}
-        placeholder=""
-      />
-      <div
-        className={
-          userData.observaciones &&
-          (localErrors.observaciones
-            ? styles.errorMessage
-            : styles.errorNotMessage)
-        }
-      >
-        {userData.observaciones
-          ? localErrors.observaciones
-            ? localErrors.observaciones
-            : "Datos Válidos"
-          : null}
-      </div>
-    </div>
-  </div>
-  
-  <button className={styles.buttonSave} type="submit">
-    Guardar
-  </button>
-</form>     </div>
     </div>
   );
 }

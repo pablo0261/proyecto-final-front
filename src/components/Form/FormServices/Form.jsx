@@ -14,7 +14,6 @@ function Form({ handleShowForm }) {
     price: "",
     idOption: "" | "1",
   });
-  console.log("userData", userData)
 
   useEffect(() => {
     setUserData((prevUserData) => ({
@@ -44,7 +43,7 @@ function Form({ handleShowForm }) {
     fetchServices();
   }, []);
 
-  const handleServicesAdd = async (event) => {
+  const handleServicesAdd = (event) => {
     event.preventDefault();
     try {
       const updatedUserData = {
@@ -53,7 +52,7 @@ function Form({ handleShowForm }) {
         idOption: userData.idOption,
       };
 
-      dispatch(postUserServices(updatedUserData));
+      dispatch(postUserServices(updatedUserData, "services"));
       handleShowForm()
     } catch (error) {
       console.error("Error al guardar los servicios y preciso:", error);
@@ -73,6 +72,7 @@ function Form({ handleShowForm }) {
     setUserData({ ...userData, [property]: value });
   };
 
+  
   return (
     <div className={styles.background}>
       <div className={styles.wrapper}>
