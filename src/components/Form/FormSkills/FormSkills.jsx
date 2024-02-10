@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { postUserServices } from "../../../redux/actions/index";
-import Validation from "../FormEducation/validationFormEducation";
 import styles from "./FormSkills.module.sass";
 
 function Form({ handleShowForm }) {
@@ -11,22 +10,12 @@ function Form({ handleShowForm }) {
 
 
   const [userData, setUserData] = useState({
-    idPeople: userLog,
+    idPeople: userLog.idPeople,
     idOption: "",
-    description: "",
-    
   });
-  console.log("userData", userData)
-
-  useEffect(() => {
-    setUserData((prevUserData) => ({
-      ...prevUserData,
-      idPeople: userLog.idPeople,
-    }));
-  }, []);
 
   const [skills, setSkills] = useState([]);
-
+  
   useEffect(() => {
     const fetchServices = async () => {
       try {
@@ -36,7 +25,7 @@ function Form({ handleShowForm }) {
           (option) => {
             return { description: option.description, idOption: option.idOption }
           }
-        )
+          )
         setSkills(skillsOptions);
       } catch (error) {
         console.error("Error al obtener las opciones de servicios:", error);
@@ -46,36 +35,26 @@ function Form({ handleShowForm }) {
     fetchServices();
   }, []);
 
-  const handleServicesAdd = async (event) => {
+  const handleSkillsAdd = (event) => {
     event.preventDefault();
     try {
-      const updatedUserData = {
-        ...userData,
-        description: userData.description,
-        idOption: userData.idOption,
-      };
-
-      dispatch(postUserServices(updatedUserData));
-      handleShowForm()
+      dispatch(postUserServices(userData));
+      handleShowForm();
     } catch (error) {
-      console.error("Error al guardar las habilidades:", error);
+      console.error("Error al guardar la educación", error);
     }
   };
-
-  const [localErrors, setLocalErrors] = useState({
-    description: "",
-  });
+  
 
   const handleChange = (event) => {
     const property = event.target.name;
     const value = event.target.value;
 
-    Validation(property, setLocalErrors, { ...userData, [property]: value });
     setUserData({ ...userData, [property]: value });
   };
 
   return (
-    <div className={styles.background}>
+    <div className={styles.container}>
       <div className={styles.wrapper}>
         <button
           type="button"
@@ -83,14 +62,14 @@ function Form({ handleShowForm }) {
           onClick={() => handleShowForm()}
         ></button>
         <p className={styles.textTitle}>Agregue sus habilidades</p>
-        <form className={styles.Form} onSubmit={handleServicesAdd}>
+        <form className={styles.Form} onSubmit={(event)=> handleSkillsAdd(event)}>
           <div className={styles.FormDivFlex}>
             <div className={styles.FormDivInputFlex}>
               <label className={styles.labels}>Opciones:</label>
               <select
                 className={styles.inputs}
                 name="idOption"
-                value={userData.description}
+                value={userData.idOption}
                 onChange={handleChange}
               >
                 <option value="" disabled>
@@ -102,23 +81,7 @@ function Form({ handleShowForm }) {
                   </option>
                 ))}
               </select>
-              <div
-                className={
-                  userData.description &&
-                  (localErrors.description
-                    ? styles.errorMessage
-                    : styles.errorNotMessage)
-                }
-              >
-                {userData.description
-                  ? localErrors.description
-                    ? localErrors.description
-                    : "Datos Válidos"
-                  : null}
-              </div>
             </div>
-
-            
           </div>
           <button
             className={styles.buttonSave}

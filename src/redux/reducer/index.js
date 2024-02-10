@@ -160,12 +160,12 @@ const rootReducer = (state = initialState, { type, payload }) => {
         selected_opportunitie : payload
       }
 
-    /* Create report */
-    case CREATE_REPORT:
-      return {
-        ...state,
-        createReport: action.payload,
-      };
+      /* Create report */
+      case CREATE_REPORT:
+        return {
+            ...state,
+            createReport: payload,
+        };
 
     default:
       return state;
