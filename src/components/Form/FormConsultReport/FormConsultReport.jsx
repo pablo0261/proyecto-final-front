@@ -50,7 +50,6 @@ const FormConsultReport = () => {
 
     const onChange = () => {
         if (captcha.current.getValue()) { //obtener el valor del catpcha
-            console.log('El usuario no es un robot');
             setCaptchaValidated(true);
         }
     }
@@ -64,7 +63,6 @@ const FormConsultReport = () => {
         const isValid = Object.values(newErrors).every((error) => error === '');
 
         if (captcha.current.getValue()) {
-            console.log('Non è un robot');
             setUserValidated(true);
             setCaptchaValidated(true);
 
@@ -77,7 +75,6 @@ const FormConsultReport = () => {
             } 
 
         } else {
-            console.log('Per favore verifica il captcha');
             setUserValidated(false);
             setCaptchaValidated(false);
         }

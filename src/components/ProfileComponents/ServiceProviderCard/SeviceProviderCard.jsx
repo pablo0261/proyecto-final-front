@@ -1,6 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
-// import Form from "../../Form/FormServices/FormServices"
 import { deleteService } from "../../../redux/actions/index";
 import Form from "../../Form/FormServices/Form";
 import style from "./ServiceProviderCard.module.sass";
@@ -10,7 +9,6 @@ function ServicesProviderCard() {
   const infoUserLog = useSelector((state) => state.infoUserLog);
   const [showForm, setShowForm] = useState(false);
   const [servicesData, setServicesData] = useState([]); 
-  console.log("servicesData",servicesData)
 
   const handleShowForm = () => {
     setShowForm(!showForm);
@@ -51,7 +49,6 @@ function ServicesProviderCard() {
       "idPeople": infoUserLog.idPeople,
       "idOption": service.idOption,
     };
-    console.log("Valor de deleteData:", deleteData); 
     dispatch(deleteService(deleteData));
   };
 

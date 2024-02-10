@@ -97,19 +97,6 @@ const handleContratService = (item) => {
   };
 };
 
-// const allPeopleProvider = () => {
-//   return async (dispatch) => {
-//     try {
-//       const response = await axios.get(`${REACT_APP_API_URL}/people?typeOfPerson=provider`);
-//       return dispatch({
-//         type: GET_HOME_PROVIDER,
-//         payload:  response.data.people,
-//       });
-//     } catch (error) {
-//       window.alert(error);
-//     }
-//   };
-// };
 const allPeopleProvider = (query) => {
   return async (dispatch) => {
     try {
@@ -221,7 +208,6 @@ const postUserServices = (updatedUserData) => {
         `${REACT_APP_API_URL}/people/options`,
         updatedUserData
       );
-      console.log("Response from services", response);
         dispatch({
           type: POST_NEW_SERVICE_USER,
           payload: response.data.response.people.data[0].people
@@ -255,7 +241,6 @@ const deleteService = (deleteData) => {
           })
         }
       } catch (error) {
-        console.log("deleteData", deleteData)
       if (error.response && error.response.data) {
         dispatch({
           type: SET_ERROR_BACK,
@@ -337,7 +322,7 @@ const createReport = (formData) => {
       const response = await axios.post(`${REACT_APP_API_URL}/xxxx/xxxx`, formData);
       dispatch({ type: CREATE_REPORT, payload: response.data }); 
     } catch (error) {
-      console.log(error);
+      window.alert(error);
     }
   };
 };

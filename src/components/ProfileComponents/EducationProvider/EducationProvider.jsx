@@ -44,7 +44,6 @@ function EducationProvider() {
       "idPeople": infoUserLog.idPeople,
       "idOption": idOption,
     };
-    console.log("Valor de deleteData:", deleteData); 
     dispatch(deleteService(deleteData));
   };
   
@@ -78,7 +77,7 @@ function EducationProvider() {
               ></button>
               {showForm && <Form handleShowForm={handleShowForm} />}
             </div>
-            {index !== education.length - 1 && (
+            {index !== education.length && (
       <div>
         <p className={style.line}></p>
       </div>

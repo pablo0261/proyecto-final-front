@@ -19,7 +19,6 @@ function Form({ handleShowForm }) {
   });
 
   const [education, setEducation] = useState([]);
-  console.log("userData", userData)
 
   useEffect(() => {
     const fetchEducation = async () => {
@@ -56,7 +55,6 @@ function Form({ handleShowForm }) {
     year: "",
     comment: "",
   });
-
 
   const handleChange = (event) => {
     const property = event.target.name;
