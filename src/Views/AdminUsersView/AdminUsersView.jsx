@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import FindUserAdmin from '../../components/FindUserAdmin/FindUserAdmin'
 import TableUserDue from '../../components/TableUserDue/TableUserDue'
 import { useSelector, useDispatch } from "react-redux";
@@ -6,12 +6,20 @@ import { allPeople } from "../../redux/actions";
 
 
 function AdminUsersView() {
-  const providers = useSelector((state) => state.getAllPeople.data);
-  const dispatch = useDispatch();
+  // const people = useSelector((state) => state.peopleForAdmin.data);
+  // const dispatch = useDispatch();
+
+  // //*Traen todos los datos para las tablas
+  // useEffect(() => {
+  //     dispatch(allPeople());
+  // }, []);
+
+ 
 
   return (
     <div>
-        <FindUserAdmin/>
+          {/* {Array.isArray(people) && people.map((user) => <FindUserAdmin key={user.people.idPeople} fullname={user.people}/>)} */}
+          <FindUserAdmin/>
         <TableUserDue/>
     </div>
   )

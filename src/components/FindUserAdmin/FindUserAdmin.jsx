@@ -1,6 +1,7 @@
 import React from 'react'
 
-function FindUserAdmin() {
+function FindUserAdmin(props) {
+  console.log(props.user.fullName)
   return (
     <div>FindUserAdmin</div>
   )

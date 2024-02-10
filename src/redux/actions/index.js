@@ -14,6 +14,7 @@ import {
   FILTER_ORDER_SELECTED,
   POST_NEW_SERVICE_USER,
   SET_CHAT,
+  GET_PEOPLE,
 } from "./action-types";
 
 const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
@@ -100,7 +101,7 @@ const allPeople = () => {
   //** Esta ruta solo llama a todos los registrados en la tabla people*/
   return async (dispatch) => {
     try {
-      const response = await axios.get(`${REACT_APP_API_URL}/people`);
+      const response = await axios.get(`${REACT_APP_API_URL}/people?typeOfPerson=provider&typeOfPerson=customer`);
       return dispatch({
         type: GET_PEOPLE,
         payload:  response.data.people,
@@ -317,4 +318,5 @@ export {
   postUserServices,
   saveOrderGlobal,
   setDataChat,
+  allPeople,
 };

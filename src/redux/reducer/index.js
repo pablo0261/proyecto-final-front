@@ -11,6 +11,7 @@ import {
   FILTER_ORDER_SELECTED,
   POST_NEW_INFO_USER,
   SET_CHAT,
+  GET_PEOPLE,
   // CONTRAT_SERVICE_USER
 } from "../actions/action-types";
 
