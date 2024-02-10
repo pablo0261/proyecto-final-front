@@ -41,9 +41,9 @@ function Form({ handleShowForm }) {
     };
 
     fetchServices();
-  }, []);
+  }, [userLog]);
 
-  const handleServicesAdd = async (event) => {
+  const handleServicesAdd = (event) => {
     event.preventDefault();
     try {
       const updatedUserData = {
@@ -72,6 +72,7 @@ function Form({ handleShowForm }) {
     setUserData({ ...userData, [property]: value });
   };
 
+  
   return (
     <div className={styles.background}>
       <div className={styles.wrapper}>

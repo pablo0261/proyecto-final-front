@@ -214,20 +214,48 @@ const postUserData = (userDataEnglish) => {
 };
 
 const postUserServices = (updatedUserData) => {
-  //*(Pablo --> Lo uso para enviar las modificaciones de los servicios de los proveedores)
+  //*(Pablo --> Lo uso para enviar las modificaciones del perfil de los proveedores)
   return async (dispatch) => {
     try {
       const response = await axios.post(
         `${REACT_APP_API_URL}/people/options`,
         updatedUserData
       );
-      if (response.status === 200) {
-        return dispatch({
+      console.log("Response from services", response);
+        dispatch({
           type: POST_NEW_SERVICE_USER,
           payload: response.data.result.people.data[0].people,
         });
-      }
+        
     } catch (error) {
+      if (error.response && error.response.data) {
+        dispatch({
+          type: SET_ERROR_BACK,
+          payload: error.response.data,
+        });
+        window.alert(error);
+        throw error.response.data;
+      }
+    }
+  };
+};
+
+const deleteService = (deleteData) => {
+  //*(Pablo --> Lo uso para enviar las modificaciones del perfil de los proveedores)
+  return async (dispatch) => {
+    try {
+      const response = await axios.delete(
+        `${REACT_APP_API_URL}/people/options`,
+         { data: deleteData } 
+        );
+        if (response.status === 200) {
+          return dispatch({
+            type: POST_NEW_INFO_USER,
+            payload: response.data.response.people.data[0].people
+          })
+        }
+      } catch (error) {
+        console.log("deleteData", deleteData)
       if (error.response && error.response.data) {
         dispatch({
           type: SET_ERROR_BACK,
@@ -310,4 +338,5 @@ export {
   saveOrderGlobal,
   getOpportunities,
   createReport,
+  deleteService,
 };

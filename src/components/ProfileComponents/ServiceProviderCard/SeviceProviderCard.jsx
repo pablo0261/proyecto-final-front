@@ -1,14 +1,16 @@
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 // import Form from "../../Form/FormServices/FormServices"
+import { deleteService } from "../../../redux/actions/index";
 import Form from "../../Form/FormServices/Form";
 import style from "./ServiceProviderCard.module.sass";
 
 function ServicesProviderCard() {
+  const dispatch = useDispatch();
   const infoUserLog = useSelector((state) => state.infoUserLog);
-
   const [showForm, setShowForm] = useState(false);
-  const [servicesData, setServicesData] = useState([]); //* Aqui guarda los sericios que ofrece la persona
+  const [servicesData, setServicesData] = useState([]); 
+  console.log("servicesData",servicesData)
 
   const handleShowForm = () => {
     setShowForm(!showForm);
@@ -28,6 +30,7 @@ function ServicesProviderCard() {
               return option.people_options.map((personOption) => ({
                 description: option.description || "No description",
                 price: personOption.price || null,
+                idOption: option.idOption 
               }));
             } else {
               return {
@@ -43,6 +46,15 @@ function ServicesProviderCard() {
     }
   }, [infoUserLog]);
 
+  const handleDeleteService = (service) => {
+    const deleteData = {
+      "idPeople": infoUserLog.idPeople,
+      "idOption": service.idOption,
+    };
+    console.log("Valor de deleteData:", deleteData); 
+    dispatch(deleteService(deleteData));
+  };
+
   return (
     <div className={style.background}>
       <div className={style.servicesWrapper}>
@@ -53,7 +65,7 @@ function ServicesProviderCard() {
           {servicesData.slice(0, 4).map((service, index) => (
             <div key={index} className={style.items}>
               <button
-                onClick={() => handleDeleteService()}
+                 onClick={() => handleDeleteService(service)}
                 className={style.crossButton}
               ></button>
               <div className={style.descriptionBox}>{service.description}</div>
