@@ -24,9 +24,10 @@ function AdminUsersView() {
   
     <div className={styles.containerServices}>
           {/* {Array.isArray(people) && people.map((user) => <FindUserAdmin key={user.people.idPeople} fullname={user.people}/>)} */}
+        <TableUserDue/>
         <FindUserAdmin/>
         {/* <AdminStatistics/> */}
-        <div >
+        {/* <div >
           <div className={styles.f}>
             <h2>Generos</h2>
             <AdminServices/> 
@@ -37,8 +38,7 @@ function AdminUsersView() {
           <AdminServices/>
           <h2>Intereses</h2>
           <AdminServices/>
-        </div>
-        <TableUserDue/>
+        </div> */}
     </div>
       </div>
   )
