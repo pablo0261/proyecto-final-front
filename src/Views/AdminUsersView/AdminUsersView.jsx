@@ -3,6 +3,7 @@ import FindUserAdmin from '../../components/FindUserAdmin/FindUserAdmin'
 import TableUserDue from '../../components/TableUserDue/TableUserDue'
 import { useSelector, useDispatch } from "react-redux";
 import { allPeople } from "../../redux/actions";
+import AdminStatistics from '../../components/AdminStatistics/AdminStatistics';
 
 
 function AdminUsersView() {
@@ -19,7 +20,8 @@ function AdminUsersView() {
   return (
     <div>
           {/* {Array.isArray(people) && people.map((user) => <FindUserAdmin key={user.people.idPeople} fullname={user.people}/>)} */}
-          <FindUserAdmin/>
+        <FindUserAdmin/>
+        {/* <AdminStatistics/> */}
         <TableUserDue/>
     </div>
   )
