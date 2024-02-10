@@ -14,7 +14,6 @@ function Form({ handleShowForm }) {
     price: "",
     idOption: "" | "1",
   });
-  console.log("userData", userData)
 
   useEffect(() => {
     setUserData((prevUserData) => ({

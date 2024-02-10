@@ -1,0 +1,136 @@
+@use '../../../../Styles/Mixins'
+@import '../../../../Styles/Variables'
+
+.background
+	background-color: #F2F2F2
+	display: flex
+	justify-content: center
+
+.wrapper
+	width: 80%
+	display: flex
+	flex-direction: column
+	justify-content: center
+
+.perfilWrapper
+	width: 100%
+	display: flex
+	margin-top: 50px
+	margin-bottom: 30px
+
+.imageWrapper
+	display: flex
+	align-items: center
+	flex-direction: column
+	position: relative
+
+.stateActive
+	margin: 0
+	@include Mixins.font(white , 15px, normal , normal)
+	padding: 5px 10px
+	background-color: $textSuccessColor
+	border-radius: 20px
+	position: absolute
+	top: -15px
+
+.stateInactive
+	margin: 0
+	@include Mixins.font(white , 15px, normal , normal)
+	padding: 5px 10px
+	background-color: grey
+	border-radius: 20px
+	position: absolute
+	top: -15px
+
+.image
+	width: 350px
+	height: 350px
+	@include Mixins.boxShadowCard
+
+.valoration
+	display: flex
+	flex-direction: column
+	justify-content: center
+	align-items: center
+	margin-top: 15px
+
+.starIcon
+	width: 40px
+	height: 40px
+	background-image: url('../../../../assets/Icons/IconStar.png')
+	background-position: center
+	background-repeat: no-repeat
+
+.textStar
+	margin: 0
+	@include Mixins.textGrey(left, none)
+
+.infoWrapper
+	width: 100%
+	margin-left: 60px
+	display: flex
+	flex-direction: column
+
+.nameWrapper
+	width: 100%
+	display: flex
+	align-items: center
+	position: relative
+
+.textName
+	margin: 0
+	@include Mixins.textTitle(left, none)
+
+.iconVerified
+	margin-left: 20px
+	width: 40px
+	height: 40px
+	background-image: url('../../../../assets/Icons/IconVerified.png')
+	background-position: center
+	background-repeat: no-repeat
+
+.textVerified
+	margin: 0
+	@include Mixins.font($textSuccessColor, 16px , normal , normal)
+
+.textData
+	margin: 0
+	@include Mixins.textGrey(left, none)
+
+.textOcupation
+	margin: 20px 0 10px 0
+	@include Mixins.textSubTitle(left, none)
+
+.textDetail
+	margin: 0
+	width: 75%
+	height: 120px
+	max-height: 120px
+	@include Mixins.textDetail(justify, none)
+
+.contacts
+	width: fit-content
+	height: fit-content
+	margin-top: 20px
+	display: flex
+	align-items: center
+
+.textContact
+	margin: 0
+	@include Mixins.textDetail(left, none)
+
+.iconPhone
+	margin: 0px 10px
+	width: 40px
+	height: 40px
+	background-image: url('../../../../assets/Icons/IconPhone.png')
+	background-position: center
+	background-repeat: no-repeat
+
+.iconEmail
+	width: 40px
+	height: 40px
+	margin: 0px 10px
+	background-image: url('../../../../assets/Icons/IconEmail.png')
+	background-position: center
+	background-repeat: no-repeat

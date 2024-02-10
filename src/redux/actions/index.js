@@ -13,7 +13,7 @@ import {
   GET_FILTER_PROVIDER,
   FILTER_ORDER_SELECTED,
   POST_NEW_SERVICE_USER,
-  SET_CHAT,
+  SET_OPPORTUNITIE,
   CREATE_REPORT,
 } from "./action-types";
 
@@ -254,53 +254,33 @@ const handleEditProfile = (formData) => {
   };
 };
 
-const setDataChat = (id) => {
+// OPPORTUNITIES
+const getOpportunities = (filter) => {
   return async (dispatch) => {
-    if (id === 1) {
-      const Chat = [
-        {
-          idPeople: 1,
-          propio: true,
-          message: "Hola, podrias decirme si vas a ir o no?",
-          date: "Ayer",
-        },
-        {
-          idPeople: 2,
-          propio: false,
-          message: "No al final, no quiero ir.",
-          date: "Hoy",
-        },
-      ];
-
-      dispatch({
-        type: SET_CHAT,
-        payload: Chat,
-      });
+    try {
+      const response = await axios.get(`${REACT_APP_API_URL}/opportunities${filter}`)
+      if (response.status === 200) {
+        return dispatch({
+          type : SET_OPPORTUNITIE,
+          payload : response.data.data,
+        })
+      }
+      if (response.status === 204) {
+        return dispatch({
+          type: SET_OPPORTUNITIE,
+          payload: response.data.data
+        })
+      }
+    } catch (error) {
+      if (error.response.status === 409) {
+        return dispatch({
+          type: SET_OPPORTUNITIE,
+          payload: []
+        })
+      }
     }
-
-    if (id === 2) {
-      const Chat = [
-        {
-          idPeople: 1,
-          propio: true,
-          message: "¿Te parece si quedamos para el Miercoles?",
-          date: "Ayer",
-        },
-        {
-          idPeople: 2,
-          propio: false,
-          message: "Dale dale, te agendo",
-          date: "Hoy",
-        },
-      ];
-
-      dispatch({
-        type: SET_CHAT,
-        payload: Chat,
-      });
-    }
-  };
-};
+  }
+}
 
 /* Create report */
 const createReport = (formData) => {
@@ -328,6 +308,6 @@ export {
   getPeopleFilteredOrderedPagination,
   postUserServices,
   saveOrderGlobal,
-  setDataChat,
+  getOpportunities,
   createReport,
 };
