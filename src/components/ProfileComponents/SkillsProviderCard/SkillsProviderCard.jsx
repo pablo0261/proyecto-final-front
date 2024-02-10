@@ -58,11 +58,7 @@ function SkillsProviderCard() {
       <div className={style.containerCard}>
         {skills.map((option) => (
           <div className={style.skillsdetailContainer} key={option.idOption}>
-            <button className={style.skillFalseButton}> {option.Skill}</button>
-            <button
-              onClick={(event) => handleDeleteService(option.idOption, event)}
-              className={style.crossButton}
-              ></button>
+            <button onClick={(event) => handleDeleteService(option.idOption, event)} className={style.skillFalseButton}> {option.Skill}</button>
           </div>
         ))}
       </div>
