@@ -19,16 +19,16 @@ function SkillsProviderCard() {
       infoUserLog.categories &&
       infoUserLog.categories.length > 0
     ) {
-      const skillsOptions = infoUserLog.categories[2].categories_options;
+      const skillsOptions = infoUserLog.categories[2];
 
-      
+      console.log("skillsOptions", skillsOptions)
       
       if (skillsOptions && skillsOptions.length > 0) {
         const skillData = skillsOptions.map((option) => ({
           idOption: option.idOption,
-          Skill: option.description 
+          Skill: option.description || "Ajedrez",
         }));
-       
+        console.log("skillData", skillData)
         
         setSkills(skillData);
       }

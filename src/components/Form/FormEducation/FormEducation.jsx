@@ -34,11 +34,11 @@ function Form({ handleShowForm }) {
 
 
 
-  
-  const handleEducationAdd = async (event) => {
+
+  const handleEducationAdd = (event) => {
     event.preventDefault();
     try {
-      dispatch(postUserServices(updatedUserData, "education"));
+      dispatch(postUserServices(updatedUserData));
       handleShowForm();
     } catch (error) {
       console.error("Error al guardar la educación", error);

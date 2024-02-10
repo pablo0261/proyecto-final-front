@@ -8,10 +8,8 @@ import style from "./ServiceProviderCard.module.sass";
 function ServicesProviderCard() {
   const dispatch = useDispatch();
   const infoUserLog = useSelector((state) => state.infoUserLog);
-
   const [showForm, setShowForm] = useState(false);
-  const [servicesData, setServicesData] = useState([]); //* Aqui guarda los sericios que ofrece la persona
-
+  const [servicesData, setServicesData] = useState([]); 
   console.log("servicesData",servicesData)
 
   const handleShowForm = () => {
@@ -48,8 +46,7 @@ function ServicesProviderCard() {
     }
   }, [infoUserLog]);
 
-  const handleDeleteService = (service, event) => {
-    event.preventDefault();
+  const handleDeleteService = (service) => {
     const deleteData = {
       "idPeople": infoUserLog.idPeople,
       "idOption": service.idOption,
@@ -68,7 +65,7 @@ function ServicesProviderCard() {
           {servicesData.slice(0, 4).map((service, index) => (
             <div key={index} className={style.items}>
               <button
-                 onClick={(event) => handleDeleteService(service, event)}
+                 onClick={() => handleDeleteService(service)}
                 className={style.crossButton}
               ></button>
               <div className={style.descriptionBox}>{service.description}</div>

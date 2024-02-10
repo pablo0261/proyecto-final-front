@@ -213,7 +213,7 @@ const postUserData = (userDataEnglish) => {
   };
 };
 
-const postUserServices = (updatedUserData, option) => {
+const postUserServices = (updatedUserData) => {
   //*(Pablo --> Lo uso para enviar las modificaciones del perfil de los proveedores)
   return async (dispatch) => {
     try {
@@ -221,23 +221,12 @@ const postUserServices = (updatedUserData, option) => {
         `${REACT_APP_API_URL}/people/options`,
         updatedUserData
       );
-      if (response.status === 200) {
-        if(option === "services")
-        return dispatch({
+      console.log("Response from services", response);
+        dispatch({
           type: POST_NEW_SERVICE_USER,
           payload: response.data.result.people.data[0].people,
         });
-        if(option === "education")
-        return dispatch({
-          type: POST_NEW_SERVICE_USER,
-          payload: response.data.result.people.data[1].people,
-        });
-        if(option === "skills")
-        return dispatch({
-          type: POST_NEW_SERVICE_USER,
-          payload: response.data.result.people.data[2].people,
-        });
-      }
+        
     } catch (error) {
       if (error.response && error.response.data) {
         dispatch({
@@ -257,12 +246,12 @@ const deleteService = (deleteData) => {
     try {
       const response = await axios.delete(
         `${REACT_APP_API_URL}/people/options`,
-        { data: deleteData } 
+         { data: deleteData } 
         );
         if (response.status === 200) {
           return dispatch({
-            type: POST_NEW_SERVICE_USER,
-            payload: response.data,
+            type: POST_NEW_INFO_USER,
+            payload: response.data.response.people.data[0].people
           })
         }
       } catch (error) {
