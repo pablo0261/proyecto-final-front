@@ -10,7 +10,8 @@ import {
   GET_FILTER_PROVIDER,
   FILTER_ORDER_SELECTED,
   POST_NEW_INFO_USER,
-  SET_CHAT,
+  SET_OPPORTUNITIE,
+  SET_SELECTED_OPPORTUNITIE,
   CREATE_REPORT,
   // CONTRAT_SERVICE_USER
 } from "../actions/action-types";
@@ -19,15 +20,15 @@ import {
 let initialState = {
   
   infoUserLog: { },
-  
+
   //Filter and getpeople
   homeCustomerProviders: [],
   getAllPeople: [],
   paginacionData: [],
   allServices: [],
-  filterOrderSelected : {
-    filters : [],
-    orders : []
+  filterOrderSelected: {
+    filters: [],
+    orders: []
   },
   //*POST//
   postUserData: [],
@@ -47,8 +48,8 @@ let initialState = {
     },
     ServicesProviderCard: [
       "Cuidado", "Cuidado y Alimento",
-    "Cuidado y Limpieza"
-  ],
+      "Cuidado y Limpieza"
+    ],
     EducationExperienciaProvider: {
       Titulo: "",
       Institución: "",
@@ -58,17 +59,18 @@ let initialState = {
     },
     InteresProviderCard: { Habilidades: "", Intereses: "" },
     SkillsProviderCard: { "Licencia de Conducir": "", Vehículo: "", Fumador: "", Hijos: "", Mascota: "" },
-    ScheduleProviderCard: { },
+    ScheduleProviderCard: {},
     MapProviderCard: {},
     ReviewProviderCard: {},
     ConectionProviderCard: {},
   },
 
-  //CHAT
-  data_Chat:[],
+  //OPPORTUNITIE
+  selected_opportunitie: {},
+  opportunities: [],
 
   /* Create report */
-  createReport:[]
+  createReport: []
 };
 
 const rootReducer = (state = initialState, { type, payload }) => {
@@ -79,7 +81,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         infoUserLog: payload,
       };
-    
+
     case GET_HOME_PROVIDER:
       return {
         ...state,
@@ -97,7 +99,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         allServices: payload,
       };
-    
+
     case FILTER_ORDER_SELECTED:
       return {
         ...state,
@@ -108,14 +110,15 @@ const rootReducer = (state = initialState, { type, payload }) => {
     case POST_NEW_INFO_USER:
       return {
         ...state,
-        infoUserLog:  payload,
+        infoUserLog: payload,
       };
-//*creo que puedo utilizar el de arriba para los dos casos
-    // case POST_NEW_SERVICE_USER:
-    // return {
-    //       ...state,
-    //       infoUserLog:  payload,
-    //     };
+
+
+    case POST_NEW_SERVICE_USER:
+      return {
+        ...state,
+        infoUserLog: payload,
+      };
 
     //* --- MANEJO DE ERRORES DEL BACK ---//*
     case SET_ERROR_BACK:
@@ -145,18 +148,24 @@ const rootReducer = (state = initialState, { type, payload }) => {
         infoUserLog: {},
       };
 
-    // CHAT
-    case SET_CHAT:
+    // OPPORTUNITIE
+    case SET_OPPORTUNITIE:
       return {
-        ...state, data_Chat: payload
-      };
+        ...state, opportunities: payload
+      }
 
-      /* Create report */
-      case CREATE_REPORT:
-        return {
-            ...state,
-            createReport: action.payload,
-        };
+    case SET_SELECTED_OPPORTUNITIE:
+      return {
+        ...state,
+        selected_opportunitie : payload
+      }
+
+    /* Create report */
+    case CREATE_REPORT:
+      return {
+        ...state,
+        createReport: action.payload,
+      };
 
     default:
       return state;
