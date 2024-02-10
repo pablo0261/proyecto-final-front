@@ -11,6 +11,7 @@ import {
   FILTER_ORDER_SELECTED,
   POST_NEW_INFO_USER,
   SET_OPPORTUNITIE,
+  SET_SELECTED_OPPORTUNITIE,
   CREATE_REPORT,
   // CONTRAT_SERVICE_USER
 } from "../actions/action-types";
@@ -191,13 +192,11 @@ let initialState = {
   },
 
   //OPPORTUNITIE
-  selected_opportunitie:{},
+  selected_opportunitie: {},
   opportunities: [],
-  //CHAT
-  data_Chat: [],
 
   /* Create report */
-  createReport:[]
+  createReport: []
 };
 
 const rootReducer = (state = initialState, { type, payload }) => {
@@ -280,12 +279,18 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state, opportunities: payload
       }
 
-      /* Create report */
-      case CREATE_REPORT:
-        return {
-            ...state,
-            createReport: action.payload,
-        };
+    case SET_SELECTED_OPPORTUNITIE:
+      return {
+        ...state,
+        selected_opportunitie : payload
+      }
+
+    /* Create report */
+    case CREATE_REPORT:
+      return {
+        ...state,
+        createReport: action.payload,
+      };
 
     default:
       return state;

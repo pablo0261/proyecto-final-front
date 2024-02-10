@@ -25,8 +25,7 @@ function Card(props) {
         dispatch({
           type : SET_SELECTED_OPPORTUNITIE,
           payload : {
-            idOpportunitie : response.data.idOpportunitie,
-            idProvider : response.data.idProvider
+            idOpportunitie : response.data.idOpportunitie
           }
         })
         navigate(Helpers.ProviderDetail.replace(":id", props.user.idPeople))
