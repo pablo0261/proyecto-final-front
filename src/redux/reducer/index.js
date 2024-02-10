@@ -111,11 +111,11 @@ const rootReducer = (state = initialState, { type, payload }) => {
         infoUserLog:  payload,
       };
 //*creo que puedo utilizar el de arriba para los dos casos
-    // case POST_NEW_SERVICE_USER:
-    // return {
-    //       ...state,
-    //       infoUserLog:  payload,
-    //     };
+    case POST_NEW_SERVICE_USER:
+    return {
+          ...state,
+          infoUserLog:  payload,
+        };
 
     //* --- MANEJO DE ERRORES DEL BACK ---//*
     case SET_ERROR_BACK:
@@ -155,7 +155,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
       case CREATE_REPORT:
         return {
             ...state,
-            createReport: action.payload,
+            createReport: payload,
         };
 
     default:

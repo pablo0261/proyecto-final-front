@@ -17,13 +17,13 @@
 .title
     width: fit-content
     margin-left: 0  
-    margin-top: 0
+    margin-top: 10px
     text-align: left
     @include Mixins.font($primaryColor, 35px, bold, normal)
     
 .editButton
     position: relative
-    top: 0
+    top: 5px
     margin-left: auto
     width: 40px
     height: 40px
@@ -40,21 +40,22 @@
     flex-direction: column
     justify-content: space-between
     margin-inline: auto
-    margin-block: 5px
-    padding-block: 15px
+    margin-block: 15px
+    padding-block: 20px
     height: 90%
     @include Mixins.font($tertiaryColor, 18px, normal, normal)
     @include Mixins.boxShadowCard
 
 .educationdetailbox
+    
     display: flex
     flex-direction: row
     justify-content: space-between
     width: 90%
     height: 90px
     margin-inline: auto
-    margin-top: 5px
-    padding-block: 15px
+    margin-block: 10px
+    padding-block: 10px
     @include Mixins.font($tertiaryColor, 18px, normal, normal)
 
 .line
@@ -97,6 +98,8 @@
     height: fit-content
     @include Mixins.font($tertiaryColor, 20px, bold, normal)
     text-align: left
+    overflow: hidden 
+    overflow-wrap: break-word
    
 
 .observationInfo

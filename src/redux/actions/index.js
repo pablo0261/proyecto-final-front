@@ -224,7 +224,7 @@ const postUserServices = (updatedUserData) => {
       console.log("Response from services", response);
         dispatch({
           type: POST_NEW_SERVICE_USER,
-          payload: response.data.result.people.data[0].people,
+          payload: response.data.response.people.data[0].people
         });
         
     } catch (error) {

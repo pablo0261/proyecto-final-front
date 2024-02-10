@@ -56,7 +56,7 @@ function EducationProvider() {
       </div>
 
       <div className={style.educationdetailContainer}>
-        {education.map((option) => (
+        {education.map((option, index) => (
           <div key={option.idOption} >
             <div className={style.educationdetailbox}>
               <div className={style.infoContainerLeft}>
@@ -78,9 +78,11 @@ function EducationProvider() {
               ></button>
               {showForm && <Form handleShowForm={handleShowForm} />}
             </div>
-            <div>
-              <p className={style.line}></p>
-            </div>
+            {index !== education.length - 1 && (
+      <div>
+        <p className={style.line}></p>
+      </div>
+    )}
           </div>
         ))}
       </div>

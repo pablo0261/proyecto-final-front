@@ -55,6 +55,7 @@ function ServicesProviderCard() {
     dispatch(deleteService(deleteData));
   };
 
+
   return (
     <div className={style.background}>
       <div className={style.servicesWrapper}>
