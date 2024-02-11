@@ -76,7 +76,7 @@ function AccessAccount() {
           window.alert(`Error: ${response.status} - ${response.statusText}`);
         }
       } else {
-        navigate(Helpers.HomeCustomerView);
+        navigate(Helpers.ProfileCustomerView);
       }
     } catch (error) {
       window.alert(error);

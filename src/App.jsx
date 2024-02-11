@@ -11,8 +11,6 @@ import ConnectionsCustomerView from './Views/CustomerViews/ConnectionsCustomerVi
 import StatsProviderView from './Views/ProviderViews/StatsProviderView';
 import ReportsProviderView from './Views/ProviderViews/ReportsProviderView';
 import ConnectionsProviderView from './Views/ProviderViews/ConnectionsProviderView';
-import Success from './Views/Success/Success';
-import Failure from './Views/Failure/Failure';
 import FAQs from './Views/FAQs/FAQs';
 import ConsultReport from './Views/ConsultReport/ConsultReport'
 import { useDispatch, useSelector } from 'react-redux';
