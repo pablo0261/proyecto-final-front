@@ -15,6 +15,8 @@ import {
   POST_NEW_SERVICE_USER,
   SET_CHAT,
   GET_PEOPLE,
+  SET_OPPORTUNITIE,
+  CREATE_REPORT,
 } from "./action-types";
 
 const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
@@ -216,19 +218,19 @@ const postUserData = (userDataEnglish) => {
 };
 
 const postUserServices = (updatedUserData) => {
-  //*(Pablo --> Lo uso para enviar las modificaciones de los servicios de los proveedores)
+  //*(Pablo --> Lo uso para enviar las modificaciones del perfil de los proveedores)
   return async (dispatch) => {
     try {
       const response = await axios.post(
         `${REACT_APP_API_URL}/people/options`,
         updatedUserData
       );
-      if (response.status === 200) {
-        return dispatch({
+      console.log("Response from services", response);
+        dispatch({
           type: POST_NEW_SERVICE_USER,
           payload: response.data.result.people.data[0].people,
         });
-      }
+        
     } catch (error) {
       if (error.response && error.response.data) {
         dispatch({
@@ -241,6 +243,35 @@ const postUserServices = (updatedUserData) => {
     }
   };
 };
+
+const deleteService = (deleteData) => {
+  //*(Pablo --> Lo uso para enviar las modificaciones del perfil de los proveedores)
+  return async (dispatch) => {
+    try {
+      const response = await axios.delete(
+        `${REACT_APP_API_URL}/people/options`,
+         { data: deleteData } 
+        );
+        if (response.status === 200) {
+          return dispatch({
+            type: POST_NEW_INFO_USER,
+            payload: response.data.response.people.data[0].people
+          })
+        }
+      } catch (error) {
+        console.log("deleteData", deleteData)
+      if (error.response && error.response.data) {
+        dispatch({
+          type: SET_ERROR_BACK,
+          payload: error.response.data,
+        });
+        window.alert(error);
+        throw error.response.data;
+      }
+    }
+  };
+};
+
 
 const handleEditProfile = (formData) => {
   return async (dispatch) => {
@@ -255,50 +286,42 @@ const handleEditProfile = (formData) => {
   };
 };
 
-const setDataChat = (id) => {
+// OPPORTUNITIES
+const getOpportunities = (filter) => {
   return async (dispatch) => {
-    if (id === 1) {
-      const Chat = [
-        {
-          idPeople: 1,
-          propio: true,
-          message: "Hola, podrias decirme si vas a ir o no?",
-          date: "Ayer",
-        },
-        {
-          idPeople: 2,
-          propio: false,
-          message: "No al final, no quiero ir.",
-          date: "Hoy",
-        },
-      ];
-
-      dispatch({
-        type: SET_CHAT,
-        payload: Chat,
-      });
+    try {
+      const response = await axios.get(`${REACT_APP_API_URL}/opportunities${filter}`)
+      if (response.status === 200) {
+        return dispatch({
+          type : SET_OPPORTUNITIE,
+          payload : response.data.data,
+        })
+      }
+      if (response.status === 204) {
+        return dispatch({
+          type: SET_OPPORTUNITIE,
+          payload: response.data.data
+        })
+      }
+    } catch (error) {
+      if (error.response.status === 409) {
+        return dispatch({
+          type: SET_OPPORTUNITIE,
+          payload: []
+        })
+      }
     }
+  }
+}
 
-    if (id === 2) {
-      const Chat = [
-        {
-          idPeople: 1,
-          propio: true,
-          message: "¿Te parece si quedamos para el Miercoles?",
-          date: "Ayer",
-        },
-        {
-          idPeople: 2,
-          propio: false,
-          message: "Dale dale, te agendo",
-          date: "Hoy",
-        },
-      ];
-
-      dispatch({
-        type: SET_CHAT,
-        payload: Chat,
-      });
+/* Create report */
+const createReport = (formData) => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.post(`${REACT_APP_API_URL}/xxxx/xxxx`, formData);
+      dispatch({ type: CREATE_REPORT, payload: response.data }); 
+    } catch (error) {
+      console.log(error);
     }
   };
 };
@@ -319,4 +342,7 @@ export {
   saveOrderGlobal,
   setDataChat,
   allPeople,
+  getOpportunities,
+  createReport,
+  deleteService,
 };

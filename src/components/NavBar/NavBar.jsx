@@ -41,9 +41,14 @@ function NavBar() {
                 {
                     location.pathname === Helpers.Landing && !userLoggedInfo.idPeople && !emailUserLog && <NavLink to="/#" className={style.link}>¿Como Funciona?</NavLink>
                 }
+                
                 {
-                    location.pathname === Helpers.AccessAccount && !userLoggedInfo.idPeople && !emailUserLog && <NavLink to={Helpers.Landing} className={style.link}>Volver</NavLink>
+                    (location.pathname === Helpers.AccessAccount || location.pathname === Helpers.FAQs || location.pathname === Helpers.ConsultReport) &&
+                    !userLoggedInfo.idPeople && !emailUserLog &&
+                    <NavLink to={Helpers.Landing} className={style.link}>Volver</NavLink>
                 }
+
+
                 {
                     userLoggedInfo.idPeople && userLoggedInfo.typeOfPerson === 'provider' && location.pathname !== Helpers.Landing && location.pathname !== Helpers.AccessAccount &&
                     <div>

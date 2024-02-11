@@ -5,6 +5,7 @@ import styles from "./FormFAQs.module.scss";
 const FormFAQs = ({ onAddQuestion }) => {
   const [question, setQuestion] = useState('');
   const [answer, setAnswer] = useState('');
+
   const [localErrors, setLocalErrors] = useState({
     Pregunta: '',
     Respuesta: ''
@@ -18,6 +19,7 @@ const FormFAQs = ({ onAddQuestion }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    
     const hasErrors = Object.values(localErrors).some((error) => error !== '');
 
     // Verificar que no haya errores y que ambas pregunta y respuesta no estén vacías
@@ -41,11 +43,12 @@ const FormFAQs = ({ onAddQuestion }) => {
 
       <form className={styles.Form} onSubmit={handleSubmit}>
 
-        <div className={styles.FormDivFlex}>
+        
           <div className={styles.FormDivInputFlex}>
 
-            <label>* Ingresa una pregunta:</label>
+            <label>Ingresa una pregunta:</label>
             <input
+            id="pregunta"
               type="text"
               name="Pregunta"
               value={question}
@@ -53,6 +56,8 @@ const FormFAQs = ({ onAddQuestion }) => {
               placeholder="Ingrese la pregunta"
             />
             {localErrors.Pregunta && <div className="error-message">{localErrors.Pregunta}</div>}
+
+            <label>Ingresa una respuesta:</label>
             <textarea
               name="Respuesta"
               value={answer}
@@ -63,7 +68,7 @@ const FormFAQs = ({ onAddQuestion }) => {
             {localErrors.Respuesta && <div className="error-message">{localErrors.Respuesta}</div>}
             <button type="submit">Guardar</button>
           </div>
-        </div>
+        
 
       </form>
 

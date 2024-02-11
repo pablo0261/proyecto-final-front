@@ -1,50 +1,43 @@
-@use '../../../Styles/Mixins.sass';
+@use '../../../Styles/Mixins.sass' as *;
 @import '../../../Styles/Variables.sass';
 
 
 .wrapper {
-  @include Mixins.boxShadowCard;
-  width: 100%;
+  width: 50%;
   height: fit-content;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  position: relative;
+  @include flexbox(column, center, center);
+  margin: 20px 0 20px 0;
 }
 
 .Form {
   width: 85%;
+ 
+  .FormDivInputFlex {
+    @include flexbox(column, null, null);
+  }
+
+  label {
+    text-align: left;
+    margin: 0px 0px 5px 0px;
+    @include font($secondaryColor, 18px, normal, normal);
+  }
 
   input {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-
-    @include Mixins.inputsFormat
+    @include inputsFormat
   }
 
   inputs:focus {
-
-    @include Mixins.inputsFormat_Hover
+    @include inputsFormat_Hover
   }
 
   inputs::placeholder {
-
-    @include Mixins.inputsFormat_Placeholder
+    @include inputsFormat_Placeholder
   }
 
   textarea {
-
     height: 100px;
-    width: 100%;
     padding: 10px 15px;
-    font-family: 'K2D', sans-serif;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: normal;
-    color: $secondaryColor;
+    @include font($secondaryColor, 16px, normal, normal);
     box-sizing: border-box;
     border: 2px solid $secondaryColor;
     border-radius: 10px;
@@ -53,79 +46,30 @@
   }
 
   textarea:focus {
-
-    @include Mixins.inputsFormat_Hover
+    @include inputsFormat_Hover
   }
 
   textarea::placeholder {
-
-    @include Mixins.inputsFormat_Placeholder
-  }
-
-  label {
-
-    text-align: left;
-    margin: 0px 0px 5px 0px;
-    @include Mixins.font($secondaryColor, 18px, normal, normal);
+    @include inputsFormat_Placeholder
   }
 
   button {
-
+    width: 100%;
     margin: 20px 0px 30px 0px;
-    @include Mixins.buttonActive;
+    @include buttonActive;
     cursor: pointer;
     transition: .2s;
   }
 
   button:hover {
-
-    @include Mixins.buttonHover
+    @include buttonHover
   }
 
   button:active {
-
-    @include Mixins.buttonPressed
+    @include buttonPressed
   }
-
-}
-
-.FormDivFlex {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.FormDivInputFlex {
-  display: flex;
-  flex-direction: column;
-  width: 48%;
 }
 
 .errorMessage {
-
-  margin: 5px 0px;
-  padding-left: 15px;
-  text-align: left;
-  @include Mixins.font($textFailureColor, 14px, normal, normal);
+  @include errorMessage
 }
-
-/* .errorNotMessage
-  margin: 5px 0px
-  padding-left: 15px
-  text-align: left
-  @include Mixins.font($textSuccessColor, 14px , normal , normal ) */
-
-/* .inputsStatic
-  @include Mixins.font(black, 18px , normal , normal )
-  display: flex
-  align-items: center
-  justify-content: flex-start 
-  pointer-events: none */
-
-/* .errorMessageStatic
-  display: flex
-  justify-content: end
-  margin-bottom: -10px
-  margin-right: -60%
-  text-align: right
-  @include Mixins.font($textFailureColor, 14px , normal , normal ) */

@@ -12,149 +12,26 @@ import {
   POST_NEW_INFO_USER,
   SET_CHAT,
   GET_PEOPLE,
+  SET_OPPORTUNITIE,
+  SET_SELECTED_OPPORTUNITIE,
+  CREATE_REPORT,
   // CONTRAT_SERVICE_USER
 } from "../actions/action-types";
 
 
 let initialState = {
   
-  infoUserLog: {
-      // idPeople: '038b359a-ad7a-4bb4-8945-15cfd42b38b3',
-      // fullName: 'lepore diego',
-      // address: 'domicilio',
-      // idLocation: null,
-      // geoposition: null,
-      // birthDate: '1999-10-05',
-      // age: 24,
-      // idGenre: null,
-      // state: 'Active',
-      // aboutMe: null,
-      // dateOfAdmission: '2024-01-24',
-      // typeOfPerson: 'provider',
-      // email: 'diegolepore@gmail.com',
-      // externalLogin: null,
-      // weekCalendar: null,
-      // averageRating: '0.00',
-      // countRating: 0,
-      // logged: false,
-      // categories: [
-      //   {
-      //     idCategorie: 1,
-      //     description: 'Servicios',
-      //     isGenre: null,
-      //     isEducation: null,
-      //     isSkill: null,
-      //     isService: true,
-      //     isInterest: null,
-      //     isExperience: null,
-      //     isExtra: null,
-      //     includeCustomer: null,
-      //     includeProvider: true,
-      //     categories_options: [
-      //       {
-      //         idOption: 1,
-      //         description: 'Cuidado',
-      //         people_options: [
-      //           {
-      //             idOption: '5ce19fac-72d6-45ac-b6ac-e67f072d85fd',
-      //             description: null,
-      //             price: '10.00',
-      //             date: null,
-      //             year: null,
-      //             institution: null,
-      //             comment: null
-      //           }
-      //         ]
-      //       },
-      //       {
-      //         idOption: 2,
-      //         description: 'Cuidado y Alimento',
-      //         people_options: [
-      //           {
-      //             idOption: '19e8cd37-8d40-4780-8493-d5d50aa0da0d',
-      //             description: null,
-      //             price: '15.00',
-      //             date: null,
-      //             year: null,
-      //             institution: null,
-      //             comment: null
-      //           }
-      //         ]
-      //       }
-      //     ]
-      //   },
-      //   {
-      //     idCategorie: 2,
-      //     description: 'Educacion',
-      //     isGenre: null,
-      //     isEducation: null,
-      //     isSkill: true,
-      //     isService: null,
-      //     isInterest: null,
-      //     isExperience: null,
-      //     isExtra: null,
-      //     includeCustomer: null,
-      //     includeProvider: true,
-      //     categories_options: [
-      //       {
-      //         idOption: 4,
-      //         description: 'Primaria',
-      //         people_options: [
-      //           {
-      //             idOption: 'c3ef3e19-b0b6-48cf-9133-2099fa4896fe',
-      //             description: 'coelgio',
-      //             price: '0.00',
-      //             date: null,
-      //             year: null,
-      //             institution: null,
-      //             comment: null
-      //           }
-      //         ]
-      //       }
-      //     ]
-      //   },
-      //   {
-      //     idCategorie: 3,
-      //     description: 'Habilidades',
-      //     isGenre: null,
-      //     isEducation: true,
-      //     isSkill: null,
-      //     isService: null,
-      //     isInterest: null,
-      //     isExperience: null,
-      //     isExtra: null,
-      //     includeCustomer: null,
-      //     includeProvider: true,
-      //     categories_options: [
-      //       {
-      //         idOption: 6,
-      //         description: 'Ajedrez',
-      //         people_options: [
-      //           {
-      //             idOption: 'd2a14cac-18d1-4347-a046-1aceda2376f7',
-      //             description: 'nivel avanzado',
-      //             price: '0.00',
-      //             date: null,
-      //             year: null,
-      //             institution: null,
-      //             comment: null
-      //           }
-      //         ]
-      //       }
-      //     ]
-      //   }
-      // ] 
-  },
-  
+  infoUserLog: { },
+
   //Filter and getpeople
   peopleForAdmin: [], /** El estado contiene los people que la tabla del admin*/
   homeCustomerProviders: [],
   getAllPeople: [],
   paginacionData: [],
   allServices: [],
-  filterOrderSelected : {
-    filters : [],
-    orders : []
+  filterOrderSelected: {
+    filters: [],
+    orders: []
   },
   //*POST//
   postUserData: [],
@@ -174,8 +51,8 @@ let initialState = {
     },
     ServicesProviderCard: [
       "Cuidado", "Cuidado y Alimento",
-    "Cuidado y Limpieza"
-  ],
+      "Cuidado y Limpieza"
+    ],
     EducationExperienciaProvider: {
       Titulo: "",
       Institución: "",
@@ -185,14 +62,18 @@ let initialState = {
     },
     InteresProviderCard: { Habilidades: "", Intereses: "" },
     SkillsProviderCard: { "Licencia de Conducir": "", Vehículo: "", Fumador: "", Hijos: "", Mascota: "" },
-    ScheduleProviderCard: { },
+    ScheduleProviderCard: {},
     MapProviderCard: {},
     ReviewProviderCard: {},
     ConectionProviderCard: {},
   },
 
-  //CHAT
-  data_Chat:[]
+  //OPPORTUNITIE
+  selected_opportunitie: {},
+  opportunities: [],
+
+  /* Create report */
+  createReport: []
 };
 
 const rootReducer = (state = initialState, { type, payload }) => {
@@ -203,13 +84,13 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         infoUserLog: payload,
       };
-
+      
     case GET_PEOPLE:
       return {
         ...state,
         peopleForAdmin: payload,
       };
-    
+   
     case GET_HOME_PROVIDER:
       return {
         ...state,
@@ -227,7 +108,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         allServices: payload,
       };
-    
+
     case FILTER_ORDER_SELECTED:
       return {
         ...state,
@@ -238,14 +119,15 @@ const rootReducer = (state = initialState, { type, payload }) => {
     case POST_NEW_INFO_USER:
       return {
         ...state,
-        infoUserLog:  payload,
+        infoUserLog: payload,
       };
 
+
     case POST_NEW_SERVICE_USER:
-    return {
-          ...state,
-          infoUserLog:  payload,
-        };
+      return {
+        ...state,
+        infoUserLog: payload,
+      };
 
     //* --- MANEJO DE ERRORES DEL BACK ---//*
     case SET_ERROR_BACK:
@@ -275,11 +157,24 @@ const rootReducer = (state = initialState, { type, payload }) => {
         infoUserLog: {},
       };
 
-    // CHAT
-    case SET_CHAT:
+    // OPPORTUNITIE
+    case SET_OPPORTUNITIE:
       return {
-        ...state, data_Chat: payload
+        ...state, opportunities: payload
       }
+
+    case SET_SELECTED_OPPORTUNITIE:
+      return {
+        ...state,
+        selected_opportunitie : payload
+      }
+
+    /* Create report */
+    case CREATE_REPORT:
+      return {
+        ...state,
+        createReport: action.payload,
+      };
 
     default:
       return state;

@@ -137,3 +137,10 @@
     font-style: italic
     font-weight: normal
     color: #969696
+
+@mixin errorMessage 
+  margin: 5px 0px
+  padding-left: 15px
+  text-align: left
+  @include font($textFailureColor, 14px, normal, normal)
+
