@@ -293,19 +293,24 @@ const getOpportunities = (filter) => {
           payload : response.data.data,
         })
       }
-      if (response.status === 204) {
+    } catch (error) {
+      window.alert(error)
+    }
+  }
+}
+
+const putOpportunities = (data) => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.put(`${REACT_APP_API_URL}/opportunities`, data)
+      if (response.status === 200) {
         return dispatch({
-          type: SET_OPPORTUNITIE,
-          payload: response.data.data
+          type : SET_OPPORTUNITIE,
+          payload : response.data.data,
         })
       }
     } catch (error) {
-      if (error.response.status === 409) {
-        return dispatch({
-          type: SET_OPPORTUNITIE,
-          payload: []
-        })
-      }
+      window.alert(error)
     }
   }
 }
@@ -337,6 +342,7 @@ export {
   postUserServices,
   saveOrderGlobal,
   getOpportunities,
+  putOpportunities,
   createReport,
   deleteService,
 };

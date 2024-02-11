@@ -25,7 +25,7 @@ function PendingBox(props) {
     }
 
     useEffect(() => {
-        if (idOpportunitie) {
+        if (idOpportunitie.length > 0) {
             setChat()
         }
     }, [idOpportunitie])
@@ -33,22 +33,27 @@ function PendingBox(props) {
     return (
         <div className={style.background}>
             {
-                !isLoadingChat && opportunities.length != 0 && dataChat.length != 0
-                    ? <div className={style.chatWrapper}>
-                        <div className={style.msgWrapper}>
-                            <ChatRender></ChatRender>
-                        </div>
-                        <div className={style.inputWrapper}>
-                            {infoUserLog.typeOfPerson === 'customer' && <button type='button' className={style.buttonChat}>Cancelar</button>}
-                            {infoUserLog.typeOfPerson === 'provider' && <div className={style.divButtons}>
-                                <button type='button' className={style.buttonChat}>Aceptar</button>
-                                <button type='button' className={style.buttonChat}>Rechazar</button>
+                opportunities.length != 0
+                    ?
+                    !isLoadingChat && dataChat.length != 0
+                        ?
+                        <div className={style.chatWrapper}>
+                            <div className={style.msgWrapper}>
+                                <ChatRender></ChatRender>
                             </div>
-                            }
+                            <div className={style.inputWrapper}>
+                                {infoUserLog.typeOfPerson === 'customer' && <button type='button' className={style.buttonChat}>Cancelar</button>}
+                                {infoUserLog.typeOfPerson === 'provider' && <div className={style.divButtons}>
+                                    <button type='button' className={style.buttonChat}>Aceptar</button>
+                                    <button type='button' className={style.buttonChat}>Rechazar</button>
+                                </div>
+                                }
+                            </div>
                         </div>
-                    </div>
+                        :
+                        <p className={style.loadingChat}>Cargando Chat</p>
                     :
-                    <p className={style.loadingChat}>Selecciona una solicitud pendiente.<br></br> En caso de no visualizar ninguna lista, no tienes solicitudes pendientes.</p>
+                    <p className={style.loadingChat}>No tienes contactos pendientes.</p>
             }
         </div>
     )

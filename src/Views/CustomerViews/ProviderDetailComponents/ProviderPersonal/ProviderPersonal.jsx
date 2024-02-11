@@ -4,7 +4,7 @@ import style from './ProviderPersonal.module.sass'
 function ProviderPersonal(props) {
 
     const { infoProvider } = props
-
+    
     return (
         <div className={style.background}>
             <div className={style.wrapper}>
@@ -23,8 +23,8 @@ function ProviderPersonal(props) {
                             <div className={style.iconVerified}></div>
                             <p className={style.textVerified}>Cuenta Verificada</p>
                         </div>
-                        <p className={style.textData}>{infoProvider.age} años | {infoProvider.address}, {infoProvider.location}, {infoProvider.province}, {infoProvider.country}</p>
-                        <p className={style.textOcupation}>{infoProvider.profesion}</p>
+                        <p className={style.textData}>{infoProvider.age} años | {infoProvider.address}, {infoProvider.locationName}, {infoProvider.provinceName}, {infoProvider.country}</p>
+                        <p className={style.textOcupation}>{infoProvider.profession}</p>
                         <p className={style.textDetail}>{infoProvider.aboutMe}</p>
                         <div className={style.contacts}>
                             <p className={style.textContact}>Contactos: </p>
