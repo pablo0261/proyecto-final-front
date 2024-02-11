@@ -5,6 +5,8 @@ import NotFound from './utils/notFound/NotFound';
 import Helpers from './Helpers/RoutesFront';
 import AccessAccount from './Views/AccessAccount/AccessAccount';
 import NavBar from './components/NavBar/NavBar';
+import Success from './Views/Success/Success';
+import Failure from './Views/Failure/Failure';
 import ProfileProviderView from './Views/ProfileProviderView/ProfileProviderView';
 import ReportsCustomerView from './Views/CustomerViews/ReportsCustomerView';
 import ConnectionsCustomerView from './Views/CustomerViews/ConnectionsCustomerView';
