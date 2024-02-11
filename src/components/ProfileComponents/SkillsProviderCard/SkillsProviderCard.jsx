@@ -22,7 +22,6 @@ function SkillsProviderCard() {
     ) {
       const skillsOptions = infoUserLog.categories[2].categories_options;
   
-      console.log("skillsOptions", skillsOptions);
       if (skillsOptions && skillsOptions.length > 0) {
         const skillData = skillsOptions.map((option) => ({
           idOption: option.idOption,
@@ -43,7 +42,6 @@ function SkillsProviderCard() {
     const confirmDelete = window.confirm("¿Está seguro de que desea eliminar la habilidad?");
 
     if (confirmDelete) {
-    console.log("Valor de deleteData:", deleteData);
     dispatch(deleteService(deleteData));
     }
   };

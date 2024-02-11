@@ -2,9 +2,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 import { deleteService } from "../../../redux/actions/index";
 import Form from "../../Form/FormEducation/FormEducation";
-import style from "./EducationProvider.module.sass";
+import style from "./ExperienciaProvider.module.sass";
 
-function EducationProvider() {
+function ExperienciaProvider() {
   const dispatch = useDispatch();
   const infoUserLog = useSelector((state) => state.infoUserLog);
   const [showForm, setShowForm] = useState(false);
@@ -50,7 +50,7 @@ function EducationProvider() {
   return (
     <div className={style.container}>
       <div className={style.titleContainer}>
-        <h1 className={style.title}>Educación</h1>
+        <h1 className={style.title}>Experiencia</h1>
         <button onClick={handleShowForm} className={style.editButton}></button>
       </div>
 
@@ -89,4 +89,4 @@ function EducationProvider() {
   );
 }
 
-export default EducationProvider;
+export default ExperienciaProvider;
