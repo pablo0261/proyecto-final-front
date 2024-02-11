@@ -96,7 +96,7 @@ const FormConsultReport = () => {
 
                 {/* Nombre y apellido */}
                 <div className={styles.FormDivInputFlex}>
-                    <label htmlFor="">Nombre y Apellido:</label>
+                    <label htmlFor="fullname">Nombre y Apellido:</label>
                     <input
                         id="fullname"
                         type="text"
@@ -110,7 +110,7 @@ const FormConsultReport = () => {
 
                 {/* Correo electronico */}
                 <div className={styles.FormDivInputFlex}>
-                    <label htmlFor="">Email:</label>
+                    <label htmlFor="mail">Email:</label>
                     <input
                         id="mail"
                         name="mail"
@@ -124,7 +124,7 @@ const FormConsultReport = () => {
 
                 {/* Título del reporte */}
                 <div className={styles.FormDivInputFlex}>
-                    <label htmlFor="">Título del reporte</label>
+                    <label htmlFor="title">Título del reporte</label>
                     <input
                         id="title"
                         type="text"
@@ -138,7 +138,7 @@ const FormConsultReport = () => {
 
                 {/* Reporte */}
                 <div className={styles.FormDivInputFlex}>
-                    <label htmlFor="">Reporte</label>
+                    <label htmlFor="report">Reporte</label>
                     <textarea
                         id="report"
                         type="text"
