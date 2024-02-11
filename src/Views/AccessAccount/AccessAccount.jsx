@@ -63,7 +63,6 @@ function AccessAccount() {
   const signInProcess = async (signInData) => {
     //*componente para manejar el post de MP y recibir el link a MP
 
-    console.log("signin:" ,signInData.typeOfPerson);
     try {
       if (signInData.typeOfPerson === "provider") {
         const response = await axios.post(
@@ -71,15 +70,13 @@ function AccessAccount() {
           signInData
         );
         if (response.status === 200) {
-          console.log("soy proveedor");
           const paymentLink = response.data.urlPayment;
           window.location.href = paymentLink;
         } else {
           window.alert(`Error: ${response.status} - ${response.statusText}`);
         }
       } else {
-        console.log("soy cliente");
-        navigate(Helpers.HomeCustomerView);
+        navigate(Helpers.ProfileCustomerView);
       }
     } catch (error) {
       window.alert(error);

@@ -1,46 +1,95 @@
-import { useSelector } from "react-redux";
-import "./ScheduleProviderCard.style.css";
+import { useSelector, useDispatch } from "react-redux";
+import { useState, useEffect } from "react";
+import { deleteService } from "../../../redux/actions/index";
+import Form from "../../Form/FormEducation/FormEducation";
+import styles from "./ScheduleProvider.module.sass";
+import okIcon from "../../../assets/Icons/IconCheck.png";
 
 function ScheduleProviderCard() {
+  const dispatch = useDispatch();
   const infoUserLog = useSelector((state) => state.infoUserLog);
+  const [showForm, setShowForm] = useState(false);
+  const [eschedule, setEschedule] = useState([]);
 
-  const handleDeleteClick = () => {
-    // dispatch(handleDeleteService(item));
-   
+  const handleShowForm = () => {
+    setShowForm(!showForm);
   };
 
-  const schedule = infoUserLog.schedule || [];
+  //! Aqui desarrollar la logica para traer los dias disponibles
+  // useEffect(() => {
+  //   if (
+  //     infoUserLog &&
+  //     infoUserLog.categories &&
+  //     infoUserLog.categories.length > 0
+  //   ) {
+  //     const educationOptions = infoUserLog.categories[1].categories_options;
 
-  const daysOfWeek = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"];
+  //     if (educationOptions && educationOptions.length > 0) {
+  //       const educationData = educationOptions.map((option) => ({
+  //         idPeople: infoUserLog.idPeople,
+  //         idOption: option.idOption,
+  //         education: option.description || "No informado",
+  //         institution: option.people_options[0].institution || "No informado",
+  //         year: option.people_options[0]?.year || "No informado",
+  //         comment:
+  //           option.people_options[0]?.comment || "No informado",
+  //       }));
+
+  //       setEducation(educationData);
+  //     }
+  //   }
+  // }, [infoUserLog]);
+
+  //! Esto de aqui abajo luego de traer la info del back quitarlo
+  const schedule = infoUserLog.schedule || [true, true, false, true, true, false, true, true, false, true, true, false, true, true, false, true, true, false];
+
+  const daysOfWeek = [
+    "Lunes",
+    "Martes",
+    "Miércoles",
+    "Jueves",
+    "Viernes",
+    "Sábado",
+    "Domingo",
+  ];
   const shifts = ["Mañana", "Tarde", "Noche"];
 
   return (
-    <div className="container">
-      <img className="edit" src="editImage" alt="edit" />
+    <div className={styles.container}>
+      <div className={styles.titleContainer}>
+        <h1 className={styles.title}>Disponibilidad y Ubicación</h1>
+        <button onClick={handleShowForm} className={styles.editButton}></button>
+      </div >
+      <div className={styles.scheduledetailContainer}>
       <table>
         <thead>
           <tr>
-            <th className="delete"></th>
-            <th className="service">Turno</th>
+            <th className={styles.days}></th>
             {daysOfWeek.map((day, dayIndex) => (
-              <th key={dayIndex}>{day}</th>
+              <th className={styles.days} key={dayIndex}>
+                {day}
+              </th>
             ))}
           </tr>
         </thead>
-        <tbody>
+        <tbody className={styles.tbody}>
           {shifts.map((shift, shiftIndex) => (
-            <tr key={shiftIndex}>
-              <td>
-                <button onClick={() => handleDeleteClick(shift)}>X</button>
-              </td>
-              <td className="service">{shift}</td>
+            <tr className={styles.turnos} key={shiftIndex}>
+              <td className={styles.moment}>{shift}</td>
               {daysOfWeek.map((day, dayIndex) => (
-                <td key={dayIndex}>{schedule[shiftIndex * daysOfWeek.length + dayIndex] ? "OK" : ""}</td>
+                 <td className={styles.campos} key={dayIndex}>
+                 {schedule[shiftIndex * daysOfWeek.length + dayIndex] ? (
+                   <img src={okIcon} alt="OK" /> 
+                 ) : (
+                   ""
+                 )}
+               </td>
               ))}
             </tr>
           ))}
         </tbody>
       </table>
+      </div>
     </div>
   );
 }

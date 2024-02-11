@@ -1,11 +1,12 @@
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
+import { deleteService } from "../../../redux/actions/index";
 import Form from "../../Form/FormSkills/FormSkills";
 import style from "./SkillsProvider.module.sass";
 
 function SkillsProviderCard() {
+  const dispatch = useDispatch();
   const infoUserLog = useSelector((state) => state.infoUserLog);
-
   const [showForm, setShowForm] = useState(false);
   const [skills, setSkills] = useState([]);
 
@@ -19,43 +20,47 @@ function SkillsProviderCard() {
       infoUserLog.categories &&
       infoUserLog.categories.length > 0
     ) {
-      const skillsOptions = infoUserLog.categories[2];
-
-      console.log("skillsOptions", skillsOptions)
-      
+      const skillsOptions = infoUserLog.categories[2].categories_options;
+  
       if (skillsOptions && skillsOptions.length > 0) {
         const skillData = skillsOptions.map((option) => ({
           idOption: option.idOption,
-          Skill: option.description || "Ajedrez",
+          Skill: option.description,
         }));
-        console.log("skillData", skillData)
-        
         setSkills(skillData);
       }
     }
-  }, []);
- 
+  }, [infoUserLog]);
+
+  const handleDeleteService = (idOption, event) => {
+    event.preventDefault();
+    const deleteData = {
+      idPeople: infoUserLog.idPeople,
+      idOption: idOption,
+    };
+
+    const confirmDelete = window.confirm("¿Está seguro de que desea eliminar la habilidad?");
+
+    if (confirmDelete) {
+    dispatch(deleteService(deleteData));
+    }
+  };
+
   return (
     <div className={style.container}>
-       <div className={style.titleContainer}>
+      <div className={style.titleContainer}>
         <h1 className={style.title}>Habilidades</h1>
-        <button
-          onClick={() => handleShowForm()}
-          className={style.editButton}
-        ></button>
+        <button onClick={handleShowForm} className={style.editButton}></button>
       </div>
 
       <div className={style.containerCard}>
         {skills.map((option) => (
           <div className={style.skillsdetailContainer} key={option.idOption}>
-            <button
-              className={style.skillFalseButton}
-            > {option.Skill}</button>
-            
-            {showForm && <Form handleShowForm={handleShowForm} />}
+            <button onClick={(event) => handleDeleteService(option.idOption, event)} className={style.skillFalseButton}> {option.Skill}</button>
           </div>
         ))}
-      </div> 
+      </div>
+        {showForm && <Form handleShowForm={handleShowForm} />}
     </div>
   );
 }

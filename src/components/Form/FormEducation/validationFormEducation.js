@@ -42,7 +42,7 @@ const Validation = (property, setLocalErrors, userData) => {
       break;
 
     case "observaciones":
-      if (userData[property].trim().length > 200) {
+      if (userData[property].trim().length > 150) {
         setLocalErrors((prevErrors) => ({
           ...prevErrors,
           [property]: "*El texto es demasiado largo (máximo 200 caracteres)",
