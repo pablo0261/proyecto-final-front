@@ -15,38 +15,19 @@ function ScheduleProviderCard() {
     setShowForm(!showForm);
   };
 
-  //! Aqui desarrollar la logica para traer los dias disponibles
-  // useEffect(() => {
-  //   if (
-  //     infoUserLog &&
-  //     infoUserLog.categories &&
-  //     infoUserLog.categories.length > 0
-  //   ) {
-  //     const educationOptions = infoUserLog.categories[1].categories_options;
-
-  //     if (educationOptions && educationOptions.length > 0) {
-  //       const educationData = educationOptions.map((option) => ({
-  //         idPeople: infoUserLog.idPeople,
-  //         idOption: option.idOption,
-  //         education: option.description || "No informado",
-  //         institution: option.people_options[0].institution || "No informado",
-  //         year: option.people_options[0]?.year || "No informado",
-  //         comment:
-  //           option.people_options[0]?.comment || "No informado",
-  //       }));
-
-  //       setEducation(educationData);
-  //     }
-  //   }
-  // }, [infoUserLog]);
-
-  //! Esto de aqui abajo luego de traer la info del back quitarlo
   useEffect(() => {
-    const exampleSchedule = infoUserLog.schedule || [
-      true, true, false, true, true, false, true, true, false, true, true, false, true, true, false, true, true, false
-    ];
-    setSchedule(exampleSchedule);
-  }, [infoUserLog.schedule]);
+    if (
+      infoUserLog &&
+      infoUserLog.categories &&
+      infoUserLog.categories.length > 0
+    ) {
+      const calendar = infoUserLog.weekCalendar;
+      if (calendar && calendar.length > 0) {
+      
+        setSchedule(calendar);
+      }
+    }
+  }, [infoUserLog]);
 
 
   const daysOfWeek = [

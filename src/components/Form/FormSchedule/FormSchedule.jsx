@@ -1,19 +1,33 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { postUserServices } from "../../../redux/actions/index";
 import styles from "./FormSchedule.module.sass";
 import okIcon from "../../../assets/Icons/IconCheck.png";
 import emptyIcon from "../../../assets/Icons/IconCheckEmpty.png";
 
 function ScheduleForm({ handleShowForm }) {
+  const dispatch = useDispatch();
   const infoUserLog = useSelector((state) => state.infoUserLog);
   const [editedSchedule, setEditedSchedule] = useState([]);
 
+  const [userData, setUserData] = useState({
+    idPeople: infoUserLog.idPeople,
+    weekCalendar: editedSchedule,
+  });
+
+  console.log("userData", userData)
+
   useEffect(() => {
-    const exampleSchedule = infoUserLog.schedule || [
-      true, true, false, true, true, false, true, true, false, true, true, false, true, true, false, true, true, false
-    ];
+    const exampleSchedule = infoUserLog.weekCalendar || [ ];
     setEditedSchedule(exampleSchedule);
-  }, [infoUserLog.schedule]);
+  }, [infoUserLog]);
+
+  useEffect(() => {
+    setUserData((prevUserData) => ({
+      ...prevUserData,
+      weekCalendar: editedSchedule
+    }));
+  }, [editedSchedule]);
 
   const toggleDayShift = (index) => {
     const newSchedule = [...editedSchedule];
@@ -21,10 +35,15 @@ function ScheduleForm({ handleShowForm }) {
     setEditedSchedule(newSchedule);
   };
 
-  const handleSaveSchedule = () => {
-    // Aquí puedes enviar el calendario editado al backend
+  const handleSaveSchedule = (event) => {
+    event.preventDefault();
+    try {
+    dispatch(postUserServices(userData));
     console.log("Calendario editado guardado:", editedSchedule);
     handleShowForm();
+  } catch (error) {
+    console.error("Error al guardar la agenda:", error);
+  }
   };
 
   const daysOfWeek = [

@@ -24,7 +24,7 @@ function ProfileProvider() {
     province: infoUserLog.provinceName || "Buenos Aires",
     state: infoUserLog.state || "Activo",
     country: infoUserLog.country || "Argentina",
-    profesion: infoUserLog.profession || "Enfermero",
+    profession: infoUserLog.profession || "",
     aboutMe: infoUserLog.aboutMe || "Predispuesto y Dedicado",
     phone: infoUserLog.phone || "02918145869",
     email: infoUserLog.email || "diegolepore@gmail.com",
@@ -86,7 +86,7 @@ function ProfileProvider() {
               <button onClick={() => handleShowForm()} className={style.editButton}></button>
             </div>
             <p className={style.textData}>{formData.age} años | {formData.address}, {formData.location}, {formData.province}, {formData.country}</p>
-            <p className={style.textOcupation}>{formData.profesion}</p>
+            <p className={style.textOcupation}>{formData.profession}</p>
             <p className={style.textDetail}>{formData.aboutMe}</p>
             <div className={style.contacts}>
               <p className={style.textContact}>Contactos: </p>
