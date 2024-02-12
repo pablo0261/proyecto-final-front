@@ -1,46 +1,83 @@
-import { useSelector } from "react-redux";
-import "./ScheduleProviderCard.style.css";
+import { useSelector, useDispatch } from "react-redux";
+import { useState, useEffect } from "react";
+import ScheduleForm from "../../Form/FormSchedule/FormSchedule";
+import styles from "./ScheduleProvider.module.sass";
+import okIcon from "../../../assets/Icons/IconCheck.png";
+import emptyIcon from "../../../assets/Icons/IconCheckEmpty.png";
 
 function ScheduleProviderCard() {
+  const dispatch = useDispatch();
   const infoUserLog = useSelector((state) => state.infoUserLog);
+  const [showForm, setShowForm] = useState(false);
+  const [schedule, setSchedule] = useState([]);
 
-  const handleDeleteClick = () => {
-    // dispatch(handleDeleteService(item));
-   
+  const handleShowForm = () => {
+    setShowForm(!showForm);
   };
 
-  const schedule = infoUserLog.schedule || [];
+  useEffect(() => {
+    if (
+      infoUserLog &&
+      infoUserLog.categories &&
+      infoUserLog.categories.length > 0
+    ) {
+      const calendar = infoUserLog.weekCalendar;
+      if (calendar && calendar.length > 0) {
+      
+        setSchedule(calendar);
+      }
+    }
+  }, [infoUserLog]);
 
-  const daysOfWeek = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"];
+
+  const daysOfWeek = [
+    "Lunes",
+    "Martes",
+    "Miércoles",
+    "Jueves",
+    "Viernes",
+    "Sábado",
+    "Domingo",
+  ];
   const shifts = ["Mañana", "Tarde", "Noche"];
 
   return (
-    <div className="container">
-      <img className="edit" src="editImage" alt="edit" />
+    <div className={styles.container}>
+      <div className={styles.titleContainer}>
+        <h1 className={styles.title}>Disponibilidad y Ubicación</h1>
+        <button onClick={handleShowForm} className={styles.editButton}></button>
+      </div >
+      <div className={styles.scheduledetailContainer}>
       <table>
         <thead>
           <tr>
-            <th className="delete"></th>
-            <th className="service">Turno</th>
+            <th className={styles.days}></th>
             {daysOfWeek.map((day, dayIndex) => (
-              <th key={dayIndex}>{day}</th>
+              <th className={styles.days} key={dayIndex}>
+                {day}
+              </th>
             ))}
           </tr>
         </thead>
-        <tbody>
+        <tbody className={styles.tbody}>
           {shifts.map((shift, shiftIndex) => (
-            <tr key={shiftIndex}>
-              <td>
-                <button onClick={() => handleDeleteClick(shift)}>X</button>
-              </td>
-              <td className="service">{shift}</td>
+            <tr className={styles.turnos} key={shiftIndex}>
+              <td className={styles.moment}>{shift}</td>
               {daysOfWeek.map((day, dayIndex) => (
-                <td key={dayIndex}>{schedule[shiftIndex * daysOfWeek.length + dayIndex] ? "OK" : ""}</td>
+                 <td className={styles.campos} key={dayIndex}>
+                 {schedule[shiftIndex * daysOfWeek.length + dayIndex] ? (
+                   <img src={okIcon} alt="OK" /> 
+                 ) : (
+                  <img src={emptyIcon} alt="OK" />
+                 )}
+               </td>
               ))}
             </tr>
           ))}
         </tbody>
       </table>
+      </div>
+      {showForm && <ScheduleForm handleShowForm={handleShowForm} />} 
     </div>
   );
 }

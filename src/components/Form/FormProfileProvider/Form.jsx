@@ -44,7 +44,8 @@ function Form({ handleShowForm }) {
     "Tucumán"
   ]
 
-  const [ciudades, setCiudades] = useState([]); // Estado para guardar las ciudades que trae de handleProvinciaChange segun la provincia
+  const [ciudades, setCiudades] = useState([]); 
+
   const handleProvinciaChange = async (event) => {
     setIsProvinciaSelected(event.target.value)
     // Trae las ciudades segun al provincia seleccionada
@@ -65,25 +66,29 @@ function Form({ handleShowForm }) {
       window.alert("Error al obtener las ciudades:", error);
     }
   }
-  // setUserData({ ...userData, Ocupación: profession });
 
-  // const handleProfessionChange = async (event) => {
-  //   // Trae las ciudades segun al provincia seleccionada
-  //   try {
-  //     const response = await fetch(`${REACT_APP_API_URL}/categories`);
-  //     const data = await response.json();
-  //     const sortedCiudades = data.data.sort((a, b) =>
-  //     a.nombreLocalidad.localeCompare(b.nombreLocalidad)
-  //   );
-  //     setCiudades(sortedCiudades);
-  //   } catch (error) {
-  //     window.alert("Error al obtener las ciudades:", error);
-  //   }
-  // };
+  const [profession, setProfession] = useState([]); 
+
+  useEffect(() => {
+    const handleProfessionChange = async () => {
+      try {
+        const response = await fetch(`${REACT_APP_API_URL}/categories`);
+        const data = await response.json();
+        const professionList = data.categories.data[3].categories_options
+        console.log("info data", professionList)
+        setProfession(professionList);
+      } catch (error) {
+        window.alert("Error al obtener las profesiones:", error);
+      }
+    };
+
+    handleProfessionChange(); 
+  }, []); 
 
   const [userData, setUserData] = useState({
     id: userLog,
     Nombre: "",
+    Profesion: "",
     Telefono: "",
     País: "",
     Provincia: "",
@@ -105,6 +110,7 @@ function Form({ handleShowForm }) {
   //-PARA ENVIAR CON EL POST--/
   const userDataEnglish = {
     idPeople: userData.id,
+    profession: userData.Profesion,
     fullName: userData.Nombre,
     phone: userData.Telefono,
     country: userData.País,
@@ -241,20 +247,6 @@ function Form({ handleShowForm }) {
                   </option>
                 ))}
               </select>
-              {/* <div
-                  className={
-                    userData.Provincia &&
-                    (localErrors.Provincia
-                      ? styles.errorMessage
-                      : styles.errorNotMessage)
-                  }
-                >
-                  {userData.Provincia
-                    ? localErrors.Provincia
-                      ? localErrors.Provincia
-                      : "Datos Válidos"
-                    : null}
-                </div> */}
             </div>
 
             <div className={styles.FormDivInputFlex}>
@@ -278,20 +270,6 @@ function Form({ handleShowForm }) {
                     </option>
                   ))}
               </select>
-              {/* <div
-                  className={
-                    userData.Localidad &&
-                    (localErrors.Localidad
-                      ? styles.errorMessage
-                      : styles.errorNotMessage)
-                  }
-                >
-                  {userData.Localidad
-                    ? localErrors.Localidad
-                      ? localErrors.Localidad
-                      : "Datos Válidos"
-                    : null}
-                </div> */}
             </div>
           </div>
           <div className={styles.FormDivInput}>
@@ -322,28 +300,25 @@ function Form({ handleShowForm }) {
 
           <div className={styles.FormDivInput}>
             <label className={styles.labels}>*Profesión:</label>
-            <input
-              className={styles.inputs}
-              type="text"
-              name="Ocupación"
-              value={userData.Ocupación}
-              onChange={handleChange}
-              placeholder="Ej: Enfermera"
-            />
-            <div
-              className={
-                userData.Ocupación &&
-                (localErrors.Ocupación
-                  ? styles.errorMessage
-                  : styles.errorNotMessage)
-              }
-            >
-              {userData.Ocupación
-                ? localErrors.Ocupación
-                  ? localErrors.Ocupación
-                  : "Datos Válidos"
-                : null}
-            </div>
+            <select
+                className={styles.inputSelect}
+                name="Ocupación"
+                value={userData.profession}
+                onChange={handleChange}
+              >
+                <option value="" disabled>
+                  Selecciona una profesión
+                </option>
+                {Array.isArray(profession) &&
+                  profession.map((profession) => (
+                    <option
+                      key={profession.idOption}
+                      value={profession.idOption}
+                    >
+                      {profession.description}
+                    </option>
+                  ))}
+              </select>
           </div>
 
           <div className={styles.FormDivInput}>

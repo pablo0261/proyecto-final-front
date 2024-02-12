@@ -9,7 +9,6 @@ function ProviderServices(props) {
     const [servicesData, setServicesData] = useState([])
 
     useEffect(() => {
-        //*Todo esto recorre y valida la info del usuario para ver los servicios y precios
         if (infoProvider.categories.length != 0) {
             const services = infoProvider.categories[0]
 
