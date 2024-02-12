@@ -24,12 +24,12 @@ function ProfileProvider() {
     province: infoUserLog.provinceName || "Buenos Aires",
     state: infoUserLog.state || "Activo",
     country: infoUserLog.country || "Argentina",
-    profesion: infoUserLog.profession || "Enfermero",
+    profession: infoUserLog.profession || "",
     aboutMe: infoUserLog.aboutMe || "Predispuesto y Dedicado",
     phone: infoUserLog.phone || "02918145869",
     email: infoUserLog.email || "diegolepore@gmail.com",
     averageRating: infoUserLog.averageRating || "4.9",
-    countRating: infoUserLog.countRating.toString() || "127",
+    countRating: infoUserLog.countRating?.toString() || "127",
     image: infoUserLog.image || "https://res.cloudinary.com/dn3kedyer/image/upload/v1707141615/image/g08drlndxzjhmpbtxbdw.png",
   };
 
@@ -60,7 +60,7 @@ function ProfileProvider() {
       <div className={style.wrapper}>
         <div className={style.alertWrapper}>
           {
-            !Verification /* && isProvider */ &&
+            !Verification &&
             <div className={style.verificationAlert}>
               <p className={style.textAlert}>Completa tu perfil para poder verificar tu cuenta. Ten en cuenta que los perfiles no verificados no son mostrados a los clientes.</p>
             </div>
@@ -86,14 +86,14 @@ function ProfileProvider() {
               <button onClick={() => handleShowForm()} className={style.editButton}></button>
             </div>
             <p className={style.textData}>{formData.age} años | {formData.address}, {formData.location}, {formData.province}, {formData.country}</p>
-            <p className={style.textOcupation}>{formData.profesion}</p>
+            <p className={style.textOcupation}>{formData.profession}</p>
             <p className={style.textDetail}>{formData.aboutMe}</p>
             <div className={style.contacts}>
               <p className={style.textContact}>Contactos: </p>
               <div className={style.iconEmail}></div>
-              { /* isProvider && */ <p className={style.textEmail}>{formData.email}</p>}
+              <p className={style.textEmail}>{formData.email}</p>
               <div className={style.iconPhone}></div>
-              { /* isProvider && */ <p className={style.textPhone}>{formData.phone}</p>}
+              <p className={style.textPhone}>{formData.phone}</p>
             </div>
           </div>
         </div>
