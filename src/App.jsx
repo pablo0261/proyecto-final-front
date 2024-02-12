@@ -13,6 +13,8 @@ import ReportsProviderView from './Views/ProviderViews/ReportsProviderView';
 import ConnectionsProviderView from './Views/ProviderViews/ConnectionsProviderView';
 import Success from './Views/Success/Success';
 import Failure from './Views/Failure/Failure';
+import Assistance from './Views/Assistance/Assistance';
+import AdminUsersView from './Views/AdminUsersView/AdminUsersView';
 import FAQs from './Views/FAQs/FAQs';
 import ConsultReport from './Views/ConsultReport/ConsultReport'
 import { useDispatch, useSelector } from 'react-redux';
@@ -95,6 +97,7 @@ function App() {
                 <Route path={Helpers.ReportsCustomerView} element={<ReportsCustomerView />} />
                 <Route path={Helpers.ProfileCustomerView} element={<ProfileProviderView />} />
                 <Route path={Helpers.ProviderDetail} element={<ProviderDetail/>}></Route>
+                <Route path={Helpers.AdminUsersView} element={<AdminUsersView />} />
 
                 <Route path='*' element={<NotFound />}></Route>
               </Routes>

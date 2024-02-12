@@ -10,6 +10,8 @@ import {
   GET_FILTER_PROVIDER,
   FILTER_ORDER_SELECTED,
   POST_NEW_INFO_USER,
+  SET_CHAT,
+  GET_PEOPLE,
   SET_OPPORTUNITIE,
   SET_SELECTED_OPPORTUNITIE,
   CREATE_REPORT,
@@ -22,6 +24,7 @@ let initialState = {
   infoUserLog: { },
 
   //Filter and getpeople
+  peopleForAdmin: [], /** El estado contiene los people que la tabla del admin*/
   homeCustomerProviders: [],
   getAllPeople: [],
   paginacionData: [],
@@ -82,6 +85,12 @@ const rootReducer = (state = initialState, { type, payload }) => {
         infoUserLog: payload,
       };
 
+    case GET_PEOPLE:
+      return {
+        ...state,
+        peopleForAdmin: payload,
+      };
+    
     case GET_HOME_PROVIDER:
       return {
         ...state,

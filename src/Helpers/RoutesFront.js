@@ -20,6 +20,9 @@ const Helpers = {
     StatsProviderView: "/statsProviderView", 
     Form: "/form/:component", 
 
+    /* Admin*/
+    AdminUsersView: "/AdminUsersView",
+
     /* Footer */
     FAQs: "/frequently-asked-questions",
     ConsultReport: "/consult-report",

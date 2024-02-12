@@ -15,6 +15,8 @@ import {
   POST_NEW_SERVICE_USER,
   SET_OPPORTUNITIE,
   CREATE_REPORT,
+  SET_CHAT,
+  GET_PEOPLE,
 } from "./action-types";
 
 const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
@@ -90,6 +92,21 @@ const handleContratService = (item) => {
       dispatch({
         type: CONTRAT_SERVICE_USER,
         payload: response.data,
+      });
+    } catch (error) {
+      window.alert(error);
+    }
+  };
+};
+
+const allPeople = () => {
+  //** Esta ruta solo llama a todos los registrados en la tabla people*/
+  return async (dispatch) => {
+    try {
+      const response = await axios.get(`${REACT_APP_API_URL}/people?typeOfPerson=provider&typeOfPerson=customer`);
+      return dispatch({
+        type: GET_PEOPLE,
+        payload:  response.data.people,
       });
     } catch (error) {
       window.alert(error);
@@ -326,6 +343,7 @@ export {
   getPeopleFilteredOrderedPagination,
   postUserServices,
   saveOrderGlobal,
+  allPeople,
   getOpportunities,
   putOpportunities,
   createReport,
