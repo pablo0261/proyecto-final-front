@@ -8,6 +8,7 @@ const FormFAQs = ({ onAddQuestion }) => {
   const [successMessage, setSuccessMessage] = useState('');
   
   const [formData, setFormData] = useState({
+    typeOfQuestion:'',
     destination:'',
     question: '',
     answer: ''
