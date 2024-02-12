@@ -343,6 +343,8 @@ export {
   getPeopleFilteredOrderedPagination,
   postUserServices,
   saveOrderGlobal,
+  setDataChat,
+  allPeople,
   getOpportunities,
   putOpportunities,
   createReport,
