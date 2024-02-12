@@ -348,6 +348,4 @@ export {
   putOpportunities,
   createReport,
   deleteService,
-  setDataChat,
-  allPeople,
 };
