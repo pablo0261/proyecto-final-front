@@ -15,6 +15,8 @@ import {
   POST_NEW_SERVICE_USER,
   SET_OPPORTUNITIE,
   CREATE_REPORT,
+  CREATE_FAQS,
+  GET_FAQS
 } from "./action-types";
 
 const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
@@ -286,8 +288,32 @@ const getOpportunities = (filter) => {
 const createReport = (formData) => {
   return async (dispatch) => {
     try {
-      const response = await axios.post(`${REACT_APP_API_URL}/xxxx/xxxx`, formData);
+      const response = await axios.post(`${REACT_APP_API_URL}/questions`, formData);
       dispatch({ type: CREATE_REPORT, payload: response.data }); 
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+/* Create FAQs */
+const createFAQs = (formData) => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.post(`${REACT_APP_API_URL}/questions`, formData);
+      dispatch({ type: CREATE_FAQS, payload: response.data }); 
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+/* Get FAQs */
+const getFAQs = () => {
+  return async function (dispatch) {
+    try {
+      const response = await axios(`${REACT_APP_API_URL}/questions`);
+dispatch({ type: GET_FAQS, payload: response.data})
     } catch (error) {
       console.log(error);
     }
@@ -310,4 +336,6 @@ export {
   saveOrderGlobal,
   getOpportunities,
   createReport,
+  createFAQs,
+  getFAQs,
 };

@@ -37,7 +37,7 @@
   textarea {
     height: 100px;
     padding: 10px 15px;
-    @include font($secondaryColor, 16px, normal, normal);
+    @include font($secondaryColor, 18px, normal, normal);
     box-sizing: border-box;
     border: 2px solid $secondaryColor;
     border-radius: 10px;
@@ -66,10 +66,11 @@
   }
 
   button:active {
-    @include buttonPressed
+    @include buttonPressed;
   }
 }
 
 .errorMessage {
-  @include errorMessage
+  @include errorMessage;
+  font-size:large;
 }
