@@ -11,6 +11,7 @@
 .chatWrapper
     width: 100%
     height: 100%
+    position: relative
 
 .msgWrapper
     width: 100%
@@ -18,9 +19,6 @@
     background: url(../../../assets/Icons/BackChat.png)
     background-position: center
     background-size: contain
-    display: flex
-    flex-direction: column
-    justify-content: flex-end
 
 .inputWrapper
     width: 100%
@@ -68,39 +66,64 @@
 .buttonChat:active
     background-color: $alertColor
 
-.msgBoxOwner
-    height: fit-content
-    width: fit-content
-    background-color: #ffc19b
-    border: 1px solid rgba(0, 0, 0, 0.2)
-    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.2)
-    padding: 10px 20px
-    border-radius: 10px
-    margin: 20px
-    align-self: flex-end
+.loadingChat
+    width: 100%
+    height: 100%
     display: flex
-    flex-direction: column
-
-.msgBoxOther
-    height: fit-content
-    width: fit-content
-    background-color: white
-    border: 1px solid rgba(0, 0, 0, 0.2)
-    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.2)
-    padding: 10px 20px
-    border-radius: 10px
-    margin: 20px
-    align-self: flex-start
-    display: flex
-    flex-direction: column
-
-.msg
+    justify-content: center
+    align-items: center
     @include Mixins.font($tertiaryColor, 18px, normal, normal)
     margin: 0
-    text-align: left
 
-.msgDate
-    margin: 10px 0px 0px 0px
-    @include Mixins.font($tertiaryColor, 14px, normal, italic)
-    margin: 0
-    text-align: right
+.buttonWrapper
+    width: 100%
+    height: fit-content
+    top: 15px
+    display: flex
+    flex-direction: row
+    justify-content: center
+    position: absolute
+
+.buttonProcess
+    width: fit-content
+    height: fit-content
+    @include Mixins.buttonActive
+    cursor: pointer
+
+.buttonProcess:hover
+    @include Mixins.buttonHover
+
+.buttonProcess:active
+    @include Mixins.buttonPressed
+
+.formCancel
+    width: 50%
+    height: fit-content
+    position: absolute
+    top: 60px
+
+.inputCancel
+    @include Mixins.inputsFormat
+
+.inputCancel:focus
+    @include Mixins.inputsFormat_Hover
+
+.inputCancel::placeholder
+    @include Mixins.inputsFormat_Placeholder
+
+.buttonSubmit
+    margin-top: 10px
+    padding: 5px 10px
+    border-radius: 8px
+    border: none
+    background-color: $secondaryColor
+    @include Mixins.font(white, 16px, normal, normal)
+    cursor: pointer
+    transition: .2s
+
+.buttonSubmit:hover
+    transform: scale(1.05)
+    background-color: $hoverColor2
+
+.buttonSubmit:active
+    transform: scale(0.9)

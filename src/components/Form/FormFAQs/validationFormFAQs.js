@@ -6,7 +6,7 @@ const Validation = (property, setLocalErrors, userData) => {
           ...prevErrors,
           [property]: '* La pregunta es obligatoria',
         }));
-      } else if (userData[property].length > 50) {
+      } else if (userData[property].length > 150) {
         setLocalErrors((prevErrors) => ({
           ...prevErrors,
           [property]: '* Pregunta demasiada extensa',
@@ -30,7 +30,7 @@ const Validation = (property, setLocalErrors, userData) => {
           ...prevErrors,
           [property]: '* La respuesta es obligatoria',
         }));
-      } else if (userData[property].length > 100) {
+      } else if (userData[property].length > 450) {
         setLocalErrors((prevErrors) => ({
           ...prevErrors,
           [property]: '* Respuesta demasiada extensa',

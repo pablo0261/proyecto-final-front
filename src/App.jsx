@@ -11,6 +11,8 @@ import ConnectionsCustomerView from './Views/CustomerViews/ConnectionsCustomerVi
 import StatsProviderView from './Views/ProviderViews/StatsProviderView';
 import ReportsProviderView from './Views/ProviderViews/ReportsProviderView';
 import ConnectionsProviderView from './Views/ProviderViews/ConnectionsProviderView';
+import Success from './Views/Success/Success';
+import Failure from './Views/Failure/Failure';
 import Assistance from './Views/Assistance/Assistance';
 import AdminUsersView from './Views/AdminUsersView/AdminUsersView';
 import FAQs from './Views/FAQs/FAQs';
@@ -22,6 +24,7 @@ import StoreItem from './Helpers/LocalStorage';
 import { addInfoUserLog, getFiltersOrdersDB, recoverUserLoggedData } from './redux/actions';
 import { jwtDecode } from "jwt-decode";
 import axios from 'axios';
+import ProviderDetail from './Views/CustomerViews/ProviderDetail';
 
 
 function App() {
@@ -53,7 +56,7 @@ function App() {
         dispatch(addInfoUserLog(user))
 
         if (user.typeOfPerson === 'admin') {
-
+          navigate(Helpers.StatsProviderView)
         } else if (user.typeOfPerson === 'provider') {
           navigate(Helpers.StatsProviderView)
         } else {
@@ -74,7 +77,7 @@ function App() {
       callback: handleCallbackResponse
     })
 
-    if (!localStorage.getItem(StoreItem.emailUserLogged)) {   
+    if (!localStorage.getItem(StoreItem.emailUserLogged)) {
       google.accounts.id.prompt();
     }
   }, [])
@@ -93,6 +96,7 @@ function App() {
                 <Route path={Helpers.ConnectionsCustomerView} element={<ConnectionsCustomerView />} />
                 <Route path={Helpers.ReportsCustomerView} element={<ReportsCustomerView />} />
                 <Route path={Helpers.ProfileCustomerView} element={<ProfileProviderView />} />
+                <Route path={Helpers.ProviderDetail} element={<ProviderDetail/>}></Route>
                 <Route path={Helpers.AdminUsersView} element={<AdminUsersView />} />
 
                 <Route path='*' element={<NotFound />}></Route>
@@ -101,14 +105,15 @@ function App() {
             {
               userLoggedInfo.typeOfPerson === 'provider' &&
               <Routes>
+                {/* Enrutador de MercadoPago */}
+                <Route path={Helpers.Success} element={<Success />} />
+                <Route path={Helpers.Failure} element={<Failure />} />
                 {/* Proveedor */}
                 <Route path={Helpers.StatsProviderView} element={<StatsProviderView />} />
                 <Route path={Helpers.ConnectionsProviderView} element={<ConnectionsProviderView />} />
                 <Route path={Helpers.ReportsProviderView} element={<ReportsProviderView />} />
                 <Route path={Helpers.ProfileProviderView} element={<ProfileProviderView />} />
 
-                {/* Footer */}
-                <Route path={Helpers.Assistance} element={<Assistance />} />
                 <Route path={Helpers.FAQs} element={<FAQs />} />
                 <Route path={Helpers.ConsultReport} element={<ConsultReport />} />
 
@@ -116,9 +121,10 @@ function App() {
               </Routes>
             }
             {
-              userLoggedInfo.typeOfPerson === 'admin' &&
+              userLoggedInfo.typeOfPerson === 'administrator' &&
               <Routes>
-                {/* Administrador */}
+                <Route path={Helpers.FAQs} element={<FAQs />} />
+                <Route path={Helpers.ConsultReport} element={<ConsultReport />} />
               </Routes>
             }
             <Footer />
@@ -129,7 +135,6 @@ function App() {
             <Routes>
               <Route exact path={Helpers.Landing} element={<Landing />} />
               <Route path={Helpers.AccessAccount} element={<AccessAccount />} />
-              <Route path={Helpers.Assistance} element={<Assistance />} />
               <Route path={Helpers.FAQs} element={<FAQs />} />
               <Route path={Helpers.ConsultReport} element={<ConsultReport />} />
 

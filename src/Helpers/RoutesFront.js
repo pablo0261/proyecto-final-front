@@ -2,11 +2,16 @@ const Helpers = {
     Landing : "/",
     AccessAccount : "/accessAccount",
 
+    /* Enrutador de MercadoPago */
+    Success: "/success", //*adicionadas por Pablo
+    Failure: "/failure", //*adicionadas por Pablo
+
     /* Cliente */
     HomeCustomerView: "/homeCustomerView",
     ProfileCustomerView: "/profileCustomerView",
     ConnectionsCustomerView: "/connectionsCustomerView",
     ReportsCustomerView: "/reportsCustomerView",
+    ProviderDetail: "/provider/:id",
 
     /* Proveedor */
     ProfileProviderView: "/profileProviderView",
@@ -19,7 +24,6 @@ const Helpers = {
     AdminUsersView: "/AdminUsersView",
 
     /* Footer */
-    Assistance: "/assistance",
     FAQs: "/frequently-asked-questions",
     ConsultReport: "/consult-report",
 }

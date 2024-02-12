@@ -1,47 +1,92 @@
-import { useSelector } from "react-redux";
-import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useState, useEffect } from "react";
+import { deleteService } from "../../../redux/actions/index";
+import Form from "../../Form/FormEducation/FormEducation";
 import style from "./EducationProvider.module.sass";
 
 function EducationProvider() {
-  
-  const categoriesData = useSelector((state) => {
-    return state.allServices[0].categories_options;  
-  });
-
+  const dispatch = useDispatch();
+  const infoUserLog = useSelector((state) => state.infoUserLog);
   const [showForm, setShowForm] = useState(false);
+  const [education, setEducation] = useState([]);
 
-  const renderCategorySection = (category) => {
-    if (!category.categories_options) {
-      return null;
+  const handleShowForm = () => {
+    setShowForm(!showForm);
+  };
+
+  useEffect(() => {
+    if (
+      infoUserLog &&
+      infoUserLog.categories &&
+      infoUserLog.categories.length > 0
+    ) {
+      const educationOptions = infoUserLog.categories[1].categories_options;
+
+      if (educationOptions && educationOptions.length > 0) {
+        const educationData = educationOptions.map((option) => ({
+          idPeople: infoUserLog.idPeople,
+          idOption: option.idOption,
+          education: option.description || "No informado",
+          institution: option.people_options[0].institution || "No informado",
+          year: option.people_options[0]?.year || "No informado",
+          comment:
+            option.people_options[0]?.comment || "No informado",
+        }));
+
+        setEducation(educationData);
+      }
     }
+  }, [infoUserLog]);
 
-    const handleClikForm = () => {
-      setShowForm(!showForm);
+  const handleDeleteService = (idOption, event) => {
+    event.preventDefault();
+    const deleteData = {
+      "idPeople": infoUserLog.idPeople,
+      "idOption": idOption,
     };
-
-    return categoriesData.map((option) => (
-      <div key={option.idOption}>
-        <button onClick={() => handleClikForm()} className={style.editButton}></button>
-        <h2>{category.description}</h2>
-        <p>{option.description}</p>
-      </div>
-    ));
+    dispatch(deleteService(deleteData));
   };
-
-  const renderSections = () => {
-    if (!categoriesData) {
-      return null;
-    }
-
-    return categoriesData.map((category) => (
-      <div key={category.idCategorie}>
-        RENDER SECTION
-        {renderCategorySection(category)}
+  
+  return (
+    <div className={style.container}>
+      <div className={style.titleContainer}>
+        <h1 className={style.title}>Educación</h1>
+        <button onClick={handleShowForm} className={style.editButton}></button>
       </div>
-    ));
-  };
 
-  return <div>Education Provider: {renderSections()}</div>;
+      <div className={style.educationdetailContainer}>
+        {education.map((option, index) => (
+          <div key={option.idOption} >
+            <div className={style.educationdetailbox}>
+              <div className={style.infoContainerLeft}>
+                <h2 className={style.education}>{option.education}</h2>
+                <p className={style.detailInfo}>
+                  {option.institution}
+                  <br />
+                  {option.year}
+                </p>
+              </div>
+              <div className={style.infoContainerRight}>
+                <p className={style.observationInfo}>
+                  {option.comment}
+                </p>
+              </div>
+              <button
+                 onClick={(event) => handleDeleteService(option.idOption, event)}
+                className={style.crossButton}
+              ></button>
+              {showForm && <Form handleShowForm={handleShowForm} />}
+            </div>
+            {index !== education.length - 1 && (
+      <div>
+        <p className={style.line}></p>
+      </div>
+    )}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 }
 
 export default EducationProvider;

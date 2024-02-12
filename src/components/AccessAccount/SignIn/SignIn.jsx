@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { ValidateFormSignIn } from "./ValidateFormSignIn";
 import style from "./SignIn.module.sass";
 import StoreItem from "../../../Helpers/LocalStorage";
-import MercadoPago from "../MercadoPago/MercadoPago";
 
 function SignIn(props) {
   const { isProvider, handleFormsVisibility, signInProcess } = props;
@@ -14,27 +13,6 @@ function SignIn(props) {
     password: "",
     typeOfPerson: isProvider ? "provider" : "customer",
   });
-
-  const [subscription, setSubscription] = useState({
-    items: 
-      {
-        description: "Subscripción",
-        price: Number(1200),
-        quantity: Number(1),
-        currency_id: "ARG",
-      },
-    payer: {
-        name: signInData.fullName,
-        email: signInData.email,
-        password: signInData.password,
-        birthDate: signInData.birthDate,
-        typeOfPerson: signInData.typeOfPerson,
-      },
-  });
-
-  useEffect(() => {
-    localStorage.setItem(StoreItem.dataUserSignIn, JSON.stringify(signInData));
-  }, []);
 
   const [errors, setErrors] = useState({
     fullName: "*Campo Obligatorio",
@@ -69,6 +47,10 @@ function SignIn(props) {
       window.alert("Por favor completa el formulario sin errores");
     }
   };
+
+  useEffect(() => {
+    localStorage.setItem(StoreItem.dataUserSignIn, JSON.stringify(signInData));
+  }, [signInData]);
 
   return (
     <div className={style.wrapper}>
@@ -150,25 +132,11 @@ function SignIn(props) {
             {errors.password ? errors.password : "Datos Validos"}
           </p>
         </div>
-        {isProvider ? (
-          <div>
-            <div className={style.subcription}>
-              <p>{subscription.items.description}</p>
-              <p>ARS ${subscription.items.price}</p>
-            </div>
-            <MercadoPago
-              userData={signInData}
-              errors={errors}
-              subscription={subscription}
-            ></MercadoPago>
-          </div>
-        ) : (
-          <div>
-            <button type="submit" className={style.buttonSubmit}>
-              Registrarse
-            </button>
-          </div>
-        )}
+        <div>
+          <button type="submit" className={style.buttonSubmit}>
+            Registrarse
+          </button>
+        </div>
       </form>
       <div className={style.Questions}>
         <p className={style.text}>¿Ya tienes una cuenta?</p>

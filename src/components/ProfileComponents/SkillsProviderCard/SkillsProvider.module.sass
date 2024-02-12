@@ -1,0 +1,88 @@
+@use '../../../Styles/Mixins'
+@import '../../../Styles/Variables'
+
+.container
+    display: block
+    height: fit-content
+    width: 80%
+    margin-inline: auto
+    margin-top: 10px
+    padding: 5px
+    
+
+.titleContainer
+    display: flex
+    height: fit-content
+    margin-inline: auto
+
+.title
+    width: fit-content
+    margin-left: 0  
+    margin-top: 0
+    text-align: left
+    @include Mixins.font($primaryColor, 35px, bold, normal)
+    
+.editButton
+    position: relative
+    top: 0
+    margin-left: auto
+    width: 40px
+    height: 40px
+    background-image: url('../../../assets/Icons/IconEdit.png')
+    background-position: center
+    background-repeat: no-repeat
+    background-color: white
+    transition: .2s
+    border: none
+    cursor: pointer
+
+.containerCard
+    height: 90px
+    justify-content: left
+    display: flex
+    @include Mixins.boxShadowCard    
+
+.skillsdetailContainer
+    display: flex
+    justify-content: space-around
+    align-items: center
+    width: fit-content
+    margin-inline: 15px
+    margin-bottom: 10px
+
+.skillFalseButton
+    width: fit-content
+    padding: 11px 30px
+    @include Mixins.font($secondaryColor, 18px, normal, normal)
+    background-color: $hoverColorSecondary
+    border: 1px solid $secondaryColor
+    border-radius: 10px
+    text-align: center
+    transition: .2s
+    cursor: pointer
+    margin-top: 18px
+    margin-inline: 10px
+
+.skillFalseButton:hover
+    transform: scale(1.05)
+
+.line
+    width: 90%    
+    margin-inline: auto
+    border-bottom: 2px solid $primaryColor
+
+.crossButton
+    background: none
+    background-image: url('../../../assets/Icons/IconCross.png')
+    height: 40px
+    width: 40px
+    border: none
+    position: relative
+    left: -20px
+    top: -20px
+    margin-block: auto
+    transition: .2s
+    cursor: pointer
+
+.crossButton:hover
+    transform: scale(1.1)

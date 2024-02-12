@@ -1,79 +1,137 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import style from './Connections.module.sass'
 import defaultImage from '../../assets/Icons/PerfilImage.png'
 import ChatBox from './ChatBox/ChatBox'
-import { useDispatch } from 'react-redux'
-import { setDataChat } from '../../redux/actions'
+import { useDispatch, useSelector } from 'react-redux'
+import { getOpportunities } from '../../redux/actions'
+import { useNavigate } from 'react-router-dom'
+import Helpers from '../../Helpers/RoutesFront'
+import PendingBox from './PendingBox/PendingBox'
+import NotChatBox from './NotChatBox/NotChatBox'
 
 function Connections() {
 
-    /* 
-    Guardar en un estado global las oportunidades con un getInstallments.
-    Filtrar por la misma action las oportunidades => Guardar en el estado global.
-    Subscribir el componente a un estado global para renderizar la lista de oportunidades.
-    Renderizar el chat de la primera oportunidad. Pasar por props el id para que pueda renderizar el chat.
-    Cuando se selecciona una lista, hacer el pedido de los chats.
-    Manejar los estados de los chats de forma local.
-    Actualizar cuando haya un cambio en la base de datos. 
-    */
-    const [filter, setFilter] = useState()
-    const [isLoading, setIsLoading] = useState()
-    const [isSelected, setIsSelected] = useState()
-
-    //Temporal
-    const oportunities = [
-        {
-            id: 1
-        },
-        {
-            id: 2
-        }
-    ]
-
+    const opportunities = useSelector(state => state.opportunities)
+    const infoUserLog = useSelector(state => state.infoUserLog)
+    const [filter, setFilter] = useState("accepted")
     const dispatch = useDispatch()
 
-    const handleShowChat = (id) => {
-        setIsLoading(true)
-        //Axios
-        setIsSelected(id)
-        dispatch(setDataChat(id))
-        setIsLoading(false)
+    const [isSelected, setIsSelected] = useState("")
+
+    const orderConstruct = (filter) => {
+        if (filter === "view") return "dateView"
+        if (filter === "pending") return "dateHiring"
+        if (filter === "accepted") return "dateAccepted"
+        if (filter === "ratingPending") return "dateEndService"
+        if (filter === "ratingProviderPending") return "dateRatingProvider"
+        if (filter === "ratingCustomerPending") return "dateRatingCustomer"
+        if (filter === "completed") return "dateEndService"
+        if (filter === "cancelled") return "dateCancelled"
+    }
+
+    useEffect(() => {
+        const opportunitieAxios = async () => {
+            try {
+                if (infoUserLog.typeOfPerson === 'customer') {
+                    const query = `?idCustomer=${infoUserLog.idPeople}${filter && `&state=${filter}`}&idOrder=${orderConstruct(filter)},DESC`
+                    await dispatch(getOpportunities(query))
+                } else if (infoUserLog.typeOfPerson === 'provider') {
+                    const query = `?idProvider=${infoUserLog.idPeople}${filter && `&state=${filter}`}&idOrder=${orderConstruct(filter)},DESC`
+                    await dispatch(getOpportunities(query))
+                }
+            } catch (error) {
+                window.alert(error)
+            }
+        }
+
+        opportunitieAxios()
+    }, [filter])
+
+    const handleSelectedOpportunitie = async (idOpportunitie) => {
+        setIsSelected(idOpportunitie)
     }
 
     const handleFilter = (filter) => {
+        setIsSelected("")
         setFilter(filter)
+    }
+    
+    const navigate = useNavigate()
+
+    const handleNavigate = (opportunitie) => {
+        if (infoUserLog.typeOfPerson === 'customer') {
+            navigate(Helpers.ProviderDetail.replace(":id", opportunitie.idProvider))
+        } else if (infoUserLog.typeOfPerson === 'provider') {
+            navigate(Helpers.ProviderDetail.replace(":id", opportunitie.idCustomer))
+        } else {
+            window.alert("Vacio")
+        }
+    }
+
+    const formatearFecha = (fechaString) => {
+        const fecha = new Date(fechaString)
+
+        const horas = fecha.getHours().toString().padStart(2, '0')
+        const minutos = fecha.getMinutes().toString().padStart(2, '0')
+        const dia = fecha.getDate().toString().padStart(2, '0')
+        const mes = (fecha.getMonth() + 1).toString().padStart(2, '0')
+        const año = fecha.getFullYear()
+
+        return `${horas}:${minutos} - ${dia}/${mes}/${año}`
     }
 
     return (
         <div className={style.wrapper}>
             <div className={style.filterWrapper}>
-                <button className={filter === "view" ? style.filterButtonPressed : style.filterButton} onClick={() => handleFilter('view')}>Visitados</button>
+                {
+                    infoUserLog.typeOfPerson === 'customer' && <button className={filter === "view" ? style.filterButtonPressed : style.filterButton} onClick={() => handleFilter('view')}>Visitados</button>
+                }
                 <button className={filter === "pending" ? style.filterButtonPressed : style.filterButton} onClick={() => handleFilter('pending')}>Pendientes</button>
-                <button className={filter === "confirmed" ? style.filterButtonPressed : style.filterButton} onClick={() => handleFilter('confirmed')}>Confirmados</button>
-                <button className={filter === "toRank" ? style.filterButtonPressed : style.filterButton} onClick={() => handleFilter('toRank')}>A Evaluar</button>
-                <button className={filter === "ended" ? style.filterButtonPressed : style.filterButton} onClick={() => handleFilter('ended')}>Finalizados</button>
-                <button className={filter === "canceled" ? style.filterButtonPressed : style.filterButton} onClick={() => handleFilter('canceled')}>Cancelados</button>
+                <button className={filter === "accepted" ? style.filterButtonPressed : style.filterButton} onClick={() => handleFilter('accepted')}>Confirmados</button>
+                <button className={filter === "ratingPending" ? style.filterButtonPressed : style.filterButton} onClick={() => handleFilter('ratingPending')}>Calificar</button>
+                {
+                    infoUserLog.typeOfPerson === 'provider'
+                        ? <button className={filter === "ratingProviderPending" ? style.filterButtonPressed : style.filterButton} onClick={() => handleFilter('ratingProviderPending')}>Calificar por Mi</button>
+                        : <button className={filter === "ratingCustomerPending" ? style.filterButtonPressed : style.filterButton} onClick={() => handleFilter('ratingCustomerPending')}>Calificar por Mi</button>
+                }
+                <button className={filter === "completed" ? style.filterButtonPressed : style.filterButton} onClick={() => handleFilter('completed')}>Finalizados</button>
+                <button className={filter === "cancelled" ? style.filterButtonPressed : style.filterButton} onClick={() => handleFilter('cancelled')}>Cancelados</button>
             </div>
             <div className={style.connectionsWrapper}>
                 <div className={style.listWrapper}>
                     {
-                        oportunities.map((oportunitie) => (
-                            <div key={oportunitie.id} className={isSelected === oportunitie.id ? style.userConnectionSelected : style.userConnection } onClick={() => handleShowChat(oportunitie.id)}>
-                                <img src={defaultImage} className={style.img}></img>
+                        opportunities.length != 0 && opportunities.map((oportunitie) => (
+                            <div
+                                key={oportunitie.idOpportunitie}
+                                className={isSelected === oportunitie.idOpportunitie ? style.userConnectionSelected : style.userConnection}
+                                onClick={() => {
+                                    if (filter != "view") {
+                                        return handleSelectedOpportunitie(oportunitie.idOpportunitie)
+                                    }
+                                }}>
+                                <img src={oportunitie.provider.image || defaultImage} className={style.img} onClick={() => handleNavigate(oportunitie)}></img>
                                 <div className={style.userWrapper}>
-                                    <p className={style.textUser}>Nombre de Usuario</p>
-                                    <p className={style.textDate}>12/05/2024</p>
+                                    <p className={style.textUser}>{oportunitie.provider.fullName}</p>
+                                    <p className={style.textDate}>{
+                                        filter === "view" && formatearFecha(oportunitie.dateView) ||
+                                        filter === "pending" && formatearFecha(oportunitie.dateHiring) ||
+                                        filter === "accepted" && formatearFecha(oportunitie.dateAccepted) ||
+                                        filter === "ratingCustomerPending" && formatearFecha(oportunitie.dateRatingCustomer) ||
+                                        filter === "ratingProviderPending" && formatearFecha(oportunitie.dateRatingProvider) ||
+                                        filter === "completed" && formatearFecha(oportunitie.dateEndService) ||
+                                        filter === "cancelled" && formatearFecha(oportunitie.dateCancelled)
+                                    }</p>
                                 </div>
                             </div>
                         ))
                     }
                 </div>
                 {
-                    isLoading
-                        ? <div>Cargando Chat</div>
-                        : <ChatBox></ChatBox>
+                    filter === "view" && <div className={style.loadingChat}> Proveedores Visitados </div> ||
+                    filter === "pending" && <PendingBox idOpportunitie={isSelected} infoUserLog={infoUserLog} opportunities={opportunities}></PendingBox> ||
+                    filter === "accepted" && <ChatBox idOpportunitie={isSelected} infoUserLog={infoUserLog} opportunities={opportunities}></ChatBox> ||
+                    <NotChatBox idOpportunitie={isSelected} infoUserLog={infoUserLog} opportunities={opportunities}></NotChatBox>
                 }
-
             </div>
         </div>
     )
