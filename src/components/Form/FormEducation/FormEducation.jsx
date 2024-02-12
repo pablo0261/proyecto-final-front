@@ -5,40 +5,44 @@ import Validation from "../FormEducation/validationFormEducation";
 import styles from "./FormEducation.module.sass";
 
 function Form({ handleShowForm }) {
+  const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
   const dispatch = useDispatch();
-  const infoUserLog = useSelector((state) => state.infoUserLog);
+  const userLog = useSelector((state) => state.infoUserLog);
 
   
-  const [updatedUserData, setupdatedUserData] = useState({
-    
-    idPeople: infoUserLog.idPeople,
+  const [userData, setUserData] = useState({
+    idPeople: userLog.idPeople,
     idOption: "",
     institution: "",
     year: "",
     comment: "",
   });
 
+  const [education, setEducation] = useState([]);
+
   useEffect(() => {
-    setupdatedUserData((prevupdatedUserData) => ({
-      ...prevupdatedUserData,
-      idPeople: infoUserLog.idPeople,
-    }));
+    const fetchEducation = async () => {
+      try {
+        const response = await fetch(`${REACT_APP_API_URL}/categories`);
+        const data = await response.json();
+        const educationOptions = data.categories.data[1].categories_options.map(
+          (option) => {
+            return { description: option.description, idOption: option.idOption }
+          }
+        )
+        setEducation(educationOptions);
+      } catch (error) {
+        console.error("Error al obtener las opciones de educación:", error);
+      }
+    };
+
+    fetchEducation();
   }, []);
-
-
-
-
-
-
-
-
-
-
 
   const handleEducationAdd = (event) => {
     event.preventDefault();
     try {
-      dispatch(postUserServices(updatedUserData));
+      dispatch(postUserServices(userData));
       handleShowForm();
     } catch (error) {
       console.error("Error al guardar la educación", error);
@@ -56,21 +60,18 @@ function Form({ handleShowForm }) {
     const property = event.target.name;
     let value = event.target.value;
   
-    if (property === "education") {//* esto es para guardar en updateUserData el idOpcion del la educación seleccionada
-      const option = infoUserLog.categories[1].categories_options.find(
-        (opt) => opt.description === value
-      );
+    if (property === "education") {
+      const option = education.find((opt) => opt.description === value);
       if (option) {
-        value = option.description;
-        setupdatedUserData((prevupdatedUserData) => ({
-          ...prevupdatedUserData,
+        setUserData((prevUserData) => ({
+          ...prevUserData,
           idOption: option.idOption,
           [property]: value,
         }));
       }
     } else {
-      Validation(property, setLocalErrors, { ...updatedUserData, [property]: value });
-      setupdatedUserData({ ...updatedUserData, [property]: value });
+      Validation(property, setLocalErrors, { ...userData, [property]: value });
+      setUserData({ ...userData, [property]: value });
     }
   };
 
@@ -83,20 +84,18 @@ function Form({ handleShowForm }) {
           onClick={() => handleShowForm()}
         ></button>
         <p className={styles.textTitle}>Agregue Su Nivel de Educación</p>
-        <form className={styles.Form} onSubmit={handleEducationAdd}>
+        <form className={styles.Form} onSubmit={(event) => handleEducationAdd(event)}>
           <div className={styles.FormDivInput}>
             <div className={styles.FormDivInput}>
               <label className={styles.labels}>Nivel de Educación</label>
               <select
                 className={styles.inputDetail}
                 name="education"
-                value={updatedUserData.education}
+                value={userData.education}
                 onChange={handleChange}
               >
                 <option value="">Seleccione una opción</option>
-                {infoUserLog.categories &&
-                  infoUserLog.categories.length > 0 &&
-                  infoUserLog.categories[1].categories_options.map((option) => (
+                {education.map((option) => (
                     <option key={option.idOption} value={option.description}>
                       {option.description}
                     </option>
@@ -104,13 +103,13 @@ function Form({ handleShowForm }) {
               </select>
               <div
                 className={
-                  updatedUserData.education &&
+                  userData.education &&
                   (localErrors.education
                     ? styles.errorMessage
                     : styles.errorNotMessage)
                 }
               >
-                {updatedUserData.education
+                {userData.education
                   ? localErrors.education
                     ? localErrors.education
                     : "Datos Válidos"
@@ -124,19 +123,19 @@ function Form({ handleShowForm }) {
                 className={styles.inputDetail}
                 type="text"
                 name="institution"
-                value={updatedUserData.institution}
+                value={userData.institution}
                 onChange={handleChange}
                 placeholder=""
               />
               <div
                 className={
-                  updatedUserData.institution &&
+                  userData.institution &&
                   (localErrors.institution
                     ? styles.errorMessage
                     : styles.errorNotMessage)
                 }
               >
-                {updatedUserData.institution
+                {userData.institution
                   ? localErrors.institution
                     ? localErrors.institution
                     : "Datos Válidos"
@@ -152,19 +151,19 @@ function Form({ handleShowForm }) {
                 className={styles.inputs}
                 type="text"
                 name="year"
-                value={updatedUserData.year}
+                value={userData.year}
                 onChange={handleChange}
                 placeholder=""
               />
               <div
                 className={
-                  updatedUserData.year &&
+                  userData.year &&
                   (localErrors.year
                     ? styles.errorMessage
                     : styles.errorNotMessage)
                 }
               >
-                {updatedUserData.year
+                {userData.year
                   ? localErrors.year
                     ? localErrors.year
                     : "Datos Válidos"
@@ -178,19 +177,19 @@ function Form({ handleShowForm }) {
                 className={styles.inputDetailObservation}
                 type="text"
                 name="comment"
-                value={updatedUserData.comment}
+                value={userData.comment}
                 onChange={handleChange}
                 placeholder=""
               />
               <div
                 className={
-                  updatedUserData.comment &&
+                  userData.comment &&
                   (localErrors.comment
                     ? styles.errorMessage
                     : styles.errorNotMessage)
                 }
               >
-                {updatedUserData.comment
+                {userData.comment
                   ? localErrors.comment
                     ? localErrors.comment
                     : "Datos Válidos"

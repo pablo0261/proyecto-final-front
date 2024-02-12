@@ -10,17 +10,10 @@ function Form({ handleShowForm }) {
   const userLog = useSelector((state) => state.infoUserLog);
 
   const [userData, setUserData] = useState({
-    idPeople: userLog,
+    idPeople: userLog.idPeople,
     price: "",
     idOption: "" | "1",
   });
-
-  useEffect(() => {
-    setUserData((prevUserData) => ({
-      ...prevUserData,
-      idPeople: userLog.idPeople,
-    }));
-  }, []);
 
   const [services, setServices] = useState([]);
 
@@ -41,7 +34,7 @@ function Form({ handleShowForm }) {
     };
 
     fetchServices();
-  }, [userLog]);
+  }, []);
 
   const handleServicesAdd = (event) => {
     event.preventDefault();
@@ -82,7 +75,7 @@ function Form({ handleShowForm }) {
           onClick={() => handleShowForm()}
         ></button>
         <p className={styles.textTitle}>Agregue los Servicios que ofrece</p>
-        <form className={styles.Form} onSubmit={handleServicesAdd}>
+        <form className={styles.Form} onSubmit={(event) => handleServicesAdd(event)}>
           <div className={styles.FormDivFlex}>
             <div className={styles.FormDivInputFlex}>
               <label className={styles.labels}>Servicios:</label>

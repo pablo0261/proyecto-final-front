@@ -225,10 +225,9 @@ const postUserServices = (updatedUserData) => {
         `${REACT_APP_API_URL}/people/options`,
         updatedUserData
       );
-      console.log("Response from services", response);
         dispatch({
           type: POST_NEW_SERVICE_USER,
-          payload: response.data.result.people.data[0].people,
+          payload: response.data.response.people.data[0].people
         });
         
     } catch (error) {
@@ -259,7 +258,6 @@ const deleteService = (deleteData) => {
           })
         }
       } catch (error) {
-        console.log("deleteData", deleteData)
       if (error.response && error.response.data) {
         dispatch({
           type: SET_ERROR_BACK,
@@ -297,19 +295,24 @@ const getOpportunities = (filter) => {
           payload : response.data.data,
         })
       }
-      if (response.status === 204) {
+    } catch (error) {
+      window.alert(error)
+    }
+  }
+}
+
+const putOpportunities = (data) => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.put(`${REACT_APP_API_URL}/opportunities`, data)
+      if (response.status === 200) {
         return dispatch({
-          type: SET_OPPORTUNITIE,
-          payload: response.data.data
+          type : SET_OPPORTUNITIE,
+          payload : response.data.data,
         })
       }
     } catch (error) {
-      if (error.response.status === 409) {
-        return dispatch({
-          type: SET_OPPORTUNITIE,
-          payload: []
-        })
-      }
+      window.alert(error)
     }
   }
 }
@@ -321,7 +324,7 @@ const createReport = (formData) => {
       const response = await axios.post(`${REACT_APP_API_URL}/xxxx/xxxx`, formData);
       dispatch({ type: CREATE_REPORT, payload: response.data }); 
     } catch (error) {
-      console.log(error);
+      window.alert(error);
     }
   };
 };
@@ -343,6 +346,7 @@ export {
   setDataChat,
   allPeople,
   getOpportunities,
+  putOpportunities,
   createReport,
   deleteService,
 };
