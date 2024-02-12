@@ -29,7 +29,7 @@ function ProfileProvider() {
     phone: infoUserLog.phone || "02918145869",
     email: infoUserLog.email || "diegolepore@gmail.com",
     averageRating: infoUserLog.averageRating || "4.9",
-    countRating: infoUserLog.countRating.toString() || "127",
+    countRating: infoUserLog.countRating?.toString() || "127",
     image: infoUserLog.image || "https://res.cloudinary.com/dn3kedyer/image/upload/v1707141615/image/g08drlndxzjhmpbtxbdw.png",
   };
 
@@ -60,7 +60,7 @@ function ProfileProvider() {
       <div className={style.wrapper}>
         <div className={style.alertWrapper}>
           {
-            !Verification /* && isProvider */ &&
+            !Verification &&
             <div className={style.verificationAlert}>
               <p className={style.textAlert}>Completa tu perfil para poder verificar tu cuenta. Ten en cuenta que los perfiles no verificados no son mostrados a los clientes.</p>
             </div>
@@ -91,9 +91,9 @@ function ProfileProvider() {
             <div className={style.contacts}>
               <p className={style.textContact}>Contactos: </p>
               <div className={style.iconEmail}></div>
-              { /* isProvider && */ <p className={style.textEmail}>{formData.email}</p>}
+              <p className={style.textEmail}>{formData.email}</p>
               <div className={style.iconPhone}></div>
-              { /* isProvider && */ <p className={style.textPhone}>{formData.phone}</p>}
+              <p className={style.textPhone}>{formData.phone}</p>
             </div>
           </div>
         </div>

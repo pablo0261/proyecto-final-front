@@ -1,15 +1,15 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
-import { deleteService } from "../../../redux/actions/index";
-import Form from "../../Form/FormEducation/FormEducation";
+import ScheduleForm from "../../Form/FormSchedule/FormSchedule";
 import styles from "./ScheduleProvider.module.sass";
 import okIcon from "../../../assets/Icons/IconCheck.png";
+import emptyIcon from "../../../assets/Icons/IconCheckEmpty.png";
 
 function ScheduleProviderCard() {
   const dispatch = useDispatch();
   const infoUserLog = useSelector((state) => state.infoUserLog);
   const [showForm, setShowForm] = useState(false);
-  const [eschedule, setEschedule] = useState([]);
+  const [schedule, setSchedule] = useState([]);
 
   const handleShowForm = () => {
     setShowForm(!showForm);
@@ -41,7 +41,13 @@ function ScheduleProviderCard() {
   // }, [infoUserLog]);
 
   //! Esto de aqui abajo luego de traer la info del back quitarlo
-  const schedule = infoUserLog.schedule || [true, true, false, true, true, false, true, true, false, true, true, false, true, true, false, true, true, false];
+  useEffect(() => {
+    const exampleSchedule = infoUserLog.schedule || [
+      true, true, false, true, true, false, true, true, false, true, true, false, true, true, false, true, true, false
+    ];
+    setSchedule(exampleSchedule);
+  }, [infoUserLog.schedule]);
+
 
   const daysOfWeek = [
     "Lunes",
@@ -81,7 +87,7 @@ function ScheduleProviderCard() {
                  {schedule[shiftIndex * daysOfWeek.length + dayIndex] ? (
                    <img src={okIcon} alt="OK" /> 
                  ) : (
-                   ""
+                  <img src={emptyIcon} alt="OK" />
                  )}
                </td>
               ))}
@@ -90,6 +96,7 @@ function ScheduleProviderCard() {
         </tbody>
       </table>
       </div>
+      {showForm && <ScheduleForm handleShowForm={handleShowForm} />} 
     </div>
   );
 }

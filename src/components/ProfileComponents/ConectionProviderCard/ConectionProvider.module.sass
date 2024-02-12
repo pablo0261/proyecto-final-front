@@ -1,0 +1,55 @@
+@use '../../../Styles/Mixins'
+@import '../../../Styles/Variables'
+
+.container 
+  position: fixed
+  bottom: 20px  
+  left: 40px
+  display: flex
+  height: fit-content
+  width: 25%
+  height: 80px
+  margin: auto
+  padding: 5px
+  border: 1px solid rgba(128, 128, 128, 0.3)
+  box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.05)
+  background-color: white
+  border-radius: 50px
+  z-index: 1
+
+.imageContainer
+    width: 80px
+    height: 70px
+    border-radius: 50%
+      
+.imagen
+    width: 100%
+    height: 100%
+    object-fit: cover
+    border-radius: inherit 
+       
+.infoContainer
+    display: flex
+    flex-direction: column
+    height: 100%
+    margin-left: 10px
+    text-align: left
+
+.name
+  @include Mixins.font($primaryColor, 20px, bold, normal)
+  text-align: left
+  margin-top: 2px
+
+.stateActive
+  margin: 0
+  @include Mixins.font($textSuccessColor , 16px, normal , normal)
+  margin-top: -15px
+
+.stateInactive
+  margin: 0
+  @include Mixins.font(black , 16px, normal , normal)
+  margin-top: -15px
+
+.infoResponse
+  @include Mixins.font(black, 18px, normal, normal)
+  margin-top: -10px 
