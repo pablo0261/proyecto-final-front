@@ -16,7 +16,7 @@ import {
   SET_OPPORTUNITIE,
   CREATE_REPORT,
   CREATE_FAQS,
-  GET_FAQS
+  GET_FAQS,
   SET_CHAT,
   GET_PEOPLE,
 } from "./action-types";
@@ -357,28 +357,9 @@ dispatch({ type: GET_FAQS, payload: response.data})
 };
 
 /* Create FAQs */
-const createFAQs = (formData) => {
-  return async (dispatch) => {
-    try {
-      const response = await axios.post(`${REACT_APP_API_URL}/questions`, formData);
-      dispatch({ type: CREATE_FAQS, payload: response.data }); 
-    } catch (error) {
-      console.log(error);
-    }
-  };
-};
 
-/* Get FAQs */
-const getFAQs = () => {
-  return async function (dispatch) {
-    try {
-      const response = await axios(`${REACT_APP_API_URL}/questions`);
-dispatch({ type: GET_FAQS, payload: response.data})
-    } catch (error) {
-      console.log(error);
-    }
-  };
-};
+
+
 
 export {
   addInfoUserLog,
