@@ -180,6 +180,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
 
       /* Create report */
       case CREATE_REPORT:
+        console.log('Nuevo estado para createReport:', payload)
         return {
             ...state,
             createReport: payload,

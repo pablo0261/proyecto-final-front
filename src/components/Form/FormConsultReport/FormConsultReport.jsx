@@ -17,6 +17,7 @@ const FormConsultReport = () => {
         title: '',
         message: '',
     });
+    console.log(formData);
 
     const [errors, setErrors] = useState({
         fullname: '',

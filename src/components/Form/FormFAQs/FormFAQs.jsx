@@ -4,12 +4,12 @@ import styles from "./FormFAQs.module.scss";
 import { useDispatch } from 'react-redux';
 import { createFAQs } from '../../../redux/actions/index';
 
-const FormFAQs = ({ onAddQuestion }) => {
+const FormFAQs = ({ onAddQuestion, typeOfQuestion }) => {
   const [successMessage, setSuccessMessage] = useState('');
   
   const [formData, setFormData] = useState({
-    typeOfQuestion:'',
-    destination:'',
+    typeOfQuestion:'TYPE_OF_QUESTION_FAQ',
+    destination:typeOfQuestion === 'provider' ? ' USER_PROVIDER' : 'USER_CUSTOMER',
     question: '',
     answer: ''
 });

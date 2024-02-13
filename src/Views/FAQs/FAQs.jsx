@@ -189,7 +189,7 @@ const FAQs = () => {
           <button className={styles.buttons} onClick={() => handleToggleForm('provider')}>
             {showForm && faqType === 'provider' ? 'Cancelar' : 'Crear Pregunta'}
           </button>
-          {showForm && faqType === 'provider' && <FormFAQs onAddQuestion={handleAddQuestion} />}
+          {showForm && faqType === 'provider' && <FormFAQs onAddQuestion={handleAddQuestion}typeOfQuestion="provider"/>}
         </>
       )}
 
@@ -230,7 +230,7 @@ const FAQs = () => {
           <button className={styles.buttons} onClick={() => handleToggleForm('client')}>
             {showForm && faqType === 'client' ? 'Cancelar' : 'Crear Pregunta'}
           </button>
-          {showForm && faqType === 'client' && <FormFAQs onAddQuestion={handleAddQuestion} />}
+          {showForm && faqType === 'client' && <FormFAQs onAddQuestion={handleAddQuestion} typeOfQuestion="client"/>}
         </>
       )}
 

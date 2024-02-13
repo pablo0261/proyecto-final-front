@@ -325,7 +325,11 @@ const createReport = (formData) => {
   return async (dispatch) => {
     try {
       const response = await axios.post(`${REACT_APP_API_URL}/questions`, formData);
-      dispatch({ type: CREATE_REPORT, payload: response.data }); 
+      dispatch({ 
+        type: CREATE_REPORT, 
+        payload: response.data 
+      }); 
+      console.log('Response from server:', response.data);
     } catch (error) {
       window.alert(error);
     }
