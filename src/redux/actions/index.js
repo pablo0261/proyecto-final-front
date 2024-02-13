@@ -15,7 +15,6 @@ import {
   POST_NEW_SERVICE_USER,
   SET_OPPORTUNITIE,
   CREATE_REPORT,
-  SET_CHAT,
   GET_PEOPLE,
 } from "./action-types";
 

@@ -2,46 +2,31 @@ import React, { useEffect } from 'react'
 import FindUserAdmin from '../../components/FindUserAdmin/FindUserAdmin'
 import TableUserDue from '../../components/TableUserDue/TableUserDue'
 import { useSelector, useDispatch } from "react-redux";
-import { allPeople } from "../../redux/actions";
+import { allPeople, getFiltersOrdersDB } from "../../redux/actions";
 import AdminStatistics from '../../components/AdminStatistics/AdminStatistics';
 import AdminServices from '../../components/AdminServices/AdminServices';
 import styles from "../AdminUsersView/AdminUsersView.module.sass"
+import AdminTablas from '../AdminTablas/AdminTablas';
 
 function AdminUsersView() {
-  // const people = useSelector((state) => state.peopleForAdmin.data);
-  // const dispatch = useDispatch();
+const people = useSelector((state) => state.peopleForAdmin.data);
+const servicios = useSelector((state) => state.allServices);
+const dispatch = useDispatch();
 
-  // //*Traen todos los datos para las tablas
-  // useEffect(() => {
-  //     dispatch(allPeople());
-  // }, []);
+useEffect(() => {
+      dispatch(allPeople());
+}, []);
+console.log(people)
 
- 
-
-  return (
-    <div className={styles.ff}>
-
-  
+return (
+  <div className={styles.ff}>
     <div className={styles.containerServices}>
-          {/* {Array.isArray(people) && people.map((user) => <FindUserAdmin key={user.people.idPeople} fullname={user.people}/>)} */}
-        <TableUserDue/>
-        <FindUserAdmin/>
-        {/* <AdminStatistics/> */}
-        {/* <div >
-          <div className={styles.f}>
-            <h2>Generos</h2>
-            <AdminServices/> 
-          </div>
-          <h2>Ocupacion</h2>
-          <AdminServices/>
-          <h2>Servicios</h2>
-          <AdminServices/>
-          <h2>Intereses</h2>
-          <AdminServices/>
-        </div> */}
+      <FindUserAdmin />
+      <TableUserDue />
     </div>
-      </div>
-  )
+  </div>
+)
+
 }
 
 export default AdminUsersView

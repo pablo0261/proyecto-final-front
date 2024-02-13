@@ -1,10 +1,18 @@
-import React from 'react'
-import styles from "./TableUser.module.sass"
+import React, { useEffect } from 'react';
+import styles from "./TableUser.module.sass";
+import { allPeople } from '../../redux/actions';
+import { useDispatch, useSelector } from 'react-redux';
 
 function TableDue() {
+  const people = useSelector((state) => state.peopleForAdmin.data);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    useDispatch(allPeople());
+}, []);
   return (
     <div className={styles.container}>
-      <table classname={styles.customTable}>
+      <table className={styles.customTable}>
         <thead>
           <tr>
             <th>Nombre</th>
@@ -18,33 +26,10 @@ function TableDue() {
             <th></th>
           </tr>
         </thead>
-        <tbody>
-          <tr>
-            <td>Jose Gonzalez</td>
-            <td>josegonzales@gmail.com</td>
-            <td>3812348854</td>
-            <td>Activo</td>
-            <td>ayer</td>
-            <td>6 dias</td>
-            <td><button>MAIL</button></td>
-            <td><button>Activo/Inactivo</button></td>
-            <td><button>Cancelar</button></td>
-          </tr>
-          <tr>
-            <td>Jose Gonzalez</td>
-            <td>josegonzales@gmail.com</td>
-            <td>3812348854</td>
-            <td>Activo</td>
-            <td>ayer</td>
-            <td>6 dias</td>
-            <td><button>MAIL</button></td>
-            <td><button>Activo/Inactivo</button></td>
-            <td><button>Cancelar</button></td>
-          </tr>
-        </tbody>
+        
       </table>
     </div>
-  )
+  );
 }
 
-export default TableDue
+export default TableDue;

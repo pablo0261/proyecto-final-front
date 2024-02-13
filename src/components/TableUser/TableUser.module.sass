@@ -1,3 +1,6 @@
+@use '../../Styles/Mixins'
+@import '../../Styles/Variables'
+
 // table
 //   width: 90%
 //   background-color: #FFFFFF
@@ -22,3 +25,11 @@
 .container 
     display: flex
     justify-content: center
+
+    .days  
+    width: fit-content
+    margin-inline: 10px  
+    margin-top: 10px
+    padding-bottom: 10px
+    text-align: center
+    @include Mixins.font($secondaryColor, 25px, bold, normal)
