@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import CreatableSelect from 'react-select/creatable';
 import styles from "../AdminServices/AdminServices.module.sass"
+import axios from 'axios';
 
 const AdminServices = ({ categoriesOptions, idCategorie }) => {
+  const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
   const createOption = (label) => ({
     label,
     value: label.toLowerCase().replace(/\W/g, ''),
@@ -16,23 +18,24 @@ const AdminServices = ({ categoriesOptions, idCategorie }) => {
   const labelToSend = value && value.label;
 
   useEffect(() => {
-    if (value) {
+    if (value !== null && !defaultOptions.some(option => option.label === value.label)) {
       setIsLoading(false);
-      // dispatch(lafuncioncreadoradelacategoria(idCategorie, labelToSend));
-      console.log(idCategorie);
-      console.log(labelToSend);
-       axios.post(`${REACT_APP_API_URL}/categories/options`, {
-         "idCategorie": idCategorie,
-         "description" : labelToSend
+      axios.post(`${REACT_APP_API_URL}/categories/options`, {
+        "idCategorie": idCategorie,
+        "description": labelToSend
       });
     }
-  }, [value]);
+  }, [value, options]);
 
   const handleCreate = (inputValue) => {
     setIsLoading(true);
     const newOption = createOption(inputValue);
     setOptions((prev) => [...prev, newOption]);
     setValue(newOption);
+    setIsLoading(false);
+    // dispatch(lafuncioncreadoradelacategoria(idCategorie, labelToSend));
+    console.log(idCategorie);
+    console.log(labelToSend);
   };
 
   console.log(value);
