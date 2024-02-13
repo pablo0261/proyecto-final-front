@@ -8,8 +8,9 @@ function TableDue() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    useDispatch(allPeople());
-}, []);
+    dispatch(allPeople());
+  }, []);
+
   return (
     <div className={styles.container}>
       <table className={styles.customTable}>
@@ -26,7 +27,22 @@ function TableDue() {
             <th></th>
           </tr>
         </thead>
-        
+        <tbody>
+          {people.map((person) => (
+            <tr key={person.people.idPeople}>
+              <td>{person.people.fullName}</td>
+              <td>{person.people.email}</td>
+              <td>{person.people.phone}</td>
+                   <td>{person.people.state}</td>
+                   {/* //Hay que revisar el campo del pago */}
+                   <td>{person.people.pago}</td>
+                   <td>{person.people.dateOfAdmission}</td>
+              <td><button>MAIL</button></td>
+              <td><button>Activo/Inactivo</button></td>
+              <td><button>Cancelar</button></td>
+            </tr>
+          ))}
+        </tbody>
       </table>
     </div>
   );

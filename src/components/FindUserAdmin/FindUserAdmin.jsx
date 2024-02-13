@@ -7,12 +7,7 @@ function FindUserAdmin({people}) {
     <div>
       <h2>Buscar Usuario</h2>
       <SearchBar/>
-      <TableUser people={people}/>
-      {/* {Array.isArray(people) && people.length > 0 && (
-        people.map((user) => (
-          <TableUser key={user.people.idPeople} people={user.people} />
-        ))
-      )} */}
+      <TableUser/>
     </div>
   )
 }

@@ -1,8 +1,17 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styles from "./TableUserDue.module.sass"
 import Pagination from '../Pagination/Pagination'
+import { allPeople } from '../../redux/actions';
+import { useDispatch, useSelector } from 'react-redux';
 
 function TableUserDue() {
+  const people = useSelector((state) => state.peopleForAdmin.data);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(allPeople());
+  }, []);
+
   return (
     <div>
       <h2>Usuarios en deuda</h2>
@@ -22,26 +31,19 @@ function TableUserDue() {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>Jose Gonzalez</td>
-            <td>josegonzales@gmail.com</td>
-            <td>3812348854</td>
-            <td>Activo</td>
-            <td>ayer</td>
-            <td>6 dias</td>
-            <td><button>MAIL</button></td>
+        {people.map((person) => (
+            <tr key={person.people.idPeople}>
+              <td>{person.people.fullName}</td>
+              <td>{person.people.email}</td>
+              <td>{person.people.phone}</td>
+                   <td>{person.people.state}</td>
+                   {/* //Hay que revisar el campo del pago */}
+                   <td>{person.people.pago}</td>
+                   <td>{person.people.dateOfAdmission}</td>
+                   <td><button>MAIL</button></td>
             <td><button>On/Off</button></td>
-          </tr>
-          <tr>
-            <td>Jose Gonzalez</td>
-            <td>josegonzales@gmail.com</td>
-            <td>3812348854</td>
-            <td>Activo</td>
-            <td>ayer</td>
-            <td>6 dias</td>
-            <td><button>MAIL</button></td>
-            <td><button>On/Off</button></td>
-          </tr>
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>
