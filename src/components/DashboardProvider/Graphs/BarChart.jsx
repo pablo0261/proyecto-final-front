@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from "react";
 import * as echarts from 'echarts/core';
 import { BarChart } from 'echarts/charts';
-import { xAxis } from 'echarts/core';
 import {
   TitleComponent,
   TooltipComponent,
   LegendComponent,
-  ToolboxComponent
+  ToolboxComponent,
+  GridComponent
 } from 'echarts/components';
 import { CanvasRenderer } from 'echarts/renderers';
-import { GridComponent } from 'echarts/components';
 
 echarts.use([
   BarChart,
@@ -17,8 +16,8 @@ echarts.use([
   TooltipComponent,
   LegendComponent,
   ToolboxComponent,
-  CanvasRenderer,
-  GridComponent
+  GridComponent,
+  CanvasRenderer
 ]);
 
 function PaymentsStatistics() {
@@ -28,14 +27,14 @@ function PaymentsStatistics() {
     const generateRandomPayments = () => {
       const payments = [];
       const currentDate = new Date();
-      const currentMonth = currentDate.getMonth() + 1; 
+      const currentMonth = currentDate.getMonth() + 1;
 
       for (let i = 0; i < 12; i++) {
         const month = (currentMonth - i) <= 0 ? (12 - Math.abs(currentMonth - i)) : (currentMonth - i);
-        const totalPayments = Math.floor(Math.random() * 100) + 1; 
-        const onTimePayments = Math.floor(Math.random() * totalPayments); 
-        const delayedPayments = Math.floor(Math.random() * (totalPayments - onTimePayments)); 
-        const suspendedUsers = Math.floor(Math.random() * (totalPayments - onTimePayments - delayedPayments)); 
+        const totalPayments = Math.floor(Math.random() * 100) + 1;
+        const onTimePayments = Math.floor(Math.random() * totalPayments);
+        const delayedPayments = Math.floor(Math.random() * (totalPayments - onTimePayments));
+        const suspendedUsers = Math.floor(Math.random() * (totalPayments - onTimePayments - delayedPayments));
         payments.push({
           month: month,
           totalPayments: totalPayments,
@@ -49,7 +48,7 @@ function PaymentsStatistics() {
     };
 
     setPaymentData(generateRandomPayments());
-  }, []); 
+  }, []);
 
   useEffect(() => {
     const chartDom = document.getElementById("payments-chart");
@@ -131,7 +130,7 @@ function PaymentsStatistics() {
     return () => {
       myChart.dispose();
     };
-  }, [paymentData]); 
+  }, [paymentData]);
 
   return <div id="payments-chart" style={{ height: "400px" }}></div>;
 }
