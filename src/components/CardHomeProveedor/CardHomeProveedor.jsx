@@ -22,7 +22,7 @@ function Card(props) {
     axios.post(`${REACT_APP_API_URL}/opportunities`, newOportunitie)
       .then((response) => {
         console.log(response)
-        if (response.status === 201) {
+        if (response.status === 201 || response.status === 200) {
           dispatch({
             type: SET_SELECTED_OPPORTUNITIE,
             payload: {
