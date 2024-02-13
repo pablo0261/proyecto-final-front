@@ -106,10 +106,10 @@ function App() {
                 <Route path={Helpers.Success} element={<Success />} />
                 <Route path={Helpers.Failure} element={<Failure />} />
                 {/* Proveedor */}
+                <Route path={Helpers.ProfileProviderView} element={<ProfileProviderView />} />
                 <Route path={Helpers.StatsProviderView} element={<StatsProviderView />} />
                 <Route path={Helpers.ConnectionsProviderView} element={<ConnectionsProviderView />} />
                 <Route path={Helpers.ReportsProviderView} element={<ReportsProviderView />} />
-                <Route path={Helpers.ProfileProviderView} element={<ProfileProviderView />} />
 
                 {/* Footer */}
                 <Route path={Helpers.FAQs} element={<FAQs />} />

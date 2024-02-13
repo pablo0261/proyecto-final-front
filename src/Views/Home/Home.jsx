@@ -86,7 +86,7 @@ const Home = () => {
       } else{
         const queryConstructOrder = `&order=${selectedOrder.map((option) => option).join(';')}`;
         return queryConstructOrder;
-      };
+      }
   };
   const queryProps = queryConstructor();
 
