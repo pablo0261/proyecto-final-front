@@ -15,6 +15,9 @@ import {
   POST_NEW_SERVICE_USER,
   SET_OPPORTUNITIE,
   CREATE_REPORT,
+  CREATE_FAQS,
+  GET_FAQS,
+  SET_CHAT,
   GET_PEOPLE,
 } from "./action-types";
 
@@ -196,11 +199,39 @@ const postUserData = (userDataEnglish) => {
       const response = await axios.post(
         `${REACT_APP_API_URL}/people`,
         userDataEnglish
-      );
+        );
+        console.log(response)
       if (response.status === 200) {
         return dispatch({
           type: POST_NEW_INFO_USER,
-          payload: response.result.people.data[0].people,
+          payload: response.data.people.data[0].people,//* Asi funciona bien para pefil provider
+        });
+      }
+    } catch (error) {
+      if (error.response && error.response.data) {
+        dispatch({
+          type: SET_ERROR_BACK,
+          payload: error.response.data,
+        });
+        window.alert(error);
+        throw error.response.data;
+      }
+    }
+  };
+};
+
+const postUserCalendar = (userData) => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.put(
+        `${REACT_APP_API_URL}/people`,
+        userData
+        );
+        console.log(response.data.people.data[0].people)
+        if (response.status === 200) {
+      dispatch({
+          type: POST_NEW_INFO_USER,
+          payload: response.data.people.data[0].people,
         });
       }
     } catch (error) {
@@ -226,7 +257,33 @@ const postUserServices = (updatedUserData) => {
       );
         dispatch({
           type: POST_NEW_SERVICE_USER,
-          payload: response.data.response.people.data[0].people
+          payload: response.data.people.data[0].people
+        });
+        
+    } catch (error) {
+      if (error.response && error.response.data) {
+        dispatch({
+          type: SET_ERROR_BACK,
+          payload: error.response.data,
+        });
+        window.alert(error);
+        throw error.response.data;
+      }
+    }
+  };
+};
+
+const postUserInteres = (updatedUserData) => {
+  //*(Pablo --> Lo uso para enviar las modificaciones del perfil de los proveedores)
+  return async (dispatch) => {
+    try {
+      const response = await axios.post(
+        `${REACT_APP_API_URL}/people/options`,
+        updatedUserData
+      );
+        dispatch({
+          type: POST_NEW_SERVICE_USER,
+          payload: response.data.people.data[0].people
         });
         
     } catch (error) {
@@ -253,7 +310,7 @@ const deleteService = (deleteData) => {
         if (response.status === 200) {
           return dispatch({
             type: POST_NEW_INFO_USER,
-            payload: response.data.response.people.data[0].people
+            payload: response.data.people.data[0].people
           })
         }
       } catch (error) {
@@ -320,13 +377,42 @@ const putOpportunities = (data) => {
 const createReport = (formData) => {
   return async (dispatch) => {
     try {
-      const response = await axios.post(`${REACT_APP_API_URL}/xxxx/xxxx`, formData);
+      const response = await axios.post(`${REACT_APP_API_URL}/questions`, formData);
       dispatch({ type: CREATE_REPORT, payload: response.data }); 
     } catch (error) {
       window.alert(error);
     }
   };
 };
+
+/* Create FAQs */
+const createFAQs = (formData) => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.post(`${REACT_APP_API_URL}/questions`, formData);
+      dispatch({ type: CREATE_FAQS, payload: response.data }); 
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+/* Get FAQs */
+const getFAQs = () => {
+  return async function (dispatch) {
+    try {
+      const response = await axios(`${REACT_APP_API_URL}/questions`);
+dispatch({ type: GET_FAQS, payload: response.data})
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+/* Create FAQs */
+
+
+
 
 export {
   addInfoUserLog,
@@ -347,4 +433,8 @@ export {
   putOpportunities,
   createReport,
   deleteService,
+  createFAQs,
+  getFAQs,
+  postUserCalendar,
+  postUserInteres,
 };

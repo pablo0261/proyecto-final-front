@@ -13,24 +13,24 @@ const FormConsultReport = () => {
 
     const [formData, setFormData] = useState({
         fullname: '',
-        mail: '',
+        senderMail: '',
         title: '',
-        report: '',
+        message: '',
     });
 
     const [errors, setErrors] = useState({
         fullname: '',
-        mail: '',
+        senderMail: '',
         title: '',
-        report: '',
+        message: '',
     });
 
     const clearFormData = () => {
         setFormData({
             fullname: '',
-            mail: '',
+            senderMail: '',
             title: '',
-            report: '',
+            message: '',
         });
     };
 
@@ -93,7 +93,7 @@ const FormConsultReport = () => {
 
                 {/* Nombre y apellido */}
                 <div className={styles.FormDivInputFlex}>
-                    <label htmlFor="">Nombre y Apellido:</label>
+                    <label htmlFor="fullname">Nombre y Apellido:</label>
                     <input
                         id="fullname"
                         type="text"
@@ -107,21 +107,21 @@ const FormConsultReport = () => {
 
                 {/* Correo electronico */}
                 <div className={styles.FormDivInputFlex}>
-                    <label htmlFor="">Email:</label>
+                    <label htmlFor="senderMail">Email:</label>
                     <input
-                        id="mail"
-                        name="mail"
+                        id="senderMail"
+                        name="senderMail"
                         type="email"
-                        value={formData.mail}
+                        value={formData.senderMail}
                         onChange={handleChange}
                         placeholder="example@mail.com"
                     />
-                    <p className={styles.errorMessage}>{errors.mail}</p>
+                    <p className={styles.errorMessage}>{errors.senderMail}</p>
                 </div>
 
                 {/* Título del reporte */}
                 <div className={styles.FormDivInputFlex}>
-                    <label htmlFor="">Título del reporte</label>
+                    <label htmlFor="title">Título del reporte</label>
                     <input
                         id="title"
                         type="text"
@@ -135,18 +135,18 @@ const FormConsultReport = () => {
 
                 {/* Reporte */}
                 <div className={styles.FormDivInputFlex}>
-                    <label htmlFor="">Reporte</label>
+                    <label htmlFor="report">Reporte</label>
                     <textarea
-                        id="report"
+                        id="message"
                         type="text"
-                        name="report"
-                        value={formData.report}
+                        name="message"
+                        value={formData.message}
                         onChange={handleChange}
                         cols="30"
                         rows="10"
                         placeholder="Escribe aqui brevemente tu reporte"
                     />
-                    <p className={styles.errorMessage}>{errors.report}</p>
+                    <p className={styles.errorMessage}>{errors.message}</p>
                 </div>
 
                 {/* Captcha */}
