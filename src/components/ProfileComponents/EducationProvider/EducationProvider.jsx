@@ -55,35 +55,39 @@ function EducationProvider() {
       </div>
 
       <div className={style.educationdetailContainer}>
-        {education.map((option, index) => (
-          <div key={option.idOption} >
-            <div className={style.educationdetailbox}>
-              <div className={style.infoContainerLeft}>
-                <h2 className={style.education}>{option.education}</h2>
-                <p className={style.detailInfo}>
-                  {option.institution}
-                  <br />
-                  {option.year}
-                </p>
+        {education.length > 0 ? ( 
+          education.map((option, index) => (
+            <div key={option.idOption}>
+              <div className={style.educationdetailbox}>
+                <div className={style.infoContainerLeft}>
+                  <h2 className={style.education}>{option.education}</h2>
+                  <p className={style.detailInfo}>
+                    {option.institution}
+                    <br />
+                    {option.year}
+                  </p>
+                </div>
+                <div className={style.infoContainerRight}>
+                  <p className={style.observationInfo}>
+                    {option.comment}
+                  </p>
+                </div>
+                <button
+                  onClick={(event) => handleDeleteService(option.idOption, event)}
+                  className={style.crossButton}
+                ></button>
+                {showForm && <Form handleShowForm={handleShowForm} />}
               </div>
-              <div className={style.infoContainerRight}>
-                <p className={style.observationInfo}>
-                  {option.comment}
-                </p>
-              </div>
-              <button
-                 onClick={(event) => handleDeleteService(option.idOption, event)}
-                className={style.crossButton}
-              ></button>
-              {showForm && <Form handleShowForm={handleShowForm} />}
+              {index !== education.length - 1 && (
+                <div>
+                  <p className={style.line}></p>
+                </div>
+              )}
             </div>
-            {index !== education.length - 1 && (
-      <div>
-        <p className={style.line}></p>
-      </div>
-    )}
-          </div>
-        ))}
+          ))
+        ) : (
+          <p>No hay información de su educación disponible.</p> 
+        )}
       </div>
     </div>
   );

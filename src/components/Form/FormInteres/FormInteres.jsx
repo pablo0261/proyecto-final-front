@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { postUserServices } from "../../../redux/actions/index";
-import styles from "./FormSkills.module.sass";
+import { postUserInteres } from "../../../redux/actions/index";
+import styles from "./FormInteres.module.sass";
 
 function Form({ handleShowForm }) {
   const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
@@ -14,19 +14,19 @@ function Form({ handleShowForm }) {
     idOption: "",
   });
 
-  const [skills, setSkills] = useState([]);
+  const [interes, setInteres] = useState([]);
   
   useEffect(() => {
     const fetchServices = async () => {
       try {
         const response = await fetch(`${REACT_APP_API_URL}/categories`);
         const data = await response.json();
-        const skillsOptions = data.categories.data[2].categories_options.map(
+        const interesOptions = data.categories.data[4].categories_options.map(
           (option) => {
             return { description: option.description, idOption: option.idOption }
           }
           )
-        setSkills(skillsOptions);
+          setInteres(interesOptions);
       } catch (error) {
         console.error("Error al obtener las opciones de servicios:", error);
       }
@@ -35,10 +35,10 @@ function Form({ handleShowForm }) {
     fetchServices();
   }, []);
 
-  const handleSkillsAdd = (event) => {
+  const handleInteresAdd = (event) => {
     event.preventDefault();
     try {
-      dispatch(postUserServices(userData));
+      dispatch(postUserInteres(userData));
       handleShowForm();
     } catch (error) {
       console.error("Error al guardar la educación", error);
@@ -62,7 +62,7 @@ function Form({ handleShowForm }) {
           onClick={() => handleShowForm()}
         ></button>
         <p className={styles.textTitle}>Agregue sus habilidades</p>
-        <form className={styles.Form} onSubmit={(event)=> handleSkillsAdd(event)}>
+        <form className={styles.Form} onSubmit={(event)=> handleInteresAdd(event)}>
           <div className={styles.FormDivFlex}>
             <div className={styles.FormDivInputFlex}>
               <label className={styles.labels}>Opciones:</label>
@@ -75,9 +75,9 @@ function Form({ handleShowForm }) {
                 <option value="" disabled>
                   Selecciona tus habilidades
                 </option>
-                {skills.map((skill) => (
-                  <option key={skill.idOption} value={skill.idOption}>
-                    {skill.description}
+                {interes.map((interes) => (
+                  <option key={interes.idOption} value={interes.idOption}>
+                    {interes.description}
                   </option>
                 ))}
               </select>

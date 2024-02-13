@@ -94,30 +94,6 @@ const Validation = (property, setLocalErrors, userData) => {
       }
       break;
 
-        case "Ocupación":
-      if (userData[property].trim() === "") {
-        setLocalErrors((prevErrors) => ({
-          ...prevErrors,
-          [property]: "*Ingrese su profesión/ocupación",
-        }));
-      } else if (!/^[A-Za-z\u00C0-\u024F\s]+$/.test(userData[property])) {
-        setLocalErrors((prevErrors) => ({
-          ...prevErrors,
-          [property]: "*Este campo no puede contener símbolos",
-        }));
-      } else if (userData[property].length > 25) {
-        setLocalErrors((prevErrors) => ({
-          ...prevErrors,
-          [property]: "*Campo demasiado extenso",
-        }));
-      } else {
-        setLocalErrors((prevErrors) => ({
-          ...prevErrors,
-          [property]: "",
-        }));
-      }
-      break;
-
       case "Sobre mi":
         if (userData[property].length > 200) {
           setLocalErrors((prevErrors) => ({

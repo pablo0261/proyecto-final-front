@@ -7,7 +7,7 @@ import ScheduleProviderCard from '../../components/ProfileComponents/SchedulePro
 import EducationProvider from '../../components/ProfileComponents/EducationProvider/EducationProvider';
 import ExperienciaProvider from '../../components/ProfileComponents/ExperienciaProvider/ExperienciaProvider';
 import MapProviderCard from '../../components/ProfileComponents/MapProviderCard/MapProviderCard';
-import ReviewProviderCard from '../../components/ProfileComponents/ReviewProviderCard/ReviewProviderCard';
+// import ReviewProviderCard from '../../components/ProfileComponents/ReviewProviderCard/ReviewProviderCard';
 import ConectionProviderCard from '../../components/ProfileComponents/ConectionProviderCard/ConectionProviderCard';
 import style from './ProfileProviderView.module.sass'
 
@@ -23,7 +23,7 @@ function ProfileProviderView() {
         <InteresProviderCard />
         <ScheduleProviderCard />
         <MapProviderCard />
-        <ReviewProviderCard />
+        {/* <ReviewProviderCard /> */}
         <ConectionProviderCard />
     </div>
   );
