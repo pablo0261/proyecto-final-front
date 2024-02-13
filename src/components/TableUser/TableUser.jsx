@@ -8,8 +8,9 @@ function TableDue() {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    // Llama a la acción para obtener datos
     dispatch(allPeople());
-  }, []);
+  }, [dispatch]); // Agrega dispatch como dependencia del useEffect
 
   return (
     <div className={styles.container}>
@@ -28,15 +29,16 @@ function TableDue() {
           </tr>
         </thead>
         <tbody>
-          {people.map((person) => (
+          {/* Verifica si people está definido antes de mapear */}
+          {people && people.map((person) => (
             <tr key={person.people.idPeople}>
               <td>{person.people.fullName}</td>
               <td>{person.people.email}</td>
               <td>{person.people.phone}</td>
-                   <td>{person.people.state}</td>
-                   {/* //Hay que revisar el campo del pago */}
-                   <td>{person.people.pago}</td>
-                   <td>{person.people.dateOfAdmission}</td>
+              <td>{person.people.state}</td>
+              {/* Asegúrate de que el campo 'pago' esté definido */}
+              <td>{person.people.pago || "No data"}</td>
+              <td>{person.people.dateOfAdmission}</td>
               <td><button>MAIL</button></td>
               <td><button>Activo/Inactivo</button></td>
               <td><button>Cancelar</button></td>
