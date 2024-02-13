@@ -188,6 +188,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
 
     /* Create FAQs */
     case CREATE_FAQS:
+      console.log('Nuevo estado para createReport:', payload)
       return {
         ...state,
         createFAQs: action.payload,

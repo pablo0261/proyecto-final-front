@@ -342,6 +342,7 @@ const createFAQs = (formData) => {
     try {
       const response = await axios.post(`${REACT_APP_API_URL}/questions`, formData);
       dispatch({ type: CREATE_FAQS, payload: response.data }); 
+      console.log('Response from server:', response.data);
     } catch (error) {
       console.log(error);
     }
@@ -359,9 +360,6 @@ dispatch({ type: GET_FAQS, payload: response.data})
     }
   };
 };
-
-/* Create FAQs */
-
 
 
 
