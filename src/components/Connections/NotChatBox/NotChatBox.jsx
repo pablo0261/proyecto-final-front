@@ -5,7 +5,7 @@ import ChatRender from './ChatRender/ChatRender'
 
 function NotChatBox(props) {
 
-    const { idOpportunitie, infoUserLog, opportunities } = props
+    const { idOpportunitie, infoUserLog, opportunities, filter } = props
     const [dataChat, setDataChat] = useState([])
     const [isLoadingChat, setIsLoadingChat] = useState()
 
@@ -37,7 +37,7 @@ function NotChatBox(props) {
                     ? !isLoadingChat && dataChat.length != 0
                         ? <div className={style.chatWrapper}>
                             <div className={style.msgWrapper}>
-                                <ChatRender dataChat={dataChat}></ChatRender>
+                                <ChatRender dataChat={dataChat} infoUserLog={infoUserLog} idOpportunitie={idOpportunitie} filter={filter}></ChatRender>
                             </div>
                         </div>
                         :

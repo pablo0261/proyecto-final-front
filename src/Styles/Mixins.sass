@@ -138,9 +138,24 @@
     font-weight: normal
     color: #969696
 
-@mixin errorMessage 
-  margin: 5px 0px
-  padding-left: 15px
-  text-align: left
-  @include font($textFailureColor, 14px, normal, normal)
+@mixin errorMessage
+    margin: 5px 0px
+    padding-left: 15px
+    text-align: left
+    @include font($textFailureColor, 14px, normal, normal)
 
+@mixin buttonSuccess
+    background-color: $textSuccessColor
+    padding: 10px 20px
+    border: none
+    border-radius: 10px
+    transition: .2s
+    @include font(white, 18px, normal, normal)
+
+@mixin buttonFailure
+    background-color: $textFailureColor
+    padding: 10px 20px
+    border: none
+    border-radius: 10px
+    transition: .2s
+    @include font(white, 18px, normal, normal)

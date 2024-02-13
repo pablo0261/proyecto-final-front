@@ -23,8 +23,8 @@ function Connections() {
         if (filter === "pending") return "dateHiring"
         if (filter === "accepted") return "dateAccepted"
         if (filter === "ratingPending") return "dateEndService"
-        if (filter === "ratingProviderPending") return "dateRatingProvider"
-        if (filter === "ratingCustomerPending") return "dateRatingCustomer"
+        if (filter === "ratingProviderPending") return "dateEndService"
+        if (filter === "ratingCustomerPending") return "dateEndService"
         if (filter === "completed") return "dateEndService"
         if (filter === "cancelled") return "dateCancelled"
     }
@@ -35,7 +35,7 @@ function Connections() {
                 if (infoUserLog.typeOfPerson === 'customer') {
                     const query = `?idCustomer=${infoUserLog.idPeople}${filter && `&state=${filter}`}&idOrder=${orderConstruct(filter)},DESC`
                     await dispatch(getOpportunities(query))
-                } else if (infoUserLog.typeOfPerson === 'provider') {
+                } else if (infoUserLog.typeOfPerson === "provider") {
                     const query = `?idProvider=${infoUserLog.idPeople}${filter && `&state=${filter}`}&idOrder=${orderConstruct(filter)},DESC`
                     await dispatch(getOpportunities(query))
                 }
@@ -55,7 +55,7 @@ function Connections() {
         setIsSelected("")
         setFilter(filter)
     }
-    
+
     const navigate = useNavigate()
 
     const handleNavigate = (opportunitie) => {
@@ -100,26 +100,30 @@ function Connections() {
             <div className={style.connectionsWrapper}>
                 <div className={style.listWrapper}>
                     {
-                        opportunities.length != 0 && opportunities.map((oportunitie) => (
+                        opportunities.length != 0 && opportunities.map((opportunitie) => (
                             <div
-                                key={oportunitie.idOpportunitie}
-                                className={isSelected === oportunitie.idOpportunitie ? style.userConnectionSelected : style.userConnection}
+                                key={opportunitie.idOpportunitie}
+                                className={isSelected === opportunitie.idOpportunitie ? style.userConnectionSelected : style.userConnection}
                                 onClick={() => {
                                     if (filter != "view") {
-                                        return handleSelectedOpportunitie(oportunitie.idOpportunitie)
+                                        return handleSelectedOpportunitie(opportunitie.idOpportunitie)
                                     }
                                 }}>
-                                <img src={oportunitie.provider.image || defaultImage} className={style.img} onClick={() => handleNavigate(oportunitie)}></img>
+                                <img src={
+                                    infoUserLog.typeOfPerson === 'provider' && opportunitie.customer.image ||
+                                    infoUserLog.typeOfPerson === 'customer' && opportunitie.provider.image ||
+                                    defaultImage
+                                } className={style.img} onClick={() => handleNavigate(opportunitie)}></img>
                                 <div className={style.userWrapper}>
-                                    <p className={style.textUser}>{oportunitie.provider.fullName}</p>
+                                    <p className={style.textUser}>{infoUserLog.typeOfPerson === 'provider' && opportunitie.customer.fullName || infoUserLog.typeOfPerson === 'customer' && opportunitie.provider.fullName}</p>
                                     <p className={style.textDate}>{
-                                        filter === "view" && formatearFecha(oportunitie.dateView) ||
-                                        filter === "pending" && formatearFecha(oportunitie.dateHiring) ||
-                                        filter === "accepted" && formatearFecha(oportunitie.dateAccepted) ||
-                                        filter === "ratingCustomerPending" && formatearFecha(oportunitie.dateRatingCustomer) ||
-                                        filter === "ratingProviderPending" && formatearFecha(oportunitie.dateRatingProvider) ||
-                                        filter === "completed" && formatearFecha(oportunitie.dateEndService) ||
-                                        filter === "cancelled" && formatearFecha(oportunitie.dateCancelled)
+                                        filter === "view" && formatearFecha(opportunitie.dateView) ||
+                                        filter === "pending" && formatearFecha(opportunitie.dateHiring) ||
+                                        filter === "accepted" && formatearFecha(opportunitie.dateAccepted) ||
+                                        filter === "ratingCustomerPending" && formatearFecha(opportunitie.dateRatingCustomer) ||
+                                        filter === "ratingProviderPending" && formatearFecha(opportunitie.dateRatingProvider) ||
+                                        filter === "completed" && formatearFecha(opportunitie.dateEndService) ||
+                                        filter === "cancelled" && formatearFecha(opportunitie.dateCancelled)
                                     }</p>
                                 </div>
                             </div>
@@ -128,9 +132,9 @@ function Connections() {
                 </div>
                 {
                     filter === "view" && <div className={style.loadingChat}> Proveedores Visitados </div> ||
-                    filter === "pending" && <PendingBox idOpportunitie={isSelected} infoUserLog={infoUserLog} opportunities={opportunities}></PendingBox> ||
-                    filter === "accepted" && <ChatBox idOpportunitie={isSelected} infoUserLog={infoUserLog} opportunities={opportunities}></ChatBox> ||
-                    <NotChatBox idOpportunitie={isSelected} infoUserLog={infoUserLog} opportunities={opportunities}></NotChatBox>
+                    filter === "pending" && <PendingBox idOpportunitie={isSelected} infoUserLog={infoUserLog} opportunities={opportunities} filter={filter}></PendingBox> ||
+                    filter === "accepted" && <ChatBox idOpportunitie={isSelected} infoUserLog={infoUserLog} opportunities={opportunities} filter={filter}></ChatBox> ||
+                    <NotChatBox idOpportunitie={isSelected} infoUserLog={infoUserLog} opportunities={opportunities} filter={filter}></NotChatBox>
                 }
             </div>
         </div>
