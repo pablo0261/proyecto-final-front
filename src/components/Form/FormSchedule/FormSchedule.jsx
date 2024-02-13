@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { postUserServices } from "../../../redux/actions/index";
+import { postUserCalendar } from "../../../redux/actions/index";
 import styles from "./FormSchedule.module.sass";
 import okIcon from "../../../assets/Icons/IconCheck.png";
 import emptyIcon from "../../../assets/Icons/IconCheckEmpty.png";
@@ -38,8 +38,7 @@ function ScheduleForm({ handleShowForm }) {
   const handleSaveSchedule = (event) => {
     event.preventDefault();
     try {
-    dispatch(postUserServices(userData));
-    console.log("Calendario editado guardado:", editedSchedule);
+    dispatch(postUserCalendar(userData));
     handleShowForm();
   } catch (error) {
     console.error("Error al guardar la agenda:", error);

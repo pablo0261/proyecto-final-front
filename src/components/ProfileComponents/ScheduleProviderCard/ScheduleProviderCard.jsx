@@ -11,7 +11,7 @@ function ScheduleProviderCard() {
   const [showForm, setShowForm] = useState(false);
   const [schedule, setSchedule] = useState([]);
 
-  const handleShowForm = () => {
+  const handleShowForm = () => {  
     setShowForm(!showForm);
   };
 
