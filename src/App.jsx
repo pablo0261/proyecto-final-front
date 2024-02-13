@@ -25,6 +25,8 @@ import { addInfoUserLog, getFiltersOrdersDB, recoverUserLoggedData } from './red
 import { jwtDecode } from "jwt-decode";
 import axios from 'axios';
 import ProviderDetail from './Views/CustomerViews/ProviderDetail';
+import AdminStatistics from './components/AdminStatistics/AdminStatistics';
+import AdminTablas from './Views/AdminTablas/AdminTablas';
 
 
 function App() {
@@ -123,6 +125,10 @@ function App() {
             {
               userLoggedInfo.typeOfPerson === 'administrator' &&
               <Routes>
+                <Route path={Helpers.AdminUsersView} element={<AdminUsersView />} />
+                <Route path={Helpers.AdminTables} element={<AdminTablas />} />
+                <Route path={Helpers.AdminStatistics} element={<AdminStatistics />} />
+
                 <Route path={Helpers.FAQs} element={<FAQs />} />
                 <Route path={Helpers.ConsultReport} element={<ConsultReport />} />
               </Routes>

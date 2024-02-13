@@ -1,10 +1,20 @@
-import React from 'react'
-import styles from "./TableUser.module.sass"
+import React, { useEffect } from 'react';
+import styles from "./TableUser.module.sass";
+import { allPeople } from '../../redux/actions';
+import { useDispatch, useSelector } from 'react-redux';
 
 function TableDue() {
+  const people = useSelector((state) => state.peopleForAdmin.data);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    // Llama a la acción para obtener datos
+    dispatch(allPeople());
+  }, [dispatch]); // Agrega dispatch como dependencia del useEffect
+
   return (
     <div className={styles.container}>
-      <table classname={styles.customTable}>
+      <table className={styles.customTable}>
         <thead>
           <tr>
             <th>Nombre</th>
@@ -19,32 +29,25 @@ function TableDue() {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>Jose Gonzalez</td>
-            <td>josegonzales@gmail.com</td>
-            <td>3812348854</td>
-            <td>Activo</td>
-            <td>ayer</td>
-            <td>6 dias</td>
-            <td><button>MAIL</button></td>
-            <td><button>Activo/Inactivo</button></td>
-            <td><button>Cancelar</button></td>
-          </tr>
-          <tr>
-            <td>Jose Gonzalez</td>
-            <td>josegonzales@gmail.com</td>
-            <td>3812348854</td>
-            <td>Activo</td>
-            <td>ayer</td>
-            <td>6 dias</td>
-            <td><button>MAIL</button></td>
-            <td><button>Activo/Inactivo</button></td>
-            <td><button>Cancelar</button></td>
-          </tr>
+          {/* Verifica si people está definido antes de mapear */}
+          {people && people.map((person) => (
+            <tr key={person.people.idPeople}>
+              <td>{person.people.fullName}</td>
+              <td>{person.people.email}</td>
+              <td>{person.people.phone}</td>
+              <td>{person.people.state}</td>
+              {/* Asegúrate de que el campo 'pago' esté definido */}
+              <td>{person.people.pago || "No data"}</td>
+              <td>{person.people.dateOfAdmission}</td>
+              <td><button>MAIL</button></td>
+              <td><button>Activo/Inactivo</button></td>
+              <td><button>Cancelar</button></td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>
-  )
+  );
 }
 
-export default TableDue
+export default TableDue;
