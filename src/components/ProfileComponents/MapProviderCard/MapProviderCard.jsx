@@ -13,7 +13,10 @@ function MapProviderCard() {
   const infoUserLog = useSelector((state) => state.infoUserLog);
 
   //* AQUI DEBERIA TRAER LA POSICION DEL PROVEEDOR DE SU OBJETO
-  const position = infoUserLog.geoposition || [-31.025, -64.025];
+  const geopositionArray = infoUserLog.geoposition.split(',').map(str => parseFloat(str.trim()));
+  const position = geopositionArray || [-31.025, -64.025];
+
+ 
 
 
   return (
