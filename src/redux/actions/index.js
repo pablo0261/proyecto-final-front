@@ -352,22 +352,22 @@ const getOpportunities = (filter) => {
         })
       }
     } catch (error) {
+      console.log(error)
       window.alert(error)
     }
   }
 }
 
-const putOpportunities = (data) => {
+const putOpportunities = (data, filter) => {
   return async (dispatch) => {
     try {
       const response = await axios.put(`${REACT_APP_API_URL}/opportunities`, data)
+      console.log(response)
       if (response.status === 200) {
-        return dispatch({
-          type : SET_OPPORTUNITIE,
-          payload : response.data.data,
-        })
+        dispatch(getOpportunities(filter))
       }
     } catch (error) {
+      console.log(error)
       window.alert(error)
     }
   }
