@@ -12,6 +12,7 @@ const FormConsultReport = () => {
     const [userValidated, setUserValidated] = useState(false);
 
     const [formData, setFormData] = useState({
+        typeOfQuestion: 'qaa',
         fullname: '',
         senderMail: '',
         title: '',

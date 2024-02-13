@@ -24,11 +24,27 @@ const FAQs = () => {
   const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;//*
   const userLoggedInfo = useSelector(state => state.infoUserLog);
 
-  const faqSDetail = useSelector((state) => state.faqS);
-
+   const faqSDetail = useSelector((state) => state.faqS);
+  const faqSDetaill = 
+    [{
+      "typeOfQuestion": "faq",
+      "destination":"provider",
+      "title": "¿Sed provider ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam?",
+      "message": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco."
+    },
+    {
+      "typeOfQuestion": "faq",
+      "destination":"customer",
+      "title": "¿Sed customer ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam?",
+      "message": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco."
+    }
+    ]
+      
+    
+  
 
   /* Get FAQs */
-  useEffect(() => {
+   useEffect(() => {
     dispatch(getFAQs())
       .then(() => {
         setIsLoading(false); // Cuando la carga se completa con éxito, se cambia isLoading a false
@@ -161,20 +177,20 @@ const FAQs = () => {
       {faqSDetail.map((faq, index) => {
         if (faq.typeOfQuestion === 'faq' && faq.destination === 'provider') {
           return (
-            <div className={styles.container__item} key={index}>
+            
               <div className={styles.container__item} key={index}>
 
                 {/* Pregunta y respuesta */}
                 <div className={styles.item}>
                   <div className={styles.question}>
-                    <h3>{faq.question}</h3>
+                    <h3>{faq.title}</h3>
                     <div className={styles.more} onClick={() => toggleAnswer(index)}>
                       <p>{expandedAnswers[index] ? '-' : '+'}</p>
                     </div>
                   </div>
 
                   <div className={`${styles.answer} ${expandedAnswers[index] ? styles.expanded : ''}`}>
-                    <p>{faq.answer}</p>
+                    <p>{faq.message}</p>
                   </div>
                 </div>
                 <hr />
@@ -186,7 +202,7 @@ const FAQs = () => {
 
 
               </div>
-            </div>
+            
           );
         }
         return null;
@@ -210,20 +226,19 @@ const FAQs = () => {
       {faqSDetail.map((faq, index) => {
         if (faq.typeOfQuestion === 'faq' && faq.destination === 'customer') {
           return (
-            <div className={styles.container__item} key={index}>
               <div className={styles.container__item} key={index}>
 
                 {/* Pregunta y respuesta */}
                 <div className={styles.item}>
                   <div className={styles.question}>
-                    <h3>{faq.question}</h3>
+                    <h3>{faq.title}</h3>
                     <div className={styles.more} onClick={() => toggleAnswer(index)}>
                       <p>{expandedAnswers[index] ? '-' : '+'}</p>
                     </div>
                   </div>
 
                   <div className={`${styles.answer} ${expandedAnswers[index] ? styles.expanded : ''}`}>
-                    <p>{faq.answer}</p>
+                    <p>{faq.message}</p>
                   </div>
                 </div>
                 <hr />
@@ -235,7 +250,6 @@ const FAQs = () => {
 
 
               </div>
-            </div>
           );
         }
         return null;
