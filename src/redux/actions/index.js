@@ -204,7 +204,34 @@ const postUserData = (userDataEnglish) => {
       if (response.status === 200) {
         return dispatch({
           type: POST_NEW_INFO_USER,
-          payload: response.result.people.data[0].people,
+          payload: response.data.people.data[0].people,//* Asi funciona bien para pefil provider
+        });
+      }
+    } catch (error) {
+      if (error.response && error.response.data) {
+        dispatch({
+          type: SET_ERROR_BACK,
+          payload: error.response.data,
+        });
+        window.alert(error);
+        throw error.response.data;
+      }
+    }
+  };
+};
+
+const postUserCalendar = (userData) => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.put(
+        `${REACT_APP_API_URL}/people`,
+        userData
+        );
+        console.log(response.data.people.data[0].people)
+        if (response.status === 200) {
+      dispatch({
+          type: POST_NEW_INFO_USER,
+          payload: response.data.people.data[0].people,
         });
       }
     } catch (error) {
@@ -230,7 +257,33 @@ const postUserServices = (updatedUserData) => {
       );
         dispatch({
           type: POST_NEW_SERVICE_USER,
-          payload: response.data.response.people.data[0].people
+          payload: response.data.people.data[0].people
+        });
+        
+    } catch (error) {
+      if (error.response && error.response.data) {
+        dispatch({
+          type: SET_ERROR_BACK,
+          payload: error.response.data,
+        });
+        window.alert(error);
+        throw error.response.data;
+      }
+    }
+  };
+};
+
+const postUserInteres = (updatedUserData) => {
+  //*(Pablo --> Lo uso para enviar las modificaciones del perfil de los proveedores)
+  return async (dispatch) => {
+    try {
+      const response = await axios.post(
+        `${REACT_APP_API_URL}/people/options`,
+        updatedUserData
+      );
+        dispatch({
+          type: POST_NEW_SERVICE_USER,
+          payload: response.data.people.data[0].people
         });
         
     } catch (error) {
@@ -257,7 +310,7 @@ const deleteService = (deleteData) => {
         if (response.status === 200) {
           return dispatch({
             type: POST_NEW_INFO_USER,
-            payload: response.data.response.people.data[0].people
+            payload: response.data.people.data[0].people
           })
         }
       } catch (error) {
@@ -382,4 +435,6 @@ export {
   deleteService,
   createFAQs,
   getFAQs,
+  postUserCalendar,
+  postUserInteres,
 };

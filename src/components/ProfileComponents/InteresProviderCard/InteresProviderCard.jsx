@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 import { deleteService } from "../../../redux/actions/index";
-import Form from "../../Form/FormSkills/FormSkills";
+import Form from "../../Form/FormInteres/FormInteres";
 import style from "./InteresProvider.module.sass";
 
 //! CAMBIAR TODO EL COMPONENTE DE SKILLS A ==> EXPERIENCE
@@ -10,7 +10,7 @@ function InteresProviderCard() {
   const dispatch = useDispatch();
   const infoUserLog = useSelector((state) => state.infoUserLog);
   const [showForm, setShowForm] = useState(false);
-  const [skills, setSkills] = useState([]);
+  const [interes, setInteres] = useState([]);
 
   const handleShowForm = () => {
     setShowForm(!showForm);
@@ -22,14 +22,14 @@ function InteresProviderCard() {
       infoUserLog.categories &&
       infoUserLog.categories.length > 0
     ) {
-      const skillsOptions = infoUserLog.categories[2].categories_options; //! Aqui se deberian buscar las experiencias del usuario para renderizarlas
+      const interesOptions = infoUserLog.categories[3].categories_options; //! Aqui se deberian buscar las experiencias del usuario para renderizarlas
   
-      if (skillsOptions && skillsOptions.length > 0) {
-        const skillData = skillsOptions.map((option) => ({
+      if (interesOptions && interesOptions.length > 0) {
+        const interesData = interesOptions.map((option) => ({
           idOption: option.idOption,
           Skill: option.description,
         }));
-        setSkills(skillData);
+        setInteres(interesData);
       }
     }
   }, [infoUserLog]);
@@ -41,7 +41,7 @@ function InteresProviderCard() {
       idOption: idOption,
     };
 
-    const confirmDelete = window.confirm("¿Está seguro de que desea eliminar la habilidad?");
+    const confirmDelete = window.confirm("¿Está seguro de que desea eliminar este interes?");
 
     if (confirmDelete) {
     dispatch(deleteService(deleteData));
@@ -56,7 +56,7 @@ function InteresProviderCard() {
       </div>
 
       <div className={style.containerCard}>
-        {skills.map((option) => (
+        {interes.map((option) => (
           <div className={style.skillsdetailContainer} key={option.idOption}>
             <button onClick={(event) => handleDeleteService(option.idOption, event)} className={style.skillFalseButton}> {option.Skill}</button>
           </div>
