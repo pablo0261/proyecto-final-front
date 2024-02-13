@@ -1,11 +1,10 @@
 import styles from './faqs.module.scss';
-import { useState } from 'react';
+import Loader from '../../utils/Loader/Loader'
+import { useEffect, useState } from 'react';
 import FormFAQs from '../../components/Form/FormFAQs/FormFAQs';
-
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
-import StoreItem from '../../Helpers/LocalStorage'; 
-import { addInfoUserLog, getFiltersOrdersDB, recoverUserLoggedData } from '../../redux/actions';
+import StoreItem from '../../Helpers/LocalStorage';
+import { addInfoUserLog, getFiltersOrdersDB, recoverUserLoggedData, getFAQs } from '../../redux/actions';
 import { jwtDecode } from "jwt-decode";
 import axios from 'axios';
 
@@ -17,58 +16,73 @@ const FAQs = () => {
   const [faqType, setFaqType] = useState('');
   const [editMode, setEditMode] = useState(false);
   const [editIndex, setEditIndex] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const [expandedAnswers, setExpandedAnswers] = useState({}); 
+  const [expandedAnswers, setExpandedAnswers] = useState({});
 
-  const dispatch = useDispatch(); 
+  const dispatch = useDispatch();
   const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
   const userLoggedInfo = useSelector(state => state.infoUserLog);
 
+  const faqSDetail = useSelector((state) => state.faqS);
+
+
+  /* Get FAQs */
+  useEffect(() => {
+    dispatch(getFAQs())
+      .then(() => {
+        setIsLoading(false); // Cuando la carga se completa con éxito, se cambia isLoading a false
+      })
+      .catch((error) => {
+        console.error('Error fetching FAQs:', error);
+        setIsLoading(false); // En caso de error, también se cambia isLoading a false
+      })
+  }, [dispatch])
 
   useEffect(() => {
-    dispatch(getFiltersOrdersDB()); 
+    dispatch(getFiltersOrdersDB());
 
-    
+
     if (localStorage.getItem(StoreItem.emailUserLogged)) {
       dispatch(recoverUserLoggedData(localStorage.getItem(StoreItem.emailUserLogged)));
     }
   }, []);
 
   const handleCallbackResponse = async (response) => {
-    const userObject = jwtDecode(response.credential); 
+    const userObject = jwtDecode(response.credential);
 
     try {
       const response = await axios.get(
         `${REACT_APP_API_URL}/people?email=${userObject.email}`
-      ); 
+      );
 
       if (response.data.people.count > 0) {
-        const user = response.data.people.data[0].people; 
-        localStorage.setItem(StoreItem.emailUserLogged, userObject.email); 
-        dispatch(addInfoUserLog(user)); 
+        const user = response.data.people.data[0].people;
+        localStorage.setItem(StoreItem.emailUserLogged, userObject.email);
+        dispatch(addInfoUserLog(user));
 
-       
+
         if (user.typeOfPerson === 'administrator') {
 
         } else {
 
         }
       } else {
-        window.alert("Usuario no existe."); 
+        window.alert("Usuario no existe.");
       }
     } catch (error) {
-      window.alert(error); 
+      window.alert(error);
     }
   };
 
   useEffect(() => {
-    
+
     google.accounts.id.initialize({
       client_id: "554332329432-0b6a0dh2ihgrkj5obs34lmnngpfvrq4j.apps.googleusercontent.com",
-      callback: handleCallbackResponse 
+      callback: handleCallbackResponse
     });
 
-    
+
     if (!localStorage.getItem(StoreItem.emailUserLogged)) {
       google.accounts.id.prompt();
     }
@@ -96,15 +110,15 @@ const FAQs = () => {
         setClientFaqList([...clientFaqList, { question: newQuestion, answer: newAnswer }]);
       }
     }
-    setShowForm(false); 
+    setShowForm(false);
   };
 
 
   const handleToggleForm = (type) => {
-    setShowForm(!showForm); 
+    setShowForm(!showForm);
     setFaqType(type);
-    setEditMode(false); 
-    setEditIndex(null); 
+    setEditMode(false);
+    setEditIndex(null);
   };
 
   /* Función para eliminar una pregunta */
@@ -131,16 +145,17 @@ const FAQs = () => {
   const toggleAnswer = (index) => {
     setExpandedAnswers(prevState => ({
       ...prevState,
-      [index]: !prevState[index] 
+      [index]: !prevState[index]
     }));
   };
-
 
 
   return (
     <div className={styles.wrap}>
 
+      {isLoading && <Loader />}
       {/* FAQs proveedor */}
+
       <h2>FAQs proveedor</h2>
       {providerFaqList.map((faq, index) => (
         <div className={styles.container__item} key={index}>
@@ -150,7 +165,7 @@ const FAQs = () => {
             <div className={styles.question}>
               <h3>{faq.question}</h3>
               <div className={styles.more} onClick={() => toggleAnswer(index)}>
-                <p>{expandedAnswers[index] ? '-' : '+'}</p> 
+                <p>{expandedAnswers[index] ? '-' : '+'}</p>
               </div>
             </div>
 
@@ -218,7 +233,7 @@ const FAQs = () => {
           {showForm && faqType === 'client' && <FormFAQs onAddQuestion={handleAddQuestion} />}
         </>
       )}
-      
+
     </div>
   );
 };

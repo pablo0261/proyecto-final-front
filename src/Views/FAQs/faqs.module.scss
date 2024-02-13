@@ -11,7 +11,6 @@
     .container__item {
         display: flex;
         flex-direction: column;
-        /* background-color: aqua; */
         width: 50%;
 
         .item {
@@ -34,10 +33,7 @@
                     border-radius: 50%;
 
                     p {
-                        font-family: 'K2D', sans-serif;
-                        color: white;
-                        font-weight: bold;
-                        font-size: xx-large;
+                        @include  font(white, large, bold, normal);
                     }
                 }
 
@@ -50,15 +46,14 @@
                 transform: .5s;
 
                 p {
-                    @include textDetail(left, normal);
+                    @include  font($textPrimaryColor, larger, null, normal);
+                    text-align: left;
                     margin: 0 50px 0 50px;
                 }
             }
 
             .expanded {
                 height: auto;
-
-
             }
 
         }
