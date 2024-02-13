@@ -1,0 +1,93 @@
+@use '../../Styles/Mixins.sass' as *;
+@import '../../Styles/Variables.sass';
+
+.wrap {
+    @include flexbox(column, center, center);
+
+    h2 {
+        @include textTitle(null, normal);
+    }
+
+    .container__item {
+        display: flex;
+        flex-direction: column;
+        width: 50%;
+
+        .item {
+            display: flex;
+            flex-direction: column;
+
+            .question {
+                @include flexbox(null, space-between, center);
+
+                h3 {
+                    @include textSubTitle(center, normal);
+                }
+
+                div {
+                    @include flexbox(null, center, center);
+                    background-color: $primaryColor;
+                    cursor: pointer;
+                    width: 30px;
+                    height: 30px;
+                    border-radius: 50%;
+
+                    p {
+                        @include  font(white, large, bold, normal);
+                    }
+                }
+
+            }
+
+            .answer {
+                padding: 0 0 0 0;
+                overflow: hidden;
+                height: 0;
+                transform: .5s;
+
+                p {
+                    @include  font($textPrimaryColor, larger, null, normal);
+                    text-align: left;
+                    margin: 0 50px 0 50px;
+                }
+            }
+
+            .expanded {
+                height: auto;
+            }
+
+        }
+
+        hr {
+            border: none;
+            background-color: $secondaryColor;
+            height: 2px;
+            margin: 20px 0;
+        }
+    }
+
+    .container__buttons {
+        display: flex;
+        justify-content: flex-end;
+
+        button {
+            margin: 10px;
+            @include buttonActive
+        }
+
+        button:hover {
+            @include buttonHover
+        }
+    }
+
+    .buttons {
+        margin: 10px;
+        width: 50%;
+        @include buttonActive
+    }
+
+    .button:hover {
+        @include buttonHover
+    }
+
+}

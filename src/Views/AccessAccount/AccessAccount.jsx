@@ -13,7 +13,6 @@ const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
 const socket = io(REACT_APP_API_URL);
 
 function AccessAccount() {
-
   useEffect(() => {
     // Carga la biblioteca de Google Sign-In
     const script = document.createElement("script");
@@ -65,26 +64,28 @@ function AccessAccount() {
     }
   };
 
+  const signInProcess = async (signInData) => {
+    //*componente para manejar el post de MP y recibir el link a MP
 
-  const signInProcess = async (signInData) => {//*componente para manejar el post de MP y recibir el link a MP
     try {
-      const response = await axios.post(
-        `${REACT_APP_API_URL}/payment`,
-        signInData
-      );
-
-      console.log("signInData", signInData);
-      if (response.status === 200) {
-        const paymentLink = response.data.urlPayment;
-        window.location.href = paymentLink;
+      if (signInData.typeOfPerson === "provider") {
+        const response = await axios.post(
+          `${REACT_APP_API_URL}/payment`,
+          signInData
+        );
+        if (response.status === 200) {
+          const paymentLink = response.data.urlPayment;
+          window.location.href = paymentLink;
+        } else {
+          window.alert(`Error: ${response.status} - ${response.statusText}`);
+        }
       } else {
-        window.alert(`Error: ${response.status} - ${response.statusText}`);
+        navigate(Helpers.ProfileCustomerView);
       }
     } catch (error) {
       window.alert(error);
     }
   };
-
 
   return (
     <div className={style.wrapper}>

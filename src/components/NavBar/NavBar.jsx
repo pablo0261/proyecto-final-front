@@ -31,9 +31,14 @@ function NavBar() {
                 {
                     location.pathname === Helpers.Landing && !userLoggedInfo.idPeople && !emailUserLog && <NavLink to="/#" className={style.link}>¿Como Funciona?</NavLink>
                 }
+                
                 {
-                    location.pathname === Helpers.AccessAccount && !userLoggedInfo.idPeople && !emailUserLog && <NavLink to={Helpers.Landing} className={style.link}>Volver</NavLink>
+                    (location.pathname === Helpers.AccessAccount || location.pathname === Helpers.FAQs || location.pathname === Helpers.ConsultReport) &&
+                    !userLoggedInfo.idPeople && !emailUserLog &&
+                    <NavLink to={Helpers.Landing} className={style.link}>Volver</NavLink>
                 }
+
+
                 {
                     userLoggedInfo.idPeople && userLoggedInfo.typeOfPerson === 'provider' && location.pathname !== Helpers.Landing && location.pathname !== Helpers.AccessAccount &&
                     <div>
@@ -51,6 +56,16 @@ function NavBar() {
                         <NavLink to={Helpers.ConnectionsCustomerView} className={({ isActive }) => isActive ? style.active : style.link}>Mis Conexiones</NavLink>
                         <NavLink to={Helpers.ReportsCustomerView} className={({ isActive }) => isActive ? style.active : style.link}>Mis Reportes</NavLink>
                         <NavLink to={Helpers.ProfileCustomerView} className={({ isActive }) => isActive ? style.active : style.link}>Mi Perfil</NavLink>
+                        <button className={style.link} onClick={() => handleLogOut()}>Cerrar Sesión</button>
+                    </div>
+                }
+                {
+                    userLoggedInfo.idPeople && userLoggedInfo.typeOfPerson === 'administrator' && location.pathname !== Helpers.Landing && location.pathname !== Helpers.AccessAccount &&
+                    <div>
+                        <NavLink to={Helpers.AdminStatistics} className={({ isActive }) => isActive ? style.active : style.link}>Estadisticas</NavLink>
+                        <NavLink to={Helpers.AdminTables} className={({ isActive }) => isActive ? style.active : style.link}>Tablas</NavLink>
+                        <NavLink to={Helpers.AdminUsersView} className={({ isActive }) => isActive ? style.active : style.link}>Usuarios</NavLink>
+                        <NavLink to={Helpers.AdminReports} className={({ isActive }) => isActive ? style.active : style.link}>Reportes</NavLink>
                         <button className={style.link} onClick={() => handleLogOut()}>Cerrar Sesión</button>
                     </div>
                 }
