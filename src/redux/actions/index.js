@@ -435,6 +435,5 @@ export {
   putUserData,
   createFAQs,
   getFAQs,
-  postUserCalendar,
   postUserInteres,
 };
