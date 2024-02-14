@@ -220,14 +220,13 @@ const postUserData = (userDataEnglish) => {
   };
 };
 
-const postUserCalendar = (userData) => {
+const putUserData = (userData) => {
   return async (dispatch) => {
     try {
       const response = await axios.put(
         `${REACT_APP_API_URL}/people`,
         userData
         );
-        console.log(response.data.people.data[0].people)
         if (response.status === 200) {
       dispatch({
           type: POST_NEW_INFO_USER,
@@ -433,8 +432,8 @@ export {
   putOpportunities,
   createReport,
   deleteService,
+  putUserData,
   createFAQs,
   getFAQs,
-  postUserCalendar,
   postUserInteres,
 };

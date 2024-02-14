@@ -1,5 +1,5 @@
 @use '../../Styles/Mixins'
-@import '../../Styles/Variables'
+@import '../../Styles/Mixins'
 
 .background
     background-color: #F2F2F2
@@ -23,12 +23,20 @@
 
 .divMasBuscados
     width: 100%
-    display: flex
+    display: block
     height: fit-content
     @include Mixins.font($tertiaryColor, 18px, normal, normal)
-    @include Mixins.boxShadowCard
     margin: 20px
 
+.cardMasBuscados
+    width: 100%
+
+.title
+    width: fit-content
+    margin-left: 30px  
+    margin-block: 0px
+    text-align: left
+    @include Mixins.font($primaryColor, 35px, bold, normal)    
 
 .divPersonasQueTeBuscaron
     width: 100%
@@ -37,6 +45,7 @@
     @include Mixins.font($tertiaryColor, 18px, normal, normal)
     @include Mixins.boxShadowCard
     margin: 20px
+    padding: 5px
 
 .divHistorialpagos
     width: 100%
@@ -56,10 +65,12 @@
 .divPromedioDeCalific
     width: 100%
     display: flex
+    margin-top: 20px
     height: fit-content
     @include Mixins.font($tertiaryColor, 18px, normal, normal)
     @include Mixins.boxShadowCard
     margin: 20px
+    padding: 5px
 
 .divUltimoComent
     width: 100%
@@ -68,6 +79,7 @@
     @include Mixins.font($tertiaryColor, 18px, normal, normal)
     @include Mixins.boxShadowCard
     margin: 20px
+    padding: 5px
 	
 .divHitorialServicios
     width: 100%
