@@ -83,8 +83,6 @@ const FormConsultReport = () => {
 
     };
 
-
-
     return (
 
         <div className={styles.wrapper}>

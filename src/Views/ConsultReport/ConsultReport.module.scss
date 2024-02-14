@@ -4,19 +4,6 @@
 .container {
   @include flexbox(column, center, center);
   width: 100%;
-
-  .container__a {
-    display: flex;
-    justify-content: flex-end;
-    width: 40%;
-    margin-top: 20px;
-  }
-
-  a {
-    display: inline-block;
-    @include font($textPrimaryColor, 18px, normal, normal);
-    text-decoration: none;
-  }
 }
 
 .textTitle {
