@@ -4,6 +4,9 @@ import { useDispatch } from 'react-redux'
 import axios from 'axios'
 import ChatRender from './ChatRender/ChatRender'
 import { putOpportunities } from '../../../redux/actions'
+import { io } from 'socket.io-client';
+const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
+const socket = io(REACT_APP_API_URL);
 
 function ChatBox(props) {
 
@@ -24,7 +27,7 @@ function ChatBox(props) {
             const response = await axios.get(`${REACT_APP_API_URL}/chats?idOpportunitie=${idOpportunitie}&idPeople=${infoUserLog.idPeople}`)
             if (response.status === 200) {
                 setDataChat(response.data.data)
-                setMessage({...message, idOpportunitie : idOpportunitie})
+                setMessage({ ...message, idOpportunitie: idOpportunitie })
                 setIsLoadingChat(false)
             }
         } catch (error) {
@@ -49,6 +52,14 @@ function ChatBox(props) {
                 .then((response) => {
                     if (response.status === 200) {
                         setMessage({ ...message, message: "" })
+                        const opp = opportunities.filter((opp) => opp.idOpportunitie === idOpportunitie)
+                        const socketEmit = {
+                            idOpportunitie: idOpportunitie,
+                            idCustomer: opp[0].idCustomer,
+                            idProvider: opp[0].idProvider,
+                            idChat: response.data.idChat
+                        }
+                        socket.emit('send-chat', socketEmit)
                     }
                 })
                 .catch((reason) => window.alert(reason))
@@ -129,7 +140,7 @@ function ChatBox(props) {
                                 }
                             </div>
                             <div className={style.msgWrapper}>
-                                <ChatRender dataChat={dataChat}></ChatRender>
+                                <ChatRender dataChat={dataChat} idOpportunitie={idOpportunitie} infoUserLog={infoUserLog}></ChatRender>
                             </div>
                             <div className={style.inputWrapper}>
                                 <form onSubmit={handleSendChat} className={style.formChat}>
