@@ -69,6 +69,16 @@ function NavBar() {
                         <button className={style.link} onClick={() => handleLogOut()}>Cerrar Sesión</button>
                     </div>
                 }
+                {
+                    userLoggedInfo.idPeople && userLoggedInfo.typeOfPerson === 'administrator' && location.pathname !== Helpers.Landing && location.pathname !== Helpers.AccessAccount &&
+                    <div>
+                        <NavLink to={Helpers.AdminStatistics} className={({ isActive }) => isActive ? style.active : style.link}>Estadisticas</NavLink>
+                        <NavLink to={Helpers.AdminTables} className={({ isActive }) => isActive ? style.active : style.link}>Tablas</NavLink>
+                        <NavLink to={Helpers.AdminUsersView} className={({ isActive }) => isActive ? style.active : style.link}>Usuarios</NavLink>
+                        <NavLink to={Helpers.AdminReports} className={({ isActive }) => isActive ? style.active : style.link}>Reportes</NavLink>
+                        <button className={style.link} onClick={() => handleLogOut()}>Cerrar Sesión</button>
+                    </div>
+                }
             </div>
         </div>
     )

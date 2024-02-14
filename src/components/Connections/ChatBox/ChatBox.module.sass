@@ -82,19 +82,32 @@
     display: flex
     flex-direction: row
     justify-content: center
+    gap: 20px
     position: absolute
 
-.buttonProcess
+.buttonProcessS
     width: fit-content
     height: fit-content
-    @include Mixins.buttonActive
+    @include Mixins.buttonSuccess
     cursor: pointer
 
-.buttonProcess:hover
-    @include Mixins.buttonHover
+.buttonProcessS:hover
+    transform: scale(1.05)
 
-.buttonProcess:active
-    @include Mixins.buttonPressed
+.buttonProcessS:active
+    transform: scale(.9)
+
+.buttonProcessF
+    width: fit-content
+    height: fit-content
+    @include Mixins.buttonFailure
+    cursor: pointer
+
+.buttonProcessF:hover
+    transform: scale(1.05)
+
+.buttonProcessF:active
+    transform: scale(.9)
 
 .formCancel
     width: 50%
