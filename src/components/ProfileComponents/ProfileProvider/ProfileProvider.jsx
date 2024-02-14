@@ -8,13 +8,6 @@ import UploadWidget from "../../CloudinaryWidget/UploadWidget";
 function ProfileProvider() {
   const infoUserLog = useSelector((state) => state.infoUserLog);
 
-  // useEffect(() => {
-  //   setUserData((prevUserData) => ({
-  //     ...prevUserData,
-  //     image: infoUserLog.image,
-  //   }));
-  // }, [infoUserLog.image]);
-
   const formData = {
     idPeople: infoUserLog.idPeople,
     fullName: infoUserLog.fullName || "Diego Lepore",
@@ -41,8 +34,8 @@ function ProfileProvider() {
   
   const [userData, setUserData] = useState(formData);
   const [showForm, setShowForm] = useState(false)
-  const [publicId, setPublicId] = useState(""); //este estado esta guardando la url de la imagen subida a cloudinary
- 
+  const [publicId, setPublicId] = useState(""); 
+
   const handleShowForm = () => {
     setShowForm(!showForm)
   }

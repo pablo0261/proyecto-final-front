@@ -1,38 +1,96 @@
-import { useSelector } from "react-redux";
-import { MapContainer,TileLayer, Marker, Popup } from 'react-leaflet'
-import { SearchControl, OpenStreetMapProvider } from 'leaflet-geosearch';
-import styles from './MapProvider.module.sass'
-
-const searchControl = new SearchControl({
-  notFoundMessage: 'Sorry, that address could not be found.',
-  provider: new OpenStreetMapProvider(),
-  style: 'bar',
-});
+import React, {
+  useState,
+  useEffect,
+  useMemo,
+  useCallback,
+  useRef,
+} from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import { putUserData } from "../../../redux/actions/index";
+import styles from "./MapProvider.module.sass";
 
 function MapProviderCard() {
+  const dispatch = useDispatch();
   const infoUserLog = useSelector((state) => state.infoUserLog);
+  
 
-  //* AQUI DEBERIA TRAER LA POSICION DEL PROVEEDOR DE SU OBJETO
-  const geopositionArray = infoUserLog.geoposition.split(',').map(str => parseFloat(str.trim()));
-  const position = geopositionArray || [-31.025, -64.025];
 
- 
 
+
+  const geopositionArray = infoUserLog.geoposition
+    .split(",")
+    .map((str) => parseFloat(str.trim())) || "-34.6142, -64.1770"
+
+  const [draggable, setDraggable] = useState(false);
+  const [position, setPosition] = useState(geopositionArray);
+  
+  const dataToSend = {
+    idPeople:  infoUserLog.idPeople,
+    geoposition: `${position.lat},${position.lng}`
+  }
+  
+
+
+
+  const markerRef = useRef(null);
+  const eventHandlers = useMemo(
+    () => ({
+      dragend() {
+        const marker = markerRef.current;
+        if (marker != null) {
+          setPosition(marker.getLatLng());
+        }
+      },
+    }),
+    []
+  );
+
+  const toggleDraggable = useCallback(() => {
+    setDraggable((d) => !d);
+  }, []);
+
+  const handleSaveGeoposition = () => {
+    try {
+      dispatch(putUserData(dataToSend));
+    } catch (error) {
+      console.error("Error al guardar la agenda:", error);
+    }
+  };
+
+  useEffect(() => {
+    handleSaveGeoposition();
+  }, []);
 
   return (
     <div>
-      <MapContainer className={styles.mapWrapper} center={position} zoom={13} scrollWheelZoom={true}>
+      <MapContainer
+        className={styles.mapWrapper}
+        center={position}
+        zoom={10}
+        scrollWheelZoom={true}
+      >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        <Marker position={position}>
+        <Marker
+          draggable={draggable}
+          eventHandlers={eventHandlers}
+          position={position}
+          ref={markerRef}
+        >
           <Popup>
-            A pretty CSS3 popup. <br /> Easily customizable.
+            <span onClick={toggleDraggable} style={{ cursor: "pointer" }}>
+              {draggable
+                ? "Arrastre el marcador"
+                : "Click aquí para editar su posición"}
+            </span>
           </Popup>
         </Marker>
       </MapContainer>
     </div>
-  )
+  );
 }
 export default MapProviderCard;
+
