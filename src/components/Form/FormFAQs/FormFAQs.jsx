@@ -7,19 +7,12 @@ import { createFAQs } from '../../../redux/actions/index';
 const FormFAQs = ({  typeOfFAQs }) => {
   const [successMessage, setSuccessMessage] = useState('');
 
-const TYPE_OF_QUESTION_FAQ='faq'
-const TYPE_OF_QUESTION_QAA='qaa'
-const USER_ADMINISTRATOR='administrator'
-const USER_CUSTOMER='customer'
-const USER_PROVIDER='provider'
-
   const [formData, setFormData] = useState({
     typeOfQuestion: 'faq',
     destination: typeOfFAQs === 'provider' ? ' provider' : 'customer',
     title: '',
     message: ''
   });
-  console.log("Debajo deberia aparecer form data");
   console.log(formData);
 
   const [localErrors, setLocalErrors] = useState({

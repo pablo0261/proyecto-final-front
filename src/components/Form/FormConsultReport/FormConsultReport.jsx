@@ -5,37 +5,32 @@ import { useDispatch } from 'react-redux';
 import validation from './validationFormConsultReport';
 import ReCAPTCHA from 'react-google-recaptcha';
 
-
 const FormConsultReport = () => {
     const [successMessage, setSuccessMessage] = useState('');
     const [captchaValidated, setCaptchaValidated] = useState(null);
-    const [userValidated, setUserValidated] = useState(false);
-
     const [formData, setFormData] = useState({
         typeOfQuestion: 'qaa',
-        fullname: '',
+        destination: 'administrator',
+        fullName: '',
         senderMail: '',
         title: '',
         message: '',
     });
     console.log(formData);
-
-    const [errors, setErrors] = useState({
-        fullname: '',
+   const [errors, setErrors] = useState({
+        fullName: '',
         senderMail: '',
         title: '',
         message: '',
     });
-
     const clearFormData = () => {
         setFormData({
-            fullname: '',
+            fullName: '',
             senderMail: '',
             title: '',
             message: '',
         });
     };
-
     const dispatch = useDispatch();
 
     const handleChange = (event) => {
@@ -49,9 +44,8 @@ const FormConsultReport = () => {
 
     /* captcha */
     const captcha = useRef(null);
-
     const onChange = () => {
-        if (captcha.current.getValue()) { //obtener el valor del catpcha
+        if (captcha.current.getValue()) { 
             setCaptchaValidated(true);
         }
     }
@@ -65,44 +59,44 @@ const FormConsultReport = () => {
         const isValid = Object.values(newErrors).every((error) => error === '');
 
         if (captcha.current.getValue()) {
-            setUserValidated(true);
             setCaptchaValidated(true);
 
             if (isValid) {
-                dispatch(createReport(formData));
-                setSuccessMessage('Reporte enviado con éxito');
-                clearFormData();
+                dispatch(createReport(formData))
+                    .then(() => {
+                        setSuccessMessage('Reporte enviado con éxito');
+                        clearFormData();
+                    })
+                    .catch(() => {
+                        setSuccessMessage('Error al enviar el reporte');
+                    });
             } else {
                 setSuccessMessage('Datos con errores');
-            } 
-
+            }
         } else {
-            setUserValidated(false);
             setCaptchaValidated(false);
         }
-
     };
 
     return (
 
         <div className={styles.wrapper}>
-
             <form className={styles.Form} onSubmit={handleSumbit} action="">
                 <div className={styles.container__button}>
                 </div>
 
                 {/* Nombre y apellido */}
                 <div className={styles.FormDivInputFlex}>
-                    <label htmlFor="fullname">Nombre y Apellido:</label>
+                    <label htmlFor="fullName">Nombre y Apellido:</label>
                     <input
-                        id="fullname"
+                        id="fullName"
                         type="text"
-                        name="fullname"
-                        value={formData.fullname}
+                        name="fullName"
+                        value={formData.fullName}
                         onChange={handleChange}
                         placeholder="Ej: Fulanita de Tal"
                     />
-                    <p className={styles.errorMessage}>{errors.fullname}</p>
+                    <p className={styles.errorMessage}>{errors.fullName}</p>
                 </div>
 
                 {/* Correo electronico */}

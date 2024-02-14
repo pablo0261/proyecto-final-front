@@ -108,7 +108,7 @@ const allPeople = () => {
       const response = await axios.get(`${REACT_APP_API_URL}/people?typeOfPerson=provider&typeOfPerson=customer`);
       return dispatch({
         type: GET_PEOPLE,
-        payload:  response.data.people,
+        payload: response.data.people,
       });
     } catch (error) {
       window.alert(error);
@@ -139,8 +139,7 @@ const getPeopleFilteredOrderedPagination = (
   return async (dispatch) => {
     try {
       const response = await axios.get(
-        `${REACT_APP_API_URL}/people?typeOfPerson=provider&${queryConstructor}${
-          queryPagination ? `${queryPagination}` : ""
+        `${REACT_APP_API_URL}/people?typeOfPerson=provider&${queryConstructor}${queryPagination ? `${queryPagination}` : ""
         }`
       );
       return dispatch({
@@ -199,8 +198,8 @@ const postUserData = (userDataEnglish) => {
       const response = await axios.post(
         `${REACT_APP_API_URL}/people`,
         userDataEnglish
-        );
-        console.log(response)
+      );
+      console.log(response)
       if (response.status === 200) {
         return dispatch({
           type: POST_NEW_INFO_USER,
@@ -226,10 +225,10 @@ const postUserCalendar = (userData) => {
       const response = await axios.put(
         `${REACT_APP_API_URL}/people`,
         userData
-        );
-        console.log(response.data.people.data[0].people)
-        if (response.status === 200) {
-      dispatch({
+      );
+      console.log(response.data.people.data[0].people)
+      if (response.status === 200) {
+        dispatch({
           type: POST_NEW_INFO_USER,
           payload: response.data.people.data[0].people,
         });
@@ -255,11 +254,11 @@ const postUserServices = (updatedUserData) => {
         `${REACT_APP_API_URL}/people/options`,
         updatedUserData
       );
-        dispatch({
-          type: POST_NEW_SERVICE_USER,
-          payload: response.data.people.data[0].people
-        });
-        
+      dispatch({
+        type: POST_NEW_SERVICE_USER,
+        payload: response.data.people.data[0].people
+      });
+
     } catch (error) {
       if (error.response && error.response.data) {
         dispatch({
@@ -281,11 +280,11 @@ const postUserInteres = (updatedUserData) => {
         `${REACT_APP_API_URL}/people/options`,
         updatedUserData
       );
-        dispatch({
-          type: POST_NEW_SERVICE_USER,
-          payload: response.data.people.data[0].people
-        });
-        
+      dispatch({
+        type: POST_NEW_SERVICE_USER,
+        payload: response.data.people.data[0].people
+      });
+
     } catch (error) {
       if (error.response && error.response.data) {
         dispatch({
@@ -305,15 +304,15 @@ const deleteService = (deleteData) => {
     try {
       const response = await axios.delete(
         `${REACT_APP_API_URL}/people/options`,
-         { data: deleteData } 
-        );
-        if (response.status === 200) {
-          return dispatch({
-            type: POST_NEW_INFO_USER,
-            payload: response.data.people.data[0].people
-          })
-        }
-      } catch (error) {
+        { data: deleteData }
+      );
+      if (response.status === 200) {
+        return dispatch({
+          type: POST_NEW_INFO_USER,
+          payload: response.data.people.data[0].people
+        })
+      }
+    } catch (error) {
       if (error.response && error.response.data) {
         dispatch({
           type: SET_ERROR_BACK,
@@ -347,8 +346,8 @@ const getOpportunities = (filter) => {
       const response = await axios.get(`${REACT_APP_API_URL}/opportunities${filter}`)
       if (response.status === 200) {
         return dispatch({
-          type : SET_OPPORTUNITIE,
-          payload : response.data.data,
+          type: SET_OPPORTUNITIE,
+          payload: response.data.data,
         })
       }
     } catch (error) {
@@ -378,10 +377,10 @@ const createReport = (formData) => {
   return async (dispatch) => {
     try {
       const response = await axios.post(`${REACT_APP_API_URL}/questions`, formData);
-      dispatch({ 
-        type: CREATE_REPORT, 
-        payload: response.data 
-      }); 
+      dispatch({
+        type: CREATE_REPORT,
+        payload: response.data
+      });
       console.log('Response from server:', response.data);
     } catch (error) {
       window.alert(error);
@@ -394,7 +393,7 @@ const createFAQs = (formData) => {
   return async (dispatch) => {
     try {
       const response = await axios.post(`${REACT_APP_API_URL}/questions`, formData);
-      dispatch({ type: CREATE_FAQS, payload: response.data }); 
+      dispatch({ type: CREATE_FAQS, payload: response.data });
       console.log('Response from server:', response.data);
     } catch (error) {
       console.log(error);
@@ -407,7 +406,7 @@ const getFAQs = () => {
   return async function (dispatch) {
     try {
       const response = await axios(`${REACT_APP_API_URL}/questions`);
-dispatch({ type: GET_FAQS, payload: response.data})
+      dispatch({ type: GET_FAQS, payload: response.data });
     } catch (error) {
       console.log(error);
     }

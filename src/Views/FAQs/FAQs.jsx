@@ -3,15 +3,13 @@ import Loader from '../../utils/Loader/Loader'
 import { useEffect, useState } from 'react';
 import FormFAQs from '../../components/Form/FormFAQs/FormFAQs';
 import { useDispatch, useSelector } from 'react-redux';
-import StoreItem from '../../Helpers/LocalStorage';//*
+import StoreItem from '../../Helpers/LocalStorage';
 import { addInfoUserLog, getFiltersOrdersDB, recoverUserLoggedData, getFAQs } from '../../redux/actions';
 import { jwtDecode } from "jwt-decode";
 import axios from 'axios';
 
 
 const FAQs = () => {
-  /* const [providerFaqList, setProviderFaqList] = useState([]);
-  const [clientFaqList, setClientFaqList] = useState([]); */
   const [showForm, setShowForm] = useState(false);
   const [faqType, setFaqType] = useState('');
   const [editMode, setEditMode] = useState(false);
@@ -25,24 +23,65 @@ const FAQs = () => {
   const userLoggedInfo = useSelector(state => state.infoUserLog);
 
    const faqSDetail = useSelector((state) => state.faqS);
-  const faqSDetaill = 
-    [{
-      "typeOfQuestion": "faq",
-      "destination":"provider",
-      "title": "¿Sed provider ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam?",
-      "message": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco."
-    },
-    {
-      "typeOfQuestion": "faq",
-      "destination":"customer",
-      "title": "¿Sed customer ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam?",
-      "message": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco."
+   /* const faqSDetail = {
+    "questions": {
+      "count": 4,
+      "filter": {},
+      "data": [
+        {
+          "idQuestion": "e98fb3cb-1651-4364-94be-9726d8fd8641",
+          "typeOfQuestion": "faq",
+          "destination": "provider",
+          "priority": null,
+          "senderMail": null,
+          "fullName": null,
+          "title": "¿Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam?",
+          "receiverMail": null,
+          "message": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.",
+          "response": "pendiente"
+        },
+        {
+          "idQuestion": "ea8a9946-f31c-47c6-97c2-c8703d4120c6",
+          "typeOfQuestion": "faq",
+          "destination": "customer",
+          "priority": null,
+          "senderMail": null,
+          "fullName": null,
+          "title": "¿Tad ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam?",
+          "receiverMail": null,
+          "message": "Frat ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.",
+          "response": "pendiente"
+        },
+        {
+          "idQuestion": "adebaa18-3c68-495e-85b9-51685207f62f",
+          "typeOfQuestion": "qaa",
+          "destination": "administrator",
+          "priority": null,
+          "senderMail": "fulanito@mail.com",
+          "fullName": "Fulanito de Tal",
+          "title": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam",
+          "receiverMail": null,
+          "message": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.",
+          "response": "pendiente"
+        },
+        {
+          "idQuestion": "f015c472-c087-4703-906c-c0ff56dd47b6",
+          "typeOfQuestion": "qaa",
+          "destination": "administrator",
+          "priority": null,
+          "senderMail": "sotanita@mail.com",
+          "fullName": "Sotanita Tilin",
+          "title": "Alflt ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam",
+          "receiverMail": null,
+          "message": "Dfteg ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.",
+          "response": "pendiente"
+        }
+      ]
     }
-    ]
-      
-    
+  } */
+   console.log("Estado global desde FAQs.jsx");
+   console.log(faqSDetail);
   
-
   /* Get FAQs */
    useEffect(() => {
     dispatch(getFAQs())
@@ -102,34 +141,6 @@ const FAQs = () => {
     }
   }, []);
 
-  /* const handleAddQuestion = (newQuestion, newAnswer) => {
-    if (faqType === 'provider') {
-      if (editMode && editIndex !== null) {
-        const updatedList = [...providerFaqList];
-        updatedList[editIndex] = { question: newQuestion, answer: newAnswer };
-        setProviderFaqList(updatedList);
-        setEditMode(false);
-        setEditIndex(null);
-      } else {
-        setProviderFaqList([...providerFaqList, { question: newQuestion, answer: newAnswer }]);
-      }
-    } else if (faqType === 'client') {
-      if (editMode && editIndex !== null) {
-        const updatedList = [...clientFaqList];
-        updatedList[editIndex] = { question: newQuestion, answer: newAnswer };
-        setClientFaqList(updatedList);
-        setEditMode(false);
-        setEditIndex(null);
-      } else {
-        setClientFaqList([...clientFaqList, { question: newQuestion, answer: newAnswer }]);
-      }
-    }
-    setShowForm(false);
-  };
- */
- 
-
-
   const handleToggleForm = (type) => {
     setShowForm(!showForm);
     setFaqType(type);
@@ -174,7 +185,7 @@ const FAQs = () => {
 
       <h2>FAQs proveedor</h2>
 
-      {faqSDetail.map((faq, index) => {
+      {faqSDetail && faqSDetail.questions && faqSDetail.questions.data && faqSDetail.questions.data.map((faq, index) => {
         if (faq.typeOfQuestion === 'faq' && faq.destination === 'provider') {
           return (
             
@@ -218,12 +229,10 @@ const FAQs = () => {
         </>
       )}
 
-
-
       {/* FAQs Cliente */}
       <h2>FAQs cliente</h2>
 
-      {faqSDetail.map((faq, index) => {
+      {faqSDetail && faqSDetail.questions && faqSDetail.questions.data && faqSDetail.questions.data.map((faq, index) => {
         if (faq.typeOfQuestion === 'faq' && faq.destination === 'customer') {
           return (
               <div className={styles.container__item} key={index}>
