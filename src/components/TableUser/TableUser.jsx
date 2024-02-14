@@ -1,16 +1,6 @@
-import React, { useEffect } from 'react';
 import styles from "./TableUser.module.sass";
-import { allPeople } from '../../redux/actions';
-import { useDispatch, useSelector } from 'react-redux';
 
-function TableDue() {
-  const people = useSelector((state) => state.peopleForAdmin.data);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    // Llama a la acción para obtener datos
-    dispatch(allPeople());
-  }, [dispatch]); // Agrega dispatch como dependencia del useEffect
+function TableDue({people}) {
 
   return (
     <div className={styles.container}>
@@ -29,7 +19,6 @@ function TableDue() {
           </tr>
         </thead>
         <tbody>
-          {/* Verifica si people está definido antes de mapear */}
           {people && people.map((person) => (
             <tr key={person.people.idPeople}>
               <td>{person.people.fullName}</td>

@@ -1,19 +1,18 @@
 import React, { useEffect } from 'react';
 import styles from "./TableUserDue.module.sass";
 import Pagination from '../Pagination/Pagination';
-import { allPeople } from '../../redux/actions';
+import { allPeopleProvider } from '../../redux/actions';
 import { useDispatch, useSelector } from 'react-redux';
 
 function TableUserDue() {
-  const people = useSelector((state) => state.peopleForAdmin.data);
+  const people = useSelector((state) => state.getAllPeople.data);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(allPeople());
-  }, [dispatch]); // Agrega dispatch como dependencia
+    dispatch(allPeopleProvider(""));
+  }, [dispatch]); 
 
   if (!people) {
-    // Manejar el caso donde people aún no está definido
     return null;
   }
 
