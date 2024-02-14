@@ -214,7 +214,6 @@ const putUserData = (userData) => {
           payload: response.data.people.data[0].people,
         });
       }
-      console.log("payload", response.data.people.data[0].people)
     } catch (error) {
       if (error.response && error.response.data) {
         dispatch({
