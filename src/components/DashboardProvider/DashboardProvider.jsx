@@ -33,21 +33,6 @@ function Dashboard() {
           </div>
         </div>
       </div>
-      {/* 
-      <h1> Relacion clientes / Proveedores</h1>
-      <p> Cantidad de Activos y desactivó</p>
-      <p> Promedio de conexiones diarias</p>
-      <p> Promedio de calificaciones de servicios</p>
-      <p> Relación de contactos/ contratos</p>
-      <p> Servicios más buscados</p>
-      <p> Servicios más ofrecidos</p>
-      <p>
-        {" "}
-        Dashboard con los siguientes datos: Visitas que recibió + Historial de
-        los servicios prestados + historial de pago + servicios más buscados +
-        valoración promedio + últimos comentarios(reviews) + login como cliente
-        (para poder acceder a la vista del cliente y revisar su perfil)
-      </p> */}
     </div>
   );
 }
