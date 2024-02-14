@@ -11,6 +11,7 @@
 .chatWrapper
     width: 100%
     height: 100%
+    position: relative
 
 .msgWrapper
     width: 100%
@@ -73,3 +74,69 @@
     align-items: center
     @include Mixins.font($tertiaryColor, 18px, normal, normal)
     margin: 0
+
+.buttonWrapper
+    width: 100%
+    height: fit-content
+    top: 15px
+    display: flex
+    flex-direction: row
+    justify-content: center
+    gap: 20px
+    position: absolute
+
+.buttonProcessS
+    width: fit-content
+    height: fit-content
+    @include Mixins.buttonSuccess
+    cursor: pointer
+
+.buttonProcessS:hover
+    transform: scale(1.05)
+
+.buttonProcessS:active
+    transform: scale(.9)
+
+.buttonProcessF
+    width: fit-content
+    height: fit-content
+    @include Mixins.buttonFailure
+    cursor: pointer
+
+.buttonProcessF:hover
+    transform: scale(1.05)
+
+.buttonProcessF:active
+    transform: scale(.9)
+
+.formCancel
+    width: 50%
+    height: fit-content
+    position: absolute
+    top: 60px
+
+.inputCancel
+    @include Mixins.inputsFormat
+
+.inputCancel:focus
+    @include Mixins.inputsFormat_Hover
+
+.inputCancel::placeholder
+    @include Mixins.inputsFormat_Placeholder
+
+.buttonSubmit
+    margin-top: 10px
+    padding: 5px 10px
+    border-radius: 8px
+    border: none
+    background-color: $secondaryColor
+    @include Mixins.font(white, 16px, normal, normal)
+    cursor: pointer
+    transition: .2s
+
+.buttonSubmit:hover
+    transform: scale(1.05)
+    background-color: $hoverColor2
+
+.buttonSubmit:active
+    transform: scale(0.9)

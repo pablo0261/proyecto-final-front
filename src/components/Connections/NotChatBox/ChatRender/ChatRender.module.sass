@@ -1,0 +1,134 @@
+@use  "../../../../Styles/Mixins"
+@import "../../../../Styles/Variables"
+
+.msgWrapper
+    width: 100%
+    height: 100%
+    display: flex
+    flex-direction: column
+    padding: 20px 20px 5px 20px
+    box-sizing: border-box
+    overflow-y: auto
+
+.msgWrapper::-webkit-scrollbar
+    width: 5px
+
+.msgWrapper::-webkit-scrollbar-track
+    background-color: rgba(0, 0, 0, 0.05)
+    border-radius: 10px
+
+.msgWrapper::-webkit-scrollbar-thumb
+    background-color: $primaryColor
+    border-radius: 10px
+
+.msgBoxOwner
+    height: fit-content
+    width: fit-content
+    max-width: 60%
+    background-color: #ffc19b
+    border: 1px solid rgba(0, 0, 0, 0.2)
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.2)
+    padding: 10px 20px
+    border-radius: 10px
+    margin-bottom: 10px
+    align-self: flex-end
+    display: flex
+    flex-direction: column
+    text-align: left
+
+.msgBoxOther
+    height: fit-content
+    width: fit-content
+    max-width: 60%
+    background-color: white
+    border: 1px solid rgba(0, 0, 0, 0.2)
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.2)
+    padding: 10px 20px
+    border-radius: 10px
+    margin-bottom: 10px
+    align-self: flex-start
+    display: flex
+    flex-direction: column
+    text-align: left
+
+.msg
+    @include Mixins.font($tertiaryColor, 18px, normal, normal)
+    margin: 0
+
+.msgDate
+    margin: 10px 0px 0px 0px
+    @include Mixins.font($tertiaryColor, 12px, normal, italic)
+    margin: 0
+    text-align: right
+
+.boxRating
+    width: 100%
+    height: fit-content
+    padding: 10px 0px
+    margin: 10px 0px
+    background-color: white
+    border: 2px solid $alertColor
+    border-radius: 10px
+    box-sizing: border-box
+    display: flex
+    flex-direction: column
+    align-items: center
+
+.formRating
+    width: 50%
+    height: fit-content
+    margin: 10px 0px
+    display: flex
+    flex-direction: column
+    align-items: center
+
+.starBox
+    width: fit-content
+    height: fit-content
+    display: flex
+    gap: 10px
+
+.star
+    width: 40px
+    height: 40px
+    background-image: url('../../../../assets/Icons/IconStarNotPressed.png')
+    background-position: center
+    background-repeat: no-repeat
+    cursor: pointer
+
+.starSelected
+    width: 40px
+    height: 40px
+    background-image: url('../../../../assets/Icons/IconStar.png')
+    background-position: center
+    background-repeat: no-repeat
+    cursor: pointer
+
+.inputRank
+    margin: 10px 0px
+    @include Mixins.inputsFormat
+
+.inputRank:focus
+    @include Mixins.inputsFormat_Hover
+
+.btnSubmit 
+    padding: 5px 10px
+    border-radius: 8px
+    border: none
+    background-color: $secondaryColor
+    @include Mixins.font(white, 16px, normal, normal)
+    cursor: pointer
+    transition: .2s
+
+.endMsg
+    width: 100%
+    height: fit-content
+    padding: 10px 0px
+    margin: 10px 0px
+    background-color: $textSuccessColor
+    border-radius: 10px
+    box-sizing: border-box
+    display: flex
+    flex-direction: column
+    align-items: center
+    @include Mixins.font(white, 18px, normal, normal)

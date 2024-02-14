@@ -15,6 +15,10 @@ import {
   POST_NEW_SERVICE_USER,
   SET_OPPORTUNITIE,
   CREATE_REPORT,
+  CREATE_FAQS,
+  GET_FAQS,
+  SET_CHAT,
+  GET_PEOPLE,
 } from "./action-types";
 
 const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
@@ -90,6 +94,21 @@ const handleContratService = (item) => {
       dispatch({
         type: CONTRAT_SERVICE_USER,
         payload: response.data,
+      });
+    } catch (error) {
+      window.alert(error);
+    }
+  };
+};
+
+const allPeople = () => {
+  //** Esta ruta solo llama a todos los registrados en la tabla people*/
+  return async (dispatch) => {
+    try {
+      const response = await axios.get(`${REACT_APP_API_URL}/people?typeOfPerson=provider&typeOfPerson=customer`);
+      return dispatch({
+        type: GET_PEOPLE,
+        payload:  response.data.people,
       });
     } catch (error) {
       window.alert(error);
@@ -331,19 +350,24 @@ const getOpportunities = (filter) => {
           payload : response.data.data,
         })
       }
-      if (response.status === 204) {
-        return dispatch({
-          type: SET_OPPORTUNITIE,
-          payload: response.data.data
-        })
+    } catch (error) {
+      console.log(error)
+      window.alert(error)
+    }
+  }
+}
+
+const putOpportunities = (data, filter) => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.put(`${REACT_APP_API_URL}/opportunities`, data)
+      console.log(response)
+      if (response.status === 200) {
+        dispatch(getOpportunities(filter))
       }
     } catch (error) {
-      if (error.response.status === 409) {
-        return dispatch({
-          type: SET_OPPORTUNITIE,
-          payload: []
-        })
-      }
+      console.log(error)
+      window.alert(error)
     }
   }
 }
@@ -352,13 +376,42 @@ const getOpportunities = (filter) => {
 const createReport = (formData) => {
   return async (dispatch) => {
     try {
-      const response = await axios.post(`${REACT_APP_API_URL}/xxxx/xxxx`, formData);
+      const response = await axios.post(`${REACT_APP_API_URL}/questions`, formData);
       dispatch({ type: CREATE_REPORT, payload: response.data }); 
     } catch (error) {
       window.alert(error);
     }
   };
 };
+
+/* Create FAQs */
+const createFAQs = (formData) => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.post(`${REACT_APP_API_URL}/questions`, formData);
+      dispatch({ type: CREATE_FAQS, payload: response.data }); 
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+/* Get FAQs */
+const getFAQs = () => {
+  return async function (dispatch) {
+    try {
+      const response = await axios(`${REACT_APP_API_URL}/questions`);
+dispatch({ type: GET_FAQS, payload: response.data})
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+/* Create FAQs */
+
+
+
 
 export {
   addInfoUserLog,
@@ -374,9 +427,14 @@ export {
   getPeopleFilteredOrderedPagination,
   postUserServices,
   saveOrderGlobal,
+  allPeople,
   getOpportunities,
+  putOpportunities,
   createReport,
   deleteService,
   putUserData,
+  createFAQs,
+  getFAQs,
+  postUserCalendar,
   postUserInteres,
 };

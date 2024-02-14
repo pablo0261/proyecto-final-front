@@ -7,13 +7,6 @@
     justify-content: $justify
     align-items: $align
 
-@mixin backgroundimg($image)
-    background-image: url($image)
-    background-repeat: no-repeat
-    background-attachment: fixed
-    background-size: cover
-    background-position: center
-
 @mixin margin-padding()
     margin: 0
     padding: 0
@@ -28,7 +21,7 @@
 @mixin buttonActive
     background-color: $primaryColor
     font-family: 'K2D', sans-serif
-    font-size: 20px
+    font-size: 18px
     font-weight: normal
     font-style: normal
     color: white
@@ -36,12 +29,12 @@
     border-radius: 10px
     border: none
     outline: none
-    transition: .3s
+    cursor: pointer
+    transition: .2s
 
 @mixin buttonHover
     background-color: $hoverColor
     transform: scale(1.02)
-    transition: .3s
 
 @mixin buttonPressed
     transform: scale(0.95)
@@ -138,9 +131,24 @@
     font-weight: normal
     color: #969696
 
-@mixin errorMessage 
-  margin: 5px 0px
-  padding-left: 15px
-  text-align: left
-  @include font($textFailureColor, 14px, normal, normal)
+@mixin errorMessage
+    margin: 5px 0px
+    padding-left: 15px
+    text-align: left
+    @include font($textFailureColor, 14px, normal, normal)
 
+@mixin buttonSuccess
+    background-color: $textSuccessColor
+    padding: 10px 20px
+    border: none
+    border-radius: 10px
+    transition: .2s
+    @include font(white, 18px, normal, normal)
+
+@mixin buttonFailure
+    background-color: $textFailureColor
+    padding: 10px 20px
+    border: none
+    border-radius: 10px
+    transition: .2s
+    @include font(white, 18px, normal, normal)

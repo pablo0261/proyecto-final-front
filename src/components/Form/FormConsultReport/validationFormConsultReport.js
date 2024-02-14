@@ -5,9 +5,9 @@ const validateText = /^[a-zA-ZáéíóúüñÑÁÉÍÓÚÜ\s\.,;:!¡¿?()-]+$/u
 function validation(formData) {
     let errors = {
         fullname: '',
-        mail: '',
+        senderMail: '',
         title: '',
-        report: '',
+        message: '',
     };
 
     if (!formData.fullname) {
@@ -16,10 +16,10 @@ function validation(formData) {
         errors.fullname = "Ingresá tu nombre y apellido completo";
     }
 
-    if (!formData.mail) {
-        errors.mail = "Campo obligatorio";
-    } else if (!validateMail.test(formData.mail)) {
-        errors.mail = "Ingresá un correo válido";
+    if (!formData.senderMail) {
+        errors.senderMail = "Campo obligatorio";
+    } else if (!validateMail.test(formData.senderMail)) {
+        errors.senderMail = "Ingresá un correo válido";
     }
 
     if (!formData.title) {
@@ -32,14 +32,14 @@ function validation(formData) {
         errors.title = "Título demasiado extenso";
     }
 
-    if (!formData.report) {
-        errors.report = "Campo obligatorio";
-    } else if (!validateText.test(formData.report)) {
-        errors.report = "Caracteres inválidos";
-    } else if (formData.report.length < 150) {
-        errors.report = "El reporte debe tener al menos 150 caracteres";
-    } else if (formData.report.length > 350) {
-        errors.report = "Reporte demasiado extenso";
+    if (!formData.message) {
+        errors.message = "Campo obligatorio";
+    } else if (!validateText.test(formData.message)) {
+        errors.message = "Caracteres inválidos";
+    } else if (formData.message.length < 150) {
+        errors.message = "El mensaje debe tener al menos 150 caracteres";
+    } else if (formData.message.length > 350) {
+        errors.message = "Mensaje demasiado extenso";
     }
 
     return errors;

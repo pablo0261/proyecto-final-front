@@ -1,12 +1,12 @@
 const Validation = (property, setLocalErrors, userData) => {
   switch (property) {
-    case 'Pregunta':
+    case 'question':
       if (userData[property].trim() === '') {
         setLocalErrors((prevErrors) => ({
           ...prevErrors,
           [property]: '* La pregunta es obligatoria',
         }));
-      } else if (userData[property].length > 50) {
+      } else if (userData[property].length > 150) {
         setLocalErrors((prevErrors) => ({
           ...prevErrors,
           [property]: '* Pregunta demasiada extensa',
@@ -24,13 +24,13 @@ const Validation = (property, setLocalErrors, userData) => {
       }
       break;
 
-    case 'Respuesta':
+    case 'answer':
       if (userData[property].trim() === '') {
         setLocalErrors((prevErrors) => ({
           ...prevErrors,
           [property]: '* La respuesta es obligatoria',
         }));
-      } else if (userData[property].length > 100) {
+      } else if (userData[property].length > 450) {
         setLocalErrors((prevErrors) => ({
           ...prevErrors,
           [property]: '* Respuesta demasiada extensa',

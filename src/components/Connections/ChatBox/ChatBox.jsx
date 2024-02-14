@@ -1,39 +1,42 @@
 import React, { useEffect, useState } from 'react'
 import style from './ChatBox.module.sass'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import axios from 'axios'
 import ChatRender from './ChatRender/ChatRender'
+import { putOpportunities } from '../../../redux/actions'
 
 function ChatBox(props) {
 
-    const { idOpportunitie, infoUserLog } = props
+    const { idOpportunitie, infoUserLog, opportunities, filter } = props
     const [dataChat, setDataChat] = useState([])
     const [isLoadingChat, setIsLoadingChat] = useState()
-   
-    const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL
-
-    useEffect(()=>{
-        const setChat = async () => {
-            try {
-                setIsLoadingChat(true)
-                const response = await axios.get(`${REACT_APP_API_URL}/chats?idOpportunitie=${idOpportunitie}&idPeople=${infoUserLog.idPeople}`)
-                if (response.status === 200) {
-                  setDataChat(response.data.data)
-                  setIsLoadingChat(false)
-                }
-              } catch (error) {
-                window.alert(error)
-              }
-        }
-
-        setChat()
-    },[idOpportunitie])
-
     const [message, setMessage] = useState({
         idOpportunitie: idOpportunitie,
         idPeople: infoUserLog.idPeople,
         message: ""
     })
+
+    const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL
+
+    const setChat = async () => {
+        try {
+            setIsLoadingChat(true)
+            const response = await axios.get(`${REACT_APP_API_URL}/chats?idOpportunitie=${idOpportunitie}&idPeople=${infoUserLog.idPeople}`)
+            if (response.status === 200) {
+                setDataChat(response.data.data)
+                setMessage({...message, idOpportunitie : idOpportunitie})
+                setIsLoadingChat(false)
+            }
+        } catch (error) {
+            window.alert(error)
+        }
+    }
+
+    useEffect(() => {
+        if (idOpportunitie.length > 0) {
+            setChat()
+        }
+    }, [idOpportunitie])
 
     const handleChangeMessage = (event) => {
         setMessage({ ...message, message: event.target.value })
@@ -45,7 +48,7 @@ function ChatBox(props) {
             axios.post(`${REACT_APP_API_URL}/chats`, message)
                 .then((response) => {
                     if (response.status === 200) {
-                        setMessage({...message, message: ""})
+                        setMessage({ ...message, message: "" })
                     }
                 })
                 .catch((reason) => window.alert(reason))
@@ -54,29 +57,97 @@ function ChatBox(props) {
         }
     }
 
+    const [showForm, setShowForm] = useState(false)
+    const [cancelation, setCancelation] = useState({
+        idOpportunitie: idOpportunitie,
+        idPeople: infoUserLog.idPeople,
+        cancelled: true,
+        reasonForCancelation: ""
+    })
+
+    const handleShowInput = () => {
+        setShowForm(!showForm)
+        setCancelation({ ...cancelation, reasonForCancelation: "" })
+    }
+
+    const handleChangeStateForm = (event) => {
+        setCancelation({ ...cancelation, reasonForCancelation: event.target.value })
+    }
+
+    const dispatch = useDispatch()
+    const handleChangeState = (event) => {
+        event.preventDefault()
+        if (!Object.values(cancelation).every((property) => property === "")) {
+            if (infoUserLog.typeOfPerson === "customer") {
+                dispatch(putOpportunities(cancelation, `?idCustomer=${infoUserLog.idPeople}&state=${filter}&idOrder=dateAccepted,DESC`))
+            } else if (infoUserLog.typeOfPerson === "provider") {
+                dispatch(putOpportunities(cancelation, `?idProvider=${infoUserLog.idPeople}&state=${filter}&idOrder=dateAccepted,DESC`))
+            }
+        } else {
+            window.alert("Debes indicar el porque")
+        }
+    }
+
+    const handleEndService = () => {
+        const today = new Date()
+        const endService = {
+            idOpportunitie: idOpportunitie,
+            idPeople: infoUserLog.idPeople,
+            dateEndService: today
+        }
+        if (infoUserLog.typeOfPerson === "customer") {
+            dispatch(putOpportunities(endService, `?idCustomer=${infoUserLog.idPeople}&state=${filter}&idOrder=dateAccepted,DESC`))
+        } else if (infoUserLog.typeOfPerson === "provider") {
+            dispatch(putOpportunities(endService, `?idProvider=${infoUserLog.idPeople}&state=${filter}&idOrder=dateAccepted,DESC`))
+        }
+    }
+
     return (
         <div className={style.background}>
             {
-                !isLoadingChat && dataChat.length != 0
-                    ? <div className={style.chatWrapper}>
-                        <div className={style.msgWrapper}>
-                            <ChatRender dataChat={dataChat}></ChatRender>
+                opportunities.length != 0
+                    ? !isLoadingChat && dataChat.length != 0
+                        ? <div className={style.chatWrapper}>
+                            <div className={style.buttonWrapper}>
+                                <div className={style.buttonProcessF} onClick={() => handleShowInput()}> Cancelar Contrato </div>
+                                {
+                                    showForm &&
+                                    <form className={style.formCancel} onSubmit={handleChangeState}>
+                                        <input
+                                            type='text'
+                                            name='reasonForCancelation'
+                                            value={cancelation.reasonForCancelation}
+                                            onChange={handleChangeStateForm}
+                                            placeholder='¿Por que quieres cancelar el contrato?'
+                                            className={style.inputCancel}
+                                        ></input>
+                                        <button type='submit' className={style.buttonSubmit}>Confirmar</button>
+                                    </form>
+                                }
+                                {
+                                    infoUserLog.typeOfPerson === 'provider' && <div className={style.buttonProcessS} onClick={() => handleEndService()}> Servicio Finalizado </div>
+                                }
+                            </div>
+                            <div className={style.msgWrapper}>
+                                <ChatRender dataChat={dataChat}></ChatRender>
+                            </div>
+                            <div className={style.inputWrapper}>
+                                <form onSubmit={handleSendChat} className={style.formChat}>
+                                    <input
+                                        type='text'
+                                        name='chat'
+                                        value={message.message}
+                                        placeholder='Escribe un mensaje'
+                                        onChange={handleChangeMessage}
+                                        className={style.inputChat} />
+                                    <button type='submit' className={style.buttonChat}>Enviar</button>
+                                </form>
+                            </div>
                         </div>
-                        <div className={style.inputWrapper}>
-                            <form onSubmit={handleSendChat} className={style.formChat}>
-                                <input
-                                    type='text'
-                                    name='chat'
-                                    value={message.message}
-                                    placeholder='Escribe un mensaje'
-                                    onChange={handleChangeMessage}
-                                    className={style.inputChat} />
-                                <button type='submit' className={style.buttonChat}>Enviar</button>
-                            </form>
-                        </div>
-                    </div>
+                        :
+                        <p className={style.loadingChat}>Selecciona una conversación</p>
                     :
-                    <p className={style.loadingChat}>Cargando chat</p>
+                    <p className={style.loadingChat}>No tienes contactos confirmados</p>
             }
         </div>
     )
