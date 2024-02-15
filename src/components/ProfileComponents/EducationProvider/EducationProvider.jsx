@@ -15,27 +15,29 @@ function EducationProvider() {
   };
 
   useEffect(() => {
-    if (
-      infoUserLog &&
-      infoUserLog.categories &&
-      infoUserLog.categories.length > 1 && 
-      infoUserLog.categories[1] && 
-      infoUserLog.categories[1].categories_options && 
-      infoUserLog.categories[1].categories_options.length > 0 
-    ) {
-      const educationOptions = infoUserLog.categories[1].categories_options;
+    if (infoUserLog.categories && infoUserLog.categories.length > 0) {
+      const educationCategory = infoUserLog.categories.find(
+        (category) => category.idCategorie === 2
+      );
+      if (
+        educationCategory &&
+        educationCategory.categories_options &&
+        educationCategory.categories_options.length > 0
+      ) {
+        const educationOptions = educationCategory.categories_options;
 
-      if (educationOptions && educationOptions.length > 0) {
-        const educationData = educationOptions.map((option) => ({
-          idPeople: infoUserLog.idPeople,
-          idOption: option.idOption,
-          education: option.description || "No informado",
-          institution: option.people_options[0].institution || "No informado",
-          year: option.people_options[0]?.year || "No informado",
-          comment: option.people_options[0]?.comment || "No informado",
-        }));
+        if (educationOptions && educationOptions.length > 0) {
+          const educationData = educationOptions.map((option) => ({
+            idPeople: infoUserLog.idPeople,
+            idOption: option.idOption,
+            education: option.description || "No informado",
+            institution: option.people_options[0].institution || "No informado",
+            year: option.people_options[0]?.year || "No informado",
+            comment: option.people_options[0]?.comment || "No informado",
+          }));
 
-        setEducation(educationData);
+          setEducation(educationData);
+        }
       }
     }
   }, [infoUserLog]);
@@ -57,42 +59,42 @@ function EducationProvider() {
       </div>
 
       <div className={style.educationdetailContainer}>
-        { education.length > 0 ? (
-            education.map((option, index) => (
-              <div key={option.idOption}>
-                <div className={style.educationdetailbox}>
-                  <div className={style.infoContainerLeft}>
-                    <h2 className={style.education}>{option.education}</h2>
-                    <p className={style.detailInfo}>
-                      {option.institution}
-                      <br />
-                      {option.year}
-                    </p>
-                  </div>
-                  <div className={style.infoContainerRight}>
-                    <p className={style.observationInfo}>{option.comment}</p>
-                  </div>
-                  <button
-                    onClick={(event) =>
-                      handleDeleteService(option.idOption, event)
-                    }
-                    className={style.crossButton}
-                  ></button>
-                  {showForm && <Form handleShowForm={handleShowForm} />}
+        {education.length > 0 ? (
+          education.map((option, index) => (
+            <div key={option.idOption}>
+              <div className={style.educationdetailbox}>
+                <div className={style.infoContainerLeft}>
+                  <h2 className={style.education}>{option.education}</h2>
+                  <p className={style.detailInfo}>
+                    {option.institution}
+                    <br />
+                    {option.year}
+                  </p>
                 </div>
-                {index !== education.length - 1 && (
-                  <div>
-                    <p className={style.line}></p>
-                  </div>
-                )}
+                <div className={style.infoContainerRight}>
+                  <p className={style.observationInfo}>{option.comment}</p>
+                </div>
+                <button
+                  onClick={(event) =>
+                    handleDeleteService(option.idOption, event)
+                  }
+                  className={style.crossButton}
+                ></button>
+                {showForm && <Form handleShowForm={handleShowForm} />}
               </div>
-            ))
-            ) : (
-              <p>No hay información de educación disponible.</p>
-            )}
-          </div>
-        </div>
-      );
-    }
+              {index !== education.length - 1 && (
+                <div>
+                  <p className={style.line}></p>
+                </div>
+              )}
+            </div>
+          ))
+        ) : (
+          <p className={style.noInfo}>No hay información de educación disponible.</p>
+        )}
+      </div>
+    </div>
+  );
+}
 
 export default EducationProvider;
