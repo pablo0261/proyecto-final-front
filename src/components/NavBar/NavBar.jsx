@@ -5,7 +5,9 @@ import Helpers from '../../Helpers/RoutesFront';
 import StoreItem from '../../Helpers/LocalStorage';
 import { useDispatch, useSelector } from 'react-redux';
 import { logOutDeleteData } from '../../redux/actions';
-import axios from 'axios';
+import { io } from 'socket.io-client';
+const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
+const socket = io(REACT_APP_API_URL);
 
 function NavBar() {
 
@@ -15,22 +17,10 @@ function NavBar() {
     const emailUserLog = localStorage.getItem(StoreItem.emailUserLogged)
 
     const dispatch = useDispatch()
-    /* const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL */
+
     const handleLogOut = () => {
-        /* const userLogOut = {
-            idPeople: userLoggedInfo.idPeople,
-            logout: true
-        }
-        try {
-            const response = axios.post(`${REACT_APP_API_URL}/logins`, userLogOut)
-            if (response.status === 200) {
-                dispatch(logOutDeleteData())
-                navigate(Helpers.Landing)
-            }
-        } catch (error) {
-            window.alert(error)
-        } */
         dispatch(logOutDeleteData())
+        socket.emit('logout-request', userLoggedInfo.idPeople)
         navigate(Helpers.Landing)
     }
 

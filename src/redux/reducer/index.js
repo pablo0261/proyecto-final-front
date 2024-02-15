@@ -17,13 +17,13 @@ import {
   CREATE_REPORT,
   CREATE_FAQS,
   GET_FAQS,
-  // CONTRAT_SERVICE_USER
+  // CONTRAT_SERVICE_USER 
 } from "../actions/action-types";
 
 
 let initialState = {
-  
-  infoUserLog: { },
+
+  infoUserLog: {},
 
   //Filter and getpeople
   peopleForAdmin: [], /** El estado contiene los people que la tabla del admin*/
@@ -99,7 +99,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         peopleForAdmin: payload,
       };
-    
+
     case GET_HOME_PROVIDER:
       return {
         ...state,
@@ -178,24 +178,26 @@ const rootReducer = (state = initialState, { type, payload }) => {
         selected_opportunitie: payload
       }
 
-      /* Create report */
-      case CREATE_REPORT:
-        return {
-            ...state,
-            createReport: payload,
-        };
+    /* Create report */
+    case CREATE_REPORT:
+      return {
+        ...state,
+        createReport: payload,
+      };
 
     /* Create FAQs */
     case CREATE_FAQS:
+      console.log('Nuevo estado para create FAQS:', payload)
       return {
         ...state,
-        createFAQs: action.payload,
+        createFAQs: payload,
       };
 
+    /* GET FAQs */
     case GET_FAQS:
       return {
         ...state,
-        faqS: action.payload
+        faqS: payload,
       }
 
 
