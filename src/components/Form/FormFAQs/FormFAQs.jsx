@@ -44,9 +44,14 @@ const FormFAQs = ({  typeOfFAQs }) => {
     const isValid = Object.values(localErrors).every((error) => error === '');
 
     if (isValid) {
-      dispatch(createFAQs(formData));
-      setSuccessMessage('Pregunta y respuesta enviadas con éxito');
+      dispatch(createFAQs(formData))
+      .then(() => {
+        setSuccessMessage('Pregunta y respuesta enviadas con éxito');
       clearFormData();
+      })
+      .catch(()=>{
+        setSuccessMessage('Error al enviar el reporte');
+      });
     } else {
       setSuccessMessage('Formulario con errores');
 

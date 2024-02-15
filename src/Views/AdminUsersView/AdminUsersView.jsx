@@ -3,7 +3,7 @@ import FindUserAdmin from '../../components/FindUserAdmin/FindUserAdmin'
 import TableUserDue from '../../components/TableUserDue/TableUserDue'
 import { useSelector, useDispatch } from "react-redux";
 import { allPeople, getFiltersOrdersDB } from "../../redux/actions";
-import styles from "../AdminUsersView/AdminUsersView.module.sass"
+import styles from "../AdminUsersView/AdminUsersView.module.scss"
 
 function AdminUsersView() {
 const people = useSelector((state) => state.peopleForAdmin.data);
@@ -16,12 +16,12 @@ useEffect(() => {
 console.log(people)
 
 return (
-  <div className={styles.ff}>
-    <div className={styles.containerServices}>
-      <FindUserAdmin />
+  
+    <div className={styles.container}>
       <TableUserDue />
+      <FindUserAdmin />
     </div>
-  </div>
+  
 )
 
 }

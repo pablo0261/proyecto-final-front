@@ -393,11 +393,13 @@ const createFAQs = (formData) => {
   return async (dispatch) => {
     try {
       const response = await axios.post(`${REACT_APP_API_URL}/questions`, formData);
-      dispatch({ type: CREATE_FAQS, payload: response.data.data });
-      console.log('Response from server:', response.data.data);
+      dispatch({
+        type: CREATE_FAQS,
+        payload: response.data
+      });
+      console.log('Response from server:', response.data);
     } catch (error) {
-      console.log(error)
-      window.alert(error)
+      window.alert(error);
     }
   };
 };

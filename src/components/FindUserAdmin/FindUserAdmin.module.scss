@@ -1,0 +1,14 @@
+@use '../../Styles/Mixins.sass' as *;
+@import '../../Styles/Variables.sass';
+
+.container {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    width: 90%;
+    margin: 0;
+
+    h2{
+        @include font($secondaryColor, 24px, bold, normal);
+    };
+};
