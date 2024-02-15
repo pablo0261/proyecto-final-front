@@ -18,7 +18,10 @@ function SkillsProviderCard() {
     if (
       infoUserLog &&
       infoUserLog.categories &&
-      infoUserLog.categories.length > 0
+      infoUserLog.categories.length > 0 &&
+      infoUserLog.categories[2] &&
+      infoUserLog.categories[2].categories_options &&
+      infoUserLog.categories[2].categories_options.length > 0
     ) {
       const skillsOptions = infoUserLog.categories[2].categories_options;
   
@@ -54,11 +57,15 @@ function SkillsProviderCard() {
       </div>
 
       <div className={style.containerCard}>
-        {skills.map((option) => (
+      {skills.length > 0 ? ( 
+        skills.map((option) => (
           <div className={style.skillsdetailContainer} key={option.idOption}>
             <button onClick={(event) => handleDeleteService(option.idOption, event)} className={style.skillFalseButton}> {option.Skill}</button>
           </div>
-        ))}
+        ))
+        ) : (
+          <p>No hay información de experiencia disponible.</p> 
+        )}
       </div>
         {showForm && <Form handleShowForm={handleShowForm} />}
     </div>

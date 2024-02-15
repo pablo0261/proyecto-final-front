@@ -18,7 +18,10 @@ function EducationProvider() {
     if (
       infoUserLog &&
       infoUserLog.categories &&
-      infoUserLog.categories.length > 0
+      infoUserLog.categories.length > 1 && 
+      infoUserLog.categories[1] && 
+      infoUserLog.categories[1].categories_options && 
+      infoUserLog.categories[1].categories_options.length > 0 
     ) {
       const educationOptions = infoUserLog.categories[1].categories_options;
 
@@ -54,10 +57,7 @@ function EducationProvider() {
       </div>
 
       <div className={style.educationdetailContainer}>
-        {infoUserLog &&
-        infoUserLog.categories &&
-        infoUserLog.categories.length > 0 ? (
-          education.length > 0 ? (
+        { education.length > 0 ? (
             education.map((option, index) => (
               <div key={option.idOption}>
                 <div className={style.educationdetailbox}>
@@ -87,15 +87,12 @@ function EducationProvider() {
                 )}
               </div>
             ))
-          ) : (
-            <p>No hay información de su educación disponible.</p>
-          )
-        ) : (
-          <p>Cargando información...</p>
-        )}
-      </div>
-    </div>
-  );
-}
+            ) : (
+              <p>No hay información de educación disponible.</p>
+            )}
+          </div>
+        </div>
+      );
+    }
 
 export default EducationProvider;

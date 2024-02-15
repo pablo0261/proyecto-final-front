@@ -18,7 +18,10 @@ function ExperienciaProvider() {
     if (
       infoUserLog &&
       infoUserLog.categories &&
-      infoUserLog.categories.length > 0
+      infoUserLog.categories.length > 0 &&
+      infoUserLog.categories[1] &&
+      infoUserLog.categories[1].categories_options &&
+      infoUserLog.categories[1].categories_options.length > 0
     ) {
       const educationOptions = infoUserLog.categories[1].categories_options;
 
@@ -86,7 +89,7 @@ function ExperienciaProvider() {
             </div>
           ))
         ) : (
-          <p>No hay información de experiencia disponible.</p> 
+          <p className={style.noInfo}>No hay información de experiencia disponible.</p> 
         )}
       </div>
     </div>
