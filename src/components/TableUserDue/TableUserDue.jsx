@@ -1,16 +1,24 @@
 import React, { useEffect } from 'react';
 import styles from "./TableUserDue.module.sass";
 import Pagination from '../Pagination/Pagination';
-import { allPeopleProvider } from '../../redux/actions';
+import { allProviderAdmin , putStateProvider} from '../../redux/actions';
 import { useDispatch, useSelector } from 'react-redux';
 
 function TableUserDue() {
-  const people = useSelector((state) => state.getAllPeople.data);
+  const people = useSelector((state) => state.providerForAdmin.data);
+  const InfoPag = useSelector((state) => state.providerForAdmin);
+  const people1 = useSelector((state) => state.peopleForAdmin.data);
   const dispatch = useDispatch();
+console.log(InfoPag)
 
   useEffect(() => {
-    dispatch(allPeopleProvider(""));
-  }, [dispatch]); 
+    dispatch(allProviderAdmin());
+  }, [people1]); 
+
+  const handleChangeStatus = (value, state) => {
+    const auxState = state === "Active" ? "Inactive" : "Active";
+    dispatch(putStateProvider(value, auxState))
+  }
 
   if (!people) {
     return null;
@@ -45,14 +53,14 @@ function TableUserDue() {
                 <td>{person.people.pago}</td>
                 <td>{person.people.dateOfAdmission}</td>
                 <td><button>MAIL</button></td>
-                <td><button>On/Off</button></td>
+                <td><button onClick={() => handleChangeStatus(person.people.idPeople, person.people.state)} >{person.people.state === "Active" ? "Inactivo" : "Activo"}</button></td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
       <div className={styles.pagination}>
-        <Pagination />
+      <Pagination pageNumber={InfoPag.pageNumber} totalOfPages={InfoPag.totalOfPages} />
       </div>
       <h3>Dar de baja automáticamente adeudados</h3>
       <h3>Aviso previo día anterior</h3>

@@ -16,7 +16,8 @@ import {
   CREATE_REPORT,
   CREATE_FAQS,
   GET_FAQS,
-
+  GET_ALL_PROVIDER_ADMIN,
+  PUT_STATE,
   // CONTRAT_SERVICE_USER
 } from "../actions/action-types";
 
@@ -27,6 +28,7 @@ let initialState = {
 
   //Filter and getpeople
   peopleForAdmin: [], /** El estado contiene los people que la tabla del admin*/
+  providerForAdmin: [],
   homeCustomerProviders: [],
   getAllPeople: [],
   paginacionData: [],
@@ -95,6 +97,17 @@ const rootReducer = (state = initialState, { type, payload }) => {
       };
 
     case GET_PEOPLE:
+      return {
+        ...state,
+        peopleForAdmin: payload,
+      };
+
+    case GET_ALL_PROVIDER_ADMIN:
+      return {
+        ...state,
+        providerForAdmin: payload,
+      };
+    case PUT_STATE:
       return {
         ...state,
         peopleForAdmin: payload,

@@ -18,6 +18,8 @@ import {
   CREATE_FAQS,
   GET_FAQS,
   GET_PEOPLE,
+  GET_ALL_PROVIDER_ADMIN,
+  PUT_STATE,
 } from "./action-types";
 
 const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
@@ -104,7 +106,7 @@ const allPeople = (query) => {
   //** Esta ruta solo llama a todos los registrados en la tabla people*/
   return async (dispatch) => {
     try {
-      const response = await axios.get(`${REACT_APP_API_URL}/people?typeOfPerson=provider&typeOfPerson=customer${query}`);
+      const response = await axios.get(`${REACT_APP_API_URL}/people?typeOfPerson=customer&typeOfPerson=provider&state=Inactive&state=Active${query}`);
       return dispatch({
         type: GET_PEOPLE,
         payload:  response.data.people,
@@ -123,6 +125,22 @@ const allPeopleProvider = (query) => {
       );
       return dispatch({
         type: GET_HOME_PROVIDER,
+        payload: response.data.people,
+      });
+    } catch (error) {
+      window.alert(error);
+    }
+  };
+};
+
+const allProviderAdmin = () => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.get(
+        `${REACT_APP_API_URL}/people?typeOfPerson=provider&state=Inactive&state=Active`
+      );
+      return dispatch({
+        type: GET_ALL_PROVIDER_ADMIN,
         payload: response.data.people,
       });
     } catch (error) {
@@ -244,6 +262,35 @@ const postUserCalendar = (userData) => {
       }
     }
   };
+};
+
+const putState = (value, auxState) => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.put(`${REACT_APP_API_URL}/people`, {
+        "idPeople": value,
+        "state": auxState
+      })
+      if (response.status === 200) {
+        dispatch(allPeople(""));}
+    } catch (error) {
+      window.alert(error);
+    };
+  }; 
+};
+const putStateProvider = (value, auxState) => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.put(`${REACT_APP_API_URL}/people`, {
+        "idPeople": value,
+        "state": auxState
+      })
+      if (response.status === 200) {
+        dispatch(allProviderAdmin());}
+    } catch (error) {
+      window.alert(error);
+    };
+  }; 
 };
 
 const postUserServices = (updatedUserData) => {
@@ -436,4 +483,7 @@ export {
   getFAQs,
   postUserCalendar,
   postUserInteres,
+  allProviderAdmin,
+  putState,
+  putStateProvider,
 };

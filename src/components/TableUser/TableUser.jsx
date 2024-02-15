@@ -1,9 +1,21 @@
+import { useEffect } from "react";
+import { allPeople, putState } from "../../redux/actions";
+import Pagination from "../Pagination/Pagination";
 import styles from "./TableUser.module.sass";
+import { useDispatch, useSelector } from "react-redux";
 
 function TableDue({people}) {
+  const dispatch = useDispatch();
+  const InfoPag = useSelector((state) => state.peopleForAdmin);
+
+  const handleChangeStatus = (value, state) => {
+    const auxState = state === "Active" ? "Inactive" : "Active";
+    dispatch(putState(value, auxState))
+  }
 
   return (
-    <div className={styles.container}>
+    <div >
+      <div className={styles.container}>
       <table className={styles.customTable}>
         <thead>
           <tr>
@@ -29,12 +41,16 @@ function TableDue({people}) {
               <td>{person.people.pago || "No data"}</td>
               <td>{person.people.dateOfAdmission}</td>
               <td><button>MAIL</button></td>
-              <td><button>Activo/Inactivo</button></td>
+              <td><button onClick={() => handleChangeStatus(person.people.idPeople, person.people.state)} >{person.people.state === "Active" ? "Inactivo" : "Activo"}</button></td>
               <td><button>Cancelar</button></td>
             </tr>
           ))}
         </tbody>
       </table>
+      </div>
+      <div className={styles.pagination}>
+      <Pagination pageNumber={InfoPag.pageNumber} totalOfPages={InfoPag.totalOfPages} />
+      </div>
     </div>
   );
 }

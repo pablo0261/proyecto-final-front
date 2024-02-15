@@ -18,3 +18,5 @@ export const SET_CHAT = 'SET_CHAT';
 export const GET_PEOPLE = 'GET_PEOPLE';
 export const CREATE_FAQS = 'CREATE_FAQS';
 export const GET_FAQS = 'GET_FAQS';
+export const GET_ALL_PROVIDER_ADMIN = 'GET_ALL_PROVIDER_ADMIN';
+export const PUT_STATE = 'PUT_STATE';
