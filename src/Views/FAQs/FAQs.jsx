@@ -1,4 +1,6 @@
 import styles from './faqs.module.scss';
+import more from '../../assets/Icons/more.svg'
+import less from '../../assets/Icons/less.svg'
 import Loader from '../../utils/Loader/Loader'
 import { useEffect, useState } from 'react';
 import FormFAQs from '../../components/Form/FormFAQs/FormFAQs';
@@ -196,7 +198,7 @@ const FAQs = () => {
                   <div className={styles.question}>
                     <h3>{faq.title}</h3>
                     <div className={styles.more} onClick={() => toggleAnswer(index)}>
-                      <p>{expandedAnswers[index] ? '-' : '+'}</p>
+                      <p>{expandedAnswers[index] ? <img src={less}/> : <img src={more}/>}</p>
                     </div>
                   </div>
 
@@ -242,7 +244,7 @@ const FAQs = () => {
                   <div className={styles.question}>
                     <h3>{faq.title}</h3>
                     <div className={styles.more} onClick={() => toggleAnswer(index)}>
-                      <p>{expandedAnswers[index] ? '-' : '+'}</p>
+                      <p>{expandedAnswers[index] ? <img src={less}/> : <img src={more}/>}</p>
                     </div>
                   </div>
 

@@ -23,18 +23,12 @@
                 h3 {
                     @include textSubTitle(left, normal);
                 }
-
+                
+                
                 div {
-                    @include flexbox(null, center, center);
-                    background-color: $primaryColor;
                     cursor: pointer;
-                    width: 30px;
-                    height: 30px;
-                    border-radius: 50%;
-
-                    p {
-                        @include  font(white, large, bold, normal);
-                    }
+                    width: 60px;
+                    height: 60px;
                 }
 
             }
@@ -91,3 +85,5 @@
     }
 
 }
+
+

@@ -44,8 +44,6 @@ const FormFAQs = ({  typeOfFAQs }) => {
     const isValid = Object.values(localErrors).every((error) => error === '');
 
     if (isValid) {
-      /* onAddQuestion(formData.question, formData.message); */ // Llama a la función para agregar la pregunta y la respuesta
-
       dispatch(createFAQs(formData));
       setSuccessMessage('Pregunta y respuesta enviadas con éxito');
       clearFormData();
