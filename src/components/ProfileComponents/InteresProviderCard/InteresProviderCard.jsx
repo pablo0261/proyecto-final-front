@@ -15,17 +15,12 @@ function InteresProviderCard() {
   };
 
   useEffect(() => {
-    if (
-      infoUserLog &&
-      infoUserLog.categories &&
-      infoUserLog.categories.length > 0 &&
-      infoUserLog.categories[3] &&
-      infoUserLog.categories[3].categories_options &&
-      infoUserLog.categories[3].categories_options.length > 0
-    ) {
-      const interesOptions = infoUserLog.categories[3].categories_options;
+    if (infoUserLog && infoUserLog.categories && infoUserLog.categories.length > 0) {
+      const interesCategory = infoUserLog.categories.find(category => category.idCategorie === 6); //*categoria de Hobbies
+      
+      if (interesCategory && interesCategory.categories_options && interesCategory.categories_options.length > 0) {
+        const interesOptions = interesCategory.categories_options;
 
-      if (interesOptions && interesOptions.length > 0) {
         const interesData = interesOptions.map((option) => ({
           idOption: option.idOption,
           interes: option.description,
@@ -57,11 +52,15 @@ function InteresProviderCard() {
       </div>
 
       <div className={style.containerCard}>
-        {intereses.map((option) => (
+        {intereses.length > 0 ? (
+          intereses.map((option) => (
           <div className={style.interesDetailContainer} key={option.idOption}>
             <button onClick={(event) => handleDeleteService(option.idOption, event)} className={style.interesFalseButton}> {option.interes}</button>
           </div>
-        ))}
+        ))
+        ): (
+          <p className={style.noInfo}>No hay información de intereses disponible.</p>
+        )}
       </div>
       {showForm && <Form handleShowForm={handleShowForm} />}
     </div>

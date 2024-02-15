@@ -17,12 +17,11 @@ function ServicesProviderCard() {
   useEffect(() => {
     //*Todo esto recorre y valida la info del usuario para ver los servicios y precios
     if (infoUserLog.categories && infoUserLog.categories.length > 0) {
-      const firstCategory = infoUserLog.categories[0];
-      if (
-        firstCategory.categories_options &&
-        firstCategory.categories_options.length > 0
-      ) {
-        const categoriesOptions = firstCategory.categories_options.flatMap(
+      const serviceCategory = infoUserLog.categories.find(
+        (category) => category.idCategorie === 1
+      );
+      if (serviceCategory && serviceCategory.categories_options) {
+        const categoriesOptions = serviceCategory.categories_options.flatMap(
           (option) => {
             if (option.people_options && option.people_options.length > 0) {
               return option.people_options.map((personOption) => ({

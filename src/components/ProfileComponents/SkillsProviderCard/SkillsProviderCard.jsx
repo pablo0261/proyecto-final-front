@@ -15,22 +15,24 @@ function SkillsProviderCard() {
   };
 
   useEffect(() => {
-    if (
-      infoUserLog &&
-      infoUserLog.categories &&
-      infoUserLog.categories.length > 0 &&
-      infoUserLog.categories[2] &&
-      infoUserLog.categories[2].categories_options &&
-      infoUserLog.categories[2].categories_options.length > 0
-    ) {
-      const skillsOptions = infoUserLog.categories[2].categories_options;
-  
-      if (skillsOptions && skillsOptions.length > 0) {
-        const skillData = skillsOptions.map((option) => ({
-          idOption: option.idOption,
-          Skill: option.description,
-        }));
-        setSkills(skillData);
+    if (infoUserLog.categories && infoUserLog.categories.length > 0) {
+      const skillsCategory = infoUserLog.categories.find(
+        (category) => category.id_categorie === 3
+      );
+      if (
+        skillsCategory &&
+        skillsCategory.categories_options &&
+        skillsCategory.categories_options.length > 0
+      ) {
+        const skillsOptions = skillsCategory.categories_options;
+
+        if (skillsOptions && skillsOptions.length > 0) {
+          const skillData = skillsOptions.map((option) => ({
+            idOption: option.idOption,
+            Skill: option.description,
+          }));
+          setSkills(skillData);
+        }
       }
     }
   }, [infoUserLog]);
@@ -42,10 +44,12 @@ function SkillsProviderCard() {
       idOption: idOption,
     };
 
-    const confirmDelete = window.confirm("¿Está seguro de que desea eliminar la habilidad?");
+    const confirmDelete = window.confirm(
+      "¿Está seguro de que desea eliminar la habilidad?"
+    );
 
     if (confirmDelete) {
-    dispatch(deleteService(deleteData));
+      dispatch(deleteService(deleteData));
     }
   };
 
@@ -57,17 +61,23 @@ function SkillsProviderCard() {
       </div>
 
       <div className={style.containerCard}>
-      {skills.length > 0 ? ( 
-        skills.map((option) => (
-          <div className={style.skillsdetailContainer} key={option.idOption}>
-            <button onClick={(event) => handleDeleteService(option.idOption, event)} className={style.skillFalseButton}> {option.Skill}</button>
-          </div>
-        ))
+        {skills.length > 0 ? (
+          skills.map((option) => (
+            <div className={style.skillsdetailContainer} key={option.idOption}>
+              <button
+                onClick={(event) => handleDeleteService(option.idOption, event)}
+                className={style.skillFalseButton}
+              >
+                {" "}
+                {option.Skill}
+              </button>
+            </div>
+          ))
         ) : (
-          <p>No hay información de experiencia disponible.</p> 
+          <p className={style.noInfo}>No hay información de experiencia disponible.</p>
         )}
       </div>
-        {showForm && <Form handleShowForm={handleShowForm} />}
+      {showForm && <Form handleShowForm={handleShowForm} />}
     </div>
   );
 }
