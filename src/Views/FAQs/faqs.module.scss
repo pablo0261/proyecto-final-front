@@ -21,7 +21,7 @@
                 @include flexbox(null, space-between, center);
 
                 h3 {
-                    @include textSubTitle(center, normal);
+                    @include textSubTitle(left, normal);
                 }
 
                 div {

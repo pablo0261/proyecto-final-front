@@ -1,14 +1,41 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import style from './ChatRender.module.sass'
+import { io } from 'socket.io-client';
+import axios from 'axios';
+const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
+const socket = io(REACT_APP_API_URL);
 
 function ChatRender(props) {
 
-    const { dataChat } = props
+    const { dataChat, idOpportunitie, infoUserLog } = props
+    const [dataChatRender, setDataChatRender] = useState(dataChat)
+    const [newChatFlag, setNewChatFlag] = useState([])
+
+    const setChat = async () => {
+        try {
+            const response = await axios.get(`${REACT_APP_API_URL}/chats?idOpportunitie=${idOpportunitie}&idPeople=${infoUserLog.idPeople}`)
+            if (response.status === 200) {
+                setDataChatRender(response.data.data)
+            }
+        } catch (error) {
+            window.alert(error)
+        }
+    }
+
+    socket.on('render-chat', (incommitChat) => {
+        if (idOpportunitie === incommitChat.idOpportunitie) {
+            setNewChatFlag(incommitChat.idChat)
+        }
+    })
+
+    useEffect(() => {
+        setChat()
+    }, [newChatFlag])
 
     useEffect(()=>{
         const msgWrapper = document.getElementById('msgWrapper')
         msgWrapper.scrollTop = msgWrapper.scrollHeight
-    },[])
+    },[dataChatRender])
 
     const formatearFecha = (fechaString) => {
         const fecha = new Date(fechaString)
@@ -25,7 +52,7 @@ function ChatRender(props) {
     return (
         <div id='msgWrapper' className={style.msgWrapper}>
             {
-                dataChat.map((chat, index) => <div key={index} className={chat.sended ? style.msgBoxOwner : style.msgBoxOther}>
+                dataChatRender.map((chat, index) => <div key={index} className={chat.sended ? style.msgBoxOwner : style.msgBoxOther}>
                     <p className={style.msg}>{chat.message}</p>
                     <p className={style.msgDate}>{
                         formatearFecha(chat.dateMessage)

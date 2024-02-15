@@ -4,16 +4,16 @@ const validateText = /^[a-zA-ZáéíóúüñÑÁÉÍÓÚÜ\s\.,;:!¡¿?()-]+$/u
 
 function validation(formData) {
     let errors = {
-        fullname: '',
+        fullName: '',
         senderMail: '',
         title: '',
         message: '',
     };
 
-    if (!formData.fullname) {
-        errors.fullname = "Campo obligatorio";
-    } else if (!validateName.test(formData.fullname)) {
-        errors.fullname = "Ingresá tu nombre y apellido completo";
+    if (!formData.fullName) {
+        errors.fullName = "Campo obligatorio";
+    } else if (!validateName.test(formData.fullName)) {
+        errors.fullName = "Ingresá tu nombre y apellido completo";
     }
 
     if (!formData.senderMail) {
