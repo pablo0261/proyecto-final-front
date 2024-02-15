@@ -3,7 +3,7 @@ import style from './StatsProviderView.module.sass'
 
 function StatsProviderView() {
   return (
-    <div className={style.wrapper}>Estas son las Estadisticas del Proveedor
+    <div className={style.wrapper}>
       <Dashboard />
     </div>
   )

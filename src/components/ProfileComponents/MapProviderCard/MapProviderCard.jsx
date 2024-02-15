@@ -14,23 +14,17 @@ function MapProviderCard() {
   const dispatch = useDispatch();
   const infoUserLog = useSelector((state) => state.infoUserLog);
   
-
-
-
-
   const geopositionArray = infoUserLog.geoposition
-    .split(",")
-    .map((str) => parseFloat(str.trim())) || "-34.6142, -64.1770"
+  ? infoUserLog.geoposition.split(",").map((str) => parseFloat(str.trim()))
+  : [-32.635184890429585,-65.19722521105064];
 
   const [draggable, setDraggable] = useState(false);
-  const [position, setPosition] = useState(geopositionArray);
-  
+  const [position, setPosition] = useState({ lat: geopositionArray[0], lng: geopositionArray[1] });
+
   const dataToSend = {
-    idPeople:  infoUserLog.idPeople,
+    idPeople: infoUserLog.idPeople,
     geoposition: `${position.lat},${position.lng}`
   }
-  
-
 
 
   const markerRef = useRef(null);
@@ -50,17 +44,18 @@ function MapProviderCard() {
     setDraggable((d) => !d);
   }, []);
 
-  const handleSaveGeoposition = () => {
+  const handleSaveGeoposition = async () => {
     try {
-      dispatch(putUserData(dataToSend));
+      await dispatch(putUserData(dataToSend));
+      console.log("Datos de geoposición guardados exitosamente:", dataToSend);
     } catch (error) {
-      console.error("Error al guardar la agenda:", error);
+      console.error("Error al guardar los datos de geoposición:", error);
     }
   };
 
   useEffect(() => {
     handleSaveGeoposition();
-  }, []);
+  }, [position]);
 
   return (
     <div>

@@ -9,20 +9,20 @@ function ProfileProvider() {
   const infoUserLog = useSelector((state) => state.infoUserLog);
 
   const formData = {
-    idPeople: infoUserLog.idPeople,
-    fullName: infoUserLog.fullName || "Diego Lepore",
-    age: infoUserLog.age || "43",
-    address: infoUserLog.address || "Emilio Rosas 3057",
-    location: infoUserLog.locationName || "Bahia Blanca",
-    province: infoUserLog.provinceName || "Buenos Aires",
-    state: infoUserLog.state || "Activo",
-    country: infoUserLog.country || "Argentina",
-    profession: infoUserLog.profession || "",
-    aboutMe: infoUserLog.aboutMe || "Predispuesto y Dedicado",
-    phone: infoUserLog.phone || "02918145869",
-    email: infoUserLog.email || "diegolepore@gmail.com",
-    averageRating: infoUserLog.averageRating || "4.9",
-    countRating: infoUserLog.countRating?.toString() || "127",
+    idPeople: infoUserLog.idPeople || '',
+    fullName: infoUserLog.fullName || '',
+    age: infoUserLog.age || '',
+    address: infoUserLog.address || '',
+    location: infoUserLog.locationName || '',
+    province: infoUserLog.provinceName || '',
+    state: infoUserLog.state || '',
+    country: infoUserLog.country || '',
+    profession: infoUserLog.profession || '',
+    aboutMe: infoUserLog.aboutMe || '',
+    phone: infoUserLog.phone || '',
+    email: infoUserLog.email || '',
+    averageRating: infoUserLog.averageRating || '',
+    countRating: infoUserLog.countRating?.toString() || '',
     image: infoUserLog.image || "https://res.cloudinary.com/dn3kedyer/image/upload/v1707141615/image/g08drlndxzjhmpbtxbdw.png",
   };
 
@@ -53,7 +53,7 @@ function ProfileProvider() {
       <div className={style.wrapper}>
         <div className={style.alertWrapper}>
           {
-            !Verification &&
+            !infoUserLog &&
             <div className={style.verificationAlert}>
               <p className={style.textAlert}>Completa tu perfil para poder verificar tu cuenta. Ten en cuenta que los perfiles no verificados no son mostrados a los clientes.</p>
             </div>

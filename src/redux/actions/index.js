@@ -198,8 +198,7 @@ const postUserData = (userDataEnglish) => {
       const response = await axios.post(
         `${REACT_APP_API_URL}/people`,
         userDataEnglish
-      );
-      console.log(response)
+        );
       if (response.status === 200) {
         return dispatch({
           type: POST_NEW_INFO_USER,
@@ -226,6 +225,7 @@ const putUserData = (userData) => {
         `${REACT_APP_API_URL}/people`,
         userData
         );
+        console.log("response",response)
         if (response.status === 200) {
       dispatch({
           type: POST_NEW_INFO_USER,
