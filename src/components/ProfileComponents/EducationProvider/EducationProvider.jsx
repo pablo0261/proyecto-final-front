@@ -29,8 +29,7 @@ function EducationProvider() {
           education: option.description || "No informado",
           institution: option.people_options[0].institution || "No informado",
           year: option.people_options[0]?.year || "No informado",
-          comment:
-            option.people_options[0]?.comment || "No informado",
+          comment: option.people_options[0]?.comment || "No informado",
         }));
 
         setEducation(educationData);
@@ -41,12 +40,12 @@ function EducationProvider() {
   const handleDeleteService = (idOption, event) => {
     event.preventDefault();
     const deleteData = {
-      "idPeople": infoUserLog.idPeople,
-      "idOption": idOption,
+      idPeople: infoUserLog.idPeople,
+      idOption: idOption,
     };
     dispatch(deleteService(deleteData));
   };
-  
+
   return (
     <div className={style.container}>
       <div className={style.titleContainer}>
@@ -55,38 +54,44 @@ function EducationProvider() {
       </div>
 
       <div className={style.educationdetailContainer}>
-        {education.length > 0 ? ( 
-          education.map((option, index) => (
-            <div key={option.idOption}>
-              <div className={style.educationdetailbox}>
-                <div className={style.infoContainerLeft}>
-                  <h2 className={style.education}>{option.education}</h2>
-                  <p className={style.detailInfo}>
-                    {option.institution}
-                    <br />
-                    {option.year}
-                  </p>
+        {infoUserLog &&
+        infoUserLog.categories &&
+        infoUserLog.categories.length > 0 ? (
+          education.length > 0 ? (
+            education.map((option, index) => (
+              <div key={option.idOption}>
+                <div className={style.educationdetailbox}>
+                  <div className={style.infoContainerLeft}>
+                    <h2 className={style.education}>{option.education}</h2>
+                    <p className={style.detailInfo}>
+                      {option.institution}
+                      <br />
+                      {option.year}
+                    </p>
+                  </div>
+                  <div className={style.infoContainerRight}>
+                    <p className={style.observationInfo}>{option.comment}</p>
+                  </div>
+                  <button
+                    onClick={(event) =>
+                      handleDeleteService(option.idOption, event)
+                    }
+                    className={style.crossButton}
+                  ></button>
+                  {showForm && <Form handleShowForm={handleShowForm} />}
                 </div>
-                <div className={style.infoContainerRight}>
-                  <p className={style.observationInfo}>
-                    {option.comment}
-                  </p>
-                </div>
-                <button
-                  onClick={(event) => handleDeleteService(option.idOption, event)}
-                  className={style.crossButton}
-                ></button>
-                {showForm && <Form handleShowForm={handleShowForm} />}
+                {index !== education.length - 1 && (
+                  <div>
+                    <p className={style.line}></p>
+                  </div>
+                )}
               </div>
-              {index !== education.length - 1 && (
-                <div>
-                  <p className={style.line}></p>
-                </div>
-              )}
-            </div>
-          ))
+            ))
+          ) : (
+            <p>No hay información de su educación disponible.</p>
+          )
         ) : (
-          <p>No hay información de su educación disponible.</p> 
+          <p>Cargando información...</p>
         )}
       </div>
     </div>
