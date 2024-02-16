@@ -229,6 +229,7 @@ const putUserData = (userData) => {
       console.log("response", response)
       if (response.status === 200) {
         dispatch({
+
           type: POST_NEW_INFO_USER,
           payload: response.data.people.data[0].people,
         });

@@ -1,21 +1,35 @@
-import React from "react";
-import style from "./MostSearch.module.sass" // Asegúrate de importar el archivo de estilos
+import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import style from "./MostSearch.module.sass"; 
 
 function MostSearch() {
-  const statistics = {
-    Cuidado: 237,
-    "Atención Médica": 205,
-    "Cuidado y Limpieza": 134,
-    Kinesiologia: 98,
-    Nutrición: 65,
-    Inyectables: 59,
-  };
+  const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
+  const userLog = useSelector((state) => state.infoUserLog);
+  const [statistics, setStatistics] = useState([]);
+
+  useEffect(() => {
+    const fetchEducation = async () => {
+      try {
+        const response = await fetch(`${REACT_APP_API_URL}/stats/provider?idPeople=${userLog.idPeople}`);
+        const data = await response.json();
+        const serviciosMasBuscados = data.data.serviciosMasBuscados.map((option) => ({
+          servicio: option.servicio || "Limpieza",
+          cantidad: parseInt(option.cantidad, 10) || 0, 
+        }));
+        setStatistics(serviciosMasBuscados);
+      } catch (error) {
+        console.error("Error al obtener los servicios mas buscados:", error);
+      }
+    };
+    fetchEducation();
+  }, []);
+
 
   const renderStatistics = () => {
-    return Object.entries(statistics).map(([key, value]) => (
-      <div key={key} className={style.statisticsItem}>
-        <p className={style.statisticsKey}>{key}</p>
-        <p className={style.statisticsValue}>{value}</p>
+    return statistics.map((item, index) => (
+      <div key={index} className={style.statisticsItem}>
+        <p className={style.statisticsKey}>{item.servicio}</p>
+        <p className={style.statisticsValue}>{item.cantidad}</p>
       </div>
     ));
   };

@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import style from './ProfileProvider.module.sass';
 import Form from "../../Form/FormProfileProvider/Form"
+import profileImage from "../../../assets/Icons/PerfilImage.png"
 import UploadWidget from "../../CloudinaryWidget/UploadWidget";
 
 
@@ -23,7 +24,7 @@ function ProfileProvider() {
     email: infoUserLog.email || '',
     averageRating: infoUserLog.averageRating || '',
     countRating: infoUserLog.countRating?.toString() || '',
-    image: infoUserLog.image || "https://res.cloudinary.com/dn3kedyer/image/upload/v1707141615/image/g08drlndxzjhmpbtxbdw.png",
+    image: infoUserLog.image || profileImage,
   };
 
   const isAllInfoFilled = Object.values(formData).every(
