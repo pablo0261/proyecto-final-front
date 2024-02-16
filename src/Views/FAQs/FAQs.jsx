@@ -142,8 +142,8 @@ const FAQs = () => {
                 <div className={styles.item}>
                   <div className={styles.question}>
                     <h3>{faq.title}</h3>
-                    <div className={styles.more} onClick={() => toggleAnswer(index)}>
-                      <p>{expandedAnswers[index] ? <img src={less}/> : <img src={more}/>}</p>
+                    <div onClick={() => toggleAnswer(index)}>
+                      <p>{expandedAnswers[index] ? <img className={styles.more} src={less}/> : <img className={styles.more} src={more}/>}</p>
                     </div>
                   </div>
 
@@ -169,10 +169,13 @@ const FAQs = () => {
       {/* Mostrar el botón de edición para alternar la visibilidad del formulario */}
       {userLoggedInfo.typeOfPerson === 'administrator' && (
         <>
-          <button className={styles.buttons} onClick={() => handleToggleForm('provider')}>
-            {showForm && faqType === 'provider' ? 'Cancelar' : 'Crear Pregunta'}
+        {showForm && faqType === 'provider' && <FormFAQs  typeOfFAQs="provider" />}
+        <div className={styles.container__buttons_close}>
+        <button onClick={() => handleToggleForm('provider')}>
+            {showForm && faqType === 'provider' ? 'Cerrar formulario' : 'Crear Pregunta'}
           </button>
-          {showForm && faqType === 'provider' && <FormFAQs  typeOfFAQs="provider" />}
+        </div>
+          
         </>
       )}
 
@@ -188,8 +191,8 @@ const FAQs = () => {
                 <div className={styles.item}>
                   <div className={styles.question}>
                     <h3>{faq.title}</h3>
-                    <div className={styles.more} onClick={() => toggleAnswer(index)}>
-                      <p>{expandedAnswers[index] ? <img src={less}/> : <img src={more}/>}</p>
+                    <div onClick={() => toggleAnswer(index)}>
+                      <p>{expandedAnswers[index] ? <img className={styles.more} src={less}/> : <img className={styles.more} src={more}/>}</p>
                     </div>
                   </div>
 
@@ -213,10 +216,13 @@ const FAQs = () => {
 
       {userLoggedInfo.typeOfPerson === 'administrator' && (
         <>
-          <button className={styles.buttons} onClick={() => handleToggleForm('client')}>
-            {showForm && faqType === 'client' ? 'Cancelar' : 'Crear Pregunta'}
+        {showForm && faqType === 'client' && <FormFAQs  typeOfFAQs="client" />}
+        <div className={styles.container__buttons_close}>
+          <button onClick={() => handleToggleForm('client')}>
+            {showForm && faqType === 'client' ? 'Cerrar formulario' : 'Crear Pregunta'}
           </button>
-          {showForm && faqType === 'client' && <FormFAQs  typeOfFAQs="client" />}
+        </div>
+          
         </>
       )}
 

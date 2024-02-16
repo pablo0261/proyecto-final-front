@@ -31,14 +31,11 @@ const FormFAQs = ({ typeOfFAQs }) => {
 
   const dispatch = useDispatch();
 
-
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value }); // Actualiza el estado formData con el nuevo valor
     Validation(name, setLocalErrors, { ...formData, [name]: value }); // Realiza la validación de los campos
   };
-
-
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -56,8 +53,11 @@ const FormFAQs = ({ typeOfFAQs }) => {
         });
     } else {
       setSuccessMessage('Formulario con errores');
+      window.alert('Por favor complete el formulario correctamente antes de enviarlo');
     }
   };
+
+  const isFormValid = formData.title !== '' && formData.message !== '' && Object.values(localErrors).every((error) => error === '');
 
   return (
     <div className={styles.wrapper}>
@@ -88,7 +88,8 @@ const FormFAQs = ({ typeOfFAQs }) => {
           ></textarea>
           {localErrors.message && <div className={styles.errorMessage}>{localErrors.message}</div>}
 
-          <button type="submit">Guardar</button>
+          <button type="submit" disabled={!isFormValid}>Guardar</button>
+
         </div>
       </form>
       {successMessage && <p className={styles.errorMessage}>{successMessage}</p>}

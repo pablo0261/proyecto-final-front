@@ -6,7 +6,7 @@
 
     h2 {
         @include textTitle(null, normal);
-    }
+    };
 
     .container__item {
         display: flex;
@@ -22,16 +22,9 @@
 
                 h3 {
                     @include textSubTitle(left, normal);
-                }
-                
-                
-                div {
-                    cursor: pointer;
-                    width: 60px;
-                    height: 60px;
-                }
-
-            }
+                };
+    
+            };
 
             .answer {
                 padding: 0 0 0 0;
@@ -43,12 +36,14 @@
                     @include  font($textPrimaryColor, larger, null, normal);
                     text-align: left;
                     margin: 0 50px 0 50px;
-                }
-            }
+                };
+
+                
+            };
 
             .expanded {
                 height: auto;
-            }
+            };
 
         }
 
@@ -57,8 +52,8 @@
             background-color: $secondaryColor;
             height: 2px;
             margin: 20px 0;
-        }
-    }
+        };
+    };
 
     .container__buttons {
         display: flex;
@@ -67,23 +62,29 @@
         button {
             margin: 10px;
             @include buttonActive
-        }
+        };
 
+        button:hover {
+            @include buttonHover
+        };
+    }
+
+    .container__buttons_close{
+        
+        button {
+            @include buttonActive
+        }
+    
         button:hover {
             @include buttonHover
         }
     }
-
-    .buttons {
-        margin: 10px;
-        width: 50%;
-        @include buttonActive
-    }
-
-    .button:hover {
-        @include buttonHover
-    }
-
 }
+
+.more {
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+};
 
 

@@ -55,14 +55,16 @@
 
   button {
     width: 100%;
-    margin: 20px 0px 30px 0px;
+    margin: 20px 0px 0px 0px;
     @include buttonActive;
+    background-color: #22B573;
     cursor: pointer;
     transition: .2s;
   }
 
   button:hover {
-    @include buttonHover
+    @include buttonHover;
+    background-color: #2ad588;
   }
 
   button:active {
