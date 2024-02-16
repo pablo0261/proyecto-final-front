@@ -19,6 +19,7 @@ import {
   GET_FAQS,
   SET_CHAT,
   GET_PEOPLE,
+  GET_REPORTS,
 } from "./action-types";
 
 const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
@@ -199,7 +200,6 @@ const postUserData = (userDataEnglish) => {
         `${REACT_APP_API_URL}/people`,
         userDataEnglish
       );
-      console.log(response)
       if (response.status === 200) {
         return dispatch({
           type: POST_NEW_INFO_USER,
@@ -219,16 +219,17 @@ const postUserData = (userDataEnglish) => {
   };
 };
 
-const postUserCalendar = (userData) => {
+const putUserData = (userData) => {
   return async (dispatch) => {
     try {
       const response = await axios.put(
         `${REACT_APP_API_URL}/people`,
         userData
       );
-      console.log(response.data.people.data[0].people)
+      console.log("response", response)
       if (response.status === 200) {
         dispatch({
+
           type: POST_NEW_INFO_USER,
           payload: response.data.people.data[0].people,
         });
@@ -344,6 +345,7 @@ const getOpportunities = (filter) => {
   return async (dispatch) => {
     try {
       const response = await axios.get(`${REACT_APP_API_URL}/opportunities${filter}`)
+      console.log(response)
       if (response.status === 200) {
         return dispatch({
           type: SET_OPPORTUNITIE,
@@ -367,6 +369,25 @@ const putOpportunities = (data, filter) => {
       }
     } catch (error) {
       console.log(error)
+      window.alert(error)
+    }
+  }
+}
+
+//REPORTS
+const getReports = (email) => {
+  return async (dispatch) => {
+    try {
+      console.log(email)
+      const response = await axios.get(`${REACT_APP_API_URL}/questions?typeOfQuestion=qaa${email} ? ${email} : ""`)
+      console.log(response)
+      if (response.status === 200) {
+        return dispatch({
+          type: GET_REPORTS,
+          payload: response.data.questions.data
+        })
+      }
+    } catch (error) {
       window.alert(error)
     }
   }
@@ -435,10 +456,11 @@ export {
   allPeople,
   getOpportunities,
   putOpportunities,
+  getReports,
   createReport,
   deleteService,
+  putUserData,
   createFAQs,
   getFAQs,
-  postUserCalendar,
   postUserInteres,
 };

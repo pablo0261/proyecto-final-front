@@ -1,0 +1,38 @@
+@use '../../../../Styles/Mixins'
+@import '../../../../Styles/Variables'
+
+.statisticsContainer
+    display: flex
+    flex-wrap: raw
+    justify-content: space-around
+    align-items: center
+    width: 100%
+    margin-inline: auto
+    margin-block: 5%
+
+.prom
+    position: relative
+    width: 100%
+    display: flex
+    justify-content: center
+    align-items: center
+    flex-wrap: wrap
+    +Mixins.font($secondaryColor, 50px, normal, normal)
+
+.stars
+    position: relative
+    display: flex
+    width: 30%
+    height: fit-content
+    justify-content: center
+    align-contem: center
+    font-size: 30px
+
+.count
+    position: relative
+    width: 95%
+    height: fit-content
+    justify-content: center
+    align-items: center
+    +Mixins.font($secondaryColor, 30px, normal, normal)
+    

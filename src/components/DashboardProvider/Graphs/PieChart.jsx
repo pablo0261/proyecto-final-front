@@ -76,11 +76,11 @@ function PieChartComponent() {
         {
           name: "Nightingale Chart",
           type: "pie",
-          radius: [30, 200],
+          radius: [20, 150],
           center: ["50%", "50%"],
           roseType: "area",
           itemStyle: {
-            borderRadius: 8,
+            borderRadius: 6,
           },//! ESTO SE DEBE CAMBIAR POR LA CANTIDAD DE VECES QUE SE CONTRATO CADA SERVICIO
           data: servicesData.map(service => ({ value: service.price || 0, name: service.description, label: {
             formatter: '$ {c}',

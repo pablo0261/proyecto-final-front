@@ -1,0 +1,45 @@
+@use '../../../../Styles/Mixins'
+@import '../../../../Styles/Variables'
+
+.statisticsContainer
+    display: flex
+    flex-wrap: wrap
+    justify-content: space-around
+    width: 100%
+    margin-inline: auto
+
+
+.statisticsBox
+    position: relative
+    width: 100%
+    display: flex
+    flex-wrap: wrap
+
+.statisticsItem
+    position: relative
+    width: 32%
+    height: 120px
+    display: block
+    justify-content: center
+    margin-block: 10px
+    margin-inline: auto
+    @include Mixins.boxShadowCard
+     
+.statisticsKey
+    position: relative
+    width: 95%
+    height: 50px
+    text-align: center
+    text-justify: center
+    margin-inline: auto
+    +Mixins.font($secondaryColor, 20px, normal, normal)
+    
+
+.statisticsValue  
+    position: relative
+    width: 95%
+    height: 90px
+    top: -80px
+    text-justify: center
+    text-align: center
+    +Mixins.font(grey, 55px, bold, normal)

@@ -10,10 +10,10 @@ import {
   GET_FILTER_PROVIDER,
   FILTER_ORDER_SELECTED,
   POST_NEW_INFO_USER,
-  SET_CHAT,
   GET_PEOPLE,
   SET_OPPORTUNITIE,
   SET_SELECTED_OPPORTUNITIE,
+  GET_REPORTS,
   CREATE_REPORT,
   CREATE_FAQS,
   GET_FAQS,
@@ -73,6 +73,9 @@ let initialState = {
   //OPPORTUNITIE
   selected_opportunitie: {},
   opportunities: [],
+
+  //REPORTS
+  reports: [],
 
   /* Create report */
   createReport: [],
@@ -177,7 +180,13 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         selected_opportunitie: payload
       }
-
+    
+    //REPORTS
+    case GET_REPORTS:
+      return {
+        ...state,
+        reports: payload
+      }
     /* Create report */
     case CREATE_REPORT:
       return {
