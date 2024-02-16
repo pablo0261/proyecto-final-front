@@ -72,11 +72,11 @@
     .container__buttons_close{
         
         button {
-            @include buttonActive
+            @include buttonActive;
         }
     
         button:hover {
-            @include buttonHover
+            @include buttonHover;
         }
     }
 }

@@ -24,13 +24,10 @@ const FAQs = () => {
   const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;//*
   const userLoggedInfo = useSelector(state => state.infoUserLog);
 
-  const faqSDetail = useSelector((state) => state.faqS);
-
-  console.log("Estado global desde FAQs.jsx");
-  console.log(faqSDetail);
-
+   const faqSDetail = useSelector((state) => state.faqS);
+   
   /* Get FAQs */
-  useEffect(() => {
+   useEffect(() => {
     dispatch(getFAQs())
       .then(() => {
         setIsLoading(false); // Cuando la carga se completa con éxito, se cambia isLoading a false
@@ -90,9 +87,9 @@ const FAQs = () => {
 
   const handleToggleForm = (type) => {
     setShowForm(!showForm);
-    /* setFaqType(type);
+    setFaqType(type);
     setEditMode(false);
-    setEditIndex(null); */
+    setEditIndex(null);
   };
 
   /* Función para eliminar una pregunta */
@@ -135,40 +132,32 @@ const FAQs = () => {
       {faqSDetail && faqSDetail.questions && faqSDetail.questions.data && faqSDetail.questions.data.map((faq, index) => {
         if (faq.typeOfQuestion === 'faq' && faq.destination === 'provider') {
           return (
+            
+              <div className={styles.container__item} key={index}>
 
-            <div className={styles.container__item} key={index}>
+                {/* Pregunta y respuesta */}
+                <div className={styles.item}>
+                  <div className={styles.question}>
+                    <h3>{faq.title}</h3>
+                    <div className={styles.more} onClick={() => toggleAnswer(index)}>
+                      <p>{expandedAnswers[index] ? <img className={styles.more} src={less} /> : <img className={styles.more} src={more} />}</p>
+                    </div>
+                  </div>
 
-              {/* Pregunta y respuesta */}
-              <div className={styles.item}>
-                <div className={styles.question}>
-                  <h3>{faq.title}</h3>
-                  <div onClick={() => toggleAnswer(index)}>
-                    <p>{expandedAnswers[index] ? <img className={styles.more} src={less} /> : <img className={styles.more} src={more} />}</p>
+                  <div className={`${styles.answer} ${expandedAnswers[index] ? styles.expanded : ''}`}>
+                    <p>{faq.message}</p>
                   </div>
                 </div>
+                <hr />
 
-                <div className={`${styles.answer} ${expandedAnswers[index] ? styles.expanded : ''}`}>
-                  <p>{faq.message}</p>
+                <div className={styles.container__buttons}>
+                  <button onClick={() => handleDeleteQuestion(index, 'provider')}>Eliminar</button>
+                  <button onClick={() => handleEditQuestion(index, 'provider')}>Editar</button>
                 </div>
+
+
               </div>
-              <hr />
-
-              {userLoggedInfo.typeOfPerson === 'administrator' && (
-                <>
-                  {showForm && faqType === 'provider' && <FormFAQs typeOfFAQs="provider" />}
-                  <div className={styles.container__buttons}>
-                    <button onClick={() => handleDeleteQuestion(index, 'provider')}>Eliminar</button>
-                    <button onClick={() => handleEditQuestion(index, 'provider')}>Editar</button>
-                  </div>
-
-                </>
-              )}
-
-
-
-
-            </div>
-
+            
           );
         }
         return null;
@@ -192,35 +181,30 @@ const FAQs = () => {
       {faqSDetail && faqSDetail.questions && faqSDetail.questions.data && faqSDetail.questions.data.map((faq, index) => {
         if (faq.typeOfQuestion === 'faq' && faq.destination === 'customer') {
           return (
-            <div className={styles.container__item} key={index}>
+              <div className={styles.container__item} key={index}>
 
-              {/* Pregunta y respuesta */}
-              <div className={styles.item}>
-                <div className={styles.question}>
-                  <h3>{faq.title}</h3>
-                  <div onClick={() => toggleAnswer(index)}>
-                    <p>{expandedAnswers[index] ? <img className={styles.more} src={less} /> : <img className={styles.more} src={more} />}</p>
+                {/* Pregunta y respuesta */}
+                <div className={styles.item}>
+                  <div className={styles.question}>
+                    <h3>{faq.title}</h3>
+                    <div className={styles.more} onClick={() => toggleAnswer(index)}>
+                      <p>{expandedAnswers[index] ? <img className={styles.more} src={less} /> : <img className={styles.more} src={more} />}</p>
+                    </div>
+                  </div>
+
+                  <div className={`${styles.answer} ${expandedAnswers[index] ? styles.expanded : ''}`}>
+                    <p>{faq.message}</p>
                   </div>
                 </div>
+                <hr />
 
-                <div className={`${styles.answer} ${expandedAnswers[index] ? styles.expanded : ''}`}>
-                  <p>{faq.message}</p>
+                <div className={styles.container__buttons}>
+                  <button onClick={() => handleDeleteQuestion(index, 'client')}>Eliminar</button>
+                  <button onClick={() => handleEditQuestion(index, 'client')}>Editar</button>
                 </div>
+
+
               </div>
-              <hr />
-
-              {userLoggedInfo.typeOfPerson === 'administrator' && (
-                <>
-                  {showForm && faqType === 'client' && <FormFAQs typeOfFAQs="client" />}
-                  <div className={styles.container__buttons}>
-                    <button onClick={() => handleDeleteQuestion(index, 'client')}>Eliminar</button>
-                    <button onClick={() => handleEditQuestion(index, 'client')}>Editar</button>
-                  </div>
-
-                </>
-              )}
-
-            </div>
           );
         }
         return null;
@@ -228,13 +212,12 @@ const FAQs = () => {
 
       {userLoggedInfo.typeOfPerson === 'administrator' && (
         <>
-          {showForm && faqType === 'client' && <FormFAQs typeOfFAQs="client" />}
+           {showForm && faqType === 'client' && <FormFAQs typeOfFAQs="client" />}
           <div className={styles.container__buttons_close}>
             <button onClick={() => handleToggleForm('client')}>
               {showForm && faqType === 'client' ? 'Cerrar formulario' : 'Crear Pregunta'}
             </button>
           </div>
-
         </>
       )}
 
