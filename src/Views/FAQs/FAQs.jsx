@@ -25,62 +25,7 @@ const FAQs = () => {
   const userLoggedInfo = useSelector(state => state.infoUserLog);
 
    const faqSDetail = useSelector((state) => state.faqS);
-   /* const faqSDetail = {
-    "questions": {
-      "count": 4,
-      "filter": {},
-      "data": [
-        {
-          "idQuestion": "e98fb3cb-1651-4364-94be-9726d8fd8641",
-          "typeOfQuestion": "faq",
-          "destination": "provider",
-          "priority": null,
-          "senderMail": null,
-          "fullName": null,
-          "title": "¿Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam?",
-          "receiverMail": null,
-          "message": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.",
-          "response": "pendiente"
-        },
-        {
-          "idQuestion": "ea8a9946-f31c-47c6-97c2-c8703d4120c6",
-          "typeOfQuestion": "faq",
-          "destination": "customer",
-          "priority": null,
-          "senderMail": null,
-          "fullName": null,
-          "title": "¿Tad ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam?",
-          "receiverMail": null,
-          "message": "Frat ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.",
-          "response": "pendiente"
-        },
-        {
-          "idQuestion": "adebaa18-3c68-495e-85b9-51685207f62f",
-          "typeOfQuestion": "qaa",
-          "destination": "administrator",
-          "priority": null,
-          "senderMail": "fulanito@mail.com",
-          "fullName": "Fulanito de Tal",
-          "title": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam",
-          "receiverMail": null,
-          "message": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.",
-          "response": "pendiente"
-        },
-        {
-          "idQuestion": "f015c472-c087-4703-906c-c0ff56dd47b6",
-          "typeOfQuestion": "qaa",
-          "destination": "administrator",
-          "priority": null,
-          "senderMail": "sotanita@mail.com",
-          "fullName": "Sotanita Tilin",
-          "title": "Alflt ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam",
-          "receiverMail": null,
-          "message": "Dfteg ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.",
-          "response": "pendiente"
-        }
-      ]
-    }
-  } */
+   
    console.log("Estado global desde FAQs.jsx");
    console.log(faqSDetail);
   

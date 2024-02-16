@@ -4,12 +4,12 @@ import styles from "./FormFAQs.module.scss";
 import { useDispatch } from 'react-redux';
 import { createFAQs } from '../../../redux/actions/index';
 
-const FormFAQs = ({  typeOfFAQs }) => {
+const FormFAQs = ({ typeOfFAQs }) => {
   const [successMessage, setSuccessMessage] = useState('');
 
   const [formData, setFormData] = useState({
     typeOfQuestion: 'faq',
-    destination: typeOfFAQs === 'provider' ? ' provider' : 'customer',
+    destination: typeOfFAQs === 'provider' ? 'provider' : 'customer',
     title: '',
     message: ''
   });
@@ -22,6 +22,8 @@ const FormFAQs = ({  typeOfFAQs }) => {
 
   const clearFormData = () => {
     setFormData({
+      typeOfQuestion: 'faq',
+      destination: typeOfFAQs === 'provider' ? 'provider' : 'customer',
       title: '',
       message: ''
     });
@@ -45,16 +47,15 @@ const FormFAQs = ({  typeOfFAQs }) => {
 
     if (isValid) {
       dispatch(createFAQs(formData))
-      .then(() => {
-        setSuccessMessage('Pregunta y respuesta enviadas con éxito');
-      clearFormData();
-      })
-      .catch(()=>{
-        setSuccessMessage('Error al enviar el reporte');
-      });
+        .then(() => {
+          setSuccessMessage('Pregunta y respuesta enviadas con éxito');
+          clearFormData();
+        })
+        .catch(() => {
+          setSuccessMessage('Error al enviar el reporte');
+        });
     } else {
       setSuccessMessage('Formulario con errores');
-
     }
   };
 
@@ -63,7 +64,7 @@ const FormFAQs = ({  typeOfFAQs }) => {
 
       <form className={styles.Form} onSubmit={handleSubmit}>
         <div className={styles.FormDivInputFlex}>
-          
+
           {/* question */}
           <label htmlFor='title'>Ingresa una pregunta:</label>
           <input
