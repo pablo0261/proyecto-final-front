@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import styles from "./TableUser.module.sass";
+import styles from "./TableUser.module.scss";
 import { allPeople } from '../../redux/actions';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -13,8 +13,8 @@ function TableDue() {
   }, [dispatch]); // Agrega dispatch como dependencia del useEffect
 
   return (
-    <div className={styles.container}>
-      <table className={styles.customTable}>
+    <div className={styles.wrapper}>
+      <table>
         <thead>
           <tr>
             <th>Nombre</th>
@@ -39,9 +39,9 @@ function TableDue() {
               {/* Asegúrate de que el campo 'pago' esté definido */}
               <td>{person.people.pago || "No data"}</td>
               <td>{person.people.dateOfAdmission}</td>
-              <td><button>MAIL</button></td>
-              <td><button>Activo/Inactivo</button></td>
-              <td><button>Cancelar</button></td>
+              <td><button className={styles.mail}>MAIL</button></td>
+              <td><button className={styles.activo}>Activo/Inactivo</button></td>
+              <td><button className={styles.cancelar}>Cancelar</button></td>
             </tr>
           ))}
         </tbody>

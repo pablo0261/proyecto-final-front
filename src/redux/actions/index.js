@@ -19,6 +19,7 @@ import {
   GET_FAQS,
   SET_CHAT,
   GET_PEOPLE,
+  GET_REPORTS,
 } from "./action-types";
 
 const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
@@ -198,7 +199,7 @@ const postUserData = (userDataEnglish) => {
       const response = await axios.post(
         `${REACT_APP_API_URL}/people`,
         userDataEnglish
-        );
+      );
       if (response.status === 200) {
         return dispatch({
           type: POST_NEW_INFO_USER,
@@ -224,10 +225,11 @@ const putUserData = (userData) => {
       const response = await axios.put(
         `${REACT_APP_API_URL}/people`,
         userData
-        );
-        if (response.status === 200) {
-          console.log("response", response)
-      dispatch({
+      );
+      console.log("response", response)
+      if (response.status === 200) {
+        dispatch({
+
           type: POST_NEW_INFO_USER,
           payload: response.data.people.data[0].people,
         });
@@ -372,6 +374,25 @@ const putOpportunities = (data, filter) => {
   }
 }
 
+//REPORTS
+const getReports = (email) => {
+  return async (dispatch) => {
+    try {
+      console.log(email)
+      const response = await axios.get(`${REACT_APP_API_URL}/questions?typeOfQuestion=qaa${email} ? ${email} : ""`)
+      console.log(response)
+      if (response.status === 200) {
+        return dispatch({
+          type: GET_REPORTS,
+          payload: response.data.questions.data
+        })
+      }
+    } catch (error) {
+      window.alert(error)
+    }
+  }
+}
+
 /* Create report */
 const createReport = (formData) => {
   return async (dispatch) => {
@@ -393,10 +414,13 @@ const createFAQs = (formData) => {
   return async (dispatch) => {
     try {
       const response = await axios.post(`${REACT_APP_API_URL}/questions`, formData);
-      dispatch({ type: CREATE_FAQS, payload: response.data });
+      dispatch({
+        type: CREATE_FAQS,
+        payload: response.data
+      });
       console.log('Response from server:', response.data);
     } catch (error) {
-      console.log(error);
+      window.alert(error);
     }
   };
 };
@@ -432,6 +456,7 @@ export {
   allPeople,
   getOpportunities,
   putOpportunities,
+  getReports,
   createReport,
   deleteService,
   putUserData,

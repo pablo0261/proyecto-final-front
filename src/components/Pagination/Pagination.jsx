@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from "./Pagination.module.sass";
+import styles from "./Pagination.module.scss";
 import { getPeopleFilteredOrderedPagination } from "../../redux/actions";
 import { useDispatch } from "react-redux";
 
@@ -30,7 +30,7 @@ const Pagination = ({ pageNumber, totalOfPages , queryProps}) => {
   };
 
   return (
-    <div className={styles.container}>
+    <div className={styles.wrapper}>
       <button onClick={onPrevPage} disabled={pageNumber === 1}>Anterior</button>
 
       {pageNumbers.map((NumberOfPage) => (

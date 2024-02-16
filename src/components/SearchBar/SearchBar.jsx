@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styles from "./SearchBar.module.sass";
+import styles from "./SearchBar.module.scss";
 
 export default function SearchBar(props) {
   const { onSearch } = props;
@@ -17,10 +17,12 @@ export default function SearchBar(props) {
 
   return (
     <div className={styles.container}>
-      <form onSubmit={handleSubmit}>
+
+      <form className={styles.container_form} onSubmit={handleSubmit}>
         <input type="search" placeholder="Buscar" onChange={handleChange} value={searchInput} />
         <button type="submit">Buscar</button>
       </form>
+
     </div>
   );
 }
