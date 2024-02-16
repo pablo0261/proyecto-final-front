@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import CreatableSelect from 'react-select/creatable';
-import styles from "../AdminServices/AdminServices.module.sass"
+import styles from "../AdminServices/AdminServices.module.scss"
 import axios from 'axios';
 
 const AdminServices = ({ categoriesOptions, idCategorie }) => {
@@ -41,7 +41,7 @@ const AdminServices = ({ categoriesOptions, idCategorie }) => {
   console.log(value);
 
   return (
-    <div>
+    <div className={styles.container}>
       <CreatableSelect
         isClearable
         isDisabled={isLoading}
@@ -50,6 +50,18 @@ const AdminServices = ({ categoriesOptions, idCategorie }) => {
         onCreateOption={handleCreate}
         options={options}
         value={value}
+
+        theme={(theme) => ({
+          ...theme,
+          borderRadius: 10,
+          colors: {
+            ...theme.colors,
+            primary25: 'rgb(245, 245, 245)',
+            primary: 'black',
+          },
+        })}
+
+
       />
       <button>Delete</button>
     </div>

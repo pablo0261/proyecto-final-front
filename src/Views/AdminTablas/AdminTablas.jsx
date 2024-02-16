@@ -14,7 +14,7 @@ function AdminTablas() {
   
 //   console.log(servicios)
   return (
-    <div>
+    <div className={styles.wrapper}>
       {servicios.map((categoria, index) => (
         <div key={index}>
           <h2>{categoria.description}</h2>

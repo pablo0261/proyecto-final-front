@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import styles from "./TableUser.module.sass";
+import styles from "./TableUser.module.scss";
 import { allPeople } from '../../redux/actions';
 import { useDispatch, useSelector } from 'react-redux';
 
