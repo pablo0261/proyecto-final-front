@@ -65,10 +65,6 @@ const AdminServices = ({ categoriesOptions, idCategorie }) => {
             primary: 'black',
           },
           
-          colors: {
-            ...theme,
-            width: '800px',
-          },
           
          
         })}
