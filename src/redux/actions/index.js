@@ -225,8 +225,8 @@ const putUserData = (userData) => {
         `${REACT_APP_API_URL}/people`,
         userData
         );
-        console.log("response",response)
         if (response.status === 200) {
+          console.log("response", response)
       dispatch({
           type: POST_NEW_INFO_USER,
           payload: response.data.people.data[0].people,
