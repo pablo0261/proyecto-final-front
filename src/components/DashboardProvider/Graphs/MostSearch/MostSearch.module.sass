@@ -6,40 +6,40 @@
     flex-wrap: wrap
     justify-content: space-around
     width: 100%
-    margin-inline: auto
-
+    height: 200px
 
 .statisticsBox
     position: relative
     width: 100%
+    higt: 100px
     display: flex
     flex-wrap: wrap
 
 .statisticsItem
     position: relative
-    width: 32%
-    height: 120px
-    display: block
+    width: 45%
+    display: flex
+    height: 80px
     justify-content: center
-    margin-block: 10px
     margin-inline: auto
     @include Mixins.boxShadowCard
      
-.statisticsKey
+.statisticsKey 
     position: relative
-    width: 95%
-    height: 50px
-    text-align: center
-    text-justify: center
+    width: 200px
     margin-inline: auto
-    +Mixins.font($secondaryColor, 20px, normal, normal)
+    text-align: center
+    justify-content: center
+    display: flex
+    align-items: center
+    white-space: normal
+    overflow: hidden
+    text-overflow: ellipsis
+    +Mixins.font($secondaryColor, 18px, normal, normal)
     
 
 .statisticsValue  
     position: relative
-    width: 95%
-    height: 90px
-    top: -80px
-    text-justify: center
-    text-align: center
-    +Mixins.font(grey, 55px, bold, normal)
+    margin-block: auto
+    margin-left: 25px
+    +Mixins.font(grey, 35px, bold, normal)

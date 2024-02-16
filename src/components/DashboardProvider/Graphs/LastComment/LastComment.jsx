@@ -42,11 +42,11 @@ function LastComment() {
           <img className={style.imagen} src={statistics.image} alt="Imagen" />
         </div>
         <div className={style.infoContainerLeft}>
-          <h2 className={style.name}>{statistics.fullName}</h2>
+          <h2 className={style.client}>{statistics.cliente}</h2>
           <h2 className={style.comment}>{statistics.review}</h2>
         </div>
         <div className={style.infoContainerRight}>
-          <h2 className={style.infoResponse}>{statistics.rating}</h2>
+          <h2 className={style.infoRating}>{statistics.rating}</h2>
         </div>
       </div>
   );

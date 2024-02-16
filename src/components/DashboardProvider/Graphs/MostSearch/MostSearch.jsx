@@ -16,7 +16,9 @@ function MostSearch() {
           servicio: option.servicio || "Limpieza",
           cantidad: parseInt(option.cantidad, 10) || 0, 
         }));
-        setStatistics(serviciosMasBuscados);
+       serviciosMasBuscados.sort((a, b) => b.cantidad - a.cantidad);
+       const limitedStatistics = serviciosMasBuscados.slice(0, 4);
+       setStatistics(limitedStatistics);
       } catch (error) {
         console.error("Error al obtener los servicios mas buscados:", error);
       }
@@ -28,8 +30,8 @@ function MostSearch() {
   const renderStatistics = () => {
     return statistics.map((item, index) => (
       <div key={index} className={style.statisticsItem}>
-        <p className={style.statisticsKey}>{item.servicio}</p>
         <p className={style.statisticsValue}>{item.cantidad}</p>
+        <p className={style.statisticsKey}>{item.servicio}</p>
       </div>
     ));
   };
