@@ -1,7 +1,7 @@
 import styles from './FormConsultReport.module.scss';
 import { createReport } from '../../../redux/actions/index';
-import React, { useState, useRef } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useEffect, useState, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import validation from './validationFormConsultReport';
 import ReCAPTCHA from 'react-google-recaptcha';
 
@@ -16,13 +16,14 @@ const FormConsultReport = () => {
         title: '',
         message: '',
     });
-    console.log(formData);
+
    const [errors, setErrors] = useState({
         fullName: '',
         senderMail: '',
         title: '',
         message: '',
     });
+
     const clearFormData = () => {
         setFormData({
             fullName: '',
@@ -31,7 +32,21 @@ const FormConsultReport = () => {
             message: '',
         });
     };
+
+    const userLoggedInfo = useSelector(state => state.infoUserLog);
+console.log(userLoggedInfo);
+
     const dispatch = useDispatch();
+
+     // Autocompletar el campo senderMail con el email del usuario logueado
+     useEffect(() => {
+        if (userLoggedInfo && userLoggedInfo.email) {
+            setFormData(prevState => ({
+                ...prevState,
+                senderMail: userLoggedInfo.email
+            }));
+        }
+    }, [userLoggedInfo]);
 
     const handleChange = (event) => {
         const { name, value } = event.target;
