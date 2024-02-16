@@ -1,0 +1,20 @@
+@use '../../Styles/Mixins.sass' as *;
+@import '../../Styles/Variables.sass';
+
+.wrapper {
+  @include flexbox(row, center, center);
+  margin: 20px 0 20px 0;
+   gap: 20px; 
+
+   button{
+    @include buttonActive;
+  };
+
+  button:hover{
+    @include buttonHover;
+  };
+
+  button:pressed{
+    @include buttonPressed;
+  };
+};

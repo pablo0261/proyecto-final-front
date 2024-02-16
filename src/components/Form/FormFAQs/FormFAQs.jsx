@@ -4,12 +4,12 @@ import styles from "./FormFAQs.module.scss";
 import { useDispatch } from 'react-redux';
 import { createFAQs } from '../../../redux/actions/index';
 
-const FormFAQs = ({  typeOfFAQs }) => {
+const FormFAQs = ({ typeOfFAQs }) => {
   const [successMessage, setSuccessMessage] = useState('');
 
   const [formData, setFormData] = useState({
     typeOfQuestion: 'faq',
-    destination: typeOfFAQs === 'provider' ? ' provider' : 'customer',
+    destination: typeOfFAQs === 'provider' ? 'provider' : 'customer',
     title: '',
     message: ''
   });
@@ -22,6 +22,8 @@ const FormFAQs = ({  typeOfFAQs }) => {
 
   const clearFormData = () => {
     setFormData({
+      typeOfQuestion: 'faq',
+      destination: typeOfFAQs === 'provider' ? 'provider' : 'customer',
       title: '',
       message: ''
     });
@@ -29,14 +31,11 @@ const FormFAQs = ({  typeOfFAQs }) => {
 
   const dispatch = useDispatch();
 
-
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value }); // Actualiza el estado formData con el nuevo valor
     Validation(name, setLocalErrors, { ...formData, [name]: value }); // Realiza la validación de los campos
   };
-
-
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -44,23 +43,28 @@ const FormFAQs = ({  typeOfFAQs }) => {
     const isValid = Object.values(localErrors).every((error) => error === '');
 
     if (isValid) {
-      /* onAddQuestion(formData.question, formData.message); */ // Llama a la función para agregar la pregunta y la respuesta
-
-      dispatch(createFAQs(formData));
-      setSuccessMessage('Pregunta y respuesta enviadas con éxito');
-      clearFormData();
+      dispatch(createFAQs(formData))
+        .then(() => {
+          setSuccessMessage('Pregunta y respuesta enviadas con éxito');
+          clearFormData();
+        })
+        .catch(() => {
+          setSuccessMessage('Error al enviar el reporte');
+        });
     } else {
       setSuccessMessage('Formulario con errores');
-
+      window.alert('Por favor complete el formulario correctamente antes de enviarlo');
     }
   };
+
+  const isFormValid = formData.title !== '' && formData.message !== '' && Object.values(localErrors).every((error) => error === '');
 
   return (
     <div className={styles.wrapper}>
 
       <form className={styles.Form} onSubmit={handleSubmit}>
         <div className={styles.FormDivInputFlex}>
-          
+
           {/* question */}
           <label htmlFor='title'>Ingresa una pregunta:</label>
           <input
@@ -84,7 +88,8 @@ const FormFAQs = ({  typeOfFAQs }) => {
           ></textarea>
           {localErrors.message && <div className={styles.errorMessage}>{localErrors.message}</div>}
 
-          <button type="submit">Guardar</button>
+          <button type="submit" disabled={!isFormValid}>Guardar</button>
+
         </div>
       </form>
       {successMessage && <p className={styles.errorMessage}>{successMessage}</p>}

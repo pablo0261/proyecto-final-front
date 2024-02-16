@@ -1,0 +1,28 @@
+@use '../../Styles/Mixins.sass' as *;
+@import '../../Styles/Variables.sass';
+
+.container{
+    @include flexbox(row, center, center);
+};
+
+.container_form {
+    @include flexbox(null, center, center);
+    gap: 10px;
+
+    input{
+        @include inputsFormat
+    };
+
+    button {
+        @include buttonActive;
+    };
+
+    button:hover {
+        @include buttonHover;
+    };
+
+    button:pressed {
+        @include buttonPressed;
+    };
+
+};
