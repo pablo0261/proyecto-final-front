@@ -1,16 +1,16 @@
 import React from 'react'
-import style from './ReportsCustomerView.module.sass'
+import style from './AdminReports.module.sass'
 import Reports from '../../components/Reports/Reports'
 
-function ReportsCustomerView() {
+function AdminReports() {
   return (
     <div className={style.background}>
       <div className={style.wrapper}>
-        <p className={style.textTitle}>Tus Reportes</p>
+        <p className={style.textTitle}>Reportes</p>
         <Reports></Reports>
       </div>
     </div>
   )
 }
 
-export default ReportsCustomerView
+export default AdminReports
