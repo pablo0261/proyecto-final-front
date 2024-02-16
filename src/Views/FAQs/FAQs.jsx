@@ -24,13 +24,13 @@ const FAQs = () => {
   const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;//*
   const userLoggedInfo = useSelector(state => state.infoUserLog);
 
-   const faqSDetail = useSelector((state) => state.faqS);
-   
-   console.log("Estado global desde FAQs.jsx");
-   console.log(faqSDetail);
-  
+  const faqSDetail = useSelector((state) => state.faqS);
+
+  console.log("Estado global desde FAQs.jsx");
+  console.log(faqSDetail);
+
   /* Get FAQs */
-   useEffect(() => {
+  useEffect(() => {
     dispatch(getFAQs())
       .then(() => {
         setIsLoading(false); // Cuando la carga se completa con éxito, se cambia isLoading a false
@@ -135,32 +135,40 @@ const FAQs = () => {
       {faqSDetail && faqSDetail.questions && faqSDetail.questions.data && faqSDetail.questions.data.map((faq, index) => {
         if (faq.typeOfQuestion === 'faq' && faq.destination === 'provider') {
           return (
-            
-              <div className={styles.container__item} key={index}>
 
-                {/* Pregunta y respuesta */}
-                <div className={styles.item}>
-                  <div className={styles.question}>
-                    <h3>{faq.title}</h3>
-                    <div onClick={() => toggleAnswer(index)}>
-                      <p>{expandedAnswers[index] ? <img className={styles.more} src={less}/> : <img className={styles.more} src={more}/>}</p>
-                    </div>
-                  </div>
+            <div className={styles.container__item} key={index}>
 
-                  <div className={`${styles.answer} ${expandedAnswers[index] ? styles.expanded : ''}`}>
-                    <p>{faq.message}</p>
+              {/* Pregunta y respuesta */}
+              <div className={styles.item}>
+                <div className={styles.question}>
+                  <h3>{faq.title}</h3>
+                  <div onClick={() => toggleAnswer(index)}>
+                    <p>{expandedAnswers[index] ? <img className={styles.more} src={less} /> : <img className={styles.more} src={more} />}</p>
                   </div>
                 </div>
-                <hr />
 
-                <div className={styles.container__buttons}>
-                  <button onClick={() => handleDeleteQuestion(index, 'provider')}>Eliminar</button>
-                  <button onClick={() => handleEditQuestion(index, 'provider')}>Editar</button>
+                <div className={`${styles.answer} ${expandedAnswers[index] ? styles.expanded : ''}`}>
+                  <p>{faq.message}</p>
                 </div>
-
-
               </div>
-            
+              <hr />
+
+              {userLoggedInfo.typeOfPerson === 'administrator' && (
+                <>
+                  {showForm && faqType === 'provider' && <FormFAQs typeOfFAQs="provider" />}
+                  <div className={styles.container__buttons}>
+                    <button onClick={() => handleDeleteQuestion(index, 'provider')}>Eliminar</button>
+                    <button onClick={() => handleEditQuestion(index, 'provider')}>Editar</button>
+                  </div>
+
+                </>
+              )}
+
+
+
+
+            </div>
+
           );
         }
         return null;
@@ -169,13 +177,12 @@ const FAQs = () => {
       {/* Mostrar el botón de edición para alternar la visibilidad del formulario */}
       {userLoggedInfo.typeOfPerson === 'administrator' && (
         <>
-        {showForm && faqType === 'provider' && <FormFAQs  typeOfFAQs="provider" />}
-        <div className={styles.container__buttons_close}>
-        <button onClick={() => handleToggleForm('provider')}>
-            {showForm && faqType === 'provider' ? 'Cerrar formulario' : 'Crear Pregunta'}
-          </button>
-        </div>
-          
+          {showForm && faqType === 'provider' && <FormFAQs typeOfFAQs="provider" />}
+          <div className={styles.container__buttons_close}>
+            <button onClick={() => handleToggleForm('provider')}>
+              {showForm && faqType === 'provider' ? 'Cerrar formulario' : 'Crear Pregunta'}
+            </button>
+          </div>
         </>
       )}
 
@@ -185,30 +192,35 @@ const FAQs = () => {
       {faqSDetail && faqSDetail.questions && faqSDetail.questions.data && faqSDetail.questions.data.map((faq, index) => {
         if (faq.typeOfQuestion === 'faq' && faq.destination === 'customer') {
           return (
-              <div className={styles.container__item} key={index}>
+            <div className={styles.container__item} key={index}>
 
-                {/* Pregunta y respuesta */}
-                <div className={styles.item}>
-                  <div className={styles.question}>
-                    <h3>{faq.title}</h3>
-                    <div onClick={() => toggleAnswer(index)}>
-                      <p>{expandedAnswers[index] ? <img className={styles.more} src={less}/> : <img className={styles.more} src={more}/>}</p>
-                    </div>
-                  </div>
-
-                  <div className={`${styles.answer} ${expandedAnswers[index] ? styles.expanded : ''}`}>
-                    <p>{faq.message}</p>
+              {/* Pregunta y respuesta */}
+              <div className={styles.item}>
+                <div className={styles.question}>
+                  <h3>{faq.title}</h3>
+                  <div onClick={() => toggleAnswer(index)}>
+                    <p>{expandedAnswers[index] ? <img className={styles.more} src={less} /> : <img className={styles.more} src={more} />}</p>
                   </div>
                 </div>
-                <hr />
 
-                <div className={styles.container__buttons}>
-                  <button onClick={() => handleDeleteQuestion(index, 'client')}>Eliminar</button>
-                  <button onClick={() => handleEditQuestion(index, 'client')}>Editar</button>
+                <div className={`${styles.answer} ${expandedAnswers[index] ? styles.expanded : ''}`}>
+                  <p>{faq.message}</p>
                 </div>
-
-
               </div>
+              <hr />
+
+              {userLoggedInfo.typeOfPerson === 'administrator' && (
+                <>
+                  {showForm && faqType === 'client' && <FormFAQs typeOfFAQs="client" />}
+                  <div className={styles.container__buttons}>
+                    <button onClick={() => handleDeleteQuestion(index, 'client')}>Eliminar</button>
+                    <button onClick={() => handleEditQuestion(index, 'client')}>Editar</button>
+                  </div>
+
+                </>
+              )}
+
+            </div>
           );
         }
         return null;
@@ -216,13 +228,13 @@ const FAQs = () => {
 
       {userLoggedInfo.typeOfPerson === 'administrator' && (
         <>
-        {showForm && faqType === 'client' && <FormFAQs  typeOfFAQs="client" />}
-        <div className={styles.container__buttons_close}>
-          <button onClick={() => handleToggleForm('client')}>
-            {showForm && faqType === 'client' ? 'Cerrar formulario' : 'Crear Pregunta'}
-          </button>
-        </div>
-          
+          {showForm && faqType === 'client' && <FormFAQs typeOfFAQs="client" />}
+          <div className={styles.container__buttons_close}>
+            <button onClick={() => handleToggleForm('client')}>
+              {showForm && faqType === 'client' ? 'Cerrar formulario' : 'Crear Pregunta'}
+            </button>
+          </div>
+
         </>
       )}
 
