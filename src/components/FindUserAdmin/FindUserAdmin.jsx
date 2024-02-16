@@ -1,12 +1,10 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import SearchBar from '../SearchBar/SearchBar'
 import TableUser from '../TableUser/TableUser'
 import { allPeople } from '../../redux/actions';
 import { useDispatch, useSelector } from 'react-redux';
 
 function FindUserAdmin() {
-  const people1 = useSelector((state) => state.providerForAdmin.data);
-
   const people = useSelector((state) => state.peopleForAdmin.data);
   const dispatch = useDispatch();
 
@@ -14,14 +12,14 @@ function FindUserAdmin() {
     dispatch(allPeople(value));
   }
   
-  useEffect(() => {
-    findUser("");
-  }, [people1]);
+  const funcionbusqueda = (queryConstructOrder) => {
+    dispatch(allPeople(queryConstructOrder));
+  };
 
   return (
     <div>
       <h2>Buscar Usuario</h2>
-      <SearchBar onSearch={findUser}/>
+      <SearchBar onSearch={findUser} onSearchChange={funcionbusqueda}/>
       <TableUser people={people}/>
     </div>
   )

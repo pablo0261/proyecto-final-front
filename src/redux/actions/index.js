@@ -133,15 +133,27 @@ const allPeopleProvider = (query) => {
   };
 };
 
-const allProviderAdmin = () => {
+const allProviderAdmin = (query) => {
   return async (dispatch) => {
     try {
       const response = await axios.get(
-        `${REACT_APP_API_URL}/people?typeOfPerson=provider&state=Inactive&state=Active`
+        `${REACT_APP_API_URL}/people?typeOfPerson=provider&state=Inactive&state=Active${query}`
       );
       return dispatch({
         type: GET_ALL_PROVIDER_ADMIN,
         payload: response.data.people,
+      });
+    } catch (error) {
+      window.alert(error);
+    }
+  };
+};
+const clear = () => {
+  return async (dispatch) => {
+    try {
+      return dispatch({
+        type: GET_PEOPLE,
+        payload: "",
       });
     } catch (error) {
       window.alert(error);
@@ -285,8 +297,7 @@ const putStateProvider = (value, auxState) => {
         "idPeople": value,
         "state": auxState
       })
-      if (response.status === 200) {
-        dispatch(allProviderAdmin());}
+      
     } catch (error) {
       window.alert(error);
     };
@@ -486,4 +497,5 @@ export {
   allProviderAdmin,
   putState,
   putStateProvider,
+  clear
 };

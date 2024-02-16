@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import styles from "./SearchBar.module.sass";
-import { allPeople } from "../../redux/actions";
+import { clear } from "../../redux/actions";
 import { useDispatch } from "react-redux";
 
-export default function SearchBar() {
+export default function SearchBar({onSearchChange}) {
   const [searchInput, setSearchInput] = useState("");
   const dispatch = useDispatch();
 
@@ -11,6 +11,7 @@ export default function SearchBar() {
 
   const handleClear = () => {
     setSearchInput("")
+    dispatch(clear())
   }
 
   const handleChange = (event) => {
@@ -22,7 +23,7 @@ export default function SearchBar() {
     if (searchInput !== "") {
       algunvalor = "&fullName=" + searchInput;
     }
-    dispatch(allPeople(algunvalor));
+    onSearchChange(algunvalor);
   };
 
   return (
@@ -30,7 +31,7 @@ export default function SearchBar() {
       <form onSubmit={handleSubmit}>
         <input type="search" placeholder="Buscar" onChange={handleChange} value={searchInput} />
         <button type="submit">Buscar</button>
-        <button type="submit" onClick={handleClear}>Limpiar</button>
+        <button type="button" onClick={handleClear}>Limpiar</button>
       </form>
     </div>
   );

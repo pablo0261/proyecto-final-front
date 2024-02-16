@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from "./TableUserDue.module.sass";
 import Pagination from '../Pagination/Pagination';
 import { allProviderAdmin , putStateProvider} from '../../redux/actions';
@@ -7,22 +7,27 @@ import { useDispatch, useSelector } from 'react-redux';
 function TableUserDue() {
   const people = useSelector((state) => state.providerForAdmin.data);
   const InfoPag = useSelector((state) => state.providerForAdmin);
-  const people1 = useSelector((state) => state.peopleForAdmin.data);
   const dispatch = useDispatch();
-console.log(InfoPag)
-
+  const [flag, setFlag] = useState(true);
+  const queryConstructOrder = ""
   useEffect(() => {
-    dispatch(allProviderAdmin());
-  }, [people1]); 
+    dispatch(allProviderAdmin(""));
+  }, [flag]); 
 
   const handleChangeStatus = (value, state) => {
     const auxState = state === "Active" ? "Inactive" : "Active";
     dispatch(putStateProvider(value, auxState))
+    setFlag(!flag)
   }
 
   if (!people) {
     return null;
   }
+  const handlerPagination = (queryConstructOrder) => {
+    console.log(queryConstructOrder)
+    dispatch(allProviderAdmin(queryConstructOrder));
+    return queryConstructOrder;
+  };
 
   return (
     <div>
@@ -60,7 +65,7 @@ console.log(InfoPag)
         </table>
       </div>
       <div className={styles.pagination}>
-      <Pagination pageNumber={InfoPag.pageNumber} totalOfPages={InfoPag.totalOfPages} />
+      <Pagination pageNumber={InfoPag.pageNumber} totalOfPages={InfoPag.totalOfPages} onPageChange={handlerPagination}/>
       </div>
       <h3>Dar de baja automáticamente adeudados</h3>
       <h3>Aviso previo día anterior</h3>
