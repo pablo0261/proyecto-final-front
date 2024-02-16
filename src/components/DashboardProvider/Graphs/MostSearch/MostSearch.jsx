@@ -1,23 +1,20 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import style from "./MostSearch.module.sass"; // Asegúrate de importar el archivo de estilos
+import style from "./MostSearch.module.sass"; 
 
 function MostSearch() {
   const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
   const userLog = useSelector((state) => state.infoUserLog);
-
   const [statistics, setStatistics] = useState([]);
 
   useEffect(() => {
     const fetchEducation = async () => {
       try {
         const response = await fetch(`${REACT_APP_API_URL}/stats/provider?idPeople=${userLog.idPeople}`);
-        console.log("URL", `${REACT_APP_API_URL}/stats/provider?idPeople=${userLog.idPeople}`);
         const data = await response.json();
-        console.log("response", response);
-        const serviciosMasBuscados = data.map((option) => ({
+        const serviciosMasBuscados = data.data.serviciosMasBuscados.map((option) => ({
           servicio: option.servicio || "Limpieza",
-          cantidad: parseInt(option.cantidad, 10) || "4", 
+          cantidad: parseInt(option.cantidad, 10) || 0, 
         }));
         setStatistics(serviciosMasBuscados);
       } catch (error) {
@@ -25,9 +22,8 @@ function MostSearch() {
       }
     };
     fetchEducation();
-  }, [REACT_APP_API_URL, userLog.idPeople]);
+  }, []);
 
-  console.log("statistics", statistics);
 
   const renderStatistics = () => {
     return statistics.map((item, index) => (
