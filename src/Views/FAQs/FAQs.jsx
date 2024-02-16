@@ -90,9 +90,9 @@ const FAQs = () => {
 
   const handleToggleForm = (type) => {
     setShowForm(!showForm);
-    setFaqType(type);
+    /* setFaqType(type);
     setEditMode(false);
-    setEditIndex(null);
+    setEditIndex(null); */
   };
 
   /* Función para eliminar una pregunta */
