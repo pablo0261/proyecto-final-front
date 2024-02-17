@@ -17,9 +17,9 @@ import {
   CREATE_REPORT,
   CREATE_FAQS,
   GET_FAQS,
-  SET_CHAT,
   GET_PEOPLE,
   GET_REPORTS,
+  GET_ALL_PROVIDER_ADMIN,
 } from "./action-types";
 
 const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
@@ -102,11 +102,11 @@ const handleContratService = (item) => {
   };
 };
 
-const allPeople = () => {
+const allPeople = (query) => {
   //** Esta ruta solo llama a todos los registrados en la tabla people*/
   return async (dispatch) => {
     try {
-      const response = await axios.get(`${REACT_APP_API_URL}/people?typeOfPerson=provider&typeOfPerson=customer`);
+      const response = await axios.get(`${REACT_APP_API_URL}/people?typeOfPerson=customer&typeOfPerson=provider&state=Inactive&state=Active${query}`);
       return dispatch({
         type: GET_PEOPLE,
         payload: response.data.people,
@@ -126,6 +126,34 @@ const allPeopleProvider = (query) => {
       return dispatch({
         type: GET_HOME_PROVIDER,
         payload: response.data.people,
+      });
+    } catch (error) {
+      window.alert(error);
+    }
+  };
+};
+
+const allProviderAdmin = (query) => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.get(
+        `${REACT_APP_API_URL}/people?typeOfPerson=provider&state=Inactive&state=Active${query}`
+      );
+      return dispatch({
+        type: GET_ALL_PROVIDER_ADMIN,
+        payload: response.data.people,
+      });
+    } catch (error) {
+      window.alert(error);
+    }
+  };
+};
+const clear = () => {
+  return async (dispatch) => {
+    try {
+      return dispatch({
+        type: GET_PEOPLE,
+        payload: "",
       });
     } catch (error) {
       window.alert(error);
@@ -245,6 +273,32 @@ const putUserData = (userData) => {
       }
     }
   };
+};
+
+const putState = (value, auxState) => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.put(`${REACT_APP_API_URL}/people`, {
+        "idPeople": value,
+        "state": auxState
+      })
+
+    } catch (error) {
+      window.alert(error);
+    };
+  }; 
+};
+const putStateProvider = (value, auxState) => {
+  return async () => {
+    try {
+      const response = await axios.put(`${REACT_APP_API_URL}/people`, {
+        "idPeople": value,
+        "state": auxState
+      })
+    } catch (error) {
+      window.alert(error);
+    };
+  }; 
 };
 
 const postUserServices = (updatedUserData) => {
@@ -378,8 +432,8 @@ const putOpportunities = (data, filter) => {
 const getReports = (email) => {
   return async (dispatch) => {
     try {
-      console.log(email)
-      const response = await axios.get(`${REACT_APP_API_URL}/questions?typeOfQuestion=qaa${email} ? ${email} : ""`)
+      console.log(`${REACT_APP_API_URL}/questions?typeOfQuestion=qaa${email ? email : ""}`)
+      const response = await axios.get(`${REACT_APP_API_URL}/questions?typeOfQuestion=qaa${email ? email : ""}`)
       console.log(response)
       if (response.status === 200) {
         return dispatch({
@@ -463,4 +517,8 @@ export {
   createFAQs,
   getFAQs,
   postUserInteres,
+  allProviderAdmin,
+  putState,
+  putStateProvider,
+  clear
 };
