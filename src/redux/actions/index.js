@@ -254,7 +254,6 @@ const putUserData = (userData) => {
         `${REACT_APP_API_URL}/people`,
         userData
       );
-      console.log("response", response)
       if (response.status === 200) {
         dispatch({
 
@@ -399,7 +398,6 @@ const getOpportunities = (filter) => {
   return async (dispatch) => {
     try {
       const response = await axios.get(`${REACT_APP_API_URL}/opportunities${filter}`)
-      console.log(response)
       if (response.status === 200) {
         return dispatch({
           type: SET_OPPORTUNITIE,

@@ -1,0 +1,36 @@
+import { useState, useEffect } from "react";
+import style from "./StatsAccessAccountProvider.module.sass"
+
+function StatsAccesAccount() {
+  const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
+  const [statistics, setStatistics] = useState({
+    customerCount: 0,
+    porcentajeConexiones: 0,
+  });
+
+  useEffect(() => {
+    const fetchEducation = async () => {
+      try {
+        const response = await fetch(`${REACT_APP_API_URL}/stats/landing`);
+        const data = await response.json();
+        setStatistics({
+            customerCount: data.customerCount,
+          porcentajeConexiones: data.successfulConnections,
+        })
+      } catch (error) {
+        console.error("Error al obtener las cantidades de visitas al perfil:", error);
+      }
+    };
+    fetchEducation();
+  }, []);
+
+  
+  return (
+    <div className={style.statisticsContainer}>
+      <div className={style.prom}> Más de {statistics.customerCount} personas buscando servicios</div>
+      <div className={style.count}>  El {statistics.porcentajeConexiones} de las busquedas logra un contrato exitoso </div>
+    </div>
+  );
+}
+
+export default StatsAccesAccount;

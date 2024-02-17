@@ -1,0 +1,26 @@
+@use '../../../../Styles/Mixins'
+@import '../../../../Styles/Variables'
+
+.statisticsContainer
+    display: block
+    width: 100%
+    margin-block: 5px
+    margin-inline: auto
+
+.prom
+    position: relative
+    width: 90%
+    height: 130px
+    margin-inline: auto
+    display: flex
+    flex-wrap: wrap
+    +Mixins.font($secondaryColor, 40px, normal, normal)
+    border-bottom: 2px solid black
+
+.count
+    position: relative
+    margin-inline: auto
+    height: 130px
+    width: 90%
+    +Mixins.font($secondaryColor, 32px, normal, normal)
+    

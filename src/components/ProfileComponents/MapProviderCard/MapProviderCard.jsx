@@ -1,41 +1,22 @@
-import React, { useState, useEffect, useMemo, useCallback, useRef } from "react";
-import axios from "axios";
+import React, {
+  useState,
+  useEffect,
+  useMemo,
+  useCallback,
+  useRef,
+} from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import { putUserData } from "../../../redux/actions/index";
 import styles from "./MapProvider.module.sass";
 
 function MapProviderCard() {
-  const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
   const dispatch = useDispatch();
   const infoUserLog = useSelector((state) => state.infoUserLog);
-
-  const [cityPosition, setCityPosition] = useState(null);
-  console.log("cityPosition",cityPosition)
-  const [geopositionArray, setGeopositionArray] = useState([-32.635184890429585, -65.19722521105064]);
-
-  const GetCitysPosition = async () => {
-    try {
-      const response = await axios(`${REACT_APP_API_URL}/municipalities?id=${infoUserLog.idLocation}`);
-      const data = response.data;
-      const geopositionCityLat = data.lat;
-      const geopositionCityLng = data.lon;
-      const cityPosition = { lat: geopositionCityLat, lng: geopositionCityLng };
-      setCityPosition(cityPosition);
-    } catch (error) {
-      console.error("Error al obtener los datos de la ciudad:", error);
-    }
-  }
-
-  useEffect(() => {
-    GetCitysPosition();
-  }, []);
-
-  useEffect(() => {
-    if (cityPosition) {
-      setGeopositionArray([cityPosition.lat, cityPosition.lng]);
-    }
-  }, [cityPosition]);
+  
+  const geopositionArray = infoUserLog.geoposition
+  ? infoUserLog.geoposition.split(",").map((str) => parseFloat(str.trim()))
+  : [-34.6142, -64.1770];
 
   const [draggable, setDraggable] = useState(false);
   const [position, setPosition] = useState({ lat: geopositionArray[0], lng: geopositionArray[1] });
@@ -44,6 +25,7 @@ function MapProviderCard() {
     idPeople: infoUserLog.idPeople,
     geoposition: `${position.lat},${position.lng}`
   }
+
 
   const markerRef = useRef(null);
   const eventHandlers = useMemo(
@@ -65,7 +47,6 @@ function MapProviderCard() {
   const handleSaveGeoposition = async () => {
     try {
       await dispatch(putUserData(dataToSend));
-      console.log("Datos de geoposición guardados exitosamente:", dataToSend);
     } catch (error) {
       console.error("Error al guardar los datos de geoposición:", error);
     }
@@ -105,5 +86,5 @@ function MapProviderCard() {
     </div>
   );
 }
-
 export default MapProviderCard;
+
