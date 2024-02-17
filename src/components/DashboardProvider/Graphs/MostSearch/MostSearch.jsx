@@ -12,6 +12,8 @@ function MostSearch() {
       try {
         const response = await fetch(`${REACT_APP_API_URL}/stats/provider?idPeople=${userLog.idPeople}`);
         const data = await response.json();
+        console.log("data", data)
+        console.log("userLog.idPeople",userLog.idPeople)
         const serviciosMasBuscados = data.data.serviciosMasBuscados.map((option) => ({
           servicio: option.servicio || "Limpieza",
           cantidad: parseInt(option.cantidad, 10) || 0, 

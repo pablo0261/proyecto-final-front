@@ -8,7 +8,7 @@ function LastComment() {
   const userLog = useSelector((state) => state.infoUserLog);
   const [statistics, setStatistics] = useState({
     idPeople: "",
-    image: "",
+    image: profileImage,
     cliente: "",
     review: "",
     rating: "",
@@ -23,7 +23,7 @@ function LastComment() {
         const ultimoComentario = data.data.ultimoComentario;
         setStatistics({
           idPeople: userLog.idPeople || "",
-          image: ultimoComentario.rating || profileImage,
+          image: ultimoComentario.photo ? ultimoComentario.photo : profileImage,
           cliente: ultimoComentario.cliente || "",
           review: ultimoComentario.review || "",
           rating: ultimoComentario.rating || "",
