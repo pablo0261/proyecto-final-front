@@ -27,13 +27,13 @@ const Footer = () => {
                         <p>Front-End Developer</p>
                     </li>
                     <li>
-                        <a href="#" target="_blank" rel="noopener noreferrer">Alejo Funes Abdala</a>
+                        <a href="https://www.linkedin.com/in/alejo-funes-abdala/" target="_blank" rel="noopener noreferrer">Alejo Funes Abdala</a>
                     </li>
                     <li>
-                        <a href="#" target="_blank" rel="noopener noreferrer">Leandro Herrera</a>
+                        <a href="https://www.linkedin.com/in/leandroherrera1002/" target="_blank" rel="noopener noreferrer">Leandro Herrera</a>
                     </li>
                     <li>
-                        <a href="#" target="_blank" rel="noopener noreferrer">Pablo Ariel Besler</a>
+                        <a href="https://www.linkedin.com/in/pablo-besler/" target="_blank" rel="noopener noreferrer">Pablo Ariel Besler</a>
                     </li>
                     <li>
                         <a href="https://www.linkedin.com/in/josericardolopezsierra/" target="_blank" rel="noopener noreferrer">Ricardo López</a>
@@ -50,10 +50,10 @@ const Footer = () => {
                         <a href="#" target="_blank" rel="noopener noreferrer">Emmanuel Martinez</a>
                     </li>
                     <li>
-                        <a href="#" target="_blank" rel="noopener noreferrer">Freydder Cardenas</a>
+                        <a href="https://www.linkedin.com/in/freydder-cardenas-221560263/" target="_blank" rel="noopener noreferrer">Freydder Cardenas</a>
                     </li>
                     <li>
-                        <a href="#" target="_blank" rel="noopener noreferrer">Tiago Souza</a>
+                        <a href="https://www.linkedin.com/in/tiago1820/" target="_blank" rel="noopener noreferrer">Tiago Souza</a>
                     </li>
                 </ul>
                 <ul>

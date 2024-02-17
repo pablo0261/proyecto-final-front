@@ -377,8 +377,8 @@ const putOpportunities = (data, filter) => {
 const getReports = (email) => {
   return async (dispatch) => {
     try {
-      console.log(email)
-      const response = await axios.get(`${REACT_APP_API_URL}/questions?typeOfQuestion=qaa${email} ? ${email} : ""`)
+      console.log(`${REACT_APP_API_URL}/questions?typeOfQuestion=qaa${email ? email : ""}`)
+      const response = await axios.get(`${REACT_APP_API_URL}/questions?typeOfQuestion=qaa${email ? email : ""}`)
       console.log(response)
       if (response.status === 200) {
         return dispatch({
