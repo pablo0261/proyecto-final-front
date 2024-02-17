@@ -13,6 +13,7 @@ import {
   GET_PEOPLE,
   SET_OPPORTUNITIE,
   SET_SELECTED_OPPORTUNITIE,
+  GET_REPORTS,
   CREATE_REPORT,
   CREATE_FAQS,
   GET_FAQS,
@@ -23,8 +24,8 @@ import {
 
 
 let initialState = {
-  
-  infoUserLog: { },
+
+  infoUserLog: {},
 
   //Filter and getpeople
   peopleForAdmin: [], /** El estado contiene los people que la tabla del admin*/
@@ -75,6 +76,9 @@ let initialState = {
   //OPPORTUNITIE
   selected_opportunitie: {},
   opportunities: [],
+
+  //REPORTS
+  reports: [],
 
   /* Create report */
   createReport: [],
@@ -190,25 +194,32 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         selected_opportunitie: payload
       }
-
-      /* Create report */
-      case CREATE_REPORT:
-        return {
-            ...state,
-            createReport: payload,
-        };
+    
+    //REPORTS
+    case GET_REPORTS:
+      return {
+        ...state,
+        reports: payload
+      }
+    /* Create report */
+    case CREATE_REPORT:
+      return {
+        ...state,
+        createReport: payload,
+      };
 
     /* Create FAQs */
     case CREATE_FAQS:
       return {
         ...state,
-        createFAQs: action.payload,
+        createFAQs: payload,
       };
 
+    /* GET FAQs */
     case GET_FAQS:
       return {
         ...state,
-        faqS: action.payload
+        faqS: payload,
       }
 
 

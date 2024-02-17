@@ -1,15 +1,15 @@
 import FindUserAdmin from '../../components/FindUserAdmin/FindUserAdmin'
 import TableUserDue from '../../components/TableUserDue/TableUserDue'
-import styles from "../AdminUsersView/AdminUsersView.module.sass"
+import styles from "../AdminUsersView/AdminUsersView.module.scss"
 
 function AdminUsersView() {
 return (
-  <div className={styles.ff}>
-    <div className={styles.containerServices}>
-      <FindUserAdmin />
+  
+    <div className={styles.container}>
       <TableUserDue />
+      <FindUserAdmin />
     </div>
-  </div>
+  
 )
 
 }

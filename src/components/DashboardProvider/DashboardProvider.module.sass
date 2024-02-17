@@ -1,0 +1,102 @@
+@use '../../Styles/Mixins'
+@import '../../Styles/Mixins'
+
+.background
+    background-color: #F2F2F2
+    
+
+.dashboardWrapper
+    width: 80%
+    display: flex
+    flex-direction: row
+    justify-content: space-between
+    margin-bottom: 70px 
+    margin-inline: auto   
+
+.containerLeft
+    width: 50%
+    margin: 10px
+    padding: 5px
+    justify-content: space-around
+	
+
+.divMasBuscados
+    width: 100%
+    display: block
+    height: fit-content
+    @include Mixins.font($tertiaryColor, 18px, normal, normal)
+    margin-top: 10px
+    margin-inline: auto
+    padding-inline: 10px
+
+.cardMasBuscados
+    width: 100%
+
+.title
+    width: fit-content
+    margin-left: 30px  
+    margin-block: 0px
+    text-align: left
+    @include Mixins.font($primaryColor, 22px, normal, normal)   
+
+.divPersonasQueTeBuscaron
+    position: relative
+    width: 100%
+    display: flex
+    height: 120px
+    @include Mixins.font($tertiaryColor, 18px, normal, normal)
+    @include Mixins.boxShadowCard
+    margin-inline: auto
+    margin-top: 10px
+    padding: 5px
+
+.divHistorialpagos
+    width: 650px
+    height: 450px
+    @include Mixins.font($tertiaryColor, 18px, normal, normal)
+    @include Mixins.boxShadowCard
+    margin-top: 20px
+    margin-inline: auto
+    padding: 20px
+
+.containerRight
+    width: 50%
+    margin: 10px
+    padding: 5px
+    justify-content: space-around
+
+.divPromedioDeCalific
+    width: 100%
+    display: flex
+    height: 130px
+    @include Mixins.font($tertiaryColor, 18px, normal, normal)
+    @include Mixins.boxShadowCard
+    margin-right: 10px
+    margin-top: 10px
+    margin-bottom: 12px
+    margin-left: 15px
+    padding: 5px
+
+.divUltimoComent
+    width: 100%
+    display: flex
+    height: 120px
+    @include Mixins.font($tertiaryColor, 18px, normal, normal)
+    @include Mixins.boxShadowCard
+    margin: 20px
+    padding: 5px
+	
+.divHitorialServicios
+    width: 650px
+    height: 450px
+    @include Mixins.font($tertiaryColor, 18px, normal, normal)
+    @include Mixins.boxShadowCard
+    margin: 20px
+    padding: 20px
+    
+
+.h2HistoriaServ
+    @include Mixins.font($primaryColor, 22px, normal, normal)
+    text-align: left
+    margin-left: 20px
+    

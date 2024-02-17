@@ -1,6 +1,8 @@
+import React from 'react';
+import styles from "./TableUser.module.scss";
+import { useDispatch } from 'react-redux';
 import { putState } from "../../redux/actions";
 import styles from "./TableUser.module.sass";
-import { useDispatch } from "react-redux";
 
 function TableDue({people}) {
   const dispatch = useDispatch();
@@ -10,9 +12,8 @@ function TableDue({people}) {
   }
 
   return (
-    <div >
-      <div className={styles.container}>
-      <table className={styles.customTable}>
+    <div className={styles.wrapper}>
+      <table>
         <thead>
           <tr>
             <th>Nombre</th>
@@ -35,15 +36,14 @@ function TableDue({people}) {
               <td>{person.people.state}</td>
               <td>{person.people.pago || "No data"}</td>
               <td>{person.people.dateOfAdmission}</td>
-              <td><button>MAIL</button></td>
-              <td><button type="button" onClick={() => handleChangeStatus(person.people.idPeople, person.people.state)} >{person.people.state === "Active" ? "Inactivo" : "Activo"}</button></td>
-              <td><button>Cancelar</button></td>
+              <td><button className={styles.mail}>MAIL</button></td>
+              <td><button className={styles.activo} type="button" onClick={() => handleChangeStatus(person.people.idPeople, person.people.state)} >{person.people.state === "Active" ? "Inactivo" : "Activo"}</button></td>
+              <td><button className={styles.cancelar}>Cancelar</button></td>
             </tr>
           ))}
         </tbody>
       </table>
       </div>
-    </div>
   );
 }
 

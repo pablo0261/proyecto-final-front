@@ -8,6 +8,9 @@ import { useDispatch } from "react-redux";
 import style from "./AccessAccount.module.sass";
 import axios from "axios";
 import { addInfoUserLog } from "../../redux/actions";
+import { io } from 'socket.io-client';
+const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
+const socket = io(REACT_APP_API_URL);
 
 function AccessAccount() {
   useEffect(() => {
@@ -46,6 +49,7 @@ function AccessAccount() {
         localStorage.setItem(StoreItem.emailUserLogged, logInData.email);
 
         dispatch(addInfoUserLog(user));
+        socket.emit('join-request', user.idPeople);
 
         if (user.typeOfPerson === "admin") {
           navigate(Helpers.HomeCustomerView); //* <== Esta ruta hay que cambiarla cuando este lista la view del Admin !!

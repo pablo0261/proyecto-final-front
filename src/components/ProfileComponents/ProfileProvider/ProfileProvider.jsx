@@ -2,35 +2,29 @@ import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import style from './ProfileProvider.module.sass';
 import Form from "../../Form/FormProfileProvider/Form"
+import profileImage from "../../../assets/Icons/PerfilImage.png"
 import UploadWidget from "../../CloudinaryWidget/UploadWidget";
 
 
 function ProfileProvider() {
   const infoUserLog = useSelector((state) => state.infoUserLog);
 
-  // useEffect(() => {
-  //   setUserData((prevUserData) => ({
-  //     ...prevUserData,
-  //     image: infoUserLog.image,
-  //   }));
-  // }, [infoUserLog.image]);
-
   const formData = {
-    idPeople: infoUserLog.idPeople,
-    fullName: infoUserLog.fullName || "Diego Lepore",
-    age: infoUserLog.age || "43",
-    address: infoUserLog.address || "Emilio Rosas 3057",
-    location: infoUserLog.locationName || "Bahia Blanca",
-    province: infoUserLog.provinceName || "Buenos Aires",
-    state: infoUserLog.state || "Activo",
-    country: infoUserLog.country || "Argentina",
-    profession: infoUserLog.profession || "",
-    aboutMe: infoUserLog.aboutMe || "Predispuesto y Dedicado",
-    phone: infoUserLog.phone || "02918145869",
-    email: infoUserLog.email || "diegolepore@gmail.com",
-    averageRating: infoUserLog.averageRating || "4.9",
-    countRating: infoUserLog.countRating?.toString() || "127",
-    image: infoUserLog.image || "https://res.cloudinary.com/dn3kedyer/image/upload/v1707141615/image/g08drlndxzjhmpbtxbdw.png",
+    idPeople: infoUserLog.idPeople || '',
+    fullName: infoUserLog.fullName || '',
+    age: infoUserLog.age || '',
+    address: infoUserLog.address || '',
+    location: infoUserLog.locationName || '',
+    province: infoUserLog.provinceName || '',
+    state: infoUserLog.state || '',
+    country: infoUserLog.country || '',
+    profession: infoUserLog.profession || '',
+    aboutMe: infoUserLog.aboutMe || '',
+    phone: infoUserLog.phone || '',
+    email: infoUserLog.email || '',
+    averageRating: infoUserLog.averageRating || '',
+    countRating: infoUserLog.countRating?.toString() || '',
+    image: infoUserLog.image || profileImage,
   };
 
   const isAllInfoFilled = Object.values(formData).every(
@@ -41,8 +35,8 @@ function ProfileProvider() {
   
   const [userData, setUserData] = useState(formData);
   const [showForm, setShowForm] = useState(false)
-  const [publicId, setPublicId] = useState(""); //este estado esta guardando la url de la imagen subida a cloudinary
- 
+  const [publicId, setPublicId] = useState(""); 
+
   const handleShowForm = () => {
     setShowForm(!showForm)
   }
@@ -60,7 +54,7 @@ function ProfileProvider() {
       <div className={style.wrapper}>
         <div className={style.alertWrapper}>
           {
-            !Verification &&
+            !infoUserLog &&
             <div className={style.verificationAlert}>
               <p className={style.textAlert}>Completa tu perfil para poder verificar tu cuenta. Ten en cuenta que los perfiles no verificados no son mostrados a los clientes.</p>
             </div>

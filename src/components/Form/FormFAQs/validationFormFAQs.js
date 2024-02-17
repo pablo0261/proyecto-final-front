@@ -1,6 +1,6 @@
 const Validation = (property, setLocalErrors, userData) => {
   switch (property) {
-    case 'question':
+    case 'title':
       if (userData[property].trim() === '') {
         setLocalErrors((prevErrors) => ({
           ...prevErrors,
@@ -24,7 +24,7 @@ const Validation = (property, setLocalErrors, userData) => {
       }
       break;
 
-    case 'answer':
+    case 'message':
       if (userData[property].trim() === '') {
         setLocalErrors((prevErrors) => ({
           ...prevErrors,

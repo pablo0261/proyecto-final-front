@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import SearchBar from '../SearchBar/SearchBar'
 import TableUser from '../TableUser/TableUser'
+import styles from "./FindUserAdmin.module.scss";
+
+
+function FindUserAdmin({people}) {
 import { allPeople } from '../../redux/actions';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -22,10 +26,14 @@ function FindUserAdmin() {
   };
 
   return (
-    <div>
-      <h2>Buscar Usuario</h2>
-      <SearchBar onSearch={findUser} onSearchChange={funcionbusqueda}/>
+    <div >
+
+      <div className={styles.container}>
+        <h2>Buscar Usuario</h2>
+        <SearchBar onSearch={findUser} onSearchChange={funcionbusqueda}/>
+      </div>
       <TableUser people={people}/>
+
     </div>
   )
 }

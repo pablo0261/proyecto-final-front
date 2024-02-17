@@ -1,8 +1,11 @@
-import React from 'react'
+import Dashboard from "../../components/DashboardProvider/DashboardProvider"
+import style from './StatsProviderView.module.sass'
 
 function StatsProviderView() {
   return (
-    <div>Estas son las Estadisticas del Proveedor</div>
+    <div className={style.wrapper}>
+      <Dashboard />
+    </div>
   )
 }
 

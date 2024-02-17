@@ -1,0 +1,9 @@
+@use '../../Styles/Mixins.sass' as *;
+@import '../../Styles/Variables.sass';
+
+.wrapper {
+    @include flexbox(column, null, nul);
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}

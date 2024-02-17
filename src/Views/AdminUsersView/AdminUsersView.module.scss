@@ -1,0 +1,21 @@
+@use '../../Styles/Mixins.sass' as *;
+@import '../../Styles/Variables.sass';
+
+.container {
+    width: 100%; 
+    @include flexbox(column, center, null); 
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  
+  
+ /*  .ff
+    width: 100%
+    margin: auto
+    
+.containerServices    
+    display: flex
+    flex-direction: column
+    justify-content: center */

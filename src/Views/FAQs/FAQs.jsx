@@ -1,4 +1,6 @@
 import styles from './faqs.module.scss';
+import more from '../../assets/Icons/more.svg'
+import less from '../../assets/Icons/less.svg'
 import Loader from '../../utils/Loader/Loader'
 import { useEffect, useState } from 'react';
 import FormFAQs from '../../components/Form/FormFAQs/FormFAQs';
@@ -10,8 +12,6 @@ import axios from 'axios';
 
 
 const FAQs = () => {
-  const [providerFaqList, setProviderFaqList] = useState([]);
-  const [clientFaqList, setClientFaqList] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [faqType, setFaqType] = useState('');
   const [editMode, setEditMode] = useState(false);
@@ -21,11 +21,13 @@ const FAQs = () => {
   const [expandedAnswers, setExpandedAnswers] = useState({});
 
   const dispatch = useDispatch();
-  const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
+  const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;//*
   const userLoggedInfo = useSelector(state => state.infoUserLog);
 
   const faqSDetail = useSelector((state) => state.faqS);
 
+  console.log("Estado global desde FAQs.jsx");
+  console.log(faqSDetail);
 
   /* Get FAQs */
   useEffect(() => {
@@ -41,7 +43,6 @@ const FAQs = () => {
 
   useEffect(() => {
     dispatch(getFiltersOrdersDB());
-
 
     if (localStorage.getItem(StoreItem.emailUserLogged)) {
       dispatch(recoverUserLoggedData(localStorage.getItem(StoreItem.emailUserLogged)));
@@ -82,37 +83,10 @@ const FAQs = () => {
       callback: handleCallbackResponse
     });
 
-
     if (!localStorage.getItem(StoreItem.emailUserLogged)) {
       google.accounts.id.prompt();
     }
   }, []);
-
-  const handleAddQuestion = (newQuestion, newAnswer) => {
-    if (faqType === 'provider') {
-      if (editMode && editIndex !== null) {
-        const updatedList = [...providerFaqList];
-        updatedList[editIndex] = { question: newQuestion, answer: newAnswer };
-        setProviderFaqList(updatedList);
-        setEditMode(false);
-        setEditIndex(null);
-      } else {
-        setProviderFaqList([...providerFaqList, { question: newQuestion, answer: newAnswer }]);
-      }
-    } else if (faqType === 'client') {
-      if (editMode && editIndex !== null) {
-        const updatedList = [...clientFaqList];
-        updatedList[editIndex] = { question: newQuestion, answer: newAnswer };
-        setClientFaqList(updatedList);
-        setEditMode(false);
-        setEditIndex(null);
-      } else {
-        setClientFaqList([...clientFaqList, { question: newQuestion, answer: newAnswer }]);
-      }
-    }
-    setShowForm(false);
-  };
-
 
   const handleToggleForm = (type) => {
     setShowForm(!showForm);
@@ -157,80 +131,110 @@ const FAQs = () => {
       {/* FAQs proveedor */}
 
       <h2>FAQs proveedor</h2>
-      {providerFaqList.map((faq, index) => (
-        <div className={styles.container__item} key={index}>
 
-          {/* Pregunta y respuesta */}
-          <div className={styles.item}>
-            <div className={styles.question}>
-              <h3>{faq.question}</h3>
-              <div className={styles.more} onClick={() => toggleAnswer(index)}>
-                <p>{expandedAnswers[index] ? '-' : '+'}</p>
+      {faqSDetail && faqSDetail.questions && faqSDetail.questions.data && faqSDetail.questions.data.map((faq, index) => {
+        if (faq.typeOfQuestion === 'faq' && faq.destination === 'provider') {
+          return (
+
+            <div className={styles.container__item} key={index}>
+
+              {/* Pregunta y respuesta */}
+              <div className={styles.item}>
+                <div className={styles.question}>
+                  <h3>{faq.title}</h3>
+                  <div onClick={() => toggleAnswer(index)}>
+                    <p>{expandedAnswers[index] ? <img className={styles.more} src={less} /> : <img className={styles.more} src={more} />}</p>
+                  </div>
+                </div>
+
+                <div className={`${styles.answer} ${expandedAnswers[index] ? styles.expanded : ''}`}>
+                  <p>{faq.message}</p>
+                </div>
               </div>
+              <hr />
+
+              {userLoggedInfo.typeOfPerson === 'administrator' && (
+                <>
+                  {showForm && faqType === 'provider' && <FormFAQs typeOfFAQs="provider" />}
+                  <div className={styles.container__buttons}>
+                    <button onClick={() => handleDeleteQuestion(index, 'provider')}>Eliminar</button>
+                    <button onClick={() => handleEditQuestion(index, 'provider')}>Editar</button>
+                  </div>
+
+                </>
+              )}
+
+
+
+
             </div>
 
-            <div className={`${styles.answer} ${expandedAnswers[index] ? styles.expanded : ''}`}>
-              <p>{faq.answer}</p>
-            </div>
-          </div>
-          <hr />
+          );
+        }
+        return null;
+      })}
 
-          <div className={styles.container__buttons}>
-            <button onClick={() => handleDeleteQuestion(index, 'provider')}>Eliminar</button>
-            <button onClick={() => handleEditQuestion(index, 'provider')}>Editar</button>
-          </div>
-
-
-        </div>
-      ))}
       {/* Mostrar el botón de edición para alternar la visibilidad del formulario */}
       {userLoggedInfo.typeOfPerson === 'administrator' && (
         <>
-          <button className={styles.buttons} onClick={() => handleToggleForm('provider')}>
-            {showForm && faqType === 'provider' ? 'Cancelar' : 'Crear Pregunta'}
-          </button>
-          {showForm && faqType === 'provider' && <FormFAQs onAddQuestion={handleAddQuestion} />}
+          {showForm && faqType === 'provider' && <FormFAQs typeOfFAQs="provider" />}
+          <div className={styles.container__buttons_close}>
+            <button onClick={() => handleToggleForm('provider')}>
+              {showForm && faqType === 'provider' ? 'Cerrar formulario' : 'Crear Pregunta'}
+            </button>
+          </div>
         </>
       )}
-
-
 
       {/* FAQs Cliente */}
       <h2>FAQs cliente</h2>
 
-      {clientFaqList.map((faq, index) => (
-        <div className={styles.container__item} key={index}>
+      {faqSDetail && faqSDetail.questions && faqSDetail.questions.data && faqSDetail.questions.data.map((faq, index) => {
+        if (faq.typeOfQuestion === 'faq' && faq.destination === 'customer') {
+          return (
+            <div className={styles.container__item} key={index}>
 
-          {/* Pregunta y respuesta */}
-          <div className={styles.item}>
-            <div className={styles.question}>
-              <h3>{faq.question}</h3>
-              <div className={styles.more} onClick={() => toggleAnswer(index)}>
-                <p>{expandedAnswers[index] ? '-' : '+'}</p>
+              {/* Pregunta y respuesta */}
+              <div className={styles.item}>
+                <div className={styles.question}>
+                  <h3>{faq.title}</h3>
+                  <div onClick={() => toggleAnswer(index)}>
+                    <p>{expandedAnswers[index] ? <img className={styles.more} src={less} /> : <img className={styles.more} src={more} />}</p>
+                  </div>
+                </div>
+
+                <div className={`${styles.answer} ${expandedAnswers[index] ? styles.expanded : ''}`}>
+                  <p>{faq.message}</p>
+                </div>
               </div>
+              <hr />
+
+              {userLoggedInfo.typeOfPerson === 'administrator' && (
+                <>
+                  {showForm && faqType === 'client' && <FormFAQs typeOfFAQs="client" />}
+                  <div className={styles.container__buttons}>
+                    <button onClick={() => handleDeleteQuestion(index, 'client')}>Eliminar</button>
+                    <button onClick={() => handleEditQuestion(index, 'client')}>Editar</button>
+                  </div>
+
+                </>
+              )}
+
             </div>
-
-            <div className={`${styles.answer} ${expandedAnswers[index] ? styles.expanded : ''}`}>
-              <p>{faq.answer}</p>
-            </div>
-          </div>
-          <hr />
-
-          <div className={styles.container__buttons}>
-            <button onClick={() => handleDeleteQuestion(index, 'client')}>Eliminar</button>
-            <button onClick={() => handleEditQuestion(index, 'client')}>Editar</button>
-          </div>
-
-
-        </div>
-      ))}
+          );
+        }
+        return null;
+      })}
 
       {userLoggedInfo.typeOfPerson === 'administrator' && (
         <>
-          <button className={styles.buttons} onClick={() => handleToggleForm('client')}>
-            {showForm && faqType === 'client' ? 'Cancelar' : 'Crear Pregunta'}
-          </button>
-          {showForm && faqType === 'client' && <FormFAQs onAddQuestion={handleAddQuestion} />}
+          {showForm && faqType === 'client' && <FormFAQs typeOfFAQs="client" />}
+          <div className={styles.container__buttons_close}>
+            <button onClick={() => handleToggleForm('client')}>
+              {showForm && faqType === 'client' ? 'Cerrar formulario' : 'Crear Pregunta'}
+            </button>
+          </div>
+
         </>
       )}
 

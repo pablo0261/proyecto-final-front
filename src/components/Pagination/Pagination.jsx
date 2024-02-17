@@ -1,5 +1,6 @@
 import React from 'react';
-import styles from "./Pagination.module.sass";
+import styles from "./Pagination.module.scss";
+
 
 const Pagination = ({ count, pageNumber, totalCount, totalOfPages, queryProps, onPageChange }) => {
   const pageNumbers = [];
@@ -24,10 +25,8 @@ const Pagination = ({ count, pageNumber, totalCount, totalOfPages, queryProps, o
   };
 
   return (
-    <div className={styles.container}>
-      <button onClick={onPrevPage} disabled={pageNumber === 1}>
-        Anterior
-      </button>
+    <div className={styles.wrapper}>
+      <button onClick={onPrevPage} disabled={pageNumber === 1}>Anterior</button>
 
       {pageNumbers.map((NumberOfPage) => (
         <div key={NumberOfPage} className={styles['button-container']}>

@@ -27,6 +27,7 @@ import axios from 'axios';
 import ProviderDetail from './Views/CustomerViews/ProviderDetail';
 import AdminStatistics from './components/AdminStatistics/AdminStatistics';
 import AdminTablas from './Views/AdminTablas/AdminTablas';
+import AdminReports from './Views/AdminReports/AdminReports.jsx';
 
 
 function App() {
@@ -98,8 +99,10 @@ function App() {
                 <Route path={Helpers.ConnectionsCustomerView} element={<ConnectionsCustomerView />} />
                 <Route path={Helpers.ReportsCustomerView} element={<ReportsCustomerView />} />
                 <Route path={Helpers.ProfileCustomerView} element={<ProfileProviderView />} />
+
                 <Route path={Helpers.ProviderDetail} element={<ProviderDetail/>}></Route>
-                <Route path={Helpers.AdminUsersView} element={<AdminUsersView />} />
+
+                <Route path={Helpers.ConsultReport} element={<ConsultReport />} />
 
                 <Route path='*' element={<NotFound />}></Route>
               </Routes>
@@ -111,10 +114,10 @@ function App() {
                 <Route path={Helpers.Success} element={<Success />} />
                 <Route path={Helpers.Failure} element={<Failure />} />
                 {/* Proveedor */}
+                <Route path={Helpers.ProfileProviderView} element={<ProfileProviderView />} />
                 <Route path={Helpers.StatsProviderView} element={<StatsProviderView />} />
                 <Route path={Helpers.ConnectionsProviderView} element={<ConnectionsProviderView />} />
                 <Route path={Helpers.ReportsProviderView} element={<ReportsProviderView />} />
-                <Route path={Helpers.ProfileProviderView} element={<ProfileProviderView />} />
 
                 <Route path={Helpers.FAQs} element={<FAQs />} />
                 <Route path={Helpers.ConsultReport} element={<ConsultReport />} />
@@ -128,6 +131,7 @@ function App() {
                 <Route path={Helpers.AdminUsersView} element={<AdminUsersView />} />
                 <Route path={Helpers.AdminTables} element={<AdminTablas />} />
                 <Route path={Helpers.AdminStatistics} element={<AdminStatistics />} />
+                <Route path={Helpers.AdminReports} element={<AdminReports />} />
 
                 <Route path={Helpers.FAQs} element={<FAQs />} />
                 <Route path={Helpers.ConsultReport} element={<ConsultReport />} />

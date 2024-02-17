@@ -1,0 +1,54 @@
+@use '../../../../Styles/Mixins'
+@import '../../../../Styles/Variables'
+
+.container 
+    position: relative
+    display: flex
+    height: 100%
+    width: 100%
+
+.imageContainer
+    display: flex
+    width: 30%
+    border-radius: 50%
+    margin-left: 5px
+    margin-block: auto
+      
+.imagen
+    width: 90%
+    height: 90%
+    object-fit: cover
+    border-radius: inherit 
+       
+.infoContainerLeft
+  width: 70%
+  display: block
+  flex-direction: column
+  height: 120px
+  margin-left: 20px
+
+.client
+  @include Mixins.font($primaryColor, 28px, bold, normal)
+  text-align: left
+  margin-block: auto
+  height: 30px
+
+.comment
+  @include Mixins.font($secondaryColor, 20px, normal, normal)
+  text-align: left
+  height: 70px
+  margin-bottom: 5px
+  overflow: hidden
+  white-space: pre-wrap
+  text-overflow: ellipsis
+
+.infoContainerRight
+  width: 30%
+  display: flex
+  margin-left: 0px
+  align-items: center
+  justify-content: center
+
+.infoRating
+  @include Mixins.font(grey, 70px, normal, normal)
+  margin-left: 20px

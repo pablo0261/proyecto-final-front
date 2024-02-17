@@ -1,84 +1,95 @@
 import { useState } from 'react';
-import Validation from './validationFormFAQs'; // Importa la función de validación
-import styles from "./FormFAQs.module.scss"; 
+import Validation from './validationFormFAQs';
+import styles from "./FormFAQs.module.scss";
 import { useDispatch } from 'react-redux';
 import { createFAQs } from '../../../redux/actions/index';
 
-const FormFAQs = ({ onAddQuestion }) => {
+const FormFAQs = ({ typeOfFAQs }) => {
   const [successMessage, setSuccessMessage] = useState('');
-  
-  const [formData, setFormData] = useState({
-    typeOfQuestion:'',
-    destination:'',
-    question: '',
-    answer: ''
-});
 
-  const [localErrors, setLocalErrors] = useState({ 
-    question: '',
-    answer: ''
+  const [formData, setFormData] = useState({
+    typeOfQuestion: 'faq',
+    destination: typeOfFAQs === 'provider' ? 'provider' : 'customer',
+    title: '',
+    message: ''
+  });
+  console.log(formData);
+
+  const [localErrors, setLocalErrors] = useState({
+    title: '',
+    message: ''
   });
 
   const clearFormData = () => {
     setFormData({
-      question: '',
-      answer: ''
+      typeOfQuestion: 'faq',
+      destination: typeOfFAQs === 'provider' ? 'provider' : 'customer',
+      title: '',
+      message: ''
     });
-};
+  };
 
-const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-  // Función que maneja los cambios en los campos del formulario
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value }); // Actualiza el estado formData con el nuevo valor
     Validation(name, setLocalErrors, { ...formData, [name]: value }); // Realiza la validación de los campos
   };
-  
 
-  // Función que maneja el envío del formulario
   const handleSubmit = (event) => {
-    event.preventDefault(); // Previene el comportamiento predeterminado del formulario
+    event.preventDefault();
 
-    const isValid = Object.values(localErrors).every((error) => error === ''); // Verifica si hay errores de validación
+    const isValid = Object.values(localErrors).every((error) => error === '');
 
-    // Verifica si no hay errores y los campos no están vacíos
     if (isValid) {
-      onAddQuestion(formData.question, formData.answer); // Llama a la función para agregar la pregunta y la respuesta
-      
-      dispatch(createFAQs(formData));
-                setSuccessMessage('Pregunta y respuesta enviadas con éxito');
-                clearFormData();
+      dispatch(createFAQs(formData))
+        .then(() => {
+          setSuccessMessage('Pregunta y respuesta enviadas con éxito');
+          clearFormData();
+        })
+        .catch(() => {
+          setSuccessMessage('Error al enviar el reporte');
+        });
     } else {
       setSuccessMessage('Formulario con errores');
-      
+      window.alert('Por favor complete el formulario correctamente antes de enviarlo');
     }
   };
 
+  const isFormValid = formData.title !== '' && formData.message !== '' && Object.values(localErrors).every((error) => error === '');
+
   return (
     <div className={styles.wrapper}>
-      <form className={styles.Form} onSubmit={handleSubmit}> {/* Inicia el formulario y maneja el evento de envío */}
+
+      <form className={styles.Form} onSubmit={handleSubmit}>
         <div className={styles.FormDivInputFlex}>
-          <label htmlFor='question'>Ingresa una pregunta:</label> {/* Etiqueta para la pregunta */}
+
+          {/* question */}
+          <label htmlFor='title'>Ingresa una pregunta:</label>
           <input
-            id="question"
+            id="title"
             type="text"
-            name="question"
-            value={formData.question}
-            onChange={handleChange} // Maneja los cambios en la pregunta
+            name="title"
+            value={formData.title}
+            onChange={handleChange}
             placeholder="Ingrese la pregunta"
           />
-          {localErrors.question && <div className={styles.errorMessage}>{localErrors.question}</div>} {/* Muestra el mensaje de error si existe */}
-          <label htmlFor='answer'>Ingresa una respuesta:</label> {/* Etiqueta para la respuesta */}
+          {localErrors.title && <div className={styles.errorMessage}>{localErrors.title}</div>}
+
+          {/* answer */}
+          <label htmlFor='message'>Ingresa una respuesta:</label>
           <textarea
-            id='answer'
-            name="answer"
-            value={formData.answer}
-            onChange={handleChange} // Maneja los cambios en la respuesta
+            id='message'
+            name="message"
+            value={formData.message}
+            onChange={handleChange}
             placeholder="Ingrese la respuesta"
           ></textarea>
-          {localErrors.answer && <div className={styles.errorMessage}>{localErrors.answer}</div>} {/* Muestra el mensaje de error si existe */}
-          <button type="submit">Guardar</button> {/* Botón para enviar el formulario */}
+          {localErrors.message && <div className={styles.errorMessage}>{localErrors.message}</div>}
+
+          <button type="submit" disabled={!isFormValid}>Guardar</button>
+
         </div>
       </form>
       {successMessage && <p className={styles.errorMessage}>{successMessage}</p>}

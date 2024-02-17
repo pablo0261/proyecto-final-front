@@ -1,15 +1,23 @@
 import React, { useEffect, useState } from 'react'
 import style from './ChatBox.module.sass'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import axios from 'axios'
 import ChatRender from './ChatRender/ChatRender'
 import { putOpportunities } from '../../../redux/actions'
+import { io } from 'socket.io-client';
+const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
+const socket = io(REACT_APP_API_URL);
 
 function ChatBox(props) {
 
-    const { idOpportunitie, infoUserLog, opportunities } = props
+    const { idOpportunitie, infoUserLog, opportunities, filter } = props
     const [dataChat, setDataChat] = useState([])
     const [isLoadingChat, setIsLoadingChat] = useState()
+    const [message, setMessage] = useState({
+        idOpportunitie: idOpportunitie,
+        idPeople: infoUserLog.idPeople,
+        message: ""
+    })
 
     const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL
 
@@ -19,6 +27,7 @@ function ChatBox(props) {
             const response = await axios.get(`${REACT_APP_API_URL}/chats?idOpportunitie=${idOpportunitie}&idPeople=${infoUserLog.idPeople}`)
             if (response.status === 200) {
                 setDataChat(response.data.data)
+                setMessage({ ...message, idOpportunitie: idOpportunitie })
                 setIsLoadingChat(false)
             }
         } catch (error) {
@@ -32,12 +41,6 @@ function ChatBox(props) {
         }
     }, [idOpportunitie])
 
-    const [message, setMessage] = useState({
-        idOpportunitie: idOpportunitie,
-        idPeople: infoUserLog.idPeople,
-        message: ""
-    })
-
     const handleChangeMessage = (event) => {
         setMessage({ ...message, message: event.target.value })
     }
@@ -49,6 +52,14 @@ function ChatBox(props) {
                 .then((response) => {
                     if (response.status === 200) {
                         setMessage({ ...message, message: "" })
+                        const opp = opportunities.filter((opp) => opp.idOpportunitie === idOpportunitie)
+                        const socketEmit = {
+                            idOpportunitie: idOpportunitie,
+                            idCustomer: opp[0].idCustomer,
+                            idProvider: opp[0].idProvider,
+                            idChat: response.data.idChat
+                        }
+                        socket.emit('send-chat', socketEmit)
                     }
                 })
                 .catch((reason) => window.alert(reason))
@@ -78,9 +89,27 @@ function ChatBox(props) {
     const handleChangeState = (event) => {
         event.preventDefault()
         if (!Object.values(cancelation).every((property) => property === "")) {
-            dispatch(putOpportunities(cancelation))
+            if (infoUserLog.typeOfPerson === "customer") {
+                dispatch(putOpportunities(cancelation, `?idCustomer=${infoUserLog.idPeople}&state=${filter}&idOrder=dateAccepted,DESC`))
+            } else if (infoUserLog.typeOfPerson === "provider") {
+                dispatch(putOpportunities(cancelation, `?idProvider=${infoUserLog.idPeople}&state=${filter}&idOrder=dateAccepted,DESC`))
+            }
         } else {
             window.alert("Debes indicar el porque")
+        }
+    }
+
+    const handleEndService = () => {
+        const today = new Date()
+        const endService = {
+            idOpportunitie: idOpportunitie,
+            idPeople: infoUserLog.idPeople,
+            dateEndService: today
+        }
+        if (infoUserLog.typeOfPerson === "customer") {
+            dispatch(putOpportunities(endService, `?idCustomer=${infoUserLog.idPeople}&state=${filter}&idOrder=dateAccepted,DESC`))
+        } else if (infoUserLog.typeOfPerson === "provider") {
+            dispatch(putOpportunities(endService, `?idProvider=${infoUserLog.idPeople}&state=${filter}&idOrder=dateAccepted,DESC`))
         }
     }
 
@@ -91,7 +120,7 @@ function ChatBox(props) {
                     ? !isLoadingChat && dataChat.length != 0
                         ? <div className={style.chatWrapper}>
                             <div className={style.buttonWrapper}>
-                                <div className={style.buttonProcess} onClick={() => handleShowInput()}> Cancelar Contrato </div>
+                                <div className={style.buttonProcessF} onClick={() => handleShowInput()}> Cancelar Contrato </div>
                                 {
                                     showForm &&
                                     <form className={style.formCancel} onSubmit={handleChangeState}>
@@ -107,11 +136,11 @@ function ChatBox(props) {
                                     </form>
                                 }
                                 {
-                                    infoUserLog.typeOfPerson === 'provider' && <div className={style.buttonProcess} onClick={() => handleChangeState()}> Contrato Finalizado </div>
+                                    infoUserLog.typeOfPerson === 'provider' && <div className={style.buttonProcessS} onClick={() => handleEndService()}> Servicio Finalizado </div>
                                 }
                             </div>
                             <div className={style.msgWrapper}>
-                                <ChatRender dataChat={dataChat}></ChatRender>
+                                <ChatRender dataChat={dataChat} idOpportunitie={idOpportunitie} infoUserLog={infoUserLog}></ChatRender>
                             </div>
                             <div className={style.inputWrapper}>
                                 <form onSubmit={handleSendChat} className={style.formChat}>
@@ -127,7 +156,7 @@ function ChatBox(props) {
                             </div>
                         </div>
                         :
-                        <p className={style.loadingChat}>Cargando Chat</p>
+                        <p className={style.loadingChat}>Selecciona una conversación</p>
                     :
                     <p className={style.loadingChat}>No tienes contactos confirmados</p>
             }
