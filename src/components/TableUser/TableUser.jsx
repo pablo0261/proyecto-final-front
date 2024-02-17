@@ -1,15 +1,23 @@
 import React from 'react';
 import styles from "./TableUser.module.scss";
 import { useDispatch } from 'react-redux';
-import { putState } from "../../redux/actions";
+import axios from 'axios';
+import { allPeople } from '../../redux/actions';
 
-function TableDue({people}) {
+function TableDue({ people , valor }) {
+  const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
   const dispatch = useDispatch();
-  const handleChangeStatus = (value, state) => {
-    const auxState = state === "Active" ? "Inactive" : "Active";
-    dispatch(putState(value, auxState))
-  }
 
+  const handleChangeStatus = async (value, state) => {
+    const auxState = state === "Active" ? "Inactive" : "Active";
+    const response = await axios.put(`${REACT_APP_API_URL}/people`, {
+      "idPeople": value,
+      "state": auxState
+    });
+    if (response.status === 200) {
+      dispatch(allPeople(valor))
+    }
+  }
   return (
     <div className={styles.wrapper}>
       <table>
@@ -35,7 +43,7 @@ function TableDue({people}) {
               <td>{person.people.state}</td>
               <td>{person.people.pago || "No data"}</td>
               <td>{person.people.dateOfAdmission}</td>
-              <td><button className={styles.mail}>MAIL</button></td>
+              <td><button >MAIL</button></td>
               <td><button className={styles.activo} type="button" onClick={() => handleChangeStatus(person.people.idPeople, person.people.state)} >{person.people.state === "Active" ? "Inactivo" : "Activo"}</button></td>
               <td><button className={styles.cancelar}>Cancelar</button></td>
             </tr>

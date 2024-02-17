@@ -39,7 +39,7 @@ const Pagination = ({ count, pageNumber, totalCount, totalOfPages, queryProps, o
         </div>
       ))}
 
-      <button onClick={onNextPage} disabled={pageNumber >= totalOfPages}>
+      <button type='button' onClick={onNextPage} disabled={pageNumber >= totalOfPages}>
         Siguiente
       </button>
     </div>
