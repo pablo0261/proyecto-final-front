@@ -80,7 +80,6 @@ function ExperienciaProvider() {
                   }
                   className={style.crossButton}
                 ></button>
-                {showForm && <Form handleShowForm={handleShowForm} />}
               </div>
               {index !== education.length - 1 && (
                 <div>
@@ -89,12 +88,13 @@ function ExperienciaProvider() {
               )}
             </div>
           ))
-        ) : (
-          <p className={style.noInfo}>
+          ) : (
+            <p className={style.noInfo}>
             No hay información de experiencia disponible.
           </p>
         )}
       </div>
+        {showForm && <Form handleShowForm={handleShowForm} />}
     </div>
   );
 }

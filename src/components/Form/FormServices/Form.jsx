@@ -27,6 +27,7 @@ function Form({ handleShowForm }) {
             return { description: option.description, idOption: option.idOption }
           }
         )
+        serviceOptions.sort((a, b) => a.description.localeCompare(b.description));
         setServices(serviceOptions);
       } catch (error) {
         console.error("Error al obtener las opciones de servicios:", error);
