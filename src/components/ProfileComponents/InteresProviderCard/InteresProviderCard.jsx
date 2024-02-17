@@ -16,7 +16,7 @@ function InteresProviderCard() {
 
   useEffect(() => {
     if (infoUserLog && infoUserLog.categories && infoUserLog.categories.length > 0) {
-      const interesCategory = infoUserLog.categories.find(category => category.idCategorie === 6); //*categoria de Hobbies
+      const interesCategory = infoUserLog.categories.find(category => category.idCategorie === 6); 
       
       if (interesCategory && interesCategory.categories_options && interesCategory.categories_options.length > 0) {
         const interesOptions = interesCategory.categories_options;

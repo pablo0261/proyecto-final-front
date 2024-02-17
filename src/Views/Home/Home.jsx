@@ -71,8 +71,10 @@ const Home = () => {
     setShowFilters(false);
   };
 
-
-
+  const handlerPagination = (queryConstructOrder) => {
+    dispatch(getPeopleFilteredOrderedPagination(queryProps, queryConstructOrder));
+  };
+  
 
   const queryConstructor = () => {
     if (selectedOrder.length > 0 && selectedServices.length > 0) {
@@ -213,9 +215,9 @@ const Home = () => {
             {Array.isArray(providers) &&
               providers.map((user) => <Card key={user.people.idPeople} user={user.people} />)}
           </div>
-          <div className={styles.pagination}>
-            <Pagination count={InfoPag.pageSize} pageNumber={InfoPag.pageNumber} totalCount={InfoPag.totalCount} totalOfPages={InfoPag.totalOfPages} queryProps={queryProps} />
-          </div>
+           <div className={styles.pagination}>
+              <Pagination count={InfoPag.pageSize} pageNumber={InfoPag.pageNumber} totalCount={InfoPag.totalCount} totalOfPages={InfoPag.totalOfPages} queryProps={queryProps} onPageChange={handlerPagination}/>
+            </div>
         </div>
       </div>
     </div>

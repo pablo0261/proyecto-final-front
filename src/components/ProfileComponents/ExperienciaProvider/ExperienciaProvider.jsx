@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 import { deleteService } from "../../../redux/actions/index";
-import Form from "../../Form/FormEducation/FormEducation";
+import Form from "../../Form/FormExperience/FormExperience";
 import style from "./ExperienciaProvider.module.sass";
 
 function ExperienciaProvider() {
@@ -17,7 +17,7 @@ function ExperienciaProvider() {
   useEffect(() => {
     if (infoUserLog.categories && infoUserLog.categories.length > 0) {
       const educationCategory = infoUserLog.categories.find(
-        (category) => category.idCategorie === 4
+        (category) => category.idCategorie === 7
       );
       if (
         educationCategory &&
@@ -80,7 +80,6 @@ function ExperienciaProvider() {
                   }
                   className={style.crossButton}
                 ></button>
-                {showForm && <Form handleShowForm={handleShowForm} />}
               </div>
               {index !== education.length - 1 && (
                 <div>
@@ -89,12 +88,13 @@ function ExperienciaProvider() {
               )}
             </div>
           ))
-        ) : (
-          <p className={style.noInfo}>
+          ) : (
+            <p className={style.noInfo}>
             No hay información de experiencia disponible.
           </p>
         )}
       </div>
+        {showForm && <Form handleShowForm={handleShowForm} />}
     </div>
   );
 }

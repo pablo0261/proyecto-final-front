@@ -1,0 +1,63 @@
+@use '../../Styles/Mixins.sass' as *;
+@import '../../Styles/Variables.sass';
+
+.wrapper {
+  @include flexbox(column, center, center);
+    width: 100%;
+    margin: 20px 0 20px 0;
+    padding: 0; 
+    
+    .container_header{
+      @include flexbox(null, space-between, null);
+      width: 80%;
+
+      div{
+        display: flex;
+      };
+
+      h2, h3{
+        @include font($secondaryColor, 24px, bold, normal);
+      };
+    };
+
+    table {
+        border-collapse: separate;
+        border-spacing: 0 10px;
+        @include boxShadowCard;
+        width: 80%;
+
+        thead {
+            th {
+                padding: 15px 10px;
+                @include font($secondaryColor, 18px, bold, normal);
+            };
+        };
+
+        tbody {
+
+            tr {
+                background-color: rgb(245, 245, 245);
+
+                td {
+                    padding: 10px;
+                    @include font($secondaryColor, 18px, normal, normal);
+                };
+            };
+        }
+        .mail{
+            @include buttonTables(#A64208);
+        };
+        .activo{
+            @include buttonTables(#22B573);
+        };
+        .inactivo{
+            @include buttonTables(#F2B138);
+            color: black;
+        };
+        .cancelar{
+            @include buttonTables(#D95555);
+        };
+    };
+};
+
+   
