@@ -19,6 +19,7 @@ function Form({ handleShowForm }) {
   const [ isProvinciaSelected , setIsProvinciaSelected ] = useState("Selecciona una provincia")
 
   const provincias = [
+    "Buenos Aires",
     "Ciudad Autónoma de Buenos Aires",
     "Catamarca",
     "Chaco",

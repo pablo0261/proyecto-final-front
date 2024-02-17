@@ -1,44 +1,52 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import style from "./LastComment.module.sass";
+import profileImage from "../../../../assets/Icons/PerfilImage.png"
 
 function LastComment() {
-  const infoUserLog = useSelector((state) => state.infoUserLog);
-  const [userData, setUserData] = useState({
+  const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
+  const userLog = useSelector((state) => state.infoUserLog);
+  const [statistics, setStatistics] = useState({
     idPeople: "",
-    state: "Active",
-    fullName: "Martin Casas",
-    image:
-      "https://res.cloudinary.com/dn3kedyer/image/upload/v1707141615/image/g08drlndxzjhmpbtxbdw.png",
-    rating: "4,7",
-    comment: "Excelente servicio prestado",
+    image: "",
+    cliente: "",
+    review: "",
+    rating: "",
   });
 
   useEffect(() => {
-    setUserData({
-      idPeople: infoUserLog.idPeople || "",
-      state: infoUserLog.state || "Active",
-      fullName: infoUserLog.fullName || "Martin Casas",
-      image:
-        infoUserLog.image ||
-        "https://res.cloudinary.com/dn3kedyer/image/upload/v1707141615/image/g08drlndxzjhmpbtxbdw.png",
-      rating: infoUserLog.rating || "4,7    ",
-      comment: "Excelente servicio prestado",
-    });
-  }, [infoUserLog]);
+    const fetchEducation = async () => {
+      try {
+        const response = await fetch(`${REACT_APP_API_URL}/stats/provider?idPeople=${userLog.idPeople}`);
+        const data = await response.json();
+        console.log("data", data)
+        const ultimoComentario = data.data.ultimoComentario;
+        setStatistics({
+          idPeople: userLog.idPeople || "",
+          image: ultimoComentario.rating || profileImage,
+          cliente: ultimoComentario.cliente || "",
+          review: ultimoComentario.review || "",
+          rating: ultimoComentario.rating || "",
+        });
+      } catch (error) {
+        console.error("Error al obtener las cantidades de visitas al perfil:", error);
+      }
+    };
+    fetchEducation();
+  }, []);
 
-  //! en Link se deberia agregar la logica que le permita contactar al proveedor
+
   return (
       <div className={style.container}>
         <div className={style.imageContainer}>
-          <img className={style.imagen} src={userData.image} alt="Imagen" />
+          <img className={style.imagen} src={statistics.image} alt="Imagen" />
         </div>
         <div className={style.infoContainerLeft}>
-          <h2 className={style.name}>{userData.fullName}</h2>
-          <h2 className={style.comment}>{userData.comment}</h2>
+          <h2 className={style.name}>{statistics.fullName}</h2>
+          <h2 className={style.comment}>{statistics.review}</h2>
         </div>
         <div className={style.infoContainerRight}>
-          <h2 className={style.infoResponse}>{userData.rating}</h2>
+          <h2 className={style.infoResponse}>{statistics.rating}</h2>
         </div>
       </div>
   );
