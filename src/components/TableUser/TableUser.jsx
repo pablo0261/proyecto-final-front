@@ -36,7 +36,7 @@ function TableDue({people}) {
               <td>{person.people.pago || "No data"}</td>
               <td>{person.people.dateOfAdmission}</td>
               <td><button>MAIL</button></td>
-              <td><button onClick={() => handleChangeStatus(person.people.idPeople, person.people.state)} >{person.people.state === "Active" ? "Inactivo" : "Activo"}</button></td>
+              <td><button type="button" onClick={() => handleChangeStatus(person.people.idPeople, person.people.state)} >{person.people.state === "Active" ? "Inactivo" : "Activo"}</button></td>
               <td><button>Cancelar</button></td>
             </tr>
           ))}

@@ -283,21 +283,19 @@ const putState = (value, auxState) => {
         "idPeople": value,
         "state": auxState
       })
-      if (response.status === 200) {
-        dispatch(allPeople(""));}
+
     } catch (error) {
       window.alert(error);
     };
   }; 
 };
 const putStateProvider = (value, auxState) => {
-  return async (dispatch) => {
+  return async () => {
     try {
       const response = await axios.put(`${REACT_APP_API_URL}/people`, {
         "idPeople": value,
         "state": auxState
       })
-      
     } catch (error) {
       window.alert(error);
     };

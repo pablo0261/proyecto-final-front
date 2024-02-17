@@ -1,33 +1,40 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import styles from "./TableUserDue.module.sass";
 import Pagination from '../Pagination/Pagination';
-import { allProviderAdmin , putStateProvider} from '../../redux/actions';
+import { allProviderAdmin } from '../../redux/actions';
 import { useDispatch, useSelector } from 'react-redux';
+import axios from 'axios';
 
 function TableUserDue() {
+  const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
   const people = useSelector((state) => state.providerForAdmin.data);
   const InfoPag = useSelector((state) => state.providerForAdmin);
   const dispatch = useDispatch();
-  const [flag, setFlag] = useState(true);
-  const queryConstructOrder = ""
+  // const [flag, setFlag] = useState(true);
+
   useEffect(() => {
     dispatch(allProviderAdmin(""));
-  }, [flag]); 
+  }, []);
 
-  const handleChangeStatus = (value, state) => {
+  const handleChangeStatus = async (value, state) => {
     const auxState = state === "Active" ? "Inactive" : "Active";
-    dispatch(putStateProvider(value, auxState))
-    setFlag(!flag)
-  }
+      const response = await axios.put(`${REACT_APP_API_URL}/people`, {
+        "idPeople": value,
+        "state": auxState
+      });
+      if (response.status === 200) {
+        return dispatch(allProviderAdmin("&pageNumber=" + InfoPag.pageNumber));
+      }
+    }
+
+  const handlerPagination = (queryConstructOrder) => {
+    dispatch(allProviderAdmin(queryConstructOrder));
+  };
 
   if (!people) {
     return null;
   }
-  const handlerPagination = (queryConstructOrder) => {
-    console.log(queryConstructOrder)
-    dispatch(allProviderAdmin(queryConstructOrder));
-    return queryConstructOrder;
-  };
+
 
   return (
     <div>
@@ -67,8 +74,8 @@ function TableUserDue() {
       <div className={styles.pagination}>
       <Pagination pageNumber={InfoPag.pageNumber} totalOfPages={InfoPag.totalOfPages} onPageChange={handlerPagination}/>
       </div>
-      <h3>Dar de baja automáticamente adeudados</h3>
-      <h3>Aviso previo día anterior</h3>
+      {/* <h3>Dar de baja automáticamente adeudados</h3>
+      <h3>Aviso previo día anterior</h3> */}
     </div>
   );
 }
