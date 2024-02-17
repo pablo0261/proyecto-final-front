@@ -2,7 +2,6 @@ import React from 'react';
 import styles from "./TableUser.module.scss";
 import { useDispatch } from 'react-redux';
 import { putState } from "../../redux/actions";
-import styles from "./TableUser.module.sass";
 
 function TableDue({people}) {
   const dispatch = useDispatch();
