@@ -3,12 +3,14 @@ import { useNavigate } from 'react-router';
 import Helpers from '../../Helpers/RoutesFront';
 /* import Statistics from '../../components/Statistics/Statistics'; */
 import StoreItem from '../../Helpers/LocalStorage';
-import Slide from '../../components/Slide/Slide'
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import SlideCustomer from '../../components/Slide/SlideCustomer';
+import SlideProvider from '../../components/Slide/SlideProvider';
 
 const Landing = () => {
 
     const navigate = useNavigate();
+    const [userTutorial, setUserTutorial] = useState("customer")
 
     useEffect(() => {
         localStorage.removeItem(StoreItem.dataUserSignIn)
@@ -18,6 +20,10 @@ const Landing = () => {
         localStorage.setItem('isProvider', JSON.stringify(bool));
         navigate(Helpers.AccessAccount);
     };
+
+    const handleTutorialPressed = (user) => {
+        setUserTutorial(user)
+    }
 
     return (
         <div className={styles.wrapper}>
@@ -72,25 +78,31 @@ const Landing = () => {
             </section>
 
             {/* ¿Cómo funciona? */}
-            <section className={styles.header}>
-                <div>
-                    <p>¿Cómo funciona?</p>
+            <section id='tutorial' className={styles.tutorial}>
+                <div className={styles.tutorialQuestion}>
+                    <p className={styles.tutorialTitle}>¿Cómo funciona?</p>
+                    <div className={styles.tutorialBtns}>
+                        <button className={userTutorial === "customer" ? styles.tutorialBtnPressed : styles.tutorialBtn} onClick={() => { handleTutorialPressed("customer") }}>Como Cliente</button>
+                        <button className={userTutorial === "provider" ? styles.tutorialBtnPressed : styles.tutorialBtn} onClick={() => { handleTutorialPressed("provider") }}>Como Proveedor</button>
+                    </div>
                 </div>
+                {
+                    userTutorial === "customer"
+                        ? <SlideCustomer></SlideCustomer>
+                        : <SlideProvider></SlideProvider>
+                }
+
             </section>
-            <div className={styles.slide}>
-                <Slide></Slide>
-            </div>
 
             {/* ¿Cómo te gustaría registrarte? */}
             <section className={styles.sectionregistro}>
-                <header>
-                    <p className={styles.sectionregistro__title}>¿Cómo te gustaría registrarte?</p>
-                </header>
-                <article className={styles.sectionregistro__button}>
-                    <button onClick={() => { handleLocalStorage(false) }}>Cliente</button>
-                    <button onClick={() => { handleLocalStorage(true) }}>Proveedor</button>
-                </article>
-
+                <div className={styles.registroBox}>
+                    <p className={styles.registroTitle}>¿Cómo te gustaría registrarte?</p>
+                    <div className={styles.registroBtn}>
+                        <button className={styles.Btn} onClick={() => { handleLocalStorage(false) }}>Cliente</button>
+                        <button className={styles.Btn} onClick={() => { handleLocalStorage(true) }}>Proveedor</button>
+                    </div>
+                </div>
             </section>
         </div>
     );

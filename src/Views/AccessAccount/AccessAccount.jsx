@@ -51,8 +51,8 @@ function AccessAccount() {
         dispatch(addInfoUserLog(user));
         socket.emit('join-request', user.idPeople);
 
-        if (user.typeOfPerson === "admin") {
-          navigate(Helpers.HomeCustomerView); //* <== Esta ruta hay que cambiarla cuando este lista la view del Admin !!
+        if (user.typeOfPerson === "administrator") {
+          navigate(Helpers.AdminStatistics); //* <== Esta ruta hay que cambiarla cuando este lista la view del Admin !!
         } else if (user.typeOfPerson === "provider") {
           navigate(Helpers.StatsProviderView);
         } else {
@@ -66,13 +66,9 @@ function AccessAccount() {
 
   const signInProcess = async (signInData) => {
     //*componente para manejar el post de MP y recibir el link a MP
-
     try {
-      if (signInData.typeOfPerson === "provider") {
-        const response = await axios.post(
-          `${REACT_APP_API_URL}/payment`,
-          signInData
-        );
+      if (isProvider) {
+        const response = await axios.post(`${REACT_APP_API_URL}/payment`, signInData);
         if (response.status === 200) {
           const paymentLink = response.data.urlPayment;
           window.location.href = paymentLink;
@@ -80,7 +76,10 @@ function AccessAccount() {
           window.alert(`Error: ${response.status} - ${response.statusText}`);
         }
       } else {
-        navigate(Helpers.ProfileCustomerView);
+        const response = await axios.post(`${REACT_APP_API_URL}/people`, signInData);
+        if (response.status === 200) {
+          navigate(Helpers.ProfileCustomerView);
+        }
       }
     } catch (error) {
       window.alert(error);
