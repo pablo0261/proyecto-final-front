@@ -12,7 +12,6 @@ const Home = () => {
   const InfoPag = useSelector((state) => state.getAllPeople);
   const providers = InfoPag && InfoPag.data;
   const allServices = useSelector((state) => state.allServices);
-  console.log(providers)
 
   const dispatch = useDispatch();
 
