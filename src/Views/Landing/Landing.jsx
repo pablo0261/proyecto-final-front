@@ -33,7 +33,6 @@ const Landing = () => {
 
   useEffect(() => {
     const fetchStatistics = async () => {
-      try {
         const response = await fetch(`${REACT_APP_API_URL}/stats/landing`);
         const data = await response.json();
         setStatistics({
@@ -42,14 +41,6 @@ const Landing = () => {
           customerCount: data.customerCount,
           providerCount: data.providerCount,
         });
-      } catch (error) {
-        console.log(error);
-        console.log(error.data);
-        window.alert(
-          "Error al obtener las cantidades de visitas al perfil:",
-          error.response.data
-        );
-      }
     };
     fetchStatistics();
   }, []);

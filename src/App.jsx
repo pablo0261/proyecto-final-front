@@ -28,6 +28,7 @@ import AdminStatistics from './components/AdminStatistics/AdminStatistics';
 import AdminTablas from './Views/AdminTablas/AdminTablas';
 import AdminReports from './Views/AdminReports/AdminReports.jsx';
 import { io } from 'socket.io-client';
+import Swal from 'sweetalert2'
 const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
 const socket = io(REACT_APP_API_URL);
 
@@ -70,6 +71,30 @@ function App() {
         }
       }
       if (response.data.people.count === 0) {
+
+        Swal.fire({
+          title: 'Usuario no registrado!',
+          text: `Para acceder al sistema es necesario realizar el cadastro`,
+          footer: 'Regrese y realice su registro',
+          icon: 'alert',
+          // showDenyButton: true,
+          // denyButtonText: 'Cancelar',
+          // confirmButtonText: 'Aceptar',
+          // ConfirmButtonColor: "green",
+        })
+        //*Codigo para descomentar cuando sea necesario personailzar el cartel de alert!
+        // .then(response => {
+        //   if(response.isConfirmed){
+        //     Swal.fire("Exito", "El registro fue exitoso")
+        //   }
+        //   else if(response.isDenied){
+        //     Swal.fire("Información", "Todo bien", "info")
+        //   }
+        //   else{
+        //     Swal.fire("Error", "Ocurrió un error", "error")
+        //   }
+        // })
+
         window.alert("Usuario no existe.")
       }
     } catch (error) {
