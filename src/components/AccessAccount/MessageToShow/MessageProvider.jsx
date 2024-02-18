@@ -3,6 +3,7 @@ import style from "./Message.module.sass";
 function MessageToShow() {
   return (
     <div className={style.introQuote}>
+      <div className={style.quoteIcon}></div>
       <div className={style.quoteBox}>
         <p className={style.quote}>
           {" "}

@@ -27,8 +27,8 @@ function StatsAccesAccount() {
   
   return (
     <div className={style.statisticsContainer}>
-      <div className={style.prom}> Más de {statistics.serviciosOfrecidos} servicios ofrecidos</div>
-      <div className={style.count}> {statistics.porcentajeConexiones} de los clientes encuentran el servicio que necesitaban</div>
+      <div className={style.prom}> Más de <span className={style.number1}>{statistics.serviciosOfrecidos}</span> servicios ofrecidos.</div>
+      <div className={style.count}> <span className={style.number2}>{statistics.porcentajeConexiones}</span> de los clientes encuentran el servicio que necesitan.</div>
     </div>
   );
 }

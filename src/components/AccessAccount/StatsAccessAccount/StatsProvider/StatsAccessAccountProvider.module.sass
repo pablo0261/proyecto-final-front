@@ -10,18 +10,32 @@
 .prom
     position: relative
     width: 90%
-    height: 130px
+    height: auto
+    white-space: wrap
     margin-inline: auto
-    display: flex
+    text-align: center
     flex-wrap: wrap
-    +Mixins.font($secondaryColor, 40px, normal, normal)
+    +Mixins.font($textSecondaryColor, 36px, normal, normal)
     border-bottom: 2px solid black
 
 .count
     position: relative
     margin-inline: auto
-    height: 130px
+    height: fit-content
     margin-top: 20px
     width: 90%
-    +Mixins.font($secondaryColor, 32px, normal, normal)
+    +Mixins.font($textSecondaryColor, 32px, normal, normal)
     
+.number1
+    border-bottom: 12px solid $alertColor
+    border-radius: 10px
+    display: inline-block
+    +Mixins.font($textSecondaryColor, 45px, normal, normal)
+    margin-left: 10px
+    line-height: 1 
+
+.number2
+    border-bottom: 12px solid $alertColor
+    border-radius: 10px
+    display: inline-block
+    +Mixins.font($textSecondaryColor, 40px, normal, normal) 
