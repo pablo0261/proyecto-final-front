@@ -38,7 +38,9 @@ const AdminServices = ({ categoriesOptions, idCategorie }) => {
 
   return (
     <div className={styles.container}>
+      
       <CreatableSelect
+      
         isClearable
         isDisabled={isLoading}
         isLoading={isLoading}
@@ -55,10 +57,15 @@ const AdminServices = ({ categoriesOptions, idCategorie }) => {
             primary25: 'rgb(245, 245, 245)',
             primary: 'black',
           },
+          
+          
+         
         })}
 
 
       />
+      
+      
       <button>Delete</button>
     </div>
   );

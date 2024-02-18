@@ -3,6 +3,7 @@
 
 .wrap {
     @include flexbox(column, center, center);
+    margin-bottom: 60px;
 
     h2 {
         @include textTitle(null, normal);
@@ -23,7 +24,6 @@
                 h3 {
                     @include textSubTitle(left, normal);
                 };
-    
             };
 
             .answer {
@@ -38,7 +38,6 @@
                     margin: 0 50px 0 50px;
                 };
 
-                
             };
 
             .expanded {
@@ -67,17 +66,25 @@
         button:hover {
             @include buttonHover
         };
+
+        button:pressed {
+            @include buttonPressed;
+        };
     }
 
     .container__buttons_close{
         
         button {
-            @include buttonActive
+            @include buttonActive;
         }
     
         button:hover {
-            @include buttonHover
+            @include buttonHover;
         }
+
+        button:pressed {
+            @include buttonPressed;
+        };
     }
 }
 
@@ -86,5 +93,4 @@
     width: 40px;
     height: 40px;
 };
-
 
