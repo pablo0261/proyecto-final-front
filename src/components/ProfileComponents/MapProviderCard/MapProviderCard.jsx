@@ -11,7 +11,6 @@ function MapProviderCard() {
   const infoUserLog = useSelector((state) => state.infoUserLog);
 
   const [cityPosition, setCityPosition] = useState(null);
-  console.log("cityPosition",cityPosition)
   const [geopositionArray, setGeopositionArray] = useState([-32.635184890429585, -65.19722521105064]);
 
   const GetCitysPosition = async () => {
@@ -65,9 +64,8 @@ function MapProviderCard() {
   const handleSaveGeoposition = async () => {
     try {
       await dispatch(putUserData(dataToSend));
-      console.log("Datos de geoposición guardados exitosamente:", dataToSend);
     } catch (error) {
-      console.error("Error al guardar los datos de geoposición:", error);
+      window.alert("Error al guardar los datos de geoposición:", error);
     }
   };
 

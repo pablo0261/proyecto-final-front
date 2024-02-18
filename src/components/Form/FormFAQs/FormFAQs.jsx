@@ -13,7 +13,6 @@ const FormFAQs = ({ typeOfFAQs }) => {
     title: '',
     message: ''
   });
-  console.log(formData);
 
   const [localErrors, setLocalErrors] = useState({
     title: '',

@@ -10,8 +10,6 @@ function MostSearch() {
       try {
         const response = await fetch(`${REACT_APP_API_URL}/stats/landing`);
         const data = await response.json();
-        console.log("data", data);
-        console.log("statistics", statistics.customerCount);
         const serviciosMasBuscados = data;
         setStatistics(serviciosMasBuscados);
       } catch (error) {

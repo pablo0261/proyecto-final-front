@@ -19,7 +19,6 @@ function LastComment() {
       try {
         const response = await fetch(`${REACT_APP_API_URL}/stats/provider?idPeople=${userLog.idPeople}`);
         const data = await response.json();
-        console.log("data", data)
         const ultimoComentario = data.data.ultimoComentario;
         setStatistics({
           idPeople: userLog.idPeople || "",

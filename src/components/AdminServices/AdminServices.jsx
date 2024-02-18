@@ -34,11 +34,7 @@ const AdminServices = ({ categoriesOptions, idCategorie }) => {
     setValue(newOption);
     setIsLoading(false);
     // dispatch(lafuncioncreadoradelacategoria(idCategorie, labelToSend));
-    console.log(idCategorie);
-    console.log(labelToSend);
   };
-
-  console.log(value);
 
   return (
     <div className={styles.container}>

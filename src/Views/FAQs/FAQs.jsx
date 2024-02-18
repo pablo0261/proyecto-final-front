@@ -26,9 +26,6 @@ const FAQs = () => {
 
   const faqSDetail = useSelector((state) => state.faqS);
 
-  console.log("Estado global desde FAQs.jsx");
-  console.log(faqSDetail);
-
   /* Get FAQs */
   useEffect(() => {
     dispatch(getFAQs())

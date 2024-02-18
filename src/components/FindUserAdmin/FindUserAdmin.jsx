@@ -18,7 +18,6 @@ function FindUserAdmin() {
   }
   
   const funcionbusqueda = (queryConstructOrder) => {
-    console.log(queryConstructOrder)
     dispatch(allPeople(queryConstructOrder));
   };
 

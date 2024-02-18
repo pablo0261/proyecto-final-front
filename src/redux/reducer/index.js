@@ -30,7 +30,6 @@ let initialState = {
   //Filter and getpeople
   peopleForAdmin: [], /** El estado contiene los people que la tabla del admin*/
   providerForAdmin: [],
-  homeCustomerProviders: [],
   getAllPeople: [],
   paginacionData: [],
   allServices: [],

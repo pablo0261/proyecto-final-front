@@ -48,7 +48,6 @@ function ChatRender(props) {
             if (infoUserLog.typeOfPerson === "customer") {
                 dispatch(putOpportunities(ratingForm, `?idCustomer=${infoUserLog.idPeople}&state=${filter}&idOrder=dateEndService,DESC`))
             } else if (infoUserLog.typeOfPerson === "provider") {
-                console.log("Enviado")
                 dispatch(putOpportunities(ratingForm, `?idProvider=${infoUserLog.idPeople}&state=${filter}&idOrder=dateEndService,DESC`))
             }
 

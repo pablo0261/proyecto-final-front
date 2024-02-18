@@ -1,0 +1,54 @@
+@use  "../../Styles/Mixins"
+@import "../../Styles/Variables"
+
+.wrapper
+    display: flex
+    flex-direction: row
+    gap: 10px
+    margin-top: 20px
+
+.btnInactive
+    background: none
+    border: none
+    @include Mixins.font($grey, 16px, normal, normal)
+
+.btnActive
+    background: none
+    border: none
+    @include Mixins.font($primaryColor, 16px, normal, normal)
+    cursor: pointer
+    transition: .2s
+
+.btnActive:hover
+    transform: scale(1.1)
+
+.btnActive:active
+    transform: scale(0.8)
+
+.active
+    width: 30px
+    height: 30px
+    border-radius: 5px
+    border: none
+    background-color: $primaryColor
+    @include Mixins.font(white, 18px, normal, normal)
+    cursor: pointer
+    transition: .2s
+
+.inactive
+    width: 30px
+    height: 30px
+    border-radius: 5px
+    border: none
+    background: none
+    @include Mixins.font($primaryColor, 18px, normal, normal)
+    cursor: pointer
+    transition: .2s
+
+.inactive:hover
+    background: $hoverColor
+    color: white
+
+.inactive:active
+    transform: scale(0.8)
+
