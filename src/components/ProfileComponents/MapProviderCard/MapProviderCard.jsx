@@ -8,6 +8,7 @@ import React, {
 import { useSelector, useDispatch } from "react-redux";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import { putUserData } from "../../../redux/actions/index";
+import Swal from 'sweetalert2'
 import styles from "./MapProvider.module.sass";
 
 function MapProviderCard() {
@@ -48,7 +49,11 @@ function MapProviderCard() {
     try {
       await dispatch(putUserData(dataToSend));
     } catch (error) {
-      window.alert("Error al guardar los datos de geoposición:", error);
+      Swal.fire({
+        title: 'Su posición no se pudo registrar!',
+        text: `Regrese y vuelva a intentarlo`,
+        icon: 'alert',
+      })
     }
   };
 

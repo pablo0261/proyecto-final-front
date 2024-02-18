@@ -1,6 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 import { deleteService } from "../../../redux/actions/index";
+import Swal from "sweetalert2";
 import Form from "../../Form/FormExperience/FormExperience";
 import style from "./ExperienciaProvider.module.sass";
 
@@ -48,8 +49,22 @@ function ExperienciaProvider() {
       idPeople: infoUserLog.idPeople,
       idOption: idOption,
     };
-    dispatch(deleteService(deleteData));
-  };
+    Swal.fire({
+      title: "Quieres eliminar esta Experiencia?",
+      text: `Click en Aceptar para eliminarla, o dale a Cancelar para regresar`,
+      footer: "Confirma que quieres eliminar la Experiencia seleccionado",
+      icon: "alert",
+      showDenyButton: true,
+      denyButtonText: "Cancelar",
+      denyButtonColor: "Grey",
+      confirmButtonText: "Eliminar",
+      confirmButtonColor: "Red",
+    }).then((response) => {
+      if (response.isConfirmed) {
+        dispatch(deleteService(deleteData));
+      } 
+    });
+  }
 
   return (
     <div className={style.container}>

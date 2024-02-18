@@ -8,16 +8,16 @@ import { useDispatch } from "react-redux";
 import style from "./AccessAccount.module.sass";
 import axios from "axios";
 import { addInfoUserLog } from "../../redux/actions";
-import { io } from 'socket.io-client';
-import StatsAccessAccountClient from "../../components/AccessAccount/StatsAccessAccount/StatsClient/StatsAccessAccountClient"
-import StatsAccessAccountProvider from "../../components/AccessAccount/StatsAccessAccount/StatsProvider/StatsAccessAccountProvider"
-import MessageToShow from "../../components/AccessAccount/MessageToShow/MessageClient"
+import { io } from "socket.io-client";
+import Swal from "sweetalert2";
+import StatsAccessAccountClient from "../../components/AccessAccount/StatsAccessAccount/StatsClient/StatsAccessAccountClient";
+import StatsAccessAccountProvider from "../../components/AccessAccount/StatsAccessAccount/StatsProvider/StatsAccessAccountProvider";
+import MessageToShow from "../../components/AccessAccount/MessageToShow/MessageClient";
 
 const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
 const socket = io(REACT_APP_API_URL);
 
 function AccessAccount() {
-  const [showUserExistsMessage, setShowUserExistsMessage] = useState(false);//!Armar aqui el cartel que se renderizara ante usuario ya existente
 
   useEffect(() => {
     // Carga la biblioteca de Google Sign-In
@@ -54,10 +54,10 @@ function AccessAccount() {
         localStorage.setItem(StoreItem.emailUserLogged, logInData.email);
 
         dispatch(addInfoUserLog(user));
-        socket.emit('join-request', user.idPeople);
+        socket.emit("join-request", user.idPeople);
 
         if (user.typeOfPerson === "administrator") {
-          navigate(Helpers.AdminStatistics); //* <== Esta ruta hay que cambiarla cuando este lista la view del Admin !!
+          navigate(Helpers.AdminStatistics); 
         } else if (user.typeOfPerson === "provider") {
           navigate(Helpers.StatsProviderView);
         } else {
@@ -65,36 +65,51 @@ function AccessAccount() {
         }
       }
     } catch (error) {
-      window.alert(error);
+      Swal.fire({
+        title: 'Usuario ya Registrado!',
+        text: `Para acceder al sistema vuelva y realice el login`,
+        icon: 'alert',
+      })
+      .then(response => {
+        if(response.isConfirmed){
+          handleFormsVisibility()
+        }
+        })
     }
   };
 
-  const signInProcess = async (signInData) => {//!Verificar cuando el back modifique el error de 400 a 409 para renderizar un cartel que indique que el 
+  const signInProcess = async (signInData) => {
     try {
       if (isProvider) {
-        const response = await axios.post(`${REACT_APP_API_URL}/payment`, signInData);
+        const response = await axios.post(
+          `${REACT_APP_API_URL}/payment`,
+          signInData
+        );
         if (response.status === 200) {
           const paymentLink = response.data.urlPayment;
           window.location.href = paymentLink;
-        } else if (response.status === 409 ) {//* Adicionado para que funcione cuando el proveedor ya se encuentra registrado
-          setShowUserExistsMessage(true);
-          handleFormsVisibility()
-        } else {
-          window.alert(`Error: ${response.status} - ${response.statusText}`);
-        }
-      
+        } 
       } else {
-        const response = await axios.post(`${REACT_APP_API_URL}/people`, signInData);
+        const response = await axios.post(
+          `${REACT_APP_API_URL}/people`,
+          signInData
+        );
         console.llog("response", response.data);
         if (response.status === 200) {
           navigate(Helpers.ProfileCustomerView);
-        } else if (response.status === 409 ) {//* Adicionado para que funcione cuando el cliente ya se encuentra registrado
-          setShowUserExistsMessage(true);
-          handleFormsVisibility()
         }
       }
     } catch (error) {
-      window.alert(error);
+      Swal.fire({
+        title: 'Usuario ya Registrado!',
+        text: `Para acceder al sistema vuelva y realice el login`,
+        icon: 'alert',
+      })
+      .then(response => {
+        if(response.isConfirmed){
+          handleFormsVisibility()
+        }
+        })
     }
   };
 
@@ -111,11 +126,17 @@ function AccessAccount() {
               ></SignIn>
               <div className={style.wrapperStats}>
                 {isProvider ? (
-                  <div className={style.components}><StatsAccessAccountProvider/></div>
+                  <div className={style.components}>
+                    <StatsAccessAccountProvider />
+                  </div>
                 ) : (
-                  <div className={style.components}><StatsAccessAccountClient/></div>
+                  <div className={style.components}>
+                    <StatsAccessAccountClient />
+                  </div>
                 )}
-                <div className={style.components}><MessageToShow/></div>
+                <div className={style.components}>
+                  <MessageToShow />
+                </div>
               </div>
             </div>
           ) : (
@@ -127,18 +148,18 @@ function AccessAccount() {
               ></LogIn>
               <div className={style.wrapperStats}>
                 {isProvider ? (
-                  <div className={style.components}><StatsAccessAccountProvider/></div>
+                  <div className={style.components}>
+                    <StatsAccessAccountProvider />
+                  </div>
                 ) : (
-                  <div className={style.components}><StatsAccessAccountClient/></div>
+                  <div className={style.components}>
+                    <StatsAccessAccountClient />
+                  </div>
                 )}
-                <div className={style.components}><MessageToShow/></div>
+                <div className={style.components}>
+                  <MessageToShow />
+                </div>
               </div>
-            </div>
-          )}
-          <div id="buttonDiv" /* className={style.btnCustom} */></div>
-          {showUserExistsMessage && (
-            <div className="alert alert-danger" role="alert">
-              El usuario ya existe. Por favor, inicia sesión con otro usuario o regístrate con un correo electrónico diferente.
             </div>
           )}
         </div>

@@ -1,6 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 import { deleteService } from "../../../redux/actions/index";
+import Swal from "sweetalert2";
 import Form from "../../Form/FormServices/Form";
 import style from "./ServiceProviderCard.module.sass";
 
@@ -48,7 +49,21 @@ function ServicesProviderCard() {
       "idPeople": infoUserLog.idPeople,
       "idOption": service.idOption,
     };
-    dispatch(deleteService(deleteData));
+    Swal.fire({
+      title: "Quieres eliminar este servicio?",
+      text: `Click en Aceptarpara eliminarlo, o dale a Cancelar para regresar`,
+      footer: "Confirma que quieres eliminar el servicio seleccionado",
+      icon: "alert",
+      showDenyButton: true,
+      denyButtonText: "Cancelar",
+      denyButtonColor: "Grey",
+      confirmButtonText: "Eliminar",
+      confirmButtonColor: "Red",
+    }).then((response) => {
+      if (response.isConfirmed) {
+        dispatch(deleteService(deleteData));
+      } 
+    });
   };
 
 

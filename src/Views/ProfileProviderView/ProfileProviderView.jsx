@@ -8,7 +8,7 @@ import EducationProvider from '../../components/ProfileComponents/EducationProvi
 import ExperienciaProvider from '../../components/ProfileComponents/ExperienciaProvider/ExperienciaProvider';
 import MapProviderCard from '../../components/ProfileComponents/MapProviderCard/MapProviderCard';
 // import ReviewProviderCard from '../../components/ProfileComponents/ReviewProviderCard/ReviewProviderCard';
-import ConectionProviderCard from '../../components/ProfileComponents/ConectionProviderCard/ConectionProviderCard';
+// import ConectionProviderCard from '../../components/ProfileComponents/ConectionProviderCard/ConectionProviderCard';
 import style from './ProfileProviderView.module.sass'
 
 function ProfileProviderView() {
