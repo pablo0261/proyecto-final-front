@@ -48,7 +48,7 @@ function MapProviderCard() {
     try {
       await dispatch(putUserData(dataToSend));
     } catch (error) {
-      console.error("Error al guardar los datos de geoposición:", error);
+      window.alert("Error al guardar los datos de geoposición:", error);
     }
   };
 

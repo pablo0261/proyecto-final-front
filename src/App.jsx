@@ -13,7 +13,6 @@ import ReportsProviderView from './Views/ProviderViews/ReportsProviderView';
 import ConnectionsProviderView from './Views/ProviderViews/ConnectionsProviderView';
 import Success from './Views/Success/Success';
 import Failure from './Views/Failure/Failure';
-import Assistance from './Views/Assistance/Assistance';
 import AdminUsersView from './Views/AdminUsersView/AdminUsersView';
 import FAQs from './Views/FAQs/FAQs';
 import ConsultReport from './Views/ConsultReport/ConsultReport'
@@ -28,6 +27,9 @@ import ProviderDetail from './Views/CustomerViews/ProviderDetail';
 import AdminStatistics from './components/AdminStatistics/AdminStatistics';
 import AdminTablas from './Views/AdminTablas/AdminTablas';
 import AdminReports from './Views/AdminReports/AdminReports.jsx';
+import { io } from 'socket.io-client';
+const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
+const socket = io(REACT_APP_API_URL);
 
 
 function App() {
@@ -42,6 +44,7 @@ function App() {
 
     if (localStorage.getItem(StoreItem.emailUserLogged)) {
       dispatch(recoverUserLoggedData(localStorage.getItem(StoreItem.emailUserLogged)))
+      socket.emit('join-request', userLoggedInfo.idPeople);
     }
   }, [])
 

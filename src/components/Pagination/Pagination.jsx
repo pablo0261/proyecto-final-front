@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from "./Pagination.module.scss";
+import styles from "./Pagination.module.sass";
 
 
 const Pagination = ({ count, pageNumber, totalCount, totalOfPages, queryProps, onPageChange }) => {
@@ -26,12 +26,12 @@ const Pagination = ({ count, pageNumber, totalCount, totalOfPages, queryProps, o
 
   return (
     <div className={styles.wrapper}>
-      <button onClick={onPrevPage} disabled={pageNumber === 1}>Anterior</button>
+      <button onClick={onPrevPage} disabled={pageNumber === 1} className={pageNumber === 1 ? styles.btnInactive : styles.btnActive}>Anterior</button>
 
       {pageNumbers.map((NumberOfPage) => (
         <div key={NumberOfPage} className={styles['button-container']}>
           <button
-            className={`${styles.button} ${NumberOfPage === pageNumber ? styles.active : ''}`}
+            className={NumberOfPage === pageNumber ? styles.active : styles.inactive}
             onClick={() => onSpeficPage(NumberOfPage)}
           >
             {NumberOfPage}
@@ -39,9 +39,7 @@ const Pagination = ({ count, pageNumber, totalCount, totalOfPages, queryProps, o
         </div>
       ))}
 
-      <button type='button' onClick={onNextPage} disabled={pageNumber >= totalOfPages}>
-        Siguiente
-      </button>
+      <button onClick={onNextPage} disabled={pageNumber >= totalOfPages} className={pageNumber === totalOfPages ? styles.btnInactive : styles.btnActive}>Siguiente</button>
     </div>
   );
 };

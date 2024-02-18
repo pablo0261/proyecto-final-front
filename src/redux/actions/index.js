@@ -24,7 +24,7 @@ import {
 
 const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
 
-//AccessAccount//
+//ACCESS ACCOUNT
 const addInfoUserLog = (data) => {
   return async (dispatch) => {
     return dispatch({
@@ -40,15 +40,6 @@ const logOutDeleteData = () => {
     return dispatch({
       type: LOG_OUT_DELETE_DATA,
     });
-    /* try {
-      const { data } = await axios.get(`${REACT_APP_API_URL}/people?email=${userLoggedData.email}`)
-      return dispatch({
-        type : LOG_OUT_DELETE_DATA,
-        payload : data.result
-      })
-    } catch (error) {
-      window.alert(error)
-    }  */
   };
 };
 
@@ -148,6 +139,7 @@ const allProviderAdmin = (query) => {
     }
   };
 };
+
 const clear = () => {
   return async (dispatch) => {
     try {
@@ -161,16 +153,11 @@ const clear = () => {
   };
 };
 
-const getPeopleFilteredOrderedPagination = (
-  queryConstructor,
-  queryPagination
-) => {
+//HOME CUSTOMER
+const getPeopleFilteredOrderedPagination = (queryConstructor, queryPagination) => {
   return async (dispatch) => {
     try {
-      const response = await axios.get(
-        `${REACT_APP_API_URL}/people?typeOfPerson=provider&${queryConstructor}${queryPagination ? `${queryPagination}` : ""
-        }`
-      );
+      const response = await axios.get(`${REACT_APP_API_URL}/people?typeOfPerson=provider${queryConstructor}${queryPagination ? `${queryPagination}` : ""}`);
       return dispatch({
         type: GET_FILTER_PROVIDER,
         payload: response.data.people,
@@ -201,18 +188,6 @@ const saveSelectionsGlobal = (selectedOptions) => {
       return dispatch({
         type: FILTER_ORDER_SELECTED,
         payload: selectedOptions,
-      });
-    } catch (error) {
-      console.error(error);
-    }
-  };
-};
-const saveOrderGlobal = (orders) => {
-  return async (dispatch) => {
-    try {
-      return dispatch({
-        type: FILTER_ORDER_SELECTED,
-        payload: orders,
       });
     } catch (error) {
       console.error(error);
@@ -388,7 +363,7 @@ const handleEditProfile = (formData) => {
         payload: formData,
       });
     } catch (error) {
-      console.error(error);
+      window.alert(error);
     }
   };
 };
@@ -405,7 +380,6 @@ const getOpportunities = (filter) => {
         })
       }
     } catch (error) {
-      console.log(error)
       window.alert(error)
     }
   }
@@ -415,12 +389,10 @@ const putOpportunities = (data, filter) => {
   return async (dispatch) => {
     try {
       const response = await axios.put(`${REACT_APP_API_URL}/opportunities`, data)
-      console.log(response)
       if (response.status === 200) {
         dispatch(getOpportunities(filter))
       }
     } catch (error) {
-      console.log(error)
       window.alert(error)
     }
   }
@@ -430,9 +402,7 @@ const putOpportunities = (data, filter) => {
 const getReports = (email) => {
   return async (dispatch) => {
     try {
-      console.log(`${REACT_APP_API_URL}/questions?typeOfQuestion=qaa${email ? email : ""}`)
       const response = await axios.get(`${REACT_APP_API_URL}/questions?typeOfQuestion=qaa${email ? email : ""}`)
-      console.log(response)
       if (response.status === 200) {
         return dispatch({
           type: GET_REPORTS,
@@ -454,7 +424,6 @@ const createReport = (formData) => {
         type: CREATE_REPORT,
         payload: response.data
       });
-      console.log('Response from server:', response.data);
     } catch (error) {
       window.alert(error);
     }
@@ -470,7 +439,6 @@ const createFAQs = (formData) => {
         type: CREATE_FAQS,
         payload: response.data
       });
-      console.log('Response from server:', response.data);
     } catch (error) {
       window.alert(error);
     }
@@ -484,7 +452,7 @@ const getFAQs = () => {
       const response = await axios(`${REACT_APP_API_URL}/questions`);
       dispatch({ type: GET_FAQS, payload: response.data });
     } catch (error) {
-      console.log(error);
+      window.alert(error)
     }
   };
 };
@@ -504,7 +472,6 @@ export {
   getFiltersOrdersDB,
   getPeopleFilteredOrderedPagination,
   postUserServices,
-  saveOrderGlobal,
   allPeople,
   getOpportunities,
   putOpportunities,

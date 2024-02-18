@@ -15,8 +15,6 @@ function ScheduleForm({ handleShowForm }) {
     weekCalendar: editedSchedule,
   });
 
-  console.log("userData", userData)
-
   useEffect(() => {
     const exampleSchedule = infoUserLog.weekCalendar || [ ];
     setEditedSchedule(exampleSchedule);
