@@ -24,7 +24,7 @@ function ProfileProviderView() {
         <ScheduleProviderCard />
         <MapProviderCard />
         {/* <ReviewProviderCard /> */}
-        <ConectionProviderCard />
+        {/* <ConectionProviderCard /> */}
     </div>
   );
 }
