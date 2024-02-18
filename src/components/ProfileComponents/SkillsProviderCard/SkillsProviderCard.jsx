@@ -15,7 +15,6 @@ function SkillsProviderCard() {
     setShowForm(!showForm);
   };
 
-  console.log("infoUserLog", infoUserLog)
   useEffect(() => {
     if (infoUserLog && infoUserLog.categories && infoUserLog.categories.length > 0) {
       const skillCategory = infoUserLog.categories.find(category => category.idCategorie === 3); 
@@ -32,7 +31,6 @@ function SkillsProviderCard() {
     }
   }, [infoUserLog]);
 
-  console.log("skills", skills)
 
   const handleDeleteService = (idOption, event) => {
     event.preventDefault();

@@ -6,23 +6,20 @@ function UserSkills(props) {
   const { infoUser } = props
   const [skills, setSkills] = useState([])
 
-  useEffect(() => {
-    if (infoUser.categories.length != 0) {
-      const skillsCategory = infoUser.categories.find((category) => category.id_categorie === 3)
 
-      if (skillsCategory.categories_options.length != 0) {
-        const skillsOptions = skillsCategory.categories_options.map(
-          (option) => {
-            const newSkill = {
-              idOption: option.idOption,
-              Skill: option.description
-            }
-            return newSkill
-          })
-        setSkills(skillData)
+  useEffect(() => {
+    if (infoUser && infoUser.categories && infoUser.categories.length > 0) {
+      const skillsCategory = infoUser.categories.find(category => category.id_categorie === 3);
+
+      if (skillsCategory && skillsCategory.categories_options && skillsCategory.categories_options.length > 0) {
+        const skillsOptions = skillsCategory.categories_options.map(option => ({
+          idOption: option.idOption,
+          Skill: option.description
+        }));
+        setSkills(skillsOptions);
       }
     }
-  }, [])
+  }, [infoUser]);
 
   return (
     <div className={style.background}>

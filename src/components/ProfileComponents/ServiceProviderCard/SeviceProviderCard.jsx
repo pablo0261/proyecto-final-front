@@ -9,14 +9,13 @@ function ServicesProviderCard() {
   const dispatch = useDispatch();
   const infoUserLog = useSelector((state) => state.infoUserLog);
   const [showForm, setShowForm] = useState(false);
-  const [servicesData, setServicesData] = useState([]); 
+  const [servicesData, setServicesData] = useState([]);
 
   const handleShowForm = () => {
     setShowForm(!showForm);
   };
 
   useEffect(() => {
-    //*Todo esto recorre y valida la info del usuario para ver los servicios y precios
     if (infoUserLog.categories && infoUserLog.categories.length > 0) {
       const serviceCategory = infoUserLog.categories.find(
         (category) => category.idCategorie === 1
@@ -28,7 +27,7 @@ function ServicesProviderCard() {
               return option.people_options.map((personOption) => ({
                 description: option.description || "No description",
                 price: personOption.price || null,
-                idOption: option.idOption 
+                idOption: option.idOption,
               }));
             } else {
               return {
@@ -46,8 +45,8 @@ function ServicesProviderCard() {
 
   const handleDeleteService = (service) => {
     const deleteData = {
-      "idPeople": infoUserLog.idPeople,
-      "idOption": service.idOption,
+      idPeople: infoUserLog.idPeople,
+      idOption: service.idOption,
     };
     Swal.fire({
       title: "Quieres eliminar este servicio?",
@@ -62,10 +61,9 @@ function ServicesProviderCard() {
     }).then((response) => {
       if (response.isConfirmed) {
         dispatch(deleteService(deleteData));
-      } 
+      }
     });
   };
-
 
   return (
     <div className={style.background}>
@@ -77,7 +75,7 @@ function ServicesProviderCard() {
           {servicesData.slice(0, 4).map((service, index) => (
             <div key={index} className={style.items}>
               <button
-                 onClick={() => handleDeleteService(service)}
+                onClick={() => handleDeleteService(service)}
                 className={style.crossButton}
               ></button>
               <div className={style.descriptionBox}>{service.description}</div>
