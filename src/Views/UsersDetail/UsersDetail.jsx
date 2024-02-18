@@ -40,8 +40,8 @@ function UsersDetail() {
       <div className={style.wrapper}>
         <UserPersonal infoUser={infoUser} />
         {infoUserLog.typeOfPerson === 'customer' && <UserServices infoUser={infoUser} infoUserLog={infoUserLog} idOpportunitie={idOpportunitie} />}
-        {/* <UserEducation infoUser={infoUser} />
-        <UserExperience infoUser={infoUser} />
+        <UserEducation infoUser={infoUser} />
+        {/* <UserExperience infoUser={infoUser} />
         <UserSkills infoUser={infoUser} />
         <UserSchedule infoUser={infoUser} />
         <UserMap infoUser={infoUser} /> */}
