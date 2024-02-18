@@ -1,4 +1,5 @@
 
+import { useSelector } from "react-redux";
 import ProfileProvider from "../../components/ProfileComponents/ProfileProvider/ProfileProvider";
 import ServicesProviderCard from '../../components/ProfileComponents/ServiceProviderCard/SeviceProviderCard';
 import InteresProviderCard from '../../components/ProfileComponents/InteresProviderCard/InteresProviderCard';
@@ -12,16 +13,25 @@ import MapProviderCard from '../../components/ProfileComponents/MapProviderCard/
 import style from './ProfileProviderView.module.sass'
 
 function ProfileProviderView() {
+  const infoUserLog = useSelector((state) => state.infoUserLog);
+
+  console.log("infoUserLog vista provider", infoUserLog);
 
   return (
     <div className={style.wrapper}>
         <ProfileProvider />
+        {infoUserLog.typeOfPerson === "provider" && 
         <ServicesProviderCard />
+  }
         <EducationProvider />
+        {infoUserLog.typeOfPerson === "provider" && 
         <ExperienciaProvider />
+}
         <SkillsProviderCard />
         <InteresProviderCard />
+        {infoUserLog.typeOfPerson === "provider" && 
         <ScheduleProviderCard />
+}
         <MapProviderCard />
         {/* <ReviewProviderCard /> */}
         {/* <ConectionProviderCard /> */}
