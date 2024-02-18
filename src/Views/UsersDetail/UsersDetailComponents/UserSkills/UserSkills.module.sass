@@ -1,46 +1,34 @@
 @use '../../../../Styles/Mixins'
 @import '../../../../Styles/Variables'
 
-.container
-    display: block
-    height: fit-content
-    width: 80%
-    margin-inline: auto
-    margin-top: 10px
-    padding: 5px
-    
-
-.titleContainer
+.background
     display: flex
+    flex-direction: column
+    justify-content: center
+    align-items: center
+
+.wrapper
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-items: flex-start
+    width: 80%
     height: fit-content
-    margin-inline: auto
+    margin: 20px
 
 .title
-    width: fit-content
-    margin-left: 0  
-    margin-top: 0
+    margin: 0
     text-align: left
     @include Mixins.font($primaryColor, 35px, bold, normal)
-    
-.editButton
-    position: relative
-    top: 0
-    margin-left: auto
-    width: 40px
-    height: 40px
-    background-image: url('../../../assets/Icons/IconEdit.png')
-    background-position: center
-    background-repeat: no-repeat
-    background-color: white
-    transition: .2s
-    border: none
-    cursor: pointer
 
-.containerCard
-    height: 90px
-    justify-content: left
+.infoWrapper
+    width: 100%
+    height: fit-content
     display: flex
-    @include Mixins.boxShadowCard    
+    flex-direction: row
+    gap: 10px
+    margin-top: 15px
+    @include Mixins.boxShadowCard
 
 .skillsdetailContainer
     display: flex
@@ -88,11 +76,6 @@
     transform: scale(1.1)
 
 .noInfo
-    text-align: center 
-    margin-inline: auto   
-    @include Mixins.font($tertiaryColor, 20px, bold, normal)
-
-.noInfo
-    text-align: center 
-    margin-inline: auto   
-    @include Mixins.font($tertiaryColor, 20px, bold, normal)                
+    text-align: center
+    margin-inline: auto
+    @include Mixins.font($grey, 20px, normal, normal)           

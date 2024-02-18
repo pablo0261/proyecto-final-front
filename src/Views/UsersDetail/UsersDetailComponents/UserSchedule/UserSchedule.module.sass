@@ -1,71 +1,46 @@
 @use '../../../../Styles/Mixins'
 @import '../../../../Styles/Variables'
 
-.container
-    display: block
-    height: fit-content
-    width: 80%
-    margin-inline: auto
-    margin-top: 15px
-    padding: 5px
-
-.scheduledetailContainer
+.background
     display: flex
     flex-direction: column
-    justify-content: space-between
-    margin-inline: auto
-    margin-block: 15px
-    padding-block: 20px
-    padding-inline: 20px
-    height: 90%
-    @include Mixins.font($tertiaryColor, 18px, normal, normal)
-    @include Mixins.boxShadowCard
+    justify-content: center
+    align-items: center
 
-
-.titleContainer
+.wrapper
     display: flex
+    flex-direction: column
+    justify-content: center
+    align-items: flex-start
+    width: 80%
     height: fit-content
-    margin-inline: auto
+    margin: 20px
 
 .title
-    width: fit-content
-    margin-left: 0  
-    margin-top: 10px
+    margin: 0
     text-align: left
     @include Mixins.font($primaryColor, 35px, bold, normal)
 
-.editButton
-    position: relative
-    top: 0px
-    margin-left: auto
-    width: 40px
-    height: 40px
-    background-image: url('../../../assets/Icons/IconEdit.png')
-    background-position: center
-    background-repeat: no-repeat
-    background-color: white
-    transition: .2s
-    border: none
-    cursor: pointer
+.infoWrapper
+    width: 100%
+    height: fit-content
+    display: flex
+    justify-content: center
+    align-items: center
+    gap: 10px
+    margin-top: 15px
+    @include Mixins.boxShadowCard
 
-.tbody
-    margin-left: 10px    
+.table
+    width: 90%
+    height: fit-content
+    margin: 20px 0px
 
-.days  
-    width: fit-content
-    margin-inline: 10px  
-    margin-top: 10px
-    padding-bottom: 10px
+.days
     text-align: center
-    @include Mixins.font($secondaryColor, 25px, bold, normal)
+    @include Mixins.font($secondaryColor, 20px, bold, normal)
+    padding-bottom: 20px
 
-.campos
-    width: fit-content
-    margin-left: 50px  
-    @include Mixins.font($primaryColor, 20px, bold, normal)
-
-.moment
-    width: fit-content
+.turnos
     text-align: left
-    text-justify: center
-    @include Mixins.font($secondaryColor, 25px, bold, normal)
+    @include Mixins.font($secondaryColor, 20px, normal, normal)

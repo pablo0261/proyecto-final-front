@@ -11,6 +11,7 @@ import UserExperience from './UsersDetailComponents/UserExperience/UserExperienc
 import UserSkills from './UsersDetailComponents/UserSkills/UserSkills';
 import UserSchedule from './UsersDetailComponents/UserSchedule/UserSchedule';
 import UserMap from './UsersDetailComponents/UserMap/UserMap';
+import UserInterest from './UsersDetailComponents/UserInterest/UserInterest';
 
 function UsersDetail() {
 
@@ -41,10 +42,11 @@ function UsersDetail() {
         <UserPersonal infoUser={infoUser} />
         {infoUserLog.typeOfPerson === 'customer' && <UserServices infoUser={infoUser} infoUserLog={infoUserLog} idOpportunitie={idOpportunitie} />}
         <UserEducation infoUser={infoUser} />
-        {/* <UserExperience infoUser={infoUser} />
+        <UserExperience infoUser={infoUser} />
         <UserSkills infoUser={infoUser} />
+        <UserInterest infoUser={infoUser}/>
         <UserSchedule infoUser={infoUser} />
-        <UserMap infoUser={infoUser} /> */}
+        <UserMap infoUser={infoUser} />
         {/* <ReviewProviderCard /> */}
         {infoUserLog.typeOfPerson === 'customer' && <ConectionProviderCard />}
       </div>

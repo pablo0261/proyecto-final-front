@@ -30,7 +30,7 @@ function UserEducation(props) {
     <div className={style.background}>
       <div className={style.wrapper}>
         <p className={style.title}>Educación</p>
-        <div className={style.educationdetailContainer}>
+        <div className={style.infoWrapper}>
           {education.length > 0 ? (
             education.map((option, index) => (
               <div key={option.idOption}>

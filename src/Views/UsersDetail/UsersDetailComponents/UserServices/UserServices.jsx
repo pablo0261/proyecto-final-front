@@ -5,7 +5,6 @@ import FormContract from '../../../../components/Form/FormContract/FormContract'
 function UserServices(props) {
 
     const { infoUser, infoUserLog, idOpportunitie } = props
-
     const [servicesData, setServicesData] = useState([])
 
     useEffect(() => {
@@ -20,7 +19,6 @@ function UserServices(props) {
                             description: option.description,
                             price: option.people_options[0].price,
                         }
-
                         return newService
                     }
                 )
