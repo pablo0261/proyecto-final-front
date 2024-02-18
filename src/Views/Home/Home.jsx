@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import styles from "./Home.module.sass";
 import MapHome from "../../components/MapHome/MapHome";
 import { useSelector, useDispatch } from "react-redux";
-import { getPeopleFilteredOrderedPagination, saveSelectionsGlobal } from "../../redux/actions";
+import { allPeople, getPeopleFilteredOrderedPagination, saveSelectionsGlobal } from "../../redux/actions";
 import Loading from "../../assets/Icons/loadingHouse.gif"
 import Pagination from "../../components/Pagination/Pagination";
 
@@ -95,7 +95,7 @@ const Home = () => {
       <div className={styles.wrapper}>
         <div className={styles.mapWrapper}>
           <p className={styles.titleMap}>Buscar en el mapa</p>
-          <MapHome />
+          <MapHome providers={providers}/>
         </div>
 
         <div className={styles.servicesContainer}>
