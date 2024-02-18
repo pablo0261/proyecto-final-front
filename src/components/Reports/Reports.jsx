@@ -11,6 +11,7 @@ function Reports() {
     const dispatch = useDispatch()
     const [report, setReport] = useState([])
     const [isSelected, setIsSelected] = useState("")
+    const [filter, setFilter] = useState("completada")
     const [message, setMessage] = useState({
         idQuestion: "",
         response: ""
@@ -22,7 +23,7 @@ function Reports() {
                 if (infoUserLog.typeOfPerson === 'administrator') {
                     dispatch(getReports())
                 } else {
-                    const query = `&senderMail=${infoUserLog.email}`
+                    const query = `&senderMail=${infoUserLog.email}&questionStatus=${filter}`
                     dispatch(getReports(query))
                 }
             } catch (error) {
@@ -47,19 +48,30 @@ function Reports() {
         if (!Object.values(message).some((msg) => msg === "")) {
             axios.put(`${REACT_APP_API_URL}/questions`, message)
                 .then((response) => {
-                    console.log(response)
                     if (response.status === 200) {
                         setMessage({ ...message, message: "" })
                     }
                 })
-                .catch((reason) => console.log(reason))
+                .catch((reason) => window.alert(reason))
         } else {
             window.alert("Escribe un mensaje")
         }
     }
 
+    const handleFilter = (filter) => {
+        setIsSelected("")
+        setFilter(filter)
+        setReport([])
+        const query = `&senderMail=${infoUserLog.email}&questionStatus=${filter}`
+        dispatch(getReports(query))
+    }
+
     return (
         <div className={style.wrapper}>
+            <div className={style.filterWrapper}>
+                <button className={filter === "pendiente" ? style.filterButtonPressed : style.filterButton} onClick={() => handleFilter('pendiente')}>Pendientes</button>
+                <button className={filter === "completada" ? style.filterButtonPressed : style.filterButton} onClick={() => handleFilter('completada')}>Confirmados</button>
+            </div>
             <div className={style.connectionsWrapper}>
                 <div className={style.listWrapper}>
                     {
@@ -70,7 +82,7 @@ function Reports() {
                                 onClick={() => { handleSelectedOpportunitie(report.idQuestion) }}>
                                 <div className={style.userWrapper}>
                                     <p className={style.textUser}>{report.title}</p>
-                                    <p className={style.textDate}>{report.idQuestion}</p>
+                                    <p className={style.textDate}>{report.dateMessage}</p>
                                 </div>
                             </div>
                         )
@@ -84,8 +96,9 @@ function Reports() {
                                 <div className={report[0].senderMail === infoUserLog.email ? style.msgBoxOwner : style.msgBoxOther}>
                                     <p className={style.reportTitle}>{report[0].title}</p>
                                     <p className={style.reportMsg}>{report[0].message}</p>
-                                    <p>{report[0].fullName}</p>
-                                    <p>{report[0].email}</p>
+                                    <div className={style.sender}>
+                                        <p className={style.reportMsg2}>{report[0].fullName} - {report[0].senderMail}</p>
+                                    </div>
                                 </div>
                             </div>
                             {
@@ -105,7 +118,7 @@ function Reports() {
                             }
                         </div>
                         :
-                        <div className={style.reportWrapper}>Contenido</div>
+                        <div className={style.reportWrapper}>Selecciona tu reporte.</div>
                 }
             </div>
         </div>

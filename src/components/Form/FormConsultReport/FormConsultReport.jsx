@@ -34,7 +34,6 @@ const FormConsultReport = () => {
     };
 
     const userLoggedInfo = useSelector(state => state.infoUserLog);
-console.log(userLoggedInfo);
 
     const dispatch = useDispatch();
 

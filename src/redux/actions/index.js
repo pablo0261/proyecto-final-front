@@ -17,14 +17,14 @@ import {
   CREATE_REPORT,
   CREATE_FAQS,
   GET_FAQS,
-  SET_CHAT,
   GET_PEOPLE,
   GET_REPORTS,
+  GET_ALL_PROVIDER_ADMIN,
 } from "./action-types";
 
 const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
 
-//AccessAccount//
+//ACCESS ACCOUNT
 const addInfoUserLog = (data) => {
   return async (dispatch) => {
     return dispatch({
@@ -40,15 +40,6 @@ const logOutDeleteData = () => {
     return dispatch({
       type: LOG_OUT_DELETE_DATA,
     });
-    /* try {
-      const { data } = await axios.get(`${REACT_APP_API_URL}/people?email=${userLoggedData.email}`)
-      return dispatch({
-        type : LOG_OUT_DELETE_DATA,
-        payload : data.result
-      })
-    } catch (error) {
-      window.alert(error)
-    }  */
   };
 };
 
@@ -102,11 +93,11 @@ const handleContratService = (item) => {
   };
 };
 
-const allPeople = () => {
+const allPeople = (query) => {
   //** Esta ruta solo llama a todos los registrados en la tabla people*/
   return async (dispatch) => {
     try {
-      const response = await axios.get(`${REACT_APP_API_URL}/people?typeOfPerson=provider&typeOfPerson=customer`);
+      const response = await axios.get(`${REACT_APP_API_URL}/people?typeOfPerson=customer&typeOfPerson=provider&state=Inactive&state=Active${query}`);
       return dispatch({
         type: GET_PEOPLE,
         payload: response.data.people,
@@ -133,16 +124,40 @@ const allPeopleProvider = (query) => {
   };
 };
 
-const getPeopleFilteredOrderedPagination = (
-  queryConstructor,
-  queryPagination
-) => {
+const allProviderAdmin = (query) => {
   return async (dispatch) => {
     try {
       const response = await axios.get(
-        `${REACT_APP_API_URL}/people?typeOfPerson=provider&${queryConstructor}${queryPagination ? `${queryPagination}` : ""
-        }`
+        `${REACT_APP_API_URL}/people?typeOfPerson=provider&state=Inactive&state=Active${query}`
       );
+      return dispatch({
+        type: GET_ALL_PROVIDER_ADMIN,
+        payload: response.data.people,
+      });
+    } catch (error) {
+      window.alert(error);
+    }
+  };
+};
+
+const clear = () => {
+  return async (dispatch) => {
+    try {
+      return dispatch({
+        type: GET_PEOPLE,
+        payload: "",
+      });
+    } catch (error) {
+      window.alert(error);
+    }
+  };
+};
+
+//HOME CUSTOMER
+const getPeopleFilteredOrderedPagination = (queryConstructor, queryPagination) => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.get(`${REACT_APP_API_URL}/people?typeOfPerson=provider${queryConstructor}${queryPagination ? `${queryPagination}` : ""}`);
       return dispatch({
         type: GET_FILTER_PROVIDER,
         payload: response.data.people,
@@ -173,18 +188,6 @@ const saveSelectionsGlobal = (selectedOptions) => {
       return dispatch({
         type: FILTER_ORDER_SELECTED,
         payload: selectedOptions,
-      });
-    } catch (error) {
-      console.error(error);
-    }
-  };
-};
-const saveOrderGlobal = (orders) => {
-  return async (dispatch) => {
-    try {
-      return dispatch({
-        type: FILTER_ORDER_SELECTED,
-        payload: orders,
       });
     } catch (error) {
       console.error(error);
@@ -226,7 +229,6 @@ const putUserData = (userData) => {
         `${REACT_APP_API_URL}/people`,
         userData
       );
-      console.log("response", response)
       if (response.status === 200) {
         dispatch({
 
@@ -247,6 +249,32 @@ const putUserData = (userData) => {
   };
 };
 
+const putState = (value, auxState) => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.put(`${REACT_APP_API_URL}/people`, {
+        "idPeople": value,
+        "state": auxState
+      })
+
+    } catch (error) {
+      window.alert(error);
+    };
+  }; 
+};
+const putStateProvider = (value, auxState) => {
+  return async () => {
+    try {
+      const response = await axios.put(`${REACT_APP_API_URL}/people`, {
+        "idPeople": value,
+        "state": auxState
+      })
+    } catch (error) {
+      window.alert(error);
+    };
+  }; 
+};
+
 const postUserServices = (updatedUserData) => {
   //*(Pablo --> Lo uso para enviar las modificaciones del perfil de los proveedores)
   return async (dispatch) => {
@@ -254,7 +282,8 @@ const postUserServices = (updatedUserData) => {
       const response = await axios.post(
         `${REACT_APP_API_URL}/people/options`,
         updatedUserData
-      );
+        );
+        console.log("response",response.data)
       dispatch({
         type: POST_NEW_SERVICE_USER,
         payload: response.data.people.data[0].people
@@ -335,7 +364,7 @@ const handleEditProfile = (formData) => {
         payload: formData,
       });
     } catch (error) {
-      console.error(error);
+      window.alert(error);
     }
   };
 };
@@ -345,7 +374,6 @@ const getOpportunities = (filter) => {
   return async (dispatch) => {
     try {
       const response = await axios.get(`${REACT_APP_API_URL}/opportunities${filter}`)
-      console.log(response)
       if (response.status === 200) {
         return dispatch({
           type: SET_OPPORTUNITIE,
@@ -353,7 +381,6 @@ const getOpportunities = (filter) => {
         })
       }
     } catch (error) {
-      console.log(error)
       window.alert(error)
     }
   }
@@ -363,24 +390,20 @@ const putOpportunities = (data, filter) => {
   return async (dispatch) => {
     try {
       const response = await axios.put(`${REACT_APP_API_URL}/opportunities`, data)
-      console.log(response)
       if (response.status === 200) {
         dispatch(getOpportunities(filter))
       }
     } catch (error) {
-      console.log(error)
       window.alert(error)
     }
   }
 }
 
 //REPORTS
-const getReports = (email) => {
+const getReports = (query) => {
   return async (dispatch) => {
     try {
-      console.log(email)
-      const response = await axios.get(`${REACT_APP_API_URL}/questions?typeOfQuestion=qaa${email} ? ${email} : ""`)
-      console.log(response)
+      const response = await axios.get(`${REACT_APP_API_URL}/questions?typeOfQuestion=qaa${query ? query : ""}`)
       if (response.status === 200) {
         return dispatch({
           type: GET_REPORTS,
@@ -402,7 +425,6 @@ const createReport = (formData) => {
         type: CREATE_REPORT,
         payload: response.data
       });
-      console.log('Response from server:', response.data);
     } catch (error) {
       window.alert(error);
     }
@@ -418,7 +440,6 @@ const createFAQs = (formData) => {
         type: CREATE_FAQS,
         payload: response.data
       });
-      console.log('Response from server:', response.data);
     } catch (error) {
       window.alert(error);
     }
@@ -432,7 +453,7 @@ const getFAQs = () => {
       const response = await axios(`${REACT_APP_API_URL}/questions`);
       dispatch({ type: GET_FAQS, payload: response.data });
     } catch (error) {
-      console.log(error);
+      window.alert(error)
     }
   };
 };
@@ -452,7 +473,6 @@ export {
   getFiltersOrdersDB,
   getPeopleFilteredOrderedPagination,
   postUserServices,
-  saveOrderGlobal,
   allPeople,
   getOpportunities,
   putOpportunities,
@@ -463,4 +483,8 @@ export {
   createFAQs,
   getFAQs,
   postUserInteres,
+  allProviderAdmin,
+  putState,
+  putStateProvider,
+  clear
 };

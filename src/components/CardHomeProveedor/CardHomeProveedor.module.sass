@@ -21,12 +21,14 @@
     border-radius: 50%
     width: 130px
     height: 130px
+    object-fit: cover
 
 .ratingWrapper
     display: flex
     flex-direction: row
     align-items: center
     justify-content: center
+    margin-top: 5px
 
 .iconStar
     width: 30px
@@ -37,7 +39,7 @@
     background-size: contain
 
 .textRating
-    margin: 10px 0px
+    margin: 0px
     @include Mixins.font($textSecondaryColor, 14px, normal, normal)
 
 .infoWrapper

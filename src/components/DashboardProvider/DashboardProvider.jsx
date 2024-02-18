@@ -17,6 +17,7 @@ function Dashboard() {
               <MostSearch />
             </div>
           </div>
+          {/* <h2 className={style.h2HistoriaServ}>Visitas</h2> */}
           <div className={style.divPersonasQueTeBuscaron}>
             <PeopleVisit />
           </div>
@@ -37,7 +38,7 @@ function Dashboard() {
           <div className={style.divUltimoComent}>
             <LastComment/>
           </div>
-          <h2 className={style.h2HistoriaServ}>Historia de Servicios</h2>
+          <h2 className={style.title}>Historia de Servicios</h2>
           <div className={style.divHitorialServicios}>
             <div>
               <PieChart />

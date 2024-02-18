@@ -24,12 +24,22 @@ function NavBar() {
         navigate(Helpers.Landing)
     }
 
+    const scrollToTutorial = () => {
+        const tutorialSection = document.getElementById('tutorial');
+        if (tutorialSection) {
+          window.scrollTo({
+            top: tutorialSection.offsetTop,
+            behavior: 'smooth'
+          });
+        }
+    };
+
     return (
         <div className={style.backWrapper}>
             <div className={style.wrapper}>
                 <div className={style.logo}></div>
                 {
-                    location.pathname === Helpers.Landing && !userLoggedInfo.idPeople && !emailUserLog && <NavLink to="/#" className={style.link}>¿Como Funciona?</NavLink>
+                    location.pathname === Helpers.Landing && !userLoggedInfo.idPeople && !emailUserLog && <button className={style.link} onClick={()=>scrollToTutorial()}>¿Como Funciona?</button>
                 }
                 
                 {

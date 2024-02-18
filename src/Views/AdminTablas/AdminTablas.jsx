@@ -12,7 +12,6 @@ function AdminTablas() {
     dispatch(getFiltersOrdersDB());
   }, []);
   
-//   console.log(servicios)
   return (
     <div className={styles.wrapper}>
       {servicios.map((categoria, index) => (

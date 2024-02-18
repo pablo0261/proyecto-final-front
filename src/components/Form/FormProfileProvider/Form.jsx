@@ -76,7 +76,6 @@ function Form({ handleShowForm }) {
         const response = await fetch(`${REACT_APP_API_URL}/categories`);
         const data = await response.json();
         const professionList = data.categories.data[3].categories_options
-        console.log("info data", professionList)
         setProfession(professionList);
       } catch (error) {
         window.alert("Error al obtener las profesiones:", error);

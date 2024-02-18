@@ -64,7 +64,10 @@ function PieChartComponent() {
         right: "botton",
       },
       toolbox: {
+        left: 'right',
+        top: 'center',
         show: true,
+        orient: 'vertical',
         feature: {
           mark: { show: true },
           dataView: { show: true, readOnly: false },
@@ -94,7 +97,7 @@ function PieChartComponent() {
     return () => {
       myChart.dispose();
     };
-  }, [servicesData]); // Dependencia actualizada para reflejar los cambios en servicesData
+  }, [servicesData]); 
 
   return <div id="pie-chart" style={{ height: "400px" }}></div>;
 }

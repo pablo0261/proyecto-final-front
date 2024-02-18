@@ -1,6 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 import { deleteService } from "../../../redux/actions/index";
+import Swal from "sweetalert2";
 import Form from "../../Form/FormInteres/FormInteres";
 import style from "./InteresProvider.module.sass";
 
@@ -16,7 +17,7 @@ function InteresProviderCard() {
 
   useEffect(() => {
     if (infoUserLog && infoUserLog.categories && infoUserLog.categories.length > 0) {
-      const interesCategory = infoUserLog.categories.find(category => category.idCategorie === 6); //*categoria de Hobbies
+      const interesCategory = infoUserLog.categories.find(category => category.idCategorie === 6); 
       
       if (interesCategory && interesCategory.categories_options && interesCategory.categories_options.length > 0) {
         const interesOptions = interesCategory.categories_options;
@@ -37,11 +38,21 @@ function InteresProviderCard() {
       idOption: idOption,
     };
 
-    const confirmDelete = window.confirm("¿Está seguro de que desea eliminar este interés?");
-
-    if (confirmDelete) {
-      dispatch(deleteService(deleteData));
-    }
+    Swal.fire({
+      title: "Quieres eliminar este Interés?",
+      text: `Click en Aceptar para eliminarlo, o dale a Cancelar para regresar`,
+      footer: "Confirma que quieres eliminar el Interés seleccionado",
+      icon: "alert",
+      showDenyButton: true,
+      denyButtonText: "Cancelar",
+      denyButtonColor: "Grey",
+      confirmButtonText: "Eliminar",
+      confirmButtonColor: "Red",
+    }).then((response) => {
+      if (response.isConfirmed) {
+        dispatch(deleteService(deleteData));
+      } 
+    });
   };
 
   return (

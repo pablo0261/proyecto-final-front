@@ -1,6 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 import { deleteService } from "../../../redux/actions/index";
+import Swal from "sweetalert2";
 import Form from "../../Form/FormEducation/FormEducation";
 import style from "./EducationProvider.module.sass";
 
@@ -48,7 +49,22 @@ function EducationProvider() {
       idPeople: infoUserLog.idPeople,
       idOption: idOption,
     };
-    dispatch(deleteService(deleteData));
+
+    Swal.fire({
+      title: "Quieres eliminar este nivel de Educación?",
+      text: `Click en Aceptar para eliminarlo, o dale a Cancelar para regresar`,
+      footer: "Confirma que quieres eliminar la Educación seleccionado",
+      icon: "alert",
+      showDenyButton: true,
+      denyButtonText: "Cancelar",
+      denyButtonColor: "Grey",
+      confirmButtonText: "Eliminar",
+      confirmButtonColor: "Red",
+    }).then((response) => {
+      if (response.isConfirmed) {
+        dispatch(deleteService(deleteData));
+      } 
+    });
   };
 
   return (
@@ -80,7 +96,6 @@ function EducationProvider() {
                   }
                   className={style.crossButton}
                 ></button>
-                {showForm && <Form handleShowForm={handleShowForm} />}
               </div>
               {index !== education.length - 1 && (
                 <div>
@@ -89,10 +104,11 @@ function EducationProvider() {
               )}
             </div>
           ))
-        ) : (
-          <p className={style.noInfo}>No hay información de educación disponible.</p>
-        )}
+          ) : (
+            <p className={style.noInfo}>No hay información de educación disponible.</p>
+            )}
       </div>
+            {showForm && <Form handleShowForm={handleShowForm} />}
     </div>
   );
 }
