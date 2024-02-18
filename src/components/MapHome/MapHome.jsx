@@ -4,25 +4,36 @@ import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import styles from "./MapHome.module.sass";
 import iconProvider from "../../assets/Icons/providerIcon.png";
 
-function MapProviderCard() {
+function MapProviderCard({providers}) {
   const infoUserLog = useSelector((state) => state.infoUserLog);
-
   const geopositionArray = infoUserLog.geoposition
-    ? infoUserLog.geoposition.split(",").map((str) => parseFloat(str.trim()))
-    : [-34.6142, -64.177];
-
+  ? infoUserLog.geoposition.split(",").map((str) => parseFloat(str.trim()))
+  : [-34.6142, -64.177];
+  
   const [position, setPosition] = useState({
     lat: geopositionArray[0],
     lng: geopositionArray[1],
   });
+  
+  const geopositionsArray = Array.isArray(providers)
+  ? providers.map((provider) =>
+      provider.people.geoposition
+        ? provider.people.geoposition
+            .split(",")
+            .map((str) => parseFloat(str.trim()))
+        : [-34.6142, -64.177]
+    )
+  : [];
 
-  const providersPositions = [
-    { lat: -34.5, lng: -64.1 },
-    { lat: -34.1, lng: -64.2 },
-    { lat: -34.53, lng: -64.3 },
-    { lat: -34.8, lng: -64.4 },
-    { lat: -34.51, lng: -64.23 },
-  ];
+const fullNameArray = Array.isArray(providers)
+  ? providers.map((provider) => provider.people.fullName)
+  : [];
+
+const combinedArray = geopositionsArray.map((position, index) => ({
+  position,
+  fullName: fullNameArray[index],
+}));
+  
 
   const providerIcon = new L.Icon({
     iconUrl:  iconProvider,
@@ -49,9 +60,9 @@ function MapProviderCard() {
             <span style={{ cursor: "pointer" }}>{infoUserLog.fullName}</span>
           </Popup>
         </Marker>
-        {providersPositions.map((provider, index) => (
-          <Marker key={index} position={provider} icon={providerIcon}>
-            <Popup>Proveedor {index + 1}</Popup>
+        {Array.isArray(combinedArray) && combinedArray.map((provider, index) => (
+          <Marker key={index} position={provider.position} icon={providerIcon}>
+            <Popup>{provider.fullName}</Popup>
           </Marker>
         ))}
       </MapContainer>
