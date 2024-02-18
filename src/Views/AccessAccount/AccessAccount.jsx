@@ -162,6 +162,7 @@ function AccessAccount() {
               </div>
             </div>
           )}
+          <div id="buttonDiv" /* className={style.btnCustom} */></div>
         </div>
       ) : (
         <Link to={Helpers.Landing}>Volver a Landing</Link>
