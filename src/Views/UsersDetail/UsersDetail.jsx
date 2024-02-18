@@ -48,7 +48,7 @@ function UsersDetail() {
         <UserSchedule infoUser={infoUser} />
         <UserMap infoUser={infoUser} />
         {/* <ReviewProviderCard /> */}
-        {infoUserLog.typeOfPerson === 'customer' && <ConectionProviderCard />}
+        {infoUserLog.typeOfPerson === 'customer' && <ConectionProviderCard infoUser={infoUser}/>}
       </div>
     )
   }

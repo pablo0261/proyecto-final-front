@@ -1,54 +1,34 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import style from "./ConectionProvider.module.sass";
 
-function ConectionProviderCard() {
-  const infoUserLog = useSelector((state) => state.infoUserLog);
-  const [userData, setUserData] = useState({
-    idPeople: "",
-    state: "Active",
-    fullName: "Diego Lepore",
-    image:
-      "https://res.cloudinary.com/dn3kedyer/image/upload/v1707141615/image/g08drlndxzjhmpbtxbdw.png",
-    timeOfResponse: "4",
-  });
+function ConectionProviderCard(props) {
 
-  useEffect(() => {
-    setUserData({
-      idPeople: infoUserLog.idPeople || "",
-      state: infoUserLog.state || "Active",
-      fullName: infoUserLog.fullName || "Diego Lepore",
-      image:
-        infoUserLog.image ||
-        "https://res.cloudinary.com/dn3kedyer/image/upload/v1707141615/image/g08drlndxzjhmpbtxbdw.png",
-      timeOfResponse: infoUserLog.timeOfResponse || "4",
-    });
-  }, [infoUserLog]);
+  const { infoUser } = props
 
+  const scrollToTutorial = () => {
+    const tutorialSection = document.getElementById('services');
+    if (tutorialSection) {
+      window.scrollTo({
+        top: tutorialSection.offsetTop,
+        behavior: 'smooth'
+      });
+    }
+  };
 
-  //! en Link se deberia agregar la logica que le permita contactar al proveedor
   return (
-    <Link to="" className={style.container}>
-    <div className={style.container}>
+    <button onClick={() => scrollToTutorial()} className={style.container}>
       <div className={style.imageContainer}>
-        <img className={style.imagen} src={userData.image} alt="Imagen" />
+        <img className={style.imagen} src={infoUser.image} alt="Imagen" />
       </div>
       <div className={style.infoContainer}>
-        <h2 className={style.name}>Conecta con {userData.fullName}</h2>
-        <div
-          className={
-            userData.state === "Active"
-              ? style.stateActive
-              : style.stateInactive
-          }
-        >
-          {userData.state}
+        <p className={style.name}>Conecta con {infoUser.fullName.split(" ")[0]}</p>
+        <div className={infoUser.logged ? style.stateActive : style.stateInactive}>
+          {infoUser.logged ? "Conectado" : "Desconectado"}
         </div>
-        <p className={style.infoResponse}>Responde aprox. en: {userData.timeOfResponse} hs.</p>
+        <p className={style.infoResponse}>Responde aprox. en: <span>{infoUser.timeOfResponse} hs</span></p>
       </div>
-    </div>
-    </Link>
+    </button>
   );
 }
 

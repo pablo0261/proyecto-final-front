@@ -46,6 +46,13 @@ function App() {
 
     if (localStorage.getItem(StoreItem.emailUserLogged)) {
       dispatch(recoverUserLoggedData(localStorage.getItem(StoreItem.emailUserLogged)))
+      if (userLoggedInfo.typeOfPerson === 'administrator') {
+        navigate(Helpers.StatsProviderView)
+      } else if (userLoggedInfo.typeOfPerson === 'provider') {
+        navigate(Helpers.StatsProviderView)
+      } else {
+        navigate(Helpers.HomeCustomerView)
+      }
       socket.emit('join-request', userLoggedInfo.idPeople);
     }
   }, [])
@@ -63,7 +70,7 @@ function App() {
 
         dispatch(addInfoUserLog(user))
 
-        if (user.typeOfPerson === 'admin') {
+        if (user.typeOfPerson === 'administrator') {
           navigate(Helpers.StatsProviderView)
         } else if (user.typeOfPerson === 'provider') {
           navigate(Helpers.StatsProviderView)
