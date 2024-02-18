@@ -2,6 +2,7 @@
 @import '../../../../Styles/Variables'
 
 .background
+    margin-top: 30px
     display: flex
     flex-direction: column
     justify-content: center
@@ -14,20 +15,20 @@
     align-items: flex-start
     width: 80%
     height: fit-content
-    margin: 40px
+    margin: 20px
 
 .title
     margin: 0
     text-align: left
     @include Mixins.font($primaryColor, 35px, bold, normal)
 
-.educationdetailContainer
+.infoWrapper
     width: 100%
+    height: fit-content
     display: flex
     flex-direction: column
     gap: 10px
-    margin-top: 10px
-    @include Mixins.font($tertiaryColor, 18px, normal, normal)
+    margin-top: 15px
     @include Mixins.boxShadowCard
 
 .educationdetailbox
