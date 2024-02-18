@@ -60,9 +60,9 @@ function Connections() {
 
     const handleNavigate = (opportunitie) => {
         if (infoUserLog.typeOfPerson === 'customer') {
-            navigate(Helpers.ProviderDetail.replace(":id", opportunitie.idProvider))
+            navigate(Helpers.UserDetail.replace(":id", opportunitie.idProvider))
         } else if (infoUserLog.typeOfPerson === 'provider') {
-            navigate(Helpers.ProviderDetail.replace(":id", opportunitie.idCustomer))
+            navigate(Helpers.UserDetail.replace(":id", opportunitie.idCustomer))
         } else {
             window.alert("Vacio")
         }

@@ -28,7 +28,7 @@ function Card(props) {
               idOpportunitie: response.data.idOpportunitie
             }
           })
-          navigate(Helpers.ProviderDetail.replace(":id", props.user.idPeople))
+          navigate(Helpers.UserDetail.replace(":id", props.user.idPeople))
         }
       })
       .catch((reason) => window.alert(reason))
