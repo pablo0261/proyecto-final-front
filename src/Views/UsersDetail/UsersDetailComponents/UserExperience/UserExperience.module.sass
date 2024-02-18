@@ -1,0 +1,129 @@
+@use '../../../../Styles/Mixins'
+@import '../../../../Styles/Variables'
+
+.container
+    display: block
+    height: fit-content
+    width: 80%
+    margin-inline: auto
+    margin-top: 10px
+    padding: 5px
+
+.titleContainer
+    display: flex
+    height: fit-content
+    margin-inline: auto
+
+.title
+    width: fit-content
+    margin-left: 0  
+    margin-top: 10px
+    text-align: left
+    @include Mixins.font($primaryColor, 35px, bold, normal)
+    
+.editButton
+    position: relative
+    top: 5px
+    margin-left: auto
+    width: 40px
+    height: 40px
+    background-image: url('../../../assets/Icons/IconEdit.png')
+    background-position: center
+    background-repeat: no-repeat
+    background-color: white
+    transition: .2s
+    border: none
+    cursor: pointer
+
+.educationdetailContainer
+    display: flex
+    flex-direction: column
+    justify-content: space-between
+    margin-inline: auto
+    margin-block: 15px
+    padding-block: 20px
+    height: 90%
+    @include Mixins.font($tertiaryColor, 18px, normal, normal)
+    @include Mixins.boxShadowCard
+
+.educationdetailbox
+    
+    display: flex
+    flex-direction: row
+    justify-content: space-between
+    width: 90%
+    height: 90px
+    margin-inline: auto
+    margin-block: 10px
+    padding-block: 10px
+    @include Mixins.font($tertiaryColor, 18px, normal, normal)
+
+.line
+    width: 90%    
+    margin-inline: auto
+    border-bottom: 2px solid $primaryColor
+
+    
+.infoContainerLeft
+    margin-inline: 0 
+    margin-top: 0
+    width: 35%
+    height: fit-content
+    @include Mixins.font($secondaryColor, 22px, normal, normal)
+    text-align: left
+    justify-content: start
+
+.education
+    position: relative
+    margin-top: 0
+    height: fit-content
+    @include Mixins.font($secondaryColor, 28px, bold, normal)
+    text-align: left
+
+.detailInfo
+    position: relative
+    margin-top: -25px
+    height: fit-content
+    padding-bottom: 1px
+    @include Mixins.font($secondaryColor, 22px, normal, normal)
+    text-align: left
+
+
+.infoContainerRight
+    position: relative
+    margin-inline: 3% 
+    margin-top: 5px
+    padding-bottom: 0
+    width: 65%
+    height: fit-content
+    @include Mixins.font($tertiaryColor, 20px, bold, normal)
+    text-align: left
+    overflow: hidden 
+    overflow-wrap: break-word
+   
+
+.observationInfo
+    position: relative
+    margin-top: 0px
+    height: fit-content
+    text-align: left
+    justify-content: start
+
+.crossButton
+    background: none
+    background-image: url('../../../assets/Icons/IconCross.png')
+    height: 40px
+    width: 40px
+    border: none
+    position: relative
+    left: 0px
+    margin-block: auto
+    transition: .2s
+    cursor: pointer
+
+.crossButton:hover
+    transform: scale(1.1)
+
+.noInfo
+    text-align: center    
+    @include Mixins.font($tertiaryColor, 20px, bold, normal)

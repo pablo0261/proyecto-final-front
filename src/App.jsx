@@ -23,11 +23,11 @@ import StoreItem from './Helpers/LocalStorage';
 import { addInfoUserLog, getFiltersOrdersDB, recoverUserLoggedData } from './redux/actions';
 import { jwtDecode } from "jwt-decode";
 import axios from 'axios';
-import ProviderDetail from './Views/CustomerViews/ProviderDetail';
 import AdminStatistics from './components/AdminStatistics/AdminStatistics';
 import AdminTablas from './Views/AdminTablas/AdminTablas';
 import AdminReports from './Views/AdminReports/AdminReports.jsx';
 import { io } from 'socket.io-client';
+import UsersDetail from './Views/UsersDetail/UsersDetail.jsx';
 const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
 const socket = io(REACT_APP_API_URL);
 
@@ -103,7 +103,7 @@ function App() {
                 <Route path={Helpers.ReportsCustomerView} element={<ReportsCustomerView />} />
                 <Route path={Helpers.ProfileCustomerView} element={<ProfileProviderView />} />
 
-                <Route path={Helpers.ProviderDetail} element={<ProviderDetail/>}></Route>
+                <Route path={Helpers.UserDetail} element={<UsersDetail/>}></Route>
 
                 <Route path={Helpers.ConsultReport} element={<ConsultReport />} />
 
@@ -121,6 +121,8 @@ function App() {
                 <Route path={Helpers.StatsProviderView} element={<StatsProviderView />} />
                 <Route path={Helpers.ConnectionsProviderView} element={<ConnectionsProviderView />} />
                 <Route path={Helpers.ReportsProviderView} element={<ReportsProviderView />} />
+
+                <Route path={Helpers.UserDetail} element={<UsersDetail/>}></Route>
 
                 <Route path={Helpers.FAQs} element={<FAQs />} />
                 <Route path={Helpers.ConsultReport} element={<ConsultReport />} />

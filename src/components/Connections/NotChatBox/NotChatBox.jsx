@@ -27,6 +27,8 @@ function NotChatBox(props) {
 
         if (idOpportunitie.length > 0) {
             setChat()
+        } else {
+            setDataChat([])
         }
     }, [idOpportunitie])
 
@@ -34,16 +36,16 @@ function NotChatBox(props) {
         <div className={style.background}>
             {
                 opportunities.length != 0
-                    ? !isLoadingChat && dataChat.length != 0
-                        ? <div className={style.chatWrapper}>
-                            <div className={style.msgWrapper}>
-                                <ChatRender dataChat={dataChat} infoUserLog={infoUserLog} idOpportunitie={idOpportunitie} filter={filter}></ChatRender>
+                    ? isLoadingChat
+                        ? <p className={style.loadingChat}>Cargando chat</p>
+                        : dataChat.length != 0
+                            ? <div className={style.chatWrapper}>
+                                <div className={style.msgWrapper}>
+                                    <ChatRender dataChat={dataChat} infoUserLog={infoUserLog} idOpportunitie={idOpportunitie} filter={filter}></ChatRender>
+                                </div>
                             </div>
-                        </div>
-                        :
-                        <p className={style.loadingChat}>Cargando chat</p>
-                    :
-                    <p className={style.loadingChat}>Sin contenido para mostrar</p>
+                            : <p className={style.loadingChat}>Selecciona un Chat</p>
+                    : <p className={style.loadingChat}>Sin contenido para mostrar</p>
             }
         </div>
     )

@@ -399,10 +399,10 @@ const putOpportunities = (data, filter) => {
 }
 
 //REPORTS
-const getReports = (email) => {
+const getReports = (query) => {
   return async (dispatch) => {
     try {
-      const response = await axios.get(`${REACT_APP_API_URL}/questions?typeOfQuestion=qaa${email ? email : ""}`)
+      const response = await axios.get(`${REACT_APP_API_URL}/questions?typeOfQuestion=qaa${query ? query : ""}`)
       if (response.status === 200) {
         return dispatch({
           type: GET_REPORTS,
