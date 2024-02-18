@@ -35,6 +35,14 @@ const AdminServices = ({ categoriesOptions, idCategorie }) => {
     setIsLoading(false);
     // dispatch(lafuncioncreadoradelacategoria(idCategorie, labelToSend));
   };
+  const handleDelete = (inputValue) => {
+    setIsLoading(true);
+    const newOption = createOption(inputValue);
+    setOptions((prev) => [...prev, newOption]);
+    setValue(newOption);
+    setIsLoading(false);
+    // dispatch(lafuncioncreadoradelacategoria(idCategorie, labelToSend));
+  };
 
   return (
     <div className={styles.container}>
@@ -59,7 +67,7 @@ const AdminServices = ({ categoriesOptions, idCategorie }) => {
 
 
       />
-      <button>Delete</button>
+      <button onClick={handleDelete}>Delete</button>
     </div>
   );
 };
