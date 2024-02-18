@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import style from './ProviderDetail.module.sass'
 import ProviderPersonal from './ProviderDetailComponents/ProviderPersonal/ProviderPersonal'
+import ConectionProviderCard from '../../components/ProfileComponents/ConectionProviderCard/ConectionProviderCard';
 import ProviderServices from './ProviderDetailComponents/ProviderServices/ProviderServices'
 import { useParams } from 'react-router-dom'
 import axios from 'axios'
@@ -34,13 +35,13 @@ function ProviderDetail() {
       <div className={style.wrapper}>
         <ProviderPersonal infoProvider={infoProvider}/>
         { infoUserLog.typeOfPerson === 'customer' && <ProviderServices infoProvider={infoProvider} infoUserLog={infoUserLog} idOpportunitie={idOpportunitie}/> }
-        {/* <EducationProvider />
+         {/* <EducationProvider />
           <InteresProviderCard />
           <SkillsProviderCard />
           <ScheduleProviderCard />
           <MapProviderCard />
-          <ReviewProviderCard />
-          <ConectionProviderCard /> */}
+          <ReviewProviderCard /> */}
+          <ConectionProviderCard />
       </div>
     )
   }
