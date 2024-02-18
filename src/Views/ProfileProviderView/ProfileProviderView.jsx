@@ -15,7 +15,6 @@ import style from './ProfileProviderView.module.sass'
 function ProfileProviderView() {
   const infoUserLog = useSelector((state) => state.infoUserLog);
 
-  console.log("infoUserLog vista provider", infoUserLog);
 
   return (
     <div className={style.wrapper}>

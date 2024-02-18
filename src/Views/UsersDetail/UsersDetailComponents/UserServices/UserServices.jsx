@@ -9,8 +9,9 @@ function UserServices(props) {
 
     useEffect(() => {
         if (infoUser.categories.length != 0) {
-            const services = infoUser.categories[0]
-
+            const services = infoUser.categories.find(
+                (category) => category.idCategorie === 1
+              );
             if (services.categories_options.length != 0) {
                 const serviceOption = services.categories_options.map(
                     (option) => {

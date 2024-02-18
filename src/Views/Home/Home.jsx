@@ -4,6 +4,7 @@ import styles from "./Home.module.sass";
 import MapHome from "../../components/MapHome/MapHome";
 import { useSelector, useDispatch } from "react-redux";
 import { getPeopleFilteredOrderedPagination, saveSelectionsGlobal } from "../../redux/actions";
+import Loading from "../../assets/Icons/loadingHouse.gif"
 import Pagination from "../../components/Pagination/Pagination";
 
 const Home = () => {
@@ -12,7 +13,6 @@ const Home = () => {
   const InfoPag = useSelector((state) => state.getAllPeople);
   const providers = InfoPag && InfoPag.data;
   const allServices = useSelector((state) => state.allServices);
-  console.log(providers)
 
   const dispatch = useDispatch();
 
@@ -27,13 +27,9 @@ const Home = () => {
   useEffect(() => {
     const handleLoading = async() => {
       if (Object.values(filterOrderSelectedGlobal).every(property => property.length === 0)) {
-        try {
           setIsLoading(true)
           await dispatch(getPeopleFilteredOrderedPagination(""));
           setIsLoading(false)
-        } catch (error) {
-          
-        } 
       }
     }
     handleLoading()
@@ -195,7 +191,7 @@ const Home = () => {
           </div>
           <div className={styles.cardsWrapper}>
             {isLoading
-              ? <p>Cargando</p>
+              ? <img src={Loading} className={styles.loading} alt="Loading..."></img>
               : providers
                 ? providers.length != 0 
                   ? providers.map((user) => <Card key={user.people.idPeople} user={user.people} />)

@@ -7,40 +7,38 @@ function UserInterest(props) {
   const [intereses, setIntereses] = useState([])
 
   useEffect(() => {
-    if (infoUser.categories.length != 0) {
-      const interests = infoUser.categories.find(category => category.idCategorie === 6);
+    if (infoUser && infoUser.categories && infoUser.categories.length > 0) {
+      const interesCategory = infoUser.categories.find(category => category.idCategorie === 6);
 
-      if (interests.categories_options.length != 0) {
-        const interestOptions = interests.categories_options.interesOptions.map(
-          (option) => {
-            const newInterest = {
-              idOption: option.idOption,
-              interes: option.description
-            }
+      if (interesCategory && interesCategory.categories_options && interesCategory.categories_options.length > 0) {
+        const interesOptions = interesCategory.categories_options;
 
-            return newInterest
-          })
-        setIntereses(interestOptions)
+        const interesData = interesOptions.map((option) => ({
+          idOption: option.idOption,
+          interes: option.description,
+        }));
+        setIntereses(interesData);
       }
     }
-  }, []);
+  }, [infoUser]);
 
   return (
-    <div className={style.background}>
-      <div className={style.wrapper}>
+    <div className={style.container}>
+      <div className={style.titleContainer}>
         <p className={style.title}>Intereses</p>
-        <div className={style.infoWrapper}>
+          </div>
+
+        <div className={style.containerCard}>
           {intereses.length > 0 ? (
             intereses.map((option) => (
               <div className={style.interesDetailContainer} key={option.idOption}>
-                <div className={style.interes}>{option.interes}</div>
+                <div className={style.interesFalseButton}>{option.interes}</div>
               </div>
             ))
           ) : (
             <p className={style.noInfo}>No hay información de intereses disponible.</p>
           )}
         </div>
-      </div>
     </div>
   );
 }

@@ -7,26 +7,32 @@ function UserExperience(props) {
   const [experiences, setExperiences] = useState([]);
 
   useEffect(() => {
-    if (infoUser.categories.length != 0) {
-      const experiencesCategory = infoUser.categories.find((category) => category.idCategorie === 7)
+    if (infoUser.categories && infoUser.categories.length > 0) {
+      const educationCategory = infoUser.categories.find(
+        (category) => category.idCategorie === 7
+      );
+      if (
+        educationCategory &&
+        educationCategory.categories_options &&
+        educationCategory.categories_options.length > 0
+      ) {
+        const educationOptions = educationCategory.categories_options;
 
-      if (experiencesCategory.categories_options.length != 0) {
-        const educationOptions = experiencesCategory.categories_options.map(
-          (option) => {
-            const newExperience = {
-              idPeople: infoUserLog.idPeople,
-              idOption: option.idOption,
-              education: option.description || "No informado",
-              institution: option.people_options[0].institution || "No informado",
-              year: option.people_options[0]?.year || "No informado",
-              comment: option.people_options[0]?.comment || "No informado"
-            }
-            return newExperience
-          })
-        setExperiences(educationOptions);
+        if (educationOptions && educationOptions.length > 0) {
+          const educationData = educationOptions.map((option) => ({
+            idPeople: infoUser.idPeople,
+            idOption: option.idOption,
+            education: option.description || "No informado",
+            institution: option.people_options[0].institution || "No informado",
+            year: option.people_options[0]?.year || "No informado",
+            comment: option.people_options[0]?.comment || "No informado",
+          }));
+
+          setExperiences(educationData);
+        }
       }
     }
-  }, []);
+  }, [infoUser]);
 
   return (
     <div className={style.background}>
