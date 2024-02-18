@@ -8,11 +8,11 @@
     width: 100%
 
 .imageContainer
-    display: flex
-    width: 30%
-    border-radius: 50%
-    margin-left: 5px
-    margin-block: auto
+  display: flex
+  width: 25%
+  border-radius: 50%
+  margin-left: 25px
+  margin-block: auto
       
 .imagen
     width: 90%
@@ -21,11 +21,11 @@
     border-radius: inherit 
        
 .infoContainerLeft
-  width: 70%
+  width: 60%
   display: block
   flex-direction: column
   height: 120px
-  margin-left: 20px
+  margin-left: 25px
 
 .client
   @include Mixins.font($primaryColor, 28px, bold, normal)
@@ -44,11 +44,16 @@
 
 .infoContainerRight
   width: 30%
-  display: flex
-  margin-left: 0px
-  align-items: center
-  justify-content: center
+  height: 120px
+  display: block
+  
 
 .infoRating
-  @include Mixins.font(grey, 70px, normal, normal)
-  margin-left: 20px
+  @include Mixins.font(grey, 40px, normal, normal)
+  margin-top: 0
+
+.stars
+  margin-top: -25px
+
+.stars img
+  width: 25px

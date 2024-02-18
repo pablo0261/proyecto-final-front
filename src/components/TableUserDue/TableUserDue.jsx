@@ -38,15 +38,8 @@ function TableUserDue() {
 
   return (
     <div className={styles.wrapper}>
-
       <div className={styles.container_header}>
-
         <h2>Usuarios en deuda</h2>
-        
-        <div>
-        <h3>Dar de baja automáticamente adeudados</h3>
-        <h3>Aviso previo día anterior</h3>
-      </div>
       </div>
       
 

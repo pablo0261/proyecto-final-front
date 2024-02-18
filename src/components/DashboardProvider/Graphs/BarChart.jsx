@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import * as echarts from 'echarts/core';
 import { BarChart } from 'echarts/charts';
 import {
@@ -21,106 +21,47 @@ echarts.use([
 ]);
 
 function PaymentsStatistics() {
-  const [paymentData, setPaymentData] = useState([]);
-
-  useEffect(() => {
-    const generateRandomPayments = () => {
-      const payments = [];
-      const currentDate = new Date();
-      const currentMonth = currentDate.getMonth() + 1;
-
-      for (let i = 0; i < 12; i++) {
-        const month = (currentMonth - i) <= 0 ? (12 - Math.abs(currentMonth - i)) : (currentMonth - i);
-        const totalPayments = Math.floor(Math.random() * 100) + 1;
-        const onTimePayments = Math.floor(Math.random() * totalPayments);
-        const delayedPayments = Math.floor(Math.random() * (totalPayments - onTimePayments));
-        const suspendedUsers = Math.floor(Math.random() * (totalPayments - onTimePayments - delayedPayments));
-        payments.push({
-          month: month,
-          totalPayments: totalPayments,
-          onTimePayments: onTimePayments,
-          delayedPayments: delayedPayments,
-          suspendedUsers: suspendedUsers
-        });
-      }
-
-      return payments;
-    };
-
-    setPaymentData(generateRandomPayments());
-  }, []);
 
   useEffect(() => {
     const chartDom = document.getElementById("payments-chart");
     const myChart = echarts.init(chartDom);
 
+    const colorPalette = ['rgb(84, 112, 198)',   // Azul
+    'rgb(145, 204, 117)',  // Verde
+    'rgb(255, 206, 84)',   // Amarillo
+    'rgb(115, 192, 222)',  // Celeste
+    'rgb(238, 102, 102)',  // Rojo claro
+    'rgb(154, 96, 180)',   // Morado claro
+    'rgb(234, 124, 204)',  // Rosa claro
+    'rgb(59, 162, 114)',   // Verde claro
+    'rgb(226, 144, 185)'   // Rosa
+  ];
+
     const option = {
-      tooltip: {
-        trigger: 'axis',
-        axisPointer: {
-          type: 'shadow'
-        }
+      title: {
+        text: 'Cantidad de Oportunidades',
+        subtext: 'por semana - Mes actual'
       },
-      legend: {
-        data: ['Total de pagos', 'Pagos a tiempo', 'Pagos con retraso', 'Usuarios suspendidos']
+      xAxis: {
+        type: 'category',
+        data: ['Semana 1', 'Semana 2', 'semana 3', 'Semana 4']
       },
-      toolbox: {
-        show: true,
-        orient: 'vertical',
-        left: 'right',
-        top: 'center',
-        feature: {
-          mark: { show: true },
-          dataView: { show: true, readOnly: false },
-          magicType: { show: true, type: ['line', 'bar', 'stack'] },
-          restore: { show: true },
-          saveAsImage: { show: true }
-        }
+      yAxis: {
+        type: 'value'
       },
-      xAxis: [
-        {
-          type: 'category',
-          axisTick: { show: false },
-          data: paymentData.map(payment => `${payment.month}`)
-        }
-      ],
-      yAxis: [
-        {
-          type: 'value'
-        }
-      ],
       series: [
         {
-          name: 'Total de pagos',
+          data: [5, 7, 8, 3],
           type: 'bar',
-          emphasis: {
-            focus: 'series'
+          itemStyle: {
+            color: function(params) {
+              return colorPalette[params.dataIndex % colorPalette.length]; // Asignar un color diferente a cada barra
+            }
           },
-          data: paymentData.map(payment => payment.totalPayments)
-        },
-        {
-          name: 'Pagos a tiempo',
-          type: 'bar',
-          emphasis: {
-            focus: 'series'
-          },
-          data: paymentData.map(payment => payment.onTimePayments)
-        },
-        {
-          name: 'Pagos con retraso',
-          type: 'bar',
-          emphasis: {
-            focus: 'series'
-          },
-          data: paymentData.map(payment => payment.delayedPayments)
-        },
-        {
-          name: 'Usuarios suspendidos',
-          type: 'bar',
-          emphasis: {
-            focus: 'series'
-          },
-          data: paymentData.map(payment => payment.suspendedUsers)
+          showBackground: true,
+          backgroundStyle: {
+            color: 'rgba(180, 180, 180, 0.2)'
+          }
         }
       ]
     };
@@ -130,7 +71,7 @@ function PaymentsStatistics() {
     return () => {
       myChart.dispose();
     };
-  }, [paymentData]);
+  }, []);
 
   return <div id="payments-chart" style={{ height: "400px" }}></div>;
 }

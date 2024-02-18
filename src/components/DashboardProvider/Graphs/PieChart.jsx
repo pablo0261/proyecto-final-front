@@ -64,9 +64,10 @@ function PieChartComponent() {
         right: "botton",
       },
       toolbox: {
-        right: 20, 
-        top: 100, 
+        left: 'right',
+        top: 'center',
         show: true,
+        orient: 'vertical',
         feature: {
           mark: { show: true },
           dataView: { show: true, readOnly: false },
