@@ -1,0 +1,71 @@
+@use '../../../../Styles/Mixins'
+@import '../../../../Styles/Variables'
+
+.container
+    display: block
+    height: fit-content
+    width: 80%
+    margin-inline: auto
+    margin-top: 15px
+    padding: 5px
+
+.scheduledetailContainer
+    display: flex
+    flex-direction: column
+    justify-content: space-between
+    margin-inline: auto
+    margin-block: 15px
+    padding-block: 20px
+    padding-inline: 20px
+    height: 90%
+    @include Mixins.font($tertiaryColor, 18px, normal, normal)
+    @include Mixins.boxShadowCard
+
+
+.titleContainer
+    display: flex
+    height: fit-content
+    margin-inline: auto
+
+.title
+    width: fit-content
+    margin-left: 0  
+    margin-top: 10px
+    text-align: left
+    @include Mixins.font($primaryColor, 35px, bold, normal)
+
+.editButton
+    position: relative
+    top: 0px
+    margin-left: auto
+    width: 40px
+    height: 40px
+    background-image: url('../../../assets/Icons/IconEdit.png')
+    background-position: center
+    background-repeat: no-repeat
+    background-color: white
+    transition: .2s
+    border: none
+    cursor: pointer
+
+.tbody
+    margin-left: 10px    
+
+.days  
+    width: fit-content
+    margin-inline: 10px  
+    margin-top: 10px
+    padding-bottom: 10px
+    text-align: center
+    @include Mixins.font($secondaryColor, 25px, bold, normal)
+
+.campos
+    width: fit-content
+    margin-left: 50px  
+    @include Mixins.font($primaryColor, 20px, bold, normal)
+
+.moment
+    width: fit-content
+    text-align: left
+    text-justify: center
+    @include Mixins.font($secondaryColor, 25px, bold, normal)

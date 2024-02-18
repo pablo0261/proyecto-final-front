@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react'
-import style from './ProviderServices.module.sass'
+import style from './UserServices.module.sass'
 import FormContract from '../../../../components/Form/FormContract/FormContract';
 
-function ProviderServices(props) {
+function UserServices(props) {
 
-    const { infoProvider, infoUserLog, idOpportunitie } = props
+    const { infoUser, infoUserLog, idOpportunitie } = props
 
     const [servicesData, setServicesData] = useState([])
 
     useEffect(() => {
-        if (infoProvider.categories.length != 0) {
-            const services = infoProvider.categories[0]
+        if (infoUser.categories.length != 0) {
+            const services = infoUser.categories[0]
 
             if (services.categories_options.length != 0) {
                 const serviceOption = services.categories_options.map(
@@ -88,4 +88,4 @@ function ProviderServices(props) {
     )
 }
 
-export default ProviderServices
+export default UserServices
