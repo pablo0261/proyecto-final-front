@@ -109,11 +109,13 @@ function Connections() {
                                         return handleSelectedOpportunitie(opportunitie.idOpportunitie)
                                     }
                                 }}>
-                                <img src={
-                                    infoUserLog.typeOfPerson === 'provider' && opportunitie.customer.image ||
-                                    infoUserLog.typeOfPerson === 'customer' && opportunitie.provider.image ||
-                                    defaultImage
-                                } className={style.img} onClick={() => handleNavigate(opportunitie)}></img>
+                                <div className={style.imgContainer}>
+                                    <img src={
+                                        infoUserLog.typeOfPerson === 'provider' && opportunitie.customer.image ||
+                                        infoUserLog.typeOfPerson === 'customer' && opportunitie.provider.image ||
+                                        defaultImage
+                                    } className={style.img} onClick={() => handleNavigate(opportunitie)}></img>
+                                </div>
                                 <div className={style.userWrapper}>
                                     <p className={style.textUser}>{infoUserLog.typeOfPerson === 'provider' && opportunitie.customer.fullName || infoUserLog.typeOfPerson === 'customer' && opportunitie.provider.fullName}</p>
                                     <p className={style.textDate}>{
