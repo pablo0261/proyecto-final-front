@@ -58,6 +58,10 @@ const AdminServices = ({ categoriesOptions, idCategorie }) => {
             primary: 'black',
           },
           
+          control: {
+            
+            width: '800px',
+          },
           
          
         })}

@@ -37,12 +37,13 @@ const FormConsultReport = () => {
 
     const dispatch = useDispatch();
 
-     // Autocompletar el campo senderMail con el email del usuario logueado
+     // Autocompletar el campo senderMail y fullName con los datos del usuario logueado
      useEffect(() => {
         if (userLoggedInfo && userLoggedInfo.email) {
             setFormData(prevState => ({
                 ...prevState,
-                senderMail: userLoggedInfo.email
+                senderMail: userLoggedInfo.email,
+                fullName: userLoggedInfo.fullName
             }));
         }
     }, [userLoggedInfo]);
@@ -109,6 +110,7 @@ const FormConsultReport = () => {
                         value={formData.fullName}
                         onChange={handleChange}
                         placeholder="Ej: Fulanita de Tal"
+                        readOnly={!!userLoggedInfo}
                     />
                     <p className={styles.errorMessage}>{errors.fullName}</p>
                 </div>
@@ -123,6 +125,7 @@ const FormConsultReport = () => {
                         value={formData.senderMail}
                         onChange={handleChange}
                         placeholder="example@mail.com"
+                        readOnly={!!userLoggedInfo}
                     />
                     <p className={styles.errorMessage}>{errors.senderMail}</p>
                 </div>
