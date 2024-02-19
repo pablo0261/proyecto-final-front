@@ -18,6 +18,16 @@ function TableDue({ people , valor , onMailButtonClick , handleShowForm}) {
       dispatch(allPeople(valor))
     }
   }
+  const handleChangeCancel = async (idValue, state) => {
+    const auxState = state === "Deleted" ? "Active" : "Deleted";
+    const response = await axios.put(`${REACT_APP_API_URL}/people`, {
+      "idPeople": idValue,
+      "state": auxState
+    });
+    if (response.status === 200) {
+      dispatch(allPeople(valor))
+    }
+  }
   return (
     <div className={styles.wrapper}>
       <table>
@@ -48,7 +58,7 @@ function TableDue({ people , valor , onMailButtonClick , handleShowForm}) {
                 onMailButtonClick(person.people.email);
               }}>MAIL</button></td>
               <td><button className={styles.activo} type="button" onClick={() => handleChangeStatus(person.people.idPeople, person.people.state)} >{person.people.state === "Active" ? "Inactivo" : "Activo"}</button></td>
-              <td><button className={styles.cancelar}>Cancelar</button></td>
+              <td><button className={styles.cancelar} type="button" onClick={() => handleChangeCancel(person.people.idPeople, person.people.state)} >{person.people.state === "Delete" ? "Active" : "Delete"}</button></td>
             </tr>
           ))}
         </tbody>
