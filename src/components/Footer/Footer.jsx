@@ -47,7 +47,7 @@ const Footer = () => {
                         <a href="https://www.linkedin.com/in/diego-lepore/" target="_blank" rel="noopener noreferrer">Diego Lepore</a>
                     </li>
                     <li>
-                        <a href="#" target="_blank" rel="noopener noreferrer">Emmanuel Martinez</a>
+                        <a href="https://www.linkedin.com/in/emmanuel-martinez-zamudio-b17139140/" target="_blank" rel="noopener noreferrer">Emmanuel Martinez</a>
                     </li>
                     <li>
                         <a href="https://www.linkedin.com/in/freydder-cardenas-221560263/" target="_blank" rel="noopener noreferrer">Freydder Cardenas</a>
