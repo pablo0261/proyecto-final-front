@@ -3,7 +3,7 @@ import CreatableSelect from 'react-select/creatable';
 import styles from "../AdminServices/AdminServices.module.scss"
 import axios from 'axios';
 
-const AdminServices = ({ categoriesOptions, idCategorie }) => {
+const AdminServices = ({ categoriesOptions, idCategorie , servicios}) => {
   const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
   const createOption = (label) => ({
     label,
@@ -33,8 +33,30 @@ const AdminServices = ({ categoriesOptions, idCategorie }) => {
     setOptions((prev) => [...prev, newOption]);
     setValue(newOption);
     setIsLoading(false);
-    // dispatch(lafuncioncreadoradelacategoria(idCategorie, labelToSend));
   };
+ 
+  
+  function findIdOption(idCategorie, labelToSend, servicios) {
+    const category = servicios.find(cat => cat.idCategorie === idCategorie);
+    if (category) {
+        const service = category.categories_options.find(opt => opt.description === labelToSend);
+        if (service) {
+            return service.idOption;
+        } 
+    } 
+    return null;
+}
+
+const handleDelete = async () => {
+  const idOption = findIdOption(idCategorie, labelToSend, servicios);
+  const data ={idOption: idOption}
+  try {
+    const deleted = await axios.delete(`${REACT_APP_API_URL}/categories/options`, {data});
+    console.log(deleted)
+  } catch(error){
+    console.log(error)
+  }
+};
 
   return (
     <div className={styles.container}>
@@ -68,9 +90,7 @@ const AdminServices = ({ categoriesOptions, idCategorie }) => {
 
 
       />
-      
-      
-      <button>Delete</button>
+      <button onClick={handleDelete} value={idCategorie}>Delete</button>
     </div>
   );
 };

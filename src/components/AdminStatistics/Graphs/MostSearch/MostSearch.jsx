@@ -22,22 +22,28 @@ function MostSearch() {
   return (
     <div className={style.statisticsContainer}>
       <div className={style.statisticsItem}>
-        <p className={style.statisticsValue}>{statistics.providerCount}</p>
+        <p className={style.statisticsValue}>999999</p>
+        <p className={style.statisticsText}>Cuidado, Alimento, Paseo</p>
       </div>
       <div className={style.statisticsItem}>
         <p className={style.statisticsValue}>{statistics.providerCount}</p>
+        <p className={style.statisticsText}>Cuidado, Paseo</p>
       </div>
       <div className={style.statisticsItem}>
         <p className={style.statisticsValue}>{statistics.providerCount}</p>
+        <p className={style.statisticsText}>Cuidado, Medicina, Paseo</p>
+      </div>
+      <div className={style.statisticsItem}>
+        <p className={style.statisticsValue}>15782</p>
+        <p className={style.statisticsText}>Cuidado, Limpieza</p>
+      </div>
+      <div className={style.statisticsItem}>
+        <p className={style.statisticsValue}>999999</p>
+        <p className={style.statisticsText}>Cuidado, Alimento, Paseo, Limpieza, Medicina</p>
       </div>
       <div className={style.statisticsItem}>
         <p className={style.statisticsValue}>{statistics.providerCount}</p>
-      </div>
-      <div className={style.statisticsItem}>
-        <p className={style.statisticsValue}>{statistics.providerCount}</p>
-      </div>
-      <div className={style.statisticsItem}>
-        <p className={style.statisticsValue}>{statistics.providerCount}</p>
+        <p className={style.statisticsText}>Cuidado</p>
       </div>
     </div>
   );
