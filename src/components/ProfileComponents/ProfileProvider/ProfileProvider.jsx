@@ -44,7 +44,6 @@ function ProfileProvider() {
       console.error("Error al obtener el estado:", error);
     }
   };
-  console.log("infoUserLog.state", infoUserLog.state)
 
   useEffect(() => {
     setUserData((prevUserData) => ({
