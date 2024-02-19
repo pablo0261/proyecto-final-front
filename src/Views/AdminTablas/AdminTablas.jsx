@@ -11,7 +11,6 @@ function AdminTablas() {
   useEffect(() => {
     dispatch(getFiltersOrdersDB());
   }, []);
-  
   return (
     <div className={styles.wrapper}>
       {servicios.map((categoria, index) => (
@@ -19,7 +18,8 @@ function AdminTablas() {
           <h2>{categoria.description}</h2>
           <AdminServices
             categoriesOptions={categoria.categories_options}
-            idCategorie={categoria.idCategorie}  
+            idCategorie={categoria.idCategorie} 
+            servicios={servicios} 
           />
         </div>
       ))}

@@ -27,7 +27,7 @@ function EducationProvider() {
       ) {
         const educationOptions = educationCategory.categories_options;
 
-        if (educationOptions && educationOptions.length > 0) {
+        if (educationOptions) {
           const educationData = educationOptions.map((option) => ({
             idPeople: infoUserLog.idPeople,
             idOption: option.idOption,
@@ -63,6 +63,9 @@ function EducationProvider() {
     }).then((response) => {
       if (response.isConfirmed) {
         dispatch(deleteService(deleteData));
+        setEducation(preEducation =>
+          preEducation.filter(exp => exp.idOption !== idOption)
+        );
       } 
     });
   };

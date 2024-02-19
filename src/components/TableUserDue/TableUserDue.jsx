@@ -1,16 +1,21 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from "./TableUserDue.module.scss";
 import Pagination from '../Pagination/Pagination';
 import { allProviderAdmin } from '../../redux/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
+import Form from "../Form/FormMail/FormMail"
 
 function TableUserDue() {
   const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
   const people = useSelector((state) => state.providerForAdmin.data);
   const InfoPag = useSelector((state) => state.providerForAdmin);
   const dispatch = useDispatch();
-  // const [flag, setFlag] = useState(true);
+  const [email, setEmail] = useState("");
+  const [showForm, setShowForm] = useState(false);
+  const handleShowForm = () => {
+    setShowForm(!showForm);
+  };
 
   useEffect(() => {
     dispatch(allProviderAdmin(""));
@@ -34,7 +39,9 @@ function TableUserDue() {
   if (!people) {
     return null;
   }
-
+  const onMailButtonClick = (email) => {
+    setEmail(email)
+  }
 
   return (
     <div className={styles.wrapper}>
@@ -66,12 +73,16 @@ function TableUserDue() {
               {/* Revisar el campo del pago */}
               <td>{person.people.pago}</td>
               <td>{person.people.dateOfAdmission}</td>
-              <td><button className={styles.mail}>MAIL</button></td>
+              <td><button onClick={() => {
+                handleShowForm();
+                onMailButtonClick(person.people.email);
+              }}>MAIL</button></td>
               <td><button onClick={() => handleChangeStatus(person.people.idPeople, person.people.state)} >{person.people.state === "Active" ? "Inactivo" : "Activo"}</button></td>
             </tr>
           ))}
         </tbody>
       </table>
+      {showForm && <Form handleShowForm={handleShowForm} email={email}/>}
 
       <div>
       <Pagination pageNumber={InfoPag.pageNumber} totalOfPages={InfoPag.totalOfPages} onPageChange={handlerPagination}/>

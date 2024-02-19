@@ -20,6 +20,7 @@ import {
   GET_PEOPLE,
   GET_REPORTS,
   GET_ALL_PROVIDER_ADMIN,
+  PUT_FAQS,
 } from "./action-types";
 
 const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
@@ -458,6 +459,22 @@ const getFAQs = () => {
   };
 };
 
+/* Put FAQs */
+const putFAQs = (data) => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.put(`${REACT_APP_API_URL}/questions`, data);
+      if (response.status === 200) {
+        dispatch({
+          type: PUT_FAQS,
+          payload: response.data,
+        });
+      }
+    } catch (error) {
+      window.alert(error);
+    }
+  };
+};
 
 
 export {
@@ -486,5 +503,6 @@ export {
   allProviderAdmin,
   putState,
   putStateProvider,
+  putFAQs,
   clear
 };

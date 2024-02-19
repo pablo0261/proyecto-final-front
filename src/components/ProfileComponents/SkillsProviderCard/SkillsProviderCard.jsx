@@ -53,6 +53,9 @@ function SkillsProviderCard() {
     }).then((response) => {
       if (response.isConfirmed) {
         dispatch(deleteService(deleteData));
+        setSkills(prevSkills =>
+          prevSkills.filter(skill => skill.idOption !== idOption)
+        );
       } 
     });
   };

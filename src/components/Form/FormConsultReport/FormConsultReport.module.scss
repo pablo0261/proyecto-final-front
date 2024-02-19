@@ -36,11 +36,11 @@
     @include inputsFormat
   }
 
-  inputs:focus {
+  input:focus {
     @include inputsFormat_Hover
   }
 
-  inputs::placeholder {
+  input::placeholder {
     @include inputsFormat_Placeholder
   }
 
