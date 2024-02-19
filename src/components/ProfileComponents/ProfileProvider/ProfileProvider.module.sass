@@ -42,6 +42,8 @@
 
 .stateActive
 	margin: 0
+	cursor: pointer
+	border: none
 	@include Mixins.font(white , 15px, normal , normal)
 	padding: 5px 10px
 	background-color: $textSuccessColor
@@ -51,9 +53,21 @@
 
 .stateInactive
 	margin: 0
+	cursor: pointer
+	border: none
+	@include Mixins.font($textPrimaryColor , 15px, normal , normal)
+	padding: 5px 10px
+	background-color: $alertColor 
+	border-radius: 20px
+	position: absolute
+	top: -15px
+
+.stateSuspend
+	margin: 0
+	border: none
 	@include Mixins.font(white , 15px, normal , normal)
 	padding: 5px 10px
-	background-color: grey
+	background-color: $textFailureColor
 	border-radius: 20px
 	position: absolute
 	top: -15px
@@ -62,23 +76,32 @@
 	width: 350px
 	height: 350px
 	@include Mixins.boxShadowCard
+	object-fit: contain
 
 .valoration
 	display: flex
-	flex-direction: column
+	flex-direction: row
 	justify-content: center
 	align-items: center
-	margin-top: 15px
+	margin-top: 0px
 
 .starIcon
+	flex-direction: row
 	width: 40px
-	height: 40px
+	height: 30px
 	background-image: url('../../../assets/Icons/IconStar.png')
 	background-position: center
 	background-repeat: no-repeat
 
 .textStar
 	margin: 0
+	@include Mixins.textGrey(left, none)
+
+.rating
+	display: flex
+	width: 90px
+	height: 30px
+	margin-inline: 10px
 	@include Mixins.textGrey(left, none)
 
 .infoWrapper

@@ -1,64 +1,101 @@
-.wrapper
-  display: grid
-  color: white
-  text-align: center
-  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif
-  margin: 0 auto
-  max-width: 960px
-  grid-template-columns: repeat(10, 1fr)
-  grid-auto-rows: minmax(40px, auto)
-  grid-gap: 10px
+@use '../../Styles/Mixins'
+@import '../../Styles/Mixins'
 
-  div
-    border: 3px solid #2D2D2D
-    border-radius: 10px
-    background-color: #2D2D2D
+.background
+    background-color: #F2F2F2
+    
 
+.dashboardWrapper
+    width: 80%
+    display: flex
+    flex-direction: row
+    justify-content: space-between
+    margin-bottom: 70px 
+    margin-inline: auto   
 
-.grid1
-  grid-column: 1/5
-  grid-row: 1 / span 3
-  
+.containerLeft
+    width: 50%
+    margin: 10px
+    padding: 5px
+    justify-content: space-around
+	
 
-.grid2
-  grid-column: 5/8
-  grid-row: span 2
+.divMasBuscados
+    width: 100%
+    display: block
+    height: fit-content
+    @include Mixins.font($tertiaryColor, 18px, normal, normal)
+    margin-top: 10px
+    margin-inline: auto
+    padding-inline: 10px
 
-.grid3
-  grid-column: 8/11
-  grid-row: span 2
+.cardMasBuscados
+    width: 100%
 
-.grid4
-  grid-column: 1/5
-  grid-row: 4 / span 3
+.title
+    width: fit-content
+    margin-left: 30px  
+    margin-block: 0px
+    text-align: left
+    @include Mixins.font($primaryColor, 22px, normal, normal)   
 
-.grid5
-  grid-column: 5/8
-  grid-row: 3/span 2
+.divPersonasQueTeBuscaron
+    position: relative
+    width: 100%
+    display: flex
+    height: 120px
+    @include Mixins.font($tertiaryColor, 18px, normal, normal)
+    @include Mixins.boxShadowCard
+    margin-inline: auto
+    margin-top: 10px
+    padding: 5px
 
-.grid6
-  grid-column: 8/11
-  grid-row: 3/span 2
+.divHistorialpagos
+    width: 650px
+    height: 400px
+    @include Mixins.font($tertiaryColor, 18px, normal, normal)
+    @include Mixins.boxShadowCard
+    margin-top: 20px
+    margin-inline: auto
+    padding: 20px
 
-.grid7
-  grid-column: 5/8
-  grid-row: 5/span 2
-.grid8
-  grid-column: 8/11
-  grid-row: 5/span 2
+.containerRight
+    width: 50%
+    margin: 10px
+    padding: 5px
+    justify-content: space-around
 
-.grid9
-  grid-column: 1/6
-  grid-row: span 4
+.divPromedioDeCalific
+    width: 100%
+    display: flex
+    height: fit-content
+    @include Mixins.font($tertiaryColor, 18px, normal, normal)
+    margin-right: 10px
+    margin-top: 10px
+    margin-bottom: 12px
+    margin-left: 15px
+    padding: 5px
 
-.grid10
-  grid-column: 6/11
-  grid-row: span 4
+.divUltimoComent
+    width: 100%
+    display: flex
+    height: 120px
+    @include Mixins.font($tertiaryColor, 18px, normal, normal)
+    @include Mixins.boxShadowCard
+    margin: 20px
+    padding: 5px
+	
+.divHitorialServicios
+    width: 650px
+    height: 400px
+    @include Mixins.font($tertiaryColor, 18px, normal, normal)
+    @include Mixins.boxShadowCard
+    margin: 20px
+    padding: 20px
+    
 
-.grid11
-  grid-column: 1/6
-  grid-row: span 4
-
-.grid12
-  grid-column: 6/11
-  grid-row: span 4
+.h2HistoriaServ
+    @include Mixins.font($primaryColor, 22px, normal, normal)
+    text-align: left
+    margin-left: 20px
+    

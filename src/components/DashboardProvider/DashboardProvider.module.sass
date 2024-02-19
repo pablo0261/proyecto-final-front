@@ -15,7 +15,6 @@
 
 .containerLeft
     width: 50%
-    @include Mixins.font($primaryColor, 35px, bold, normal)
     margin: 10px
     padding: 5px
     justify-content: space-around
@@ -38,30 +37,30 @@
     margin-left: 30px  
     margin-block: 0px
     text-align: left
-    @include Mixins.font($primaryColor, 35px, bold, normal)    
+    @include Mixins.font($primaryColor, 22px, normal, normal)   
 
 .divPersonasQueTeBuscaron
+    position: relative
     width: 100%
     display: flex
-    height: fit-content
+    height: 120px
     @include Mixins.font($tertiaryColor, 18px, normal, normal)
     @include Mixins.boxShadowCard
-    margin-top: 20px
     margin-inline: auto
+    margin-top: 10px
     padding: 5px
 
 .divHistorialpagos
-    width: 100%
-    height: fit-content
+    width: 650px
+    height: 400px
     @include Mixins.font($tertiaryColor, 18px, normal, normal)
     @include Mixins.boxShadowCard
     margin-top: 20px
     margin-inline: auto
-    padding: 5px
+    padding: 20px
 
 .containerRight
     width: 50%
-    @include Mixins.font($primaryColor, 35px, bold, normal)
     margin: 10px
     padding: 5px
     justify-content: space-around
@@ -69,29 +68,32 @@
 .divPromedioDeCalific
     width: 100%
     display: flex
-    margin-top: 20px
-    height: fit-content
+    height: 130px
     @include Mixins.font($tertiaryColor, 18px, normal, normal)
     @include Mixins.boxShadowCard
-    margin: 20px
+    margin-right: 10px
+    margin-top: 10px
+    margin-bottom: 12px
+    margin-left: 15px
     padding: 5px
 
 .divUltimoComent
     width: 100%
     display: flex
-    height: fit-content
+    height: 120px
     @include Mixins.font($tertiaryColor, 18px, normal, normal)
     @include Mixins.boxShadowCard
     margin: 20px
     padding: 5px
 	
 .divHitorialServicios
-    width: 100%
-    height: fit-content
+    width: 650px
+    height: 400px
     @include Mixins.font($tertiaryColor, 18px, normal, normal)
     @include Mixins.boxShadowCard
     margin: 20px
-    padding: 5px
+    padding: 20px
+    
 
 .h2HistoriaServ
     @include Mixins.font($primaryColor, 22px, normal, normal)

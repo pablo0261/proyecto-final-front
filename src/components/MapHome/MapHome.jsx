@@ -1,34 +1,72 @@
-import { MapContainer,TileLayer, Marker, Popup } from 'react-leaflet'
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import styles from "./MapHome.module.sass";
+import iconProvider from "../../assets/Icons/providerIcon.png";
 
-import { SearchControl, OpenStreetMapProvider } from 'leaflet-geosearch';
+function MapProviderCard({providers}) {
+  const infoUserLog = useSelector((state) => state.infoUserLog);
+  const geopositionArray = infoUserLog.geoposition
+  ? infoUserLog.geoposition.split(",").map((str) => parseFloat(str.trim()))
+  : [-34.6142, -64.177];
+  
+  const [position, setPosition] = useState({
+    lat: geopositionArray[0],
+    lng: geopositionArray[1],
+  });
+  
+  const geopositionsArray = Array.isArray(providers)
+  ? providers.map((provider) =>
+      provider.people.geoposition
+        ? provider.people.geoposition
+            .split(",")
+            .map((str) => parseFloat(str.trim()))
+        : [-34.6142, -64.177]
+    )
+  : [];
 
-const searchControl = new SearchControl({
-  notFoundMessage: 'Sorry, that address could not be found.',
-  provider: new OpenStreetMapProvider(),
-  style: 'bar',
-});
+const fullNameArray = Array.isArray(providers)
+  ? providers.map((provider) => provider.people.fullName)
+  : [];
 
+const combinedArray = geopositionsArray.map((position, index) => ({
+  position,
+  fullName: fullNameArray[index],
+}));
+  
 
-import styles from './MapHome.module.sass'
+  const providerIcon = new L.Icon({
+    iconUrl:  iconProvider,
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41],
+  });
 
-function MapHome() {
-  const position = [-31.025, -64.025]
-  // var map = L.map('map').setView([51.505, -0.09], 13);
   return (
     <div>
-      <MapContainer className={styles.mapWrapper} center={position} zoom={13} scrollWheelZoom={true}>
+      <MapContainer
+        className={styles.mapWrapper}
+        center={position}
+        zoom={10}
+        scrollWheelZoom={true}
+      >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         <Marker position={position}>
           <Popup>
-            A pretty CSS3 popup. <br /> Easily customizable.
+            <span style={{ cursor: "pointer" }}>{infoUserLog.fullName}</span>
           </Popup>
         </Marker>
+        {Array.isArray(combinedArray) && combinedArray.map((provider, index) => (
+          <Marker key={index} position={provider.position} icon={providerIcon}>
+            <Popup>{provider.fullName}</Popup>
+          </Marker>
+        ))}
       </MapContainer>
     </div>
-  )
+  );
 }
-
-export default MapHome
+export default MapProviderCard;

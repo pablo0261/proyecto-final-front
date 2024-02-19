@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import LogIn from "../../components/AccessAccount/LogIn/LogIn";
 import SignIn from "../../components/AccessAccount/SignIn/SignIn";
 import { Link, useNavigate } from "react-router-dom";
@@ -8,11 +8,17 @@ import { useDispatch } from "react-redux";
 import style from "./AccessAccount.module.sass";
 import axios from "axios";
 import { addInfoUserLog } from "../../redux/actions";
-import { io } from 'socket.io-client';
+import { io } from "socket.io-client";
+import Swal from "sweetalert2";
+import StatsAccessAccountClient from "../../components/AccessAccount/StatsAccessAccount/StatsClient/StatsAccessAccountClient";
+import StatsAccessAccountProvider from "../../components/AccessAccount/StatsAccessAccount/StatsProvider/StatsAccessAccountProvider";
+import MessageToShow from "../../components/AccessAccount/MessageToShow/MessageClient";
+
 const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
 const socket = io(REACT_APP_API_URL);
 
 function AccessAccount() {
+
   useEffect(() => {
     // Carga la biblioteca de Google Sign-In
     const script = document.createElement("script");
@@ -36,7 +42,6 @@ function AccessAccount() {
   };
 
   const dispatch = useDispatch();
-  const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
   const navigate = useNavigate();
 
   const logInProcess = async (logInData) => {
@@ -49,10 +54,10 @@ function AccessAccount() {
         localStorage.setItem(StoreItem.emailUserLogged, logInData.email);
 
         dispatch(addInfoUserLog(user));
-        socket.emit('join-request', user.idPeople);
+        socket.emit("join-request", user.idPeople);
 
-        if (user.typeOfPerson === "admin") {
-          navigate(Helpers.HomeCustomerView); //* <== Esta ruta hay que cambiarla cuando este lista la view del Admin !!
+        if (user.typeOfPerson === "administrator") {
+          navigate(Helpers.AdminStatistics); 
         } else if (user.typeOfPerson === "provider") {
           navigate(Helpers.StatsProviderView);
         } else {
@@ -60,15 +65,22 @@ function AccessAccount() {
         }
       }
     } catch (error) {
-      window.alert(error);
+      Swal.fire({
+        title: 'Usuario ya Registrado!',
+        text: `Para acceder al sistema vuelva y realice el Login`,
+        icon: 'alert',
+      })
+      .then(response => {
+        if(response.isConfirmed){
+          handleFormsVisibility()
+        }
+        })
     }
   };
 
   const signInProcess = async (signInData) => {
-    //*componente para manejar el post de MP y recibir el link a MP
-
     try {
-      if (signInData.typeOfPerson === "provider") {
+      if (isProvider) {
         const response = await axios.post(
           `${REACT_APP_API_URL}/payment`,
           signInData
@@ -76,14 +88,28 @@ function AccessAccount() {
         if (response.status === 200) {
           const paymentLink = response.data.urlPayment;
           window.location.href = paymentLink;
-        } else {
-          window.alert(`Error: ${response.status} - ${response.statusText}`);
-        }
+        } 
       } else {
-        navigate(Helpers.ProfileCustomerView);
+        const response = await axios.post(
+          `${REACT_APP_API_URL}/people`,
+          signInData
+        );
+        console.llog("response", response.data);
+        if (response.status === 200) {
+          navigate(Helpers.ProfileCustomerView);
+        }
       }
     } catch (error) {
-      window.alert(error);
+      Swal.fire({
+        title: 'Usuario ya Registrado!',
+        text: `Para acceder al sistema realice el login`,
+        icon: 'alert',
+      })
+      .then(response => {
+        if(response.isConfirmed){
+          handleFormsVisibility()
+        }
+        })
     }
   };
 
@@ -99,8 +125,18 @@ function AccessAccount() {
                 signInProcess={signInProcess}
               ></SignIn>
               <div className={style.wrapperStats}>
-                <div className={style.components}>Componente de Stats</div>
-                <div className={style.components}>Componente de Comentario</div>
+                {isProvider ? (
+                  <div className={style.components}>
+                    <StatsAccessAccountProvider />
+                  </div>
+                ) : (
+                  <div className={style.components}>
+                    <StatsAccessAccountClient />
+                  </div>
+                )}
+                <div className={style.components}>
+                  <MessageToShow />
+                </div>
               </div>
             </div>
           ) : (
@@ -111,8 +147,18 @@ function AccessAccount() {
                 logInProcess={logInProcess}
               ></LogIn>
               <div className={style.wrapperStats}>
-                <div className={style.components}>Componente de Stats</div>
-                <div className={style.components}>Componente de Comentario</div>
+                {isProvider ? (
+                  <div className={style.components}>
+                    <StatsAccessAccountProvider />
+                  </div>
+                ) : (
+                  <div className={style.components}>
+                    <StatsAccessAccountClient />
+                  </div>
+                )}
+                <div className={style.components}>
+                  <MessageToShow />
+                </div>
               </div>
             </div>
           )}

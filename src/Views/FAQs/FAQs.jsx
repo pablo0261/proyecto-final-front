@@ -24,8 +24,8 @@ const FAQs = () => {
   const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;//*
   const userLoggedInfo = useSelector(state => state.infoUserLog);
 
-   const faqSDetail = useSelector((state) => state.faqS);
-   
+  const faqSDetail = useSelector((state) => state.faqS);
+
   /* Get FAQs */
    useEffect(() => {
     dispatch(getFAQs())

@@ -21,7 +21,6 @@ function Card(props) {
     }
     axios.post(`${REACT_APP_API_URL}/opportunities`, newOportunitie)
       .then((response) => {
-        console.log(response)
         if (response.status === 201 || response.status === 200) {
           dispatch({
             type: SET_SELECTED_OPPORTUNITIE,
@@ -29,7 +28,7 @@ function Card(props) {
               idOpportunitie: response.data.idOpportunitie
             }
           })
-          navigate(Helpers.ProviderDetail.replace(":id", props.user.idPeople))
+          navigate(Helpers.UserDetail.replace(":id", props.user.idPeople))
         }
       })
       .catch((reason) => window.alert(reason))
@@ -47,8 +46,7 @@ function Card(props) {
       <div className={styles.infoWrapper}>
         <div className={styles.headerWrapper}>
           <p className={styles.textTitle}>{props.user.fullName}</p>
-          {/* <p className={styles.textGrey}>A partir de <span className={styles.textPrice}>{props.user.categories.length > 0 ? props.user.categories[0].categories_options[0]?.people_options[0]?.price : "10"}</span> x Hora</p> */}
-          <p className={styles.textGrey}>A partir de <span className={styles.textPrice}>{props.user.minPrice ? props.user.minPrice : "10"}</span> x Hora</p>
+          <p className={styles.textGrey}>A partir de <span className={styles.textPrice}>${props.user.minPrice ? props.user.minPrice : ""}</span> x Hora</p>
         </div>
         <p className={styles.textGrey}>{props.user.address}</p>
         <p className={styles.textDark}>{props.user.profession}</p>

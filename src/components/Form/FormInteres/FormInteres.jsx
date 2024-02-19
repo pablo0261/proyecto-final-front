@@ -26,6 +26,7 @@ function Form({ handleShowForm }) {
             return { description: option.description, idOption: option.idOption }
           }
           )
+          interesOptions.sort((a, b) => a.description.localeCompare(b.description));
           setInteres(interesOptions);
       } catch (error) {
         console.error("Error al obtener las opciones de servicios:", error);
@@ -61,7 +62,7 @@ function Form({ handleShowForm }) {
           className={styles.closeButton}
           onClick={() => handleShowForm()}
         ></button>
-        <p className={styles.textTitle}>Agregue sus habilidades</p>
+        <p className={styles.textTitle}>Agregue sus Intereses</p>
         <form className={styles.Form} onSubmit={(event)=> handleInteresAdd(event)}>
           <div className={styles.FormDivFlex}>
             <div className={styles.FormDivInputFlex}>

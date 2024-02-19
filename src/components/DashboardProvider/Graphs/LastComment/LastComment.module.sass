@@ -4,16 +4,15 @@
 .container 
     position: relative
     display: flex
-    height: 150px
+    height: 100%
     width: 100%
-    margin: 10px
 
 .imageContainer
-    display: flex
-    width: 25%
-    border-radius: 50%
-    margin-left: 5px
-    margin-block: auto
+  display: flex
+  width: 25%
+  border-radius: 50%
+  margin-left: 25px
+  margin-block: auto
       
 .imagen
     width: 90%
@@ -22,30 +21,39 @@
     border-radius: inherit 
        
 .infoContainerLeft
-    width: 30%
-    display: block
-    flex-direction: column
-    justify-content: left
-    height: 100%
-    margin-left: 10px
-    text-align: left
+  width: 60%
+  display: block
+  flex-direction: column
+  height: 120px
+  margin-left: 25px
 
-.name
+.client
   @include Mixins.font($primaryColor, 28px, bold, normal)
   text-align: left
-  margin-top: 20px
+  margin-block: auto
+  height: 30px
 
 .comment
   @include Mixins.font($secondaryColor, 20px, normal, normal)
   text-align: left
-  margin-top: 2px
+  height: 70px
+  margin-bottom: 5px
+  overflow: hidden
+  white-space: pre-wrap
+  text-overflow: ellipsis
 
 .infoContainerRight
-    width: 30%
-    display: flex
-    margin-left: 40px
-    align-items: center
-    justify-content: center
+  width: 30%
+  height: 120px
+  display: block
+  
 
-.infoResponse
-  @include Mixins.font(grey, 70px, normal, normal)
+.infoRating
+  @include Mixins.font(grey, 40px, normal, normal)
+  margin-top: 0
+
+.stars
+  margin-top: -25px
+
+.stars img
+  width: 25px

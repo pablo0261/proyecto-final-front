@@ -1,10 +1,11 @@
 import axios from "axios";
 import { useEffect, useRef } from "react";
+import style from "./UploadWidget.module.sass";
 const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
 
 
 
-const UploadWidget = ({setPublicId, user}) => {
+const UploadWidget = ({ setPublicId, user }) => {
   const cloudinaryRef = useRef();
   const widgetRef = useRef();
   const imageUrlRef = useRef(null);
@@ -17,31 +18,31 @@ const UploadWidget = ({setPublicId, user}) => {
         uploadPreset: 'p7bxy5ug',
         // cropping: true, //add a cropping step
         // showAdvancedOptions: true,  //add advanced options (public_id and tag)
-        sources: [ "local", "url"], // restrict the upload sources to URL and local files
-        // multiple: false,  //restrict upload to a single file
-        // folder: "user_images", //upload files to the specified folder
-        // tags: ["users", "profile"], //add the given tags to the uploaded files
-        // context: {alt: "user_uploaded"}, //add the given context data to the uploaded files
-        // clientAllowedFormats: ["images"], //restrict uploading to image files only
-        // maxImageFileSize: 2000000,  //restrict file size to less than 2MB
-        // maxImageWidth: 2000, //Scales the image down to a width of 2000 pixels before uploading
-        // theme: "purple", //change to a purple theme
-        styles: { 
-            palette: {
-                window: "#464040",
-                sourceBg: "#292222",
-                windowBorder: "#c7a49f",
-                tabIcon: "#2500EA",
-                inactiveTabIcon: "#E8D5BB",
-                menuIcons: "#ebe5db",
-                link: "#54492F",
-                action: "#ffcc00",
-                inProgress: "#99cccc",
-                complete: "#78b3b4",
-                error: "#ff6666",
-                textDark: "#4C2F1A",
-                textLight: "#D8CFCF"
-            }},
+        sources: ["local", "url"], // restrict the upload sources to URL and local files
+        styles: {
+          palette: {
+            window: "#FFFFFF",
+            windowBorder: "#A64208",
+            tabIcon: "#730707",
+            menuIcons: "#730707",
+            textDark: "#260303",
+            textLight: "#FFFFFF",
+            link: "#730707",
+            action: "#A64208",
+            inactiveTabIcon: "#808080",
+            error: "#D95555",
+            inProgress: "#A64208",
+            complete: "#22B573",
+            sourceBg: "#FFFFFF"
+          },
+          fonts: {
+            default: null,
+            "sans-serif": {
+              url: null,
+              active: true
+            }
+          }
+        }
       },
       function (error, result) {
         if (!error && result && result.event === "success") {
@@ -49,15 +50,15 @@ const UploadWidget = ({setPublicId, user}) => {
           setPublicId(imageUrl);
           axios.put(`${REACT_APP_API_URL}/people`, {
             "idPeople": user,
-            "image" : imageUrl
-            })
+            "image": imageUrl
+          })
         }
       }
     );
   }, []);
   return (
-    <div>
-        <button onClick={() => widgetRef.current.open()}>Subir imagen</button>
+    <div >
+      <button className={style.editButton} onClick={() => widgetRef.current.open()}></button>
     </div>
   );
 };

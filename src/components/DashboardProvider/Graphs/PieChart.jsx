@@ -20,12 +20,12 @@ echarts.use([
 ]);
 
 function PieChartComponent() {
-
+  const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
     const infoUserLog = useSelector((state) => state.infoUserLog);
     const [servicesData, setServicesData] = useState([]); 
+    const [statistics, setStatistics] = useState([]);
 
     useEffect(() => {
-        //*Todo esto recorre y valida la info del usuario para ver los servicios y precios
         if (infoUserLog.categories && infoUserLog.categories.length > 0) {
           const firstCategory = infoUserLog.categories[0];
           if (
@@ -55,19 +55,42 @@ function PieChartComponent() {
         }
       }, [infoUserLog]);
 
+      useEffect(() => {
+        const fetchEducation = async () => {
+          try {
+            const response = await fetch(`${REACT_APP_API_URL}/stats/provider?idPeople=${infoUserLog.idPeople}`);
+            const data = await response.json();
+            const misServiciosMasContratados = data.data.misServiciosMasContratados.map((option) => ([{
+              servicio: option.servicio || "",
+              cantidad: parseInt(option.cantidad) || 1, 
+            }]));
+           setStatistics(misServiciosMasContratados);
+          } catch (error) {
+            console.error("Error al obtener los servicios mas buscados:", error);
+          }
+        };
+        fetchEducation();
+      }, []);  
+
   useEffect(() => {
     const chartDom = document.getElementById("pie-chart");
     const myChart = echarts.init(chartDom);
 
     const option = {
       legend: {
-        right: "botton",
+        bottom: 10,
+      },
+      title: {
+        text: 'Registro de Servicios Contratados',
+        subtext: 'por semana - Mes actual'
       },
       toolbox: {
+        left: 'right',
+        top: 'center',
         show: true,
+        orient: 'vertical',
         feature: {
           mark: { show: true },
-          dataView: { show: true, readOnly: false },
           restore: { show: true },
           saveAsImage: { show: true },
         },
@@ -81,10 +104,10 @@ function PieChartComponent() {
           roseType: "area",
           itemStyle: {
             borderRadius: 6,
-          },//! ESTO SE DEBE CAMBIAR POR LA CANTIDAD DE VECES QUE SE CONTRATO CADA SERVICIO
-          data: servicesData.map(service => ({ value: service.price || 0, name: service.description, label: {
-            formatter: '$ {c}',
-          }, })),
+          },
+          data: statistics.map(option => ({ 
+            value: option[0].cantidad || 0, 
+            name: option[0].servicio })),
         },
       ],
     };
@@ -94,7 +117,7 @@ function PieChartComponent() {
     return () => {
       myChart.dispose();
     };
-  }, [servicesData]); // Dependencia actualizada para reflejar los cambios en servicesData
+  }, [statistics]); 
 
   return <div id="pie-chart" style={{ height: "400px" }}></div>;
 }

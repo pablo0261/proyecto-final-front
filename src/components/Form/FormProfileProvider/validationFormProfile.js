@@ -74,7 +74,7 @@ const Validation = (property, setLocalErrors, userData) => {
       if (userData[property].trim() === "") {
         setLocalErrors((prevErrors) => ({
           ...prevErrors,
-          [property]: "*Ingrese su domicilio sin el número de casa, piso y/o depto.",
+          [property]: "*Ingrese su domicilio.",
         }));
       } else if (!/^[A-Za-z0-9ÁÉÍÓÚáéíóúÜüÑñ\s]+$/.test(userData[property])) {
         setLocalErrors((prevErrors) => ({

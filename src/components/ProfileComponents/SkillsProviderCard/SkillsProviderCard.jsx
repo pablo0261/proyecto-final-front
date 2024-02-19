@@ -1,6 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 import { deleteService } from "../../../redux/actions/index";
+import Swal from "sweetalert2";
 import Form from "../../Form/FormSkills/FormSkills";
 import style from "./SkillsProvider.module.sass";
 
@@ -15,27 +16,21 @@ function SkillsProviderCard() {
   };
 
   useEffect(() => {
-    if (infoUserLog.categories && infoUserLog.categories.length > 0) {
-      const skillsCategory = infoUserLog.categories.find(
-        (category) => category.id_categorie === 3
-      );
-      if (
-        skillsCategory &&
-        skillsCategory.categories_options &&
-        skillsCategory.categories_options.length > 0
-      ) {
-        const skillsOptions = skillsCategory.categories_options;
+    if (infoUserLog && infoUserLog.categories && infoUserLog.categories.length > 0) {
+      const skillCategory = infoUserLog.categories.find(category => category.idCategorie === 3); 
+      
+      if (skillCategory && skillCategory.categories_options && skillCategory.categories_options.length > 0) {
+        const interesOptions = skillCategory.categories_options;
 
-        if (skillsOptions && skillsOptions.length > 0) {
-          const skillData = skillsOptions.map((option) => ({
-            idOption: option.idOption,
-            Skill: option.description,
-          }));
-          setSkills(skillData);
-        }
+        const skillData = interesOptions.map((option) => ({
+          idOption: option.idOption,
+          skill: option.description,
+        }));
+        setSkills(skillData);
       }
     }
   }, [infoUserLog]);
+
 
   const handleDeleteService = (idOption, event) => {
     event.preventDefault();
@@ -43,14 +38,23 @@ function SkillsProviderCard() {
       idPeople: infoUserLog.idPeople,
       idOption: idOption,
     };
+    
 
-    const confirmDelete = window.confirm(
-      "¿Está seguro de que desea eliminar la habilidad?"
-    );
-
-    if (confirmDelete) {
-      dispatch(deleteService(deleteData));
-    }
+    Swal.fire({
+      title: "Quieres eliminar esta Habilidad?",
+      text: `Click en Aceptar para eliminarla, o dale a Cancelar para regresar`,
+      footer: "Confirma que quieres eliminar la Habilidad seleccionado",
+      icon: "alert",
+      showDenyButton: true,
+      denyButtonText: "Cancelar",
+      denyButtonColor: "Grey",
+      confirmButtonText: "Eliminar",
+      confirmButtonColor: "Red",
+    }).then((response) => {
+      if (response.isConfirmed) {
+        dispatch(deleteService(deleteData));
+      } 
+    });
   };
 
   return (
@@ -68,13 +72,14 @@ function SkillsProviderCard() {
                 onClick={(event) => handleDeleteService(option.idOption, event)}
                 className={style.skillFalseButton}
               >
-                {" "}
-                {option.Skill}
+                {option.skill}
               </button>
             </div>
           ))
         ) : (
-          <p className={style.noInfo}>No hay información de experiencia disponible.</p>
+          <p className={style.noInfo}>
+            No hay información de experiencia disponible.
+          </p>
         )}
       </div>
       {showForm && <Form handleShowForm={handleShowForm} />}

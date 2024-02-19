@@ -1,128 +1,118 @@
-import React, { useState, useEffect } from "react";
-import * as echarts from 'echarts/core';
-import { BarChart } from 'echarts/charts';
+import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import * as echarts from "echarts/core";
+import { BarChart } from "echarts/charts";
 import {
   TitleComponent,
   TooltipComponent,
   LegendComponent,
   ToolboxComponent,
-  GridComponent
-} from 'echarts/components';
-import { CanvasRenderer } from 'echarts/renderers';
+  GridComponent,
+} from "echarts/components";
+import { CanvasRenderer } from "echarts/renderers";
 
 echarts.use([
-  BarChart,
   TitleComponent,
   TooltipComponent,
   LegendComponent,
   ToolboxComponent,
   GridComponent,
-  CanvasRenderer
+  BarChart,
+  CanvasRenderer,
 ]);
 
 function PaymentsStatistics() {
-  const [paymentData, setPaymentData] = useState([]);
+  const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
+  const userLog = useSelector((state) => state.infoUserLog);
+  const [oportunidadesPorSemana, setOportunidadesPorSemana] = useState([]);
 
   useEffect(() => {
-    const generateRandomPayments = () => {
-      const payments = [];
-      const currentDate = new Date();
-      const currentMonth = currentDate.getMonth() + 1;
-
-      for (let i = 0; i < 12; i++) {
-        const month = (currentMonth - i) <= 0 ? (12 - Math.abs(currentMonth - i)) : (currentMonth - i);
-        const totalPayments = Math.floor(Math.random() * 100) + 1;
-        const onTimePayments = Math.floor(Math.random() * totalPayments);
-        const delayedPayments = Math.floor(Math.random() * (totalPayments - onTimePayments));
-        const suspendedUsers = Math.floor(Math.random() * (totalPayments - onTimePayments - delayedPayments));
-        payments.push({
-          month: month,
-          totalPayments: totalPayments,
-          onTimePayments: onTimePayments,
-          delayedPayments: delayedPayments,
-          suspendedUsers: suspendedUsers
-        });
+    const fetchEducation = async () => {
+      try {
+        const response = await fetch(
+          `${REACT_APP_API_URL}/stats/provider?idPeople=${userLog.idPeople}`
+        );
+        const data = await response.json();
+        console.log("data", data);
+        const oportunidades = data.data.opportunidadesPorSemana.map(
+          (option) => ({
+            name: `Semana ${option.ejex}`,
+            value: [parseInt(option.Oportunidades), parseInt(option.Solicitudes), parseInt(option.Contrataciones)],
+          })
+        );
+        setOportunidadesPorSemana(oportunidades);
+      } catch (error) {
+        console.error(
+          "Error al obtener los servicios más buscados:",
+          error
+        );
       }
-
-      return payments;
     };
-
-    setPaymentData(generateRandomPayments());
-  }, []);
+    fetchEducation();
+  }, [REACT_APP_API_URL, userLog.idPeople]);
 
   useEffect(() => {
     const chartDom = document.getElementById("payments-chart");
     const myChart = echarts.init(chartDom);
 
+    const colorPalette = [
+      "rgb(84, 112, 198)",
+      "rgb(145, 204, 117)",
+      "rgb(255, 206, 84)",
+      "rgb(115, 192, 222)",
+      "rgb(238, 102, 102)",
+      "rgb(154, 96, 180)",
+      "rgb(234, 124, 204)",
+      "rgb(59, 162, 114)",
+      "rgb(226, 144, 185)",
+    ];
+
     const option = {
-      tooltip: {
-        trigger: 'axis',
-        axisPointer: {
-          type: 'shadow'
-        }
-      },
       legend: {
-        data: ['Total de pagos', 'Pagos a tiempo', 'Pagos con retraso', 'Usuarios suspendidos']
+        bottom: "bottom",
       },
       toolbox: {
+        left: "right",
+        top: "center",
         show: true,
-        orient: 'vertical',
-        left: 'right',
-        top: 'center',
+        orient: "vertical",
         feature: {
           mark: { show: true },
-          dataView: { show: true, readOnly: false },
-          magicType: { show: true, type: ['line', 'bar', 'stack'] },
           restore: { show: true },
-          saveAsImage: { show: true }
-        }
+          saveAsImage: { show: true },
+        },
       },
-      xAxis: [
-        {
-          type: 'category',
-          axisTick: { show: false },
-          data: paymentData.map(payment => `${payment.month}`)
-        }
-      ],
-      yAxis: [
-        {
-          type: 'value'
-        }
-      ],
+      title: {
+        text: "Cantidad de Oportunidades",
+        subtext: "por semana - Mes actual",
+      },
+      xAxis: {
+        type: "category",
+        data: oportunidadesPorSemana.map((serie) => serie.name), // Ahora los nombres de las series están en el eje x
+      },
+      yAxis: {
+        type: "value",
+      },
       series: [
         {
-          name: 'Total de pagos',
-          type: 'bar',
-          emphasis: {
-            focus: 'series'
-          },
-          data: paymentData.map(payment => payment.totalPayments)
+          name: "Oportunidades",
+          type: "bar",
+          data: oportunidadesPorSemana.map((serie) => serie.value[0]),
+          itemStyle: { color: colorPalette[0] },
         },
         {
-          name: 'Pagos a tiempo',
-          type: 'bar',
-          emphasis: {
-            focus: 'series'
-          },
-          data: paymentData.map(payment => payment.onTimePayments)
+          name: "Solicitudes",
+          type: "bar",
+          data: oportunidadesPorSemana.map((serie) => serie.value[1]),
+          itemStyle: { color: colorPalette[1] },
         },
         {
-          name: 'Pagos con retraso',
-          type: 'bar',
-          emphasis: {
-            focus: 'series'
-          },
-          data: paymentData.map(payment => payment.delayedPayments)
+          name: "Contrataciones",
+          type: "bar",
+          data: oportunidadesPorSemana.map((serie) => serie.value[2]),
+          itemStyle: { color: colorPalette[2] },
         },
-        {
-          name: 'Usuarios suspendidos',
-          type: 'bar',
-          emphasis: {
-            focus: 'series'
-          },
-          data: paymentData.map(payment => payment.suspendedUsers)
-        }
-      ]
+      ],
     };
 
     myChart.setOption(option);
@@ -130,7 +120,7 @@ function PaymentsStatistics() {
     return () => {
       myChart.dispose();
     };
-  }, [paymentData]);
+  }, [oportunidadesPorSemana]);
 
   return <div id="payments-chart" style={{ height: "400px" }}></div>;
 }

@@ -24,7 +24,7 @@
     
 .editButton
     position: relative
-    top: 0
+    top: 5px
     margin-left: auto
     width: 40px
     height: 40px
@@ -72,7 +72,7 @@
     border-bottom: 2px solid $primaryColor
 
 .crossButton
-    background: none
+    background: rgba(128, 128, 128, 0)
     background-image: url('../../../assets/Icons/IconCross.png')
     height: 40px
     width: 40px
@@ -93,6 +93,6 @@
     @include Mixins.font($tertiaryColor, 20px, bold, normal)
 
 .noInfo
-    text-align: center 
-    margin-inline: auto   
-    @include Mixins.font($tertiaryColor, 20px, bold, normal)                
+    text-align: center
+    margin-inline: auto
+    @include Mixins.font($grey, 20px, normal, normal)            
