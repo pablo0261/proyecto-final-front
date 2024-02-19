@@ -28,7 +28,6 @@ function ScheduleProviderCard() {
     }
   }, [infoUserLog]);
 
-  console.log("schedule", schedule)
   const daysOfWeek = [
     "Lunes",
     "Martes",
