@@ -67,7 +67,7 @@ function AccessAccount() {
     } catch (error) {
       Swal.fire({
         title: 'Usuario ya Registrado!',
-        text: `Para acceder al sistema vuelva y realice el login`,
+        text: `Para acceder al sistema vuelva y realice el Login`,
         icon: 'alert',
       })
       .then(response => {
@@ -102,7 +102,7 @@ function AccessAccount() {
     } catch (error) {
       Swal.fire({
         title: 'Usuario ya Registrado!',
-        text: `Para acceder al sistema vuelva y realice el login`,
+        text: `Para acceder al sistema realice el login`,
         icon: 'alert',
       })
       .then(response => {
