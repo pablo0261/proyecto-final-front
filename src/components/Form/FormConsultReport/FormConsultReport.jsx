@@ -37,12 +37,13 @@ const FormConsultReport = () => {
 
     const dispatch = useDispatch();
 
-     // Autocompletar el campo senderMail con el email del usuario logueado
+     // Autocompletar el campo senderMail y fullName con los datos del usuario logueado
      useEffect(() => {
         if (userLoggedInfo && userLoggedInfo.email) {
             setFormData(prevState => ({
                 ...prevState,
-                senderMail: userLoggedInfo.email
+                senderMail: userLoggedInfo.email,
+                fullName: userLoggedInfo.fullName
             }));
         }
     }, [userLoggedInfo]);
