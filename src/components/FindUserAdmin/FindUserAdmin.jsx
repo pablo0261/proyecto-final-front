@@ -52,7 +52,7 @@ function FindUserAdmin() {
       )}
       {isLoading && (
         <div className={styles.loading}>
-          <img src={loadingHouse} alt="Loading" />
+          <img src={loadingHouse} alt="Loading..." />
         </div>
       )}
     </>
