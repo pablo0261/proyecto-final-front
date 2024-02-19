@@ -1,0 +1,80 @@
+@use '../../../../Styles/Mixins'
+@import '../../../../Styles/Variables'
+
+.background
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-items: center
+
+.wrapper
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-items: flex-start
+    width: 80%
+    height: fit-content
+    margin: 20px
+
+.title
+    margin: 0
+    text-align: left
+    @include Mixins.font($primaryColor, 35px, bold, normal)
+
+.infoWrapper
+    width: 100%
+    height: fit-content
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-items: center
+    gap: 10px
+    margin-top: 15px
+    padding: 30px 0px
+    box-sizing: border-box
+    @include Mixins.boxShadowCard
+
+.educationWrapper
+    width: 90%
+    height: fit-content
+    display: flex
+    flex-direction: column
+    gap: 20px
+
+.educationBox
+    width: 100%
+    height: fit-content
+    display: flex
+    margin: 20px 0px
+
+.line
+    width: 100%
+    border-bottom: 1px solid $primaryColor
+
+.infoContainerLeft
+    width: 35%
+    height: fit-content
+    text-align: left
+
+.description
+    margin: 0
+    @include Mixins.font($secondaryColor, 24px, bold, normal)
+
+.detailInfo
+    margin: 0
+    line-height: 25px
+    @include Mixins.font($secondaryColor, 20px, normal, normal)
+
+.infoContainerRight
+    width: 65%
+    height: fit-content
+    text-align: left
+
+.comment
+    margin: 0
+    @include Mixins.font($textSecondaryColor, 18px, normal, normal)
+
+.noInfo
+    text-align: center
+    margin-inline: auto
+    @include Mixins.font($grey, 18px, normal, normal)

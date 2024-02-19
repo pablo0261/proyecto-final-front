@@ -38,6 +38,8 @@ function ChatBox(props) {
     useEffect(() => {
         if (idOpportunitie.length > 0) {
             setChat()
+        } else {
+            setDataChat([])
         }
     }, [idOpportunitie])
 
@@ -86,13 +88,16 @@ function ChatBox(props) {
     }
 
     const dispatch = useDispatch()
+
     const handleChangeState = (event) => {
         event.preventDefault()
         if (!Object.values(cancelation).every((property) => property === "")) {
             if (infoUserLog.typeOfPerson === "customer") {
                 dispatch(putOpportunities(cancelation, `?idCustomer=${infoUserLog.idPeople}&state=${filter}&idOrder=dateAccepted,DESC`))
+                setDataChat([])
             } else if (infoUserLog.typeOfPerson === "provider") {
                 dispatch(putOpportunities(cancelation, `?idProvider=${infoUserLog.idPeople}&state=${filter}&idOrder=dateAccepted,DESC`))
+                setDataChat([])
             }
         } else {
             window.alert("Debes indicar el porque")
@@ -108,8 +113,10 @@ function ChatBox(props) {
         }
         if (infoUserLog.typeOfPerson === "customer") {
             dispatch(putOpportunities(endService, `?idCustomer=${infoUserLog.idPeople}&state=${filter}&idOrder=dateAccepted,DESC`))
+            setDataChat([])
         } else if (infoUserLog.typeOfPerson === "provider") {
             dispatch(putOpportunities(endService, `?idProvider=${infoUserLog.idPeople}&state=${filter}&idOrder=dateAccepted,DESC`))
+            setDataChat([])
         }
     }
 

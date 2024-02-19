@@ -1,55 +1,53 @@
 @use '../../../Styles/Mixins'
 @import '../../../Styles/Variables'
 
-.container 
+.container
   position: fixed
-  bottom: 20px  
-  left: 40px
-  display: flex
+  bottom: 30px
+  left: 30px
   height: fit-content
-  width: 25%
-  height: 80px
-  margin: auto
-  padding: 5px
-  border: 1px solid rgba(128, 128, 128, 0.3)
-  box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.05)
-  background-color: white
+  width: fit-content
+  @include Mixins.flexbox(row, flex-start, center)
+  @include Mixins.boxShadowCard
   border-radius: 50px
   z-index: 1
+  cursor: pointer
 
 .imageContainer
-    width: 80px
-    height: 70px
-    border-radius: 50%
-      
+  width: 80px
+  height: 80px
+  border-radius: 50%
+  margin: 5px 0px
+  border: 1px solid rgba(128, 128, 128, 0.3)
+
 .imagen
-    width: 100%
-    height: 100%
-    object-fit: cover
-    border-radius: inherit 
-       
+  width: 100%
+  height: 100%
+  object-fit: cover
+  border-radius: 50%
+
 .infoContainer
-    display: flex
-    flex-direction: column
-    height: 100%
-    margin-left: 10px
-    text-align: left
+  display: flex
+  flex-direction: column
+  height: fit-content
+  margin: 0px 30px 0px 15px
+  text-align: left
 
 .name
+  margin: 0
   @include Mixins.font($primaryColor, 20px, bold, normal)
-  text-align: left
-  margin-top: 2px
 
 .stateActive
-  margin: 0
-  @include Mixins.font($textSuccessColor , 16px, normal , normal)
-  margin-top: -15px
+  margin: 5px 0px 0px 0px
+  @include Mixins.font($textSuccessColor , 14px, normal , normal)
 
 .stateInactive
-  margin: 0
-  @include Mixins.font(black , 16px, normal , normal)
-  margin-top: -15px
+  margin: 5px 0px 0px 0px
+  @include Mixins.font($grey , 14px, normal , normal)
 
 .infoResponse
-  @include Mixins.font(black, 18px, normal, normal)
-  margin-top: -10px 
+  margin: 0
+  @include Mixins.font($tertiaryColor, 16px, normal, normal)
+
+  span
+    @include Mixins.font($tertiaryColor, 16px, bold, normal)

@@ -1,6 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 import { deleteService } from "../../../redux/actions/index";
+import Swal from "sweetalert2";
 import Form from "../../Form/FormExperience/FormExperience";
 import style from "./ExperienciaProvider.module.sass";
 
@@ -8,7 +9,7 @@ function ExperienciaProvider() {
   const dispatch = useDispatch();
   const infoUserLog = useSelector((state) => state.infoUserLog);
   const [showForm, setShowForm] = useState(false);
-  const [education, setEducation] = useState([]);
+  const [experience, setExperience] = useState([]);
 
   const handleShowForm = () => {
     setShowForm(!showForm);
@@ -16,18 +17,18 @@ function ExperienciaProvider() {
 
   useEffect(() => {
     if (infoUserLog.categories && infoUserLog.categories.length > 0) {
-      const educationCategory = infoUserLog.categories.find(
+      const experienceCategory = infoUserLog.categories.find(
         (category) => category.idCategorie === 7
       );
       if (
-        educationCategory &&
-        educationCategory.categories_options &&
-        educationCategory.categories_options.length > 0
+        experienceCategory &&
+        experienceCategory.categories_options &&
+        experienceCategory.categories_options.length > 0
       ) {
-        const educationOptions = educationCategory.categories_options;
+        const experienceOption = experienceCategory.categories_options;
 
-        if (educationOptions && educationOptions.length > 0) {
-          const educationData = educationOptions.map((option) => ({
+        if (experienceOption && experienceOption.length > 0) {
+          const experienceData = experienceOption.map((option) => ({
             idPeople: infoUserLog.idPeople,
             idOption: option.idOption,
             education: option.description || "No informado",
@@ -36,7 +37,7 @@ function ExperienciaProvider() {
             comment: option.people_options[0]?.comment || "No informado",
           }));
 
-          setEducation(educationData);
+          setExperience(experienceData);
         }
       }
     }
@@ -48,8 +49,22 @@ function ExperienciaProvider() {
       idPeople: infoUserLog.idPeople,
       idOption: idOption,
     };
-    dispatch(deleteService(deleteData));
-  };
+    Swal.fire({
+      title: "Quieres eliminar esta Experiencia?",
+      text: `Click en Aceptar para eliminarla, o dale a Cancelar para regresar`,
+      footer: "Confirma que quieres eliminar la Experiencia seleccionado",
+      icon: "alert",
+      showDenyButton: true,
+      denyButtonText: "Cancelar",
+      denyButtonColor: "Grey",
+      confirmButtonText: "Eliminar",
+      confirmButtonColor: "Red",
+    }).then((response) => {
+      if (response.isConfirmed) {
+        dispatch(deleteService(deleteData));
+      } 
+    });
+  }
 
   return (
     <div className={style.container}>
@@ -59,8 +74,8 @@ function ExperienciaProvider() {
       </div>
 
       <div className={style.educationdetailContainer}>
-        {education.length > 0 ? (
-          education.map((option, index) => (
+        {experience.length > 0 ? (
+          experience.map((option, index) => (
             <div key={option.idOption}>
               <div className={style.educationdetailbox}>
                 <div className={style.infoContainerLeft}>
@@ -81,7 +96,7 @@ function ExperienciaProvider() {
                   className={style.crossButton}
                 ></button>
               </div>
-              {index !== education.length - 1 && (
+              {index !== experience.length - 1 && (
                 <div>
                   <p className={style.line}></p>
                 </div>

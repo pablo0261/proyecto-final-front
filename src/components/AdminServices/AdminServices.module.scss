@@ -7,8 +7,10 @@
     width: 100%;
     margin: 0;
     padding: 0;
-    background-color: aqua;
+    
     gap: 10px;
+
+   
 
     button {
         @include buttonActive;
@@ -23,129 +25,3 @@
     }
 
 } 
-/* 
-.container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    background-color: aqua;
-  
-    .react-select__control {
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      padding: 8px;
-    }
-  
-    .react-select__control--is-focused {
-      border-color: #ff0000;
-    }
-  
-    .react-select__menu {
-      background-color: #fff;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      margin-top: 4px;
-      max-height: 200px;
-      overflow-y: auto;
-    }
-  
-    .react-select__option {
-      padding: 8px;
-      cursor: pointer;
-  
-      &:hover {
-        background-color: #f0f0f0;
-      }
-    }
-  }
-   */
-
-
-
-
-/* 
-.container {
-    @include flexbox(row, center, center);
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    background-color: aqua;
-
-    .react-.input-container {
-     
-
-        height: 40px;
-        width: 100%;
-        padding: 0px 15px;
-        font-family: 'K2D', sans-serif;
-        font-size: 16px;
-        font-style: normal;
-        font-weight: normal;
-        color: $secondaryColor;
-        box-sizing: border-box;
-        border: 2px solid $secondaryColor;
-        border-radius: 10px;
-        transition: .2s;
-    }
-
-    .react-.input__control {
-        font-size: 16px;
-        color: #333;
-        outline: none;
-        border: none;
-        width: 100%;
-    }
-
-    .react-.input__menu {
-        background-color: #fff;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        margin-top: 4px;
-        max-height: 200px;
-        overflow-y: auto;
-    }
-
-    .react-.input__option {
-        padding: 8px;
-        cursor: pointer;
-    }
-
-    .react-.input__option:hover {
-        background-color: #f0f0f0;
-    }
-
-    button {
-        @include buttonActive;
-    }
-
-    ;
-
-    button:hover {
-        @include buttonHover;
-    }
-
-    ;
-
-    button:pressed {
-        @include buttonPressed;
-    }
-
-    ;
- */
-
-/* 
-        button {
-            margin-top: 10px;
-            padding: 8px 16px;
-            background-color: #f0f0f0;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-    
-        button:hover {
-            background-color: #ccc;
-        } */

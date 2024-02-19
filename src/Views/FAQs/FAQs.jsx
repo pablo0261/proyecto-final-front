@@ -26,6 +26,14 @@ const FAQs = () => {
 
   const faqSDetail = useSelector((state) => state.faqS);
 
+  const [formData, setFormData] = useState({
+    idQuestion: '',
+    typeOfQuestion: '',
+    destination: '',
+    title: '',
+    message: ''
+  });
+
   /* Get FAQs */
   useEffect(() => {
     dispatch(getFAQs())
@@ -106,11 +114,24 @@ const FAQs = () => {
   };
 
   /* Función para entrar en el modo de edición */
-  const handleEditQuestion = (index, type) => {
+  const handlePutQuestion = (index, destination) => {
     setEditMode(true);
     setEditIndex(index);
-    handleToggleForm(type);
+  
+    const faqToEdit = faqSDetail.questions.data[index];
+    setFormData({
+      idQuestion: faqToEdit.idQuestion,
+      typeOfQuestion: faqToEdit.typeOfQuestion,
+      destination: destination,
+      title: faqToEdit.title,
+      message: faqToEdit.message
+    });
+  
+    setShowForm(true);
+    setFaqType(destination);
   };
+  
+
 
   /* Función para cambiar el estado de visibilidad de answer */
   const toggleAnswer = (index) => {
@@ -139,7 +160,7 @@ const FAQs = () => {
               <div className={styles.item}>
                 <div className={styles.question}>
                   <h3>{faq.title}</h3>
-                  <div onClick={() => toggleAnswer(index)}>
+                  <div className={styles.more} onClick={() => toggleAnswer(index)}>
                     <p>{expandedAnswers[index] ? <img className={styles.more} src={less} /> : <img className={styles.more} src={more} />}</p>
                   </div>
                 </div>
@@ -149,20 +170,16 @@ const FAQs = () => {
                 </div>
               </div>
               <hr />
-
               {userLoggedInfo.typeOfPerson === 'administrator' && (
-                <>
-                  {showForm && faqType === 'provider' && <FormFAQs typeOfFAQs="provider" />}
-                  <div className={styles.container__buttons}>
-                    <button onClick={() => handleDeleteQuestion(index, 'provider')}>Eliminar</button>
-                    <button onClick={() => handleEditQuestion(index, 'provider')}>Editar</button>
-                  </div>
+                <div className={styles.container__buttons}>
+                  <button onClick={() => handleDeleteQuestion(index, 'provider')}>Eliminar</button>
 
-                </>
+
+                  <button onClick={() => handlePutQuestion(index, 'provider')}>Editar</button>
+
+
+                </div>
               )}
-
-
-
 
             </div>
 
@@ -174,7 +191,11 @@ const FAQs = () => {
       {/* Mostrar el botón de edición para alternar la visibilidad del formulario */}
       {userLoggedInfo.typeOfPerson === 'administrator' && (
         <>
-          {showForm && faqType === 'provider' && <FormFAQs typeOfFAQs="provider" />}
+          {showForm && faqType === 'provider' && <FormFAQs
+            typeOfFAQs="provider"
+            formData={formData}
+            setFormData={setFormData}
+          />}
           <div className={styles.container__buttons_close}>
             <button onClick={() => handleToggleForm('provider')}>
               {showForm && faqType === 'provider' ? 'Cerrar formulario' : 'Crear Pregunta'}
@@ -195,7 +216,7 @@ const FAQs = () => {
               <div className={styles.item}>
                 <div className={styles.question}>
                   <h3>{faq.title}</h3>
-                  <div onClick={() => toggleAnswer(index)}>
+                  <div className={styles.more} onClick={() => toggleAnswer(index)}>
                     <p>{expandedAnswers[index] ? <img className={styles.more} src={less} /> : <img className={styles.more} src={more} />}</p>
                   </div>
                 </div>
@@ -205,16 +226,11 @@ const FAQs = () => {
                 </div>
               </div>
               <hr />
-
               {userLoggedInfo.typeOfPerson === 'administrator' && (
-                <>
-                  {showForm && faqType === 'client' && <FormFAQs typeOfFAQs="client" />}
-                  <div className={styles.container__buttons}>
-                    <button onClick={() => handleDeleteQuestion(index, 'client')}>Eliminar</button>
-                    <button onClick={() => handleEditQuestion(index, 'client')}>Editar</button>
-                  </div>
-
-                </>
+                <div className={styles.container__buttons}>
+                  <button onClick={() => handleDeleteQuestion(index, 'client')}>Eliminar</button>
+                  <button onClick={() => handlePutQuestion(index, 'client')}>Editarrr</button>
+                </div>
               )}
 
             </div>
@@ -223,15 +239,19 @@ const FAQs = () => {
         return null;
       })}
 
+
       {userLoggedInfo.typeOfPerson === 'administrator' && (
         <>
-          {showForm && faqType === 'client' && <FormFAQs typeOfFAQs="client" />}
+          {showForm && faqType === 'client' && <FormFAQs
+            typeOfFAQs="client"
+            formData={formData}
+            setFormData={setFormData}
+          />}
           <div className={styles.container__buttons_close}>
             <button onClick={() => handleToggleForm('client')}>
               {showForm && faqType === 'client' ? 'Cerrar formulario' : 'Crear Pregunta'}
             </button>
           </div>
-
         </>
       )}
 

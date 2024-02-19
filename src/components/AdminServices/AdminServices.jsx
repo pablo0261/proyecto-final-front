@@ -60,7 +60,9 @@ const handleDelete = async () => {
 
   return (
     <div className={styles.container}>
+      
       <CreatableSelect
+      
         isClearable
         isDisabled={isLoading}
         isLoading={isLoading}
@@ -77,6 +79,13 @@ const handleDelete = async () => {
             primary25: 'rgb(245, 245, 245)',
             primary: 'black',
           },
+          
+          control: {
+            
+            width: '800px',
+          },
+          
+         
         })}
 
 

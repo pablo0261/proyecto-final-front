@@ -1,69 +1,118 @@
-import React, { useEffect } from "react";
-import * as echarts from 'echarts/core';
-import { BarChart } from 'echarts/charts';
+import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import * as echarts from "echarts/core";
+import { BarChart } from "echarts/charts";
 import {
   TitleComponent,
   TooltipComponent,
   LegendComponent,
   ToolboxComponent,
-  GridComponent
-} from 'echarts/components';
-import { CanvasRenderer } from 'echarts/renderers';
+  GridComponent,
+} from "echarts/components";
+import { CanvasRenderer } from "echarts/renderers";
 
 echarts.use([
-  BarChart,
   TitleComponent,
   TooltipComponent,
   LegendComponent,
   ToolboxComponent,
   GridComponent,
-  CanvasRenderer
+  BarChart,
+  CanvasRenderer,
 ]);
 
 function PaymentsStatistics() {
+  const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
+  const userLog = useSelector((state) => state.infoUserLog);
+  const [oportunidadesPorSemana, setOportunidadesPorSemana] = useState([]);
+
+  useEffect(() => {
+    const fetchEducation = async () => {
+      try {
+        const response = await fetch(
+          `${REACT_APP_API_URL}/stats/provider?idPeople=${userLog.idPeople}`
+        );
+        const data = await response.json();
+        console.log("data", data);
+        const oportunidades = data.data.opportunidadesPorSemana.map(
+          (option) => ({
+            name: `Semana ${option.ejex}`,
+            value: [parseInt(option.Oportunidades), parseInt(option.Solicitudes), parseInt(option.Contrataciones)],
+          })
+        );
+        setOportunidadesPorSemana(oportunidades);
+      } catch (error) {
+        console.error(
+          "Error al obtener los servicios más buscados:",
+          error
+        );
+      }
+    };
+    fetchEducation();
+  }, [REACT_APP_API_URL, userLog.idPeople]);
 
   useEffect(() => {
     const chartDom = document.getElementById("payments-chart");
     const myChart = echarts.init(chartDom);
 
-    const colorPalette = ['rgb(84, 112, 198)',   // Azul
-    'rgb(145, 204, 117)',  // Verde
-    'rgb(255, 206, 84)',   // Amarillo
-    'rgb(115, 192, 222)',  // Celeste
-    'rgb(238, 102, 102)',  // Rojo claro
-    'rgb(154, 96, 180)',   // Morado claro
-    'rgb(234, 124, 204)',  // Rosa claro
-    'rgb(59, 162, 114)',   // Verde claro
-    'rgb(226, 144, 185)'   // Rosa
-  ];
+    const colorPalette = [
+      "rgb(84, 112, 198)",
+      "rgb(145, 204, 117)",
+      "rgb(255, 206, 84)",
+      "rgb(115, 192, 222)",
+      "rgb(238, 102, 102)",
+      "rgb(154, 96, 180)",
+      "rgb(234, 124, 204)",
+      "rgb(59, 162, 114)",
+      "rgb(226, 144, 185)",
+    ];
 
     const option = {
+      legend: {
+        bottom: "bottom",
+      },
+      toolbox: {
+        left: "right",
+        top: "center",
+        show: true,
+        orient: "vertical",
+        feature: {
+          mark: { show: true },
+          restore: { show: true },
+          saveAsImage: { show: true },
+        },
+      },
       title: {
-        text: 'Cantidad de Oportunidades',
-        subtext: 'por semana - Mes actual'
+        text: "Cantidad de Oportunidades",
+        subtext: "por semana - Mes actual",
       },
       xAxis: {
-        type: 'category',
-        data: ['Semana 1', 'Semana 2', 'semana 3', 'Semana 4']
+        type: "category",
+        data: oportunidadesPorSemana.map((serie) => serie.name), // Ahora los nombres de las series están en el eje x
       },
       yAxis: {
-        type: 'value'
+        type: "value",
       },
       series: [
         {
-          data: [5, 7, 8, 3],
-          type: 'bar',
-          itemStyle: {
-            color: function(params) {
-              return colorPalette[params.dataIndex % colorPalette.length]; // Asignar un color diferente a cada barra
-            }
-          },
-          showBackground: true,
-          backgroundStyle: {
-            color: 'rgba(180, 180, 180, 0.2)'
-          }
-        }
-      ]
+          name: "Oportunidades",
+          type: "bar",
+          data: oportunidadesPorSemana.map((serie) => serie.value[0]),
+          itemStyle: { color: colorPalette[0] },
+        },
+        {
+          name: "Solicitudes",
+          type: "bar",
+          data: oportunidadesPorSemana.map((serie) => serie.value[1]),
+          itemStyle: { color: colorPalette[1] },
+        },
+        {
+          name: "Contrataciones",
+          type: "bar",
+          data: oportunidadesPorSemana.map((serie) => serie.value[2]),
+          itemStyle: { color: colorPalette[2] },
+        },
+      ],
     };
 
     myChart.setOption(option);
@@ -71,7 +120,7 @@ function PaymentsStatistics() {
     return () => {
       myChart.dispose();
     };
-  }, []);
+  }, [oportunidadesPorSemana]);
 
   return <div id="payments-chart" style={{ height: "400px" }}></div>;
 }

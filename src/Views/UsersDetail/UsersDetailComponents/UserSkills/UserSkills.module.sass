@@ -1,0 +1,49 @@
+@use '../../../../Styles/Mixins'
+@import '../../../../Styles/Variables'
+
+.background
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-items: center
+
+.wrapper
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-items: flex-start
+    width: 80%
+    height: fit-content
+    margin: 20px
+
+.title
+    margin: 0
+    text-align: left
+    @include Mixins.font($primaryColor, 35px, bold, normal)
+
+.infoWrapper
+    width: 100%
+    height: fit-content
+    display: flex
+    flex-direction: row
+    justify-content: flex-start
+    align-items: center
+    flex-wrap: wrap
+    gap: 20px
+    margin-top: 15px
+    padding: 30px
+    box-sizing: border-box
+    @include Mixins.boxShadowCard
+
+.skills
+    width: fit-content
+    height: fit-content
+    padding: 8px 20px
+    @include Mixins.font(white, 20px, bold, normal)
+    background-color: $secondaryColor
+    border-radius: 10px
+
+.noInfo
+    text-align: center 
+    margin-inline: auto   
+    @include Mixins.font($tertiaryColor, 18px, bold, normal)         

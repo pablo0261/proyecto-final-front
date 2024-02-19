@@ -14,6 +14,7 @@ function Reports() {
     const [filter, setFilter] = useState("completada")
     const [message, setMessage] = useState({
         idQuestion: "",
+        typeOfQuestion: "qaa",
         response: ""
     })
 
@@ -21,7 +22,8 @@ function Reports() {
         const reportAxios = async () => {
             try {
                 if (infoUserLog.typeOfPerson === 'administrator') {
-                    dispatch(getReports())
+                    const query = `&questionStatus=${filter}`
+                    dispatch(getReports(query))
                 } else {
                     const query = `&senderMail=${infoUserLog.email}&questionStatus=${filter}`
                     dispatch(getReports(query))
@@ -36,23 +38,29 @@ function Reports() {
     const handleSelectedOpportunitie = async (idQuestion) => {
         setIsSelected(idQuestion)
         setReport(reports.filter(report => report.idQuestion === idQuestion))
-        setMessage({ idQuestion: idQuestion, response: "" })
+        setMessage({ ...message, idQuestion: idQuestion, response: "" })
     }
 
     const handleChangeMessage = (event) => {
         setMessage({ ...message, response: event.target.value })
     }
 
+    const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
+
     const handleSendChat = (event) => {
         event.preventDefault()
         if (!Object.values(message).some((msg) => msg === "")) {
+            console.log(message)
             axios.put(`${REACT_APP_API_URL}/questions`, message)
                 .then((response) => {
                     if (response.status === 200) {
-                        setMessage({ ...message, message: "" })
+                        setMessage({ ...message, response: "" })
+                        const query = `&questionStatus=${filter}`
+                        dispatch(getReports(query))
+                        setReport([])
                     }
                 })
-                .catch((reason) => window.alert(reason))
+                .catch((reason) => console.log(reason))
         } else {
             window.alert("Escribe un mensaje")
         }
@@ -62,8 +70,13 @@ function Reports() {
         setIsSelected("")
         setFilter(filter)
         setReport([])
-        const query = `&senderMail=${infoUserLog.email}&questionStatus=${filter}`
-        dispatch(getReports(query))
+        if (infoUserLog.typeOfPerson != 'administrator') {
+            const query = `&senderMail=${infoUserLog.email}&questionStatus=${filter}`
+            dispatch(getReports(query))
+        } else {
+            const query = `&questionStatus=${filter}`
+            dispatch(getReports(query))
+        }
     }
 
     return (
@@ -92,36 +105,50 @@ function Reports() {
                     report.length > 0
                         ?
                         <div className={style.reportWrapper}>
-                            <div className={infoUserLog.typeOfPerson === 'administrator' ? style.msgWrapper : style.msgWrapperClient}>
-                                <div className={report[0].senderMail === infoUserLog.email ? style.msgBoxOwner : style.msgBoxOther}>
-                                    <p className={style.reportTitle}>{report[0].title}</p>
-                                    <p className={style.reportMsg}>{report[0].message}</p>
-                                    <div className={style.sender}>
-                                        <p className={style.reportMsg2}>{report[0].fullName} - {report[0].senderMail}</p>
-                                    </div>
+                            <div className={
+                                infoUserLog.typeOfPerson === 'administrator'
+                                ?   report[0].questionStatus === 'completada'
+                                    ? style.msgWrapperComplete
+                                    : style.msgWrapperPending
+                                : style.msgWrapperComplete
+                                }>
+                            <div className={report[0].senderMail === infoUserLog.mail ? "" : style.msgBoxOther}>
+                                <p className={style.reportTitle}>{report[0].title}</p>
+                                <p className={style.reportMsg}>{report[0].message}</p>
+                                <div className={style.sender}>
+                                    <p className={style.reportMsg2}>{report[0].fullName} - {report[0].senderMail}</p>
                                 </div>
                             </div>
                             {
-                                infoUserLog.typeOfPerson === 'administrator' &&
-                                <div className={style.inputWrapper}>
-                                    <form onSubmit={handleSendChat} className={style.formChat}>
-                                        <input
-                                            type='text'
-                                            name='chat'
-                                            value={message.response}
-                                            placeholder='Escribe un mensaje'
-                                            onChange={handleChangeMessage}
-                                            className={style.inputChat} />
-                                        <button type='submit' className={style.buttonChat}>Enviar</button>
-                                    </form>
+                                report[0].questionStatus === 'completada' &&
+                                <div className={report[0].senderMail != infoUserLog.mail && style.msgBoxOwner}>
+                                    <p className={style.reportTitle}>Care With Love</p>
+                                    <p className={style.reportMsg}>{report[0].response}</p>
                                 </div>
                             }
+
                         </div>
-                        :
-                        <div className={style.reportWrapper}>Selecciona tu reporte.</div>
+                            {
+                    infoUserLog.typeOfPerson === 'administrator' && report[0].questionStatus === 'pendiente' &&
+                    <div className={style.inputWrapper}>
+                        <form onSubmit={handleSendChat} className={style.formChat}>
+                            <input
+                                type='text'
+                                name='chat'
+                                value={message.response}
+                                placeholder='Escribe un mensaje'
+                                onChange={handleChangeMessage}
+                                className={style.inputChat} />
+                            <button type='submit' className={style.buttonChat}>Enviar</button>
+                        </form>
+                    </div>
                 }
             </div>
+            :
+            <div className={style.reportWrapper}>Selecciona tu reporte.</div>
+                }
         </div>
+        </div >
     )
 }
 

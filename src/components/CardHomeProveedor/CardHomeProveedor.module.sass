@@ -3,12 +3,13 @@
 
 .wrapper
     display: flex
-    width: 94%
+    width: 100%
     height: fit-content
     flex-direction: row
     @include Mixins.boxShadowCard
     cursor: pointer
     padding: 15px 20px
+    box-sizing: border-box
 
 .profileWrapper
     display: flex
@@ -53,6 +54,7 @@
     width: 100%
     display: flex
     justify-content: space-between
+    align-items: center
 
 .textTitle
     width: fit-content
@@ -61,8 +63,9 @@
     margin: 0
 
 .textGrey
+    line-height:15px
     text-align: left
-    @include Mixins.font(#808080, 16px, normal, italic)
+    @include Mixins.font($grey, 16px, normal, italic)
     margin: 0
 
 .textPrice
@@ -77,12 +80,11 @@
 .servicesWrapper
     display: flex
     flex-wrap: wrap
-    gap: 10px
+    gap: 5px 10px
 
 .textServices
     margin: 0
     padding: 0 10px
     border-radius: 10px
-    border: 2px solid $primaryColor
-    @include Mixins.font($tertiaryColor, 16px, normal, normal)
-
+    border: 1px solid $primaryColor
+    @include Mixins.font($primaryColor, 16px, normal, normal)
