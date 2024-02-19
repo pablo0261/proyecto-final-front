@@ -8,17 +8,8 @@ function Form({ handleShowForm }) {
   const dispatch = useDispatch();
   const userLog = useSelector((state) => state.infoUserLog);
 
-  const ExperiencieNumber = [1, 2, 3, 4];
+  const ExperiencieNumber = ["Número de orden","1", "2", "3", "4"];
 
-  //   jdon de ejemplo
-  //   {
-  // 	"idPeople": "038b359a-ad7a-4bb4-8945-15cfd42b38b3",
-  // 	"idOption":"103",
-  // 	"institution":"hogar san jose",
-  // 	"year":"2014",
-  // 	"comment":"cuidado de 3 personas",
-  // 	"description":"."
-  // }
 
   const [userData, setUserData] = useState({
     idPeople: userLog.idPeople,
@@ -41,9 +32,6 @@ function Form({ handleShowForm }) {
     if (name === "idOption") {
       let newIdOption;
       switch (value) {
-        case "1":
-          newIdOption = "113";
-          break;
         case "2":
           newIdOption = "114";
           break;
@@ -54,7 +42,7 @@ function Form({ handleShowForm }) {
           newIdOption = "116";
           break;
         default:
-          newIdOption = "";
+          newIdOption = "113";
       }
       setUserData((prevUserData) => ({ ...prevUserData, idOption: newIdOption }));
     } else {
@@ -94,9 +82,9 @@ function Form({ handleShowForm }) {
                 name="idOption"
                 value={userData.idOption}
                 onChange={handleChange}
-                placeholder="Selecciona el número de experiencia que completarás"
+                placeholder={"Selecciona el número de experiencia que completarás"}
               >
-                <option value="idOption" disabled>
+                <option value="" disabled>
                   Selecciona el número de experiencia que completarás
                 </option>
                 {ExperiencieNumber.map((number) => (
@@ -111,7 +99,7 @@ function Form({ handleShowForm }) {
 
               <div className={styles.FormDivInput}>
                 <label className={styles.labels}>
-                  institution que desempeño
+                  Que tarea realizó?
                 </label>
                 <input
                   className={styles.inputDetail}
@@ -119,7 +107,7 @@ function Form({ handleShowForm }) {
                   name="institution"
                   value={userData.institution}
                   onChange={handleChange}
-                  placeholder="institution que desarrollaste"
+                  placeholder="Cuidado y Limpieza"
                 />
                 <div
                   className={
@@ -139,14 +127,14 @@ function Form({ handleShowForm }) {
             </div>
 
             <div className={styles.FormDivInput}>
-              <label className={styles.labels}>description:</label>
+              <label className={styles.labels}>Donde desarrollaste la actividad?</label>
               <input
                 className={styles.inputDetail}
                 type="text"
                 name="description"
                 value={userData.description}
                 onChange={handleChange}
-                placeholder="description donde desarrollaste la actividad"
+                placeholder="Lugar"
               />
               <div
                 className={
