@@ -34,6 +34,7 @@ function UserExperience(props) {
     }
   }, [infoUser]);
 
+  console.log(experiences)
   return (
     <div className={style.background}>
       <div className={style.wrapper}>
@@ -41,10 +42,10 @@ function UserExperience(props) {
         <div className={style.infoWrapper}>
           {experiences.length > 0 ? (
             experiences.map((option, index) => (
-              <div key={option.idOption}>
-                <div className={style.educationdetailbox}>
+              <div key={option.idOption} className={style.educationWrapper}>
+                <div className={style.educationBox}>
                   <div className={style.infoContainerLeft}>
-                    <h2 className={style.education}>{option.education}</h2>
+                    <p className={style.description}>{option.education}</p>
                     <p className={style.detailInfo}>
                       {option.institution}
                       <br />
@@ -52,19 +53,11 @@ function UserExperience(props) {
                     </p>
                   </div>
                   <div className={style.infoContainerRight}>
-                    <p className={style.observationInfo}>{option.comment}</p>
+                    <p className={style.comment}>{option.comment}</p>
                   </div>
-                  <button
-                    onClick={(event) =>
-                      handleDeleteService(option.idOption, event)
-                    }
-                    className={style.crossButton}
-                  ></button>
                 </div>
                 {index !== experiences.length - 1 && (
-                  <div>
-                    <p className={style.line}></p>
-                  </div>
+                  <div className={style.line}></div>
                 )}
               </div>
             ))

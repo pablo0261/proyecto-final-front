@@ -25,90 +25,56 @@
     width: 100%
     height: fit-content
     display: flex
-    flex-direction: row
+    flex-direction: column
+    justify-content: center
+    align-items: center
     gap: 10px
     margin-top: 15px
+    padding: 30px 0px
+    box-sizing: border-box
     @include Mixins.boxShadowCard
 
-.educationdetailbox
-    
-    display: flex
-    flex-direction: row
-    justify-content: space-between
+.educationWrapper
     width: 90%
-    height: 90px
-    margin-inline: auto
-    margin-block: 10px
-    padding-block: 10px
-    @include Mixins.font($tertiaryColor, 18px, normal, normal)
+    height: fit-content
+    display: flex
+    flex-direction: column
+    gap: 20px
+
+.educationBox
+    width: 100%
+    height: fit-content
+    display: flex
+    margin: 20px 0px
 
 .line
-    width: 90%    
-    margin-inline: auto
-    border-bottom: 2px solid $primaryColor
+    width: 100%
+    border-bottom: 1px solid $primaryColor
 
-    
 .infoContainerLeft
-    margin-inline: 0 
-    margin-top: 0
     width: 35%
     height: fit-content
-    @include Mixins.font($secondaryColor, 22px, normal, normal)
     text-align: left
-    justify-content: start
 
-.education
-    position: relative
-    margin-top: 0
-    height: fit-content
-    @include Mixins.font($secondaryColor, 28px, bold, normal)
-    text-align: left
+.description
+    margin: 0
+    @include Mixins.font($secondaryColor, 24px, bold, normal)
 
 .detailInfo
-    position: relative
-    margin-top: -25px
-    height: fit-content
-    padding-bottom: 1px
-    @include Mixins.font($secondaryColor, 22px, normal, normal)
-    text-align: left
-
+    margin: 0
+    line-height: 25px
+    @include Mixins.font($secondaryColor, 20px, normal, normal)
 
 .infoContainerRight
-    position: relative
-    margin-inline: 3% 
-    margin-top: 5px
-    padding-bottom: 0
     width: 65%
     height: fit-content
-    @include Mixins.font($tertiaryColor, 20px, bold, normal)
     text-align: left
-    overflow: hidden 
-    overflow-wrap: break-word
-   
 
-.observationInfo
-    position: relative
-    margin-top: 0px
-    height: fit-content
-    text-align: left
-    justify-content: start
-
-.crossButton
-    background: none
-    background-image: url('../../../assets/Icons/IconCross.png')
-    height: 40px
-    width: 40px
-    border: none
-    position: relative
-    left: 0px
-    margin-block: auto
-    transition: .2s
-    cursor: pointer
-
-.crossButton:hover
-    transform: scale(1.1)
+.comment
+    margin: 0
+    @include Mixins.font($textSecondaryColor, 18px, normal, normal)
 
 .noInfo
     text-align: center
     margin-inline: auto
-    @include Mixins.font($grey, 20px, normal, normal) 
+    @include Mixins.font($grey, 18px, normal, normal)

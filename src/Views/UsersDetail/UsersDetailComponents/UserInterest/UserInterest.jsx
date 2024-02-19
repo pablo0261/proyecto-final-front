@@ -7,39 +7,38 @@ function UserInterest(props) {
   const [intereses, setIntereses] = useState([])
 
   useEffect(() => {
-    if (infoUser && infoUser.categories && infoUser.categories.length > 0) {
+    if (infoUser.categories.length != 0) {
       const interesCategory = infoUser.categories.find(category => category.idCategorie === 6);
 
-      if (interesCategory && interesCategory.categories_options && interesCategory.categories_options.length > 0) {
-        const interesOptions = interesCategory.categories_options;
+      if (interesCategory && interesCategory.categories_options.length != 0) {
+        const interesOptions = interesCategory.categories_options.map((option) => {
+          const newInterest = {
+            idOption: option.idOption,
+            interes: option.description
+          }
 
-        const interesData = interesOptions.map((option) => ({
-          idOption: option.idOption,
-          interes: option.description,
-        }));
-        setIntereses(interesData);
+          return newInterest
+        });
+        setIntereses(interesOptions);
       }
     }
   }, [infoUser]);
 
   return (
-    <div className={style.container}>
-      <div className={style.titleContainer}>
+    <div className={style.background}>
+      <div className={style.wrapper}>
         <p className={style.title}>Intereses</p>
-          </div>
-
-        <div className={style.containerCard}>
-          {intereses.length > 0 ? (
-            intereses.map((option) => (
-              <div className={style.interesDetailContainer} key={option.idOption}>
-                <div className={style.interesFalseButton}>{option.interes}</div>
-              </div>
-            ))
-          ) : (
-            <p className={style.noInfo}>No hay información de intereses disponible.</p>
-          )}
-        </div>
+        <div className={style.infoWrapper}>
+        {intereses.length != 0 ? (
+          intereses.map((option) => (
+            <div className={style.interes}>{option.interes}</div>
+          ))
+        ) : (
+          <p className={style.noInfo}>No hay información de intereses disponible.</p>
+        )}
+      </div>
     </div>
+    </div >
   );
 }
 

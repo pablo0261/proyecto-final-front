@@ -1,4 +1,4 @@
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import Landing from './Views/Landing/Landing';
 import Home from './Views/Home/Home';
 import NotFound from './utils/notFound/NotFound';
@@ -39,6 +39,7 @@ function App() {
   const dispatch = useDispatch()
   const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
   const navigate = useNavigate()
+  const { pathname } = useLocation()
   const userLoggedInfo = useSelector(state => state.infoUserLog)
 
   useEffect(() => {
@@ -46,11 +47,11 @@ function App() {
 
     if (localStorage.getItem(StoreItem.emailUserLogged)) {
       dispatch(recoverUserLoggedData(localStorage.getItem(StoreItem.emailUserLogged)))
-      if (userLoggedInfo.typeOfPerson === 'administrator') {
+      if (userLoggedInfo.typeOfPerson === 'administrator' && pathname === Helpers.AccessAccount || pathname === Helpers.Landing) {
         navigate(Helpers.StatsProviderView)
-      } else if (userLoggedInfo.typeOfPerson === 'provider') {
+      } else if (userLoggedInfo.typeOfPerson === 'provider' && pathname === Helpers.AccessAccount || pathname === Helpers.Landing) {
         navigate(Helpers.StatsProviderView)
-      } else {
+      } else  if (userLoggedInfo.typeOfPerson === 'provider' && pathname === Helpers.AccessAccount || pathname === Helpers.Landing) {
         navigate(Helpers.HomeCustomerView)
       }
       socket.emit('join-request', userLoggedInfo.idPeople);

@@ -4,16 +4,18 @@ import style from './UserPersonal.module.sass'
 function UserPersonal(props) {
 
     const { infoUser } = props
-    
+
     return (
         <div className={style.background}>
             <div className={style.wrapper}>
                 <div className={style.perfilWrapper}>
                     <div className={style.imageWrapper}>
                         <div className={infoUser.logged ? style.stateActive : style.stateInactive}>{infoUser.logged ? "Conectado" : "Desconectado"}</div>
-                        <img className={style.image} src={"https://res.cloudinary.com/dn3kedyer/image/upload/v1707141615/image/g08drlndxzjhmpbtxbdw.png" || infoUser.image} alt="Imagen" />
+                        <img className={style.image} src={infoUser.image ? infoUser.image : "https://res.cloudinary.com/dn3kedyer/image/upload/v1707141615/image/g08drlndxzjhmpbtxbdw.png"} alt="Imagen" />
                         <div className={style.valoration}>
-                            <div className={style.starIcon}></div>
+                            {[...Array(Number(infoUser.averageRating))].map((_, index) => (
+                                <div key={index} className={style.starIcon}></div>
+                            ))}
                             <p className={style.textStar}>{infoUser.averageRating} ({infoUser.countRating})</p>
                         </div>
                     </div>
@@ -28,8 +30,8 @@ function UserPersonal(props) {
                         <p className={style.textDetail}>{infoUser.aboutMe}</p>
                         <div className={style.contacts}>
                             <p className={style.textContact}>Contactos: </p>
-                            { infoUser.email && <div className={style.iconEmail}></div>}
-                            { infoUser.phone && <div className={style.iconPhone}></div>}
+                            {infoUser.email && <div className={style.iconEmail}></div>}
+                            {infoUser.phone && <div className={style.iconPhone}></div>}
                         </div>
                     </div>
                 </div>
