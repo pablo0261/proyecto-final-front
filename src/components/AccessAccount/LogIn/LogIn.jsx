@@ -8,9 +8,7 @@ function LogIn(props) {
 
     const [logInData, setLogInData] = useState({
         email: "",
-        password: "",
-        idPeople: 1,
-        typeOfPerson: isProvider ? 'provider' : 'customer'
+        password: ""
     })
 
     const [errors, setErrors] = useState({
