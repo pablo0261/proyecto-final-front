@@ -28,6 +28,7 @@ function ScheduleProviderCard() {
     }
   }, [infoUserLog]);
 
+  console.log("schedule", schedule)
   const daysOfWeek = [
     "Lunes",
     "Martes",
@@ -61,15 +62,18 @@ function ScheduleProviderCard() {
             {shifts.map((shift, shiftIndex) => (
               <tr className={styles.turnos} key={shiftIndex}>
                 <td className={styles.moment}>{shift}</td>
-                {daysOfWeek.map((day, dayIndex) => (
-                  <td className={styles.campos} key={dayIndex}>
-                    {schedule[shiftIndex * daysOfWeek.length + dayIndex] ? (
-                      <img src={okIcon} alt="OK" />
-                    ) : (
-                      <img src={emptyIcon} alt="OK" />
-                    )}
-                  </td>
-                ))}
+                {daysOfWeek.map((day, dayIndex) => {
+                  const index = dayIndex * shifts.length + shiftIndex;
+                  return (
+                    <td className={styles.campos} key={dayIndex}>
+                      {schedule[index] ? (
+                        <img src={okIcon} alt="OK" />
+                      ) : (
+                        <img src={emptyIcon} alt="OK" />
+                      )}
+                    </td>
+                  );
+                })}
               </tr>
             ))}
           </tbody>
