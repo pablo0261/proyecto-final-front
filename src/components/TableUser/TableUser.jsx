@@ -4,14 +4,14 @@ import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import { allPeople } from '../../redux/actions';
 
-function TableDue({ people , valor }) {
+function TableDue({ people , valor , onMailButtonClick , handleShowForm}) {
   const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
   const dispatch = useDispatch();
 
-  const handleChangeStatus = async (value, state) => {
+  const handleChangeStatus = async (idValue, state) => {
     const auxState = state === "Active" ? "Inactive" : "Active";
     const response = await axios.put(`${REACT_APP_API_URL}/people`, {
-      "idPeople": value,
+      "idPeople": idValue,
       "state": auxState
     });
     if (response.status === 200) {
@@ -43,7 +43,10 @@ function TableDue({ people , valor }) {
               <td>{person.people.state}</td>
               <td>{person.people.pago || "No data"}</td>
               <td>{person.people.dateOfAdmission}</td>
-              <td><button >MAIL</button></td>
+              <td><button onClick={() => {
+                handleShowForm();
+                onMailButtonClick(person.people.email);
+              }}>MAIL</button></td>
               <td><button className={styles.activo} type="button" onClick={() => handleChangeStatus(person.people.idPeople, person.people.state)} >{person.people.state === "Active" ? "Inactivo" : "Activo"}</button></td>
               <td><button className={styles.cancelar}>Cancelar</button></td>
             </tr>
