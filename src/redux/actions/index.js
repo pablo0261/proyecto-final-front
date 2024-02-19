@@ -172,7 +172,7 @@ const getPeopleFilteredOrderedPagination = (queryConstructor, queryPagination) =
 const getFiltersOrdersDB = () => {
   return async (dispatch) => {
     try {
-      const response = await axios.get(`${REACT_APP_API_URL}/categories`);
+      const response = await axios.get(`${REACT_APP_API_URL}/categories?isDeleted=false`);
       return dispatch({
         type: FILTER_SERVICES,
         payload: response.data.categories.data,
