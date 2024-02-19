@@ -19,6 +19,7 @@ import {
   GET_FAQS,
   GET_ALL_PROVIDER_ADMIN,
   PUT_STATE,
+  PUT_FAQS,
   // CONTRAT_SERVICE_USER
 } from "../actions/action-types";
 
@@ -220,6 +221,17 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         faqS: payload,
       }
+
+      case PUT_FAQS:
+      return {
+        ...state,
+        faqS: state.faqS.map((faq) => {
+          if (faq.idQuestion === payload.idQuestion) {
+            return payload; // Reemplaza la FAQ existente con la nueva información
+          }
+          return faq;
+        }),
+      };
 
 
     default:
