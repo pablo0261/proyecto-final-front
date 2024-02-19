@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
 import style from "./ValoresGenerales.module.sass"; // Asegúrate de importar el archivo de estilos
 
 function Calification() {
