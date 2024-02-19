@@ -51,6 +51,9 @@ function InteresProviderCard() {
     }).then((response) => {
       if (response.isConfirmed) {
         dispatch(deleteService(deleteData));
+        setIntereses(preInteres =>
+          preInteres.filter(interes => interes.idOption !== idOption)
+        );
       } 
     });
   };
