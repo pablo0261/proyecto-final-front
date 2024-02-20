@@ -6,6 +6,7 @@ import StoreItem from '../../Helpers/LocalStorage';
 import { useDispatch, useSelector } from 'react-redux';
 import { logOutDeleteData } from '../../redux/actions';
 import { io } from 'socket.io-client';
+import axios from 'axios';
 const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
 const socket = io(REACT_APP_API_URL);
 
@@ -18,10 +19,17 @@ function NavBar() {
 
     const dispatch = useDispatch()
 
-    const handleLogOut = () => {
-        dispatch(logOutDeleteData())
-        socket.emit('logout-request', userLoggedInfo.idPeople)
-        navigate(Helpers.Landing)
+    const handleLogOut = async() => {
+        try {
+            const response = await axios.put(
+            `${REACT_APP_API_URL}/people/logout`, {idPeople: userLoggedInfo.idPeople});
+            if (response.status === 200) {
+                dispatch(logOutDeleteData())
+                socket.emit('logout-request', userLoggedInfo.idPeople)
+                navigate(Helpers.Landing)}
+        } catch (error) {
+            window.alert(error)
+        }
     }
 
     const scrollToTutorial = () => {
