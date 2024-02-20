@@ -1,28 +1,46 @@
 @use '../../Styles/Mixins.sass' as *;
 @import '../../Styles/Variables.sass';
 
-.container{
+.container {
     @include flexbox(row, center, center);
-};
+}
+
+;
 
 .container_form {
     @include flexbox(null, center, center);
     gap: 10px;
 
-    input{
+    input {
         @include inputsFormat
-    };
+    }
+
+    input:focus {
+        @include inputsFormat_Hover
+    }
+
+    input::placeholder {
+        @include inputsFormat_Placeholder
+    }
 
     button {
         @include buttonActive;
-    };
+    }
+
+    ;
 
     button:hover {
         @include buttonHover;
-    };
+    }
+
+    ;
 
     button:pressed {
         @include buttonPressed;
-    };
+    }
 
-};
+    ;
+
+}
+
+;

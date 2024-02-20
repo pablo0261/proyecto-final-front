@@ -67,17 +67,16 @@ function AccessAccount() {
         }
       }
     } catch (error) {
-      console.log(error)
       Swal.fire({
-        title: 'Usuario ya Registrado!',
-        text: `Para acceder al sistema vuelva y realice el Login`,
+        title: `${error.response.data.error}!`,
+        text: `Por favor, verifique los datos e intente nuevamente`,
         icon: 'alert',
       })
-      .then(response => {
-        if(response.isConfirmed){
-          handleFormsVisibility()
-        }
-        })
+      // .then(response => {
+      //   if(response.isConfirmed){
+      //     handleFormsVisibility()
+      //   }
+      //   })
     }
   };
 
