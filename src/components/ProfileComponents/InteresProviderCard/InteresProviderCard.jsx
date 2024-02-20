@@ -69,7 +69,13 @@ function InteresProviderCard() {
       <div className={style.infoWrapper}>
         {intereses.length != 0
           ? intereses.map((option, index) =>
-            <button key={index} onClick={(event) => handleDeleteService(option.idOption, event)} className={style.interes}> {option.interes}</button>)
+            <button 
+            key={index} 
+            onClick={(event) => handleDeleteService(option.idOption, event)} 
+            onMouseEnter={(event) => event.target.innerText = "Eliminar"}
+            onMouseLeave={(event) => event.target.innerText = option.interes}
+            className={style.interes}
+            > {option.interes}</button>)
           : <p className={style.noInfo}>No hay información de intereses disponible.</p>
         }
       </div>

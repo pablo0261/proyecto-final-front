@@ -62,13 +62,11 @@ const Landing = () => {
             </p>
             <div className={styles.buttonWrapper}>
               <button
-                className={styles.buttonLogIn}
                 onClick={() => handleLocalStorage(false)}
               >
                 Busco un cuidador
               </button>
               <button
-                className={styles.buttonLogIn}
                 onClick={() => handleLocalStorage(true)}
               >
                 Ofrecer mis servicios

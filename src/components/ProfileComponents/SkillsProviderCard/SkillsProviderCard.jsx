@@ -69,7 +69,10 @@ function SkillsProviderCard() {
         {skills.length != 0
           ? skills.map(
             (option, index) =>
-              <button key={index} onClick={(event) => handleDeleteService(option.idOption, event)} className={style.skill}>{option.skill}</button>
+              <button 
+              key={index} 
+              onClick={(event) => handleDeleteService(option.idOption, event)} onMouseEnter={(event) => event.target.innerText = "Eliminar"}
+              onMouseLeave={(event) => event.target.innerText = option.interes}className={style.skill}>{option.skill}</button>
           )
           : <p className={style.noInfo}>No hay información de habilidades disponible.</p>
         }

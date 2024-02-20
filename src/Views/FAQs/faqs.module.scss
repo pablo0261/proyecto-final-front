@@ -82,7 +82,7 @@
             @include buttonHover;
         }
 
-        button:pressed {
+        button:active {
             @include buttonPressed;
         };
     }
