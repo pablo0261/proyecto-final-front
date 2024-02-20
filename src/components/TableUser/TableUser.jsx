@@ -53,11 +53,19 @@ function TableDue({ people , valor , onMailButtonClick , handleShowForm}) {
               <td>{person.people.state}</td>
               <td>{person.people.pago || "No data"}</td>
               <td>{person.people.dateOfAdmission}</td>
-              <td><button onClick={() => {
+              <td><button className={styles.mail} onClick={() => {
                 handleShowForm();
                 onMailButtonClick(person.people.email);
               }}>MAIL</button></td>
-              <td><button className={styles.activo} type="button" onClick={() => handleChangeStatus(person.people.idPeople, person.people.state)} >{person.people.state === "Active" ? "Inactivo" : "Activo"}</button></td>
+              <td>
+                <button
+                  className={person.people.state === "Active" ? styles.inactivo : styles.activo}
+                  type="button"
+                  onClick={() => handleChangeStatus(person.people.idPeople, person.people.state)}
+                >
+                  {person.people.state === "Active" ? "Desactivar" : "Activar"}
+                </button>
+              </td>
               <td><button className={styles.cancelar} type="button" onClick={() => handleChangeCancel(person.people.idPeople, person.people.state)} >{person.people.state === "Delete" ? "Active" : "Delete"}</button></td>
             </tr>
           ))}
