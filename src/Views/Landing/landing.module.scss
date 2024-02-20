@@ -53,13 +53,17 @@
     margin: 20px 0px 50px 0px;
     gap: 30px;
 
-    .buttonLogIn {
+    button {
         @include buttonActive;
-    }
-
-    .buttonLogIn:hover {
-        @include buttonHover;
-    }
+      }
+    
+      button:hover {
+        @include buttonHover
+      }
+    
+      button:active {
+        @include buttonPressed
+      }
 }
 
 .introQuote {
@@ -267,6 +271,10 @@
             .Btn:hover {
                 transform: scale(1.1);
             }
+
+            .Btn:active {
+                @include buttonPressed
+              }
         }
     }
 }
