@@ -1,16 +1,29 @@
 const Validation = (property, setLocalErrors, userData) => {
   switch (property) {
-    case "education":
+    case "idOption":
+      if (userData[property] === "") {
+        setLocalErrors((prevErrors) => ({
+          ...prevErrors,
+          [property]: "*Ingrese el nivel de educación",
+        }));
+      } else {
+        setLocalErrors((prevErrors) => ({
+          ...prevErrors,
+          [property]: "",
+        }));
+      }
+        break;
+
     case "institution":
       if (userData[property].trim() === "") {
         setLocalErrors((prevErrors) => ({
           ...prevErrors,
           [property]: "*Ingrese el nivel de educación",
         }));
-      } else if (!/^[\w\sáéíóúÁÉÍÓÚüÜñÑ.,]{1,25}$/.test(userData[property])) {
+      } else if (!/^[\w\sáéíóúÁÉÍÓÚüÜñÑ.,]{1,50}$/.test(userData[property])) {
         setLocalErrors((prevErrors) => ({
           ...prevErrors,
-          [property]: "*El campo solo puede contener letras, números, espacios, acentos, comas, puntos y debe tener hasta 25 caracteres",
+          [property]: "*El campo solo puede contener letras, números, espacios, acentos, comas, puntos y debe tener hasta 50 caracteres",
         }));
       } else {
         setLocalErrors((prevErrors) => ({
@@ -41,11 +54,11 @@ const Validation = (property, setLocalErrors, userData) => {
       }
       break;
 
-    case "observaciones":
-      if (userData[property].trim().length > 150) {
+    case "comment":
+      if (userData[property].trim().length > 250) {
         setLocalErrors((prevErrors) => ({
           ...prevErrors,
-          [property]: "*El texto es demasiado largo (máximo 200 caracteres)",
+          [property]: "*El texto es demasiado largo (máximo 250 caracteres)",
         }));
       } else if (!/^[\w\sáéíóúÁÉÍÓÚüÜñÑ.,]+$/.test(userData[property])) {
         setLocalErrors((prevErrors) => ({

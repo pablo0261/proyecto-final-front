@@ -3,6 +3,7 @@ const isFromArgentina = /^(?:(?:00)?549?)?0?(?:11|[2368]\d)(?:(?=\d{0,2}15)\d{2}
 
 const Validation = (property, setLocalErrors, userData) => {
   switch (property) {
+
     case "Nombre":
       if (userData[property].trim() === "") {
         setLocalErrors((prevErrors) => ({
@@ -46,21 +47,25 @@ const Validation = (property, setLocalErrors, userData) => {
       }
       break;
 
-    case "País":
+    case "Provincia":
       if (userData[property].trim() === "") {
         setLocalErrors((prevErrors) => ({
           ...prevErrors,
-          [property]: "*Ingrese su pais de residencia",
+          [property]: "*Seleccione una provincia.",
         }));
-      } else if (!/^[A-Za-z\s]+$/.test(userData[property])) {
+      } else {
         setLocalErrors((prevErrors) => ({
           ...prevErrors,
-          [property]: "*El país no puede contener símbolos",
+          [property]: "",
         }));
-      } else if (userData[property].length > 15) {
+      }
+      break;
+
+    case "Localidad":
+      if (userData[property].trim() === "") {
         setLocalErrors((prevErrors) => ({
           ...prevErrors,
-          [property]: "*Introduzca un país valido",
+          [property]: "*Seleccione una ciudad.",
         }));
       } else {
         setLocalErrors((prevErrors) => ({
@@ -81,7 +86,7 @@ const Validation = (property, setLocalErrors, userData) => {
           ...prevErrors,
           [property]: "*La Calle no puede contener símbolos",
         }));
-      } else if (userData[property].length > 20) {
+      } else if (userData[property].length > 40) {
         setLocalErrors((prevErrors) => ({
           ...prevErrors,
           [property]: "*Introduzca una calle valida",
@@ -94,19 +99,33 @@ const Validation = (property, setLocalErrors, userData) => {
       }
       break;
 
-      case "Sobre mi":
-        if (userData[property].length > 200) {
-          setLocalErrors((prevErrors) => ({
-            ...prevErrors,
-            [property]: "*Texto demasiado extenso",
-          }));
-        } else {
-          setLocalErrors((prevErrors) => ({
-            ...prevErrors,
-            [property]: "",
-          }));
-        }
-        break;
+    case "Profesion":
+      if (userData[property].trim() === "") {
+        setLocalErrors((prevErrors) => ({
+          ...prevErrors,
+          [property]: "*Seleccione una opcion.",
+        }));
+      } else {
+        setLocalErrors((prevErrors) => ({
+          ...prevErrors,
+          [property]: "",
+        }));
+      }
+      break;
+
+    case "Sobre mi":
+      if (userData[property].trim().length > 200) {
+        setLocalErrors((prevErrors) => ({
+          ...prevErrors,
+          [property]: "*El texto es demasiado largo (máximo 200 caracteres)",
+        }));
+      } else {
+        setLocalErrors((prevErrors) => ({
+          ...prevErrors,
+          [property]: "",
+        }));
+      }
+      break;
 
     default:
       break;

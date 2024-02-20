@@ -23,11 +23,15 @@ function Form({ handleShowForm }) {
   useEffect(() => {
     const fetchEducation = async () => {
       try {
-        const response = await fetch(`${REACT_APP_API_URL}/categories`);
+        const response = await fetch(`${REACT_APP_API_URL}/categories?isDeleted=false&idCategorie=2`);
         const data = await response.json();
-        const educationOptions = data.categories.data[1].categories_options.map(
+        const educationOptions = data.categories.data[0].categories_options.map(
           (option) => {
-            return { description: option.description, idOption: option.idOption }
+            const newEducation = { 
+              description: option.description, 
+              idOption: option.idOption 
+            }
+            return newEducation
           }
         )
         setEducation(educationOptions);
@@ -54,29 +58,24 @@ function Form({ handleShowForm }) {
   };
 
   const [localErrors, setLocalErrors] = useState({
-    education: "*Campo Obligatorio",
+    idOption: "*Campo Obligatorio",
     institution: "*Campo Obligatorio",
     year: "*Campo Obligatorio",
     comment: "*Campo Obligatorio",
   });
 
+  const [educationSelected, setEducationSelected] = useState()
+
   const handleChange = (event) => {
     const property = event.target.name;
-    let value = event.target.value;
+    const value = event.target.value;
 
-    if (property === "education") {
-      const option = education.find((opt) => opt.description === value);
-      if (option) {
-        setUserData((prevUserData) => ({
-          ...prevUserData,
-          idOption: option.idOption,
-          [property]: value,
-        }));
-      }
-    } else {
-      Validation(property, setLocalErrors, { ...userData, [property]: value });
-      setUserData({ ...userData, [property]: value });
+    if (property === "idOption") {
+      setEducationSelected(value)
     }
+
+    setUserData({ ...userData, [property]: value });
+    Validation(property, setLocalErrors, { ...userData, [property]: value });
   };
 
   return (
@@ -97,19 +96,19 @@ function Form({ handleShowForm }) {
               <label className={styles.labels}>*Nivel de Educación</label>
               <select
                 className={styles.inputSelect}
-                name="education"
-                value={userData.education}
+                name="idOption"
+                value={educationSelected}
                 onChange={handleChange}
               >
                 <option value="">Seleccione una opción</option>
                 {education.map((option) => (
-                  <option key={option.idOption} value={option.description}>
+                  <option key={option.idOption} value={option.idOption}>
                     {option.description}
                   </option>
                 ))}
               </select>
-              <div className={localErrors.education ? styles.errorMessage : styles.errorNotMessage}>
-                {localErrors.education ? localErrors.education : "Datos Válidos"}
+              <div className={localErrors.idOption ? styles.errorMessage : styles.errorNotMessage}>
+                {localErrors.idOption ? localErrors.idOption : "Datos Válidos"}
               </div>
             </div>
 

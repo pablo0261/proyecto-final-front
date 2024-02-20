@@ -31,7 +31,7 @@ function ServicesProviderCard() {
           }
         )
         setServicesData(serviceOption)
-      } 
+      }
     }
   }, [infoUserLog]);
 
@@ -41,9 +41,9 @@ function ServicesProviderCard() {
       idOption: service.idOption,
     };
     Swal.fire({
-      title: "¿Quieres eliminar este servicio?",
-      text: "Confirma que quieres eliminar el servicio seleccionado",
-      icon: "alert",
+      title: "¿Quieres eliminar este Servicio?",
+      text: "Confirma que quieres eliminar el Servicio seleccionado",
+      icon: "warning",
       showDenyButton: true,
       denyButtonText: "Cancelar",
       denyButtonColor: "Grey",

@@ -41,10 +41,9 @@ function SkillsProviderCard() {
 
 
     Swal.fire({
-      title: "Quieres eliminar esta Habilidad?",
-      text: `Click en Aceptar para eliminarla, o dale a Cancelar para regresar`,
-      footer: "Confirma que quieres eliminar la Habilidad seleccionado",
-      icon: "alert",
+      title: "¿Quieres eliminar esta Habilidad?",
+      text: "Confirma que quieres eliminar la Habilidad seleccionada",
+      icon: "warning",
       showDenyButton: true,
       denyButtonText: "Cancelar",
       denyButtonColor: "Grey",
@@ -69,8 +68,8 @@ function SkillsProviderCard() {
       <div className={style.infoWrapper}>
         {skills.length != 0
           ? skills.map(
-            (option) =>
-              <button onClick={(event) => handleDeleteService(option.idOption, event)} className={style.skill}>{option.skill}</button>
+            (option, index) =>
+              <button key={index} onClick={(event) => handleDeleteService(option.idOption, event)} className={style.skill}>{option.skill}</button>
           )
           : <p className={style.noInfo}>No hay información de habilidades disponible.</p>
         }

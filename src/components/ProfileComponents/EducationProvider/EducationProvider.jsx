@@ -53,7 +53,7 @@ function EducationProvider() {
 
     Swal.fire({
       title: "¿Quieres eliminar este nivel de Educación?",
-      text: "Click en Aceptar para eliminarlo, o dale a Cancelar para regresar",
+      text: "Confirma que quieres eliminar la Educación seleccionado",
       icon: "warning",
       showDenyButton: true,
       denyButtonText: "Cancelar",
@@ -92,7 +92,7 @@ function EducationProvider() {
                 <div className={style.infoContainerRight}>
                   <p className={style.comment}>{option.comment}</p>
                 </div>
-                <button onClick={(event) =>handleDeleteService(option.idOption, event)} className={style.crossButton}></button>
+                <button onClick={(event) => handleDeleteService(option.idOption, event)} className={style.crossButton}></button>
               </div>
               {index !== education.length - 1 && (
                 <div className={style.line}></div>

@@ -89,10 +89,10 @@ const Validation = (
       break;
 
     case "comment":
-      if (userData[property].trim().length > 200) {
+      if (userData[property].trim().length > 250) {
         setLocalErrors((prevErrors) => ({
           ...prevErrors,
-          [property]: "*El texto es demasiado largo (máximo 200 caracteres)",
+          [property]: "*El texto es demasiado largo (máximo 250 caracteres)",
         }));
       } else if (!/^[\w\sáéíóúÁÉÍÓÚüÜñÑ.,]+$/.test(userData[property])) {
         setLocalErrors((prevErrors) => ({
