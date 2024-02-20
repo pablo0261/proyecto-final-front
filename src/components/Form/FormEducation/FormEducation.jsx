@@ -9,7 +9,7 @@ function Form({ handleShowForm }) {
   const dispatch = useDispatch();
   const userLog = useSelector((state) => state.infoUserLog);
 
-  
+
   const [userData, setUserData] = useState({
     idPeople: userLog.idPeople,
     idOption: "",
@@ -23,11 +23,15 @@ function Form({ handleShowForm }) {
   useEffect(() => {
     const fetchEducation = async () => {
       try {
-        const response = await fetch(`${REACT_APP_API_URL}/categories`);
+        const response = await fetch(`${REACT_APP_API_URL}/categories?isDeleted=false&idCategorie=2`);
         const data = await response.json();
-        const educationOptions = data.categories.data[1].categories_options.map(
+        const educationOptions = data.categories.data[0].categories_options.map(
           (option) => {
-            return { description: option.description, idOption: option.idOption }
+            const newEducation = { 
+              description: option.description, 
+              idOption: option.idOption 
+            }
+            return newEducation
           }
         )
         setEducation(educationOptions);
@@ -41,38 +45,37 @@ function Form({ handleShowForm }) {
 
   const handleEducationAdd = (event) => {
     event.preventDefault();
-    try {
-      dispatch(postUserServices(userData));
-      handleShowForm();
-    } catch (error) {
-      console.error("Error al guardar la educación", error);
+    if (!Object.values(localErrors).some(errors => errors != "")) {
+      try {
+        dispatch(postUserServices(userData));
+        handleShowForm();
+      } catch (error) {
+        console.error("Error al guardar la educación", error);
+      }
+    } else {
+      window.alert("Rellene todos los campos antes de guardar cambios.")
     }
   };
 
   const [localErrors, setLocalErrors] = useState({
-    education: "",
-    institution: "",
-    year: "",
-    comment: "",
+    idOption: "*Campo Obligatorio",
+    institution: "*Campo Obligatorio",
+    year: "*Campo Obligatorio",
+    comment: "*Campo Obligatorio",
   });
+
+  const [educationSelected, setEducationSelected] = useState()
 
   const handleChange = (event) => {
     const property = event.target.name;
-    let value = event.target.value;
-  
-    if (property === "education") {
-      const option = education.find((opt) => opt.description === value);
-      if (option) {
-        setUserData((prevUserData) => ({
-          ...prevUserData,
-          idOption: option.idOption,
-          [property]: value,
-        }));
-      }
-    } else {
-      Validation(property, setLocalErrors, { ...userData, [property]: value });
-      setUserData({ ...userData, [property]: value });
+    const value = event.target.value;
+
+    if (property === "idOption") {
+      setEducationSelected(value)
     }
+
+    setUserData({ ...userData, [property]: value });
+    Validation(property, setLocalErrors, { ...userData, [property]: value });
   };
 
   return (
@@ -83,70 +86,51 @@ function Form({ handleShowForm }) {
           className={styles.closeButton}
           onClick={() => handleShowForm()}
         ></button>
-        <p className={styles.textTitle}>Agregue Su Nivel de Educación</p>
+        <p className={styles.textTitle}>Cuentanos sobre tu formación</p>
         <form className={styles.Form} onSubmit={(event) => handleEducationAdd(event)}>
+          {
+            Object.values(userData).some((data) => data !== "") && <p className={styles.errorMessageStatic}>(*)Rellene los campos obligatorios</p>
+          }
           <div className={styles.FormDivInput}>
             <div className={styles.FormDivInput}>
-              <label className={styles.labels}>Nivel de Educación</label>
+              <label className={styles.labels}>*Nivel de Educación</label>
               <select
-                className={styles.inputDetail}
-                name="education"
-                value={userData.education}
+                className={styles.inputSelect}
+                name="idOption"
+                value={educationSelected}
                 onChange={handleChange}
               >
                 <option value="">Seleccione una opción</option>
                 {education.map((option) => (
-                    <option key={option.idOption} value={option.description}>
-                      {option.description}
-                    </option>
-                  ))}
+                  <option key={option.idOption} value={option.idOption}>
+                    {option.description}
+                  </option>
+                ))}
               </select>
-              <div
-                className={
-                  userData.education &&
-                  (localErrors.education
-                    ? styles.errorMessage
-                    : styles.errorNotMessage)
-                }
-              >
-                {userData.education
-                  ? localErrors.education
-                    ? localErrors.education
-                    : "Datos Válidos"
-                  : null}
+              <div className={localErrors.idOption ? styles.errorMessage : styles.errorNotMessage}>
+                {localErrors.idOption ? localErrors.idOption : "Datos Válidos"}
               </div>
             </div>
 
             <div className={styles.FormDivInput}>
-              <label className={styles.labels}>Institución:</label>
+              <label className={styles.labels}>*Institución:</label>
               <input
-                className={styles.inputDetail}
+                className={styles.inputs}
                 type="text"
                 name="institution"
                 value={userData.institution}
                 onChange={handleChange}
                 placeholder=""
               />
-              <div
-                className={
-                  userData.institution &&
-                  (localErrors.institution
-                    ? styles.errorMessage
-                    : styles.errorNotMessage)
-                }
-              >
-                {userData.institution
-                  ? localErrors.institution
-                    ? localErrors.institution
-                    : "Datos Válidos"
-                  : null}
+              <div className={localErrors.institution ? styles.errorMessage : styles.errorNotMessage}>
+                {localErrors.institution ? localErrors.institution : "Datos Válidos"}
               </div>
             </div>
           </div>
 
           <div className={styles.FormDivInput}>
             <div className={styles.FormDivInput}>
-              <label className={styles.labels}>Año:</label>
+              <label className={styles.labels}>*Año:</label>
               <input
                 className={styles.inputs}
                 type="text"
@@ -155,24 +139,13 @@ function Form({ handleShowForm }) {
                 onChange={handleChange}
                 placeholder=""
               />
-              <div
-                className={
-                  userData.year &&
-                  (localErrors.year
-                    ? styles.errorMessage
-                    : styles.errorNotMessage)
-                }
-              >
-                {userData.year
-                  ? localErrors.year
-                    ? localErrors.year
-                    : "Datos Válidos"
-                  : null}
+              <div className={localErrors.year ? styles.errorMessage : styles.errorNotMessage}>
+                {localErrors.year ? localErrors.year : "Datos Válidos"}
               </div>
             </div>
 
             <div className={styles.FormDivInput}>
-              <label className={styles.labels}>Observaciones:</label>
+              <label className={styles.labels}>*Observaciones:</label>
               <textarea
                 className={styles.inputDetailObservation}
                 type="text"
@@ -181,27 +154,15 @@ function Form({ handleShowForm }) {
                 onChange={handleChange}
                 placeholder=""
               />
-              <div
-                className={
-                  userData.comment &&
-                  (localErrors.comment
-                    ? styles.errorMessage
-                    : styles.errorNotMessage)
-                }
-              >
-                {userData.comment
-                  ? localErrors.comment
-                    ? localErrors.comment
-                    : "Datos Válidos"
-                  : null}
+              <div className={localErrors.comment ? styles.errorMessage : styles.errorNotMessage}>
+                {localErrors.comment ? localErrors.comment : "Datos Válidos"}
               </div>
             </div>
           </div>
-
           <button className={styles.buttonSave} type="submit">
             Guardar
           </button>
-        </form>{" "}
+        </form>
       </div>
     </div>
   );

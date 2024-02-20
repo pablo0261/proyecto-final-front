@@ -6,6 +6,7 @@ import Form from "../../Form/FormEducation/FormEducation";
 import style from "./EducationProvider.module.sass";
 
 function EducationProvider() {
+
   const dispatch = useDispatch();
   const infoUserLog = useSelector((state) => state.infoUserLog);
   const [showForm, setShowForm] = useState(false);
@@ -31,10 +32,10 @@ function EducationProvider() {
           const educationData = educationOptions.map((option) => ({
             idPeople: infoUserLog.idPeople,
             idOption: option.idOption,
-            education: option.description || "No informado",
-            institution: option.people_options[0].institution || "No informado",
-            year: option.people_options[0]?.year || "No informado",
-            comment: option.people_options[0]?.comment || "No informado",
+            education: option.description,
+            institution: option.people_options[0].institution,
+            year: option.people_options[0]?.year,
+            comment: option.people_options[0]?.comment,
           }));
 
           setEducation(educationData);
@@ -51,10 +52,9 @@ function EducationProvider() {
     };
 
     Swal.fire({
-      title: "Quieres eliminar este nivel de Educación?",
-      text: `Click en Aceptar para eliminarlo, o dale a Cancelar para regresar`,
-      footer: "Confirma que quieres eliminar la Educación seleccionado",
-      icon: "alert",
+      title: "¿Quieres eliminar este nivel de Educación?",
+      text: "Confirma que quieres eliminar la Educación seleccionado",
+      icon: "warning",
       showDenyButton: true,
       denyButtonText: "Cancelar",
       denyButtonColor: "Grey",
@@ -66,24 +66,23 @@ function EducationProvider() {
         setEducation(preEducation =>
           preEducation.filter(exp => exp.idOption !== idOption)
         );
-      } 
+      }
     });
   };
 
   return (
-    <div className={style.container}>
-      <div className={style.titleContainer}>
-        <h1 className={style.title}>Educación</h1>
+    <div className={style.background}>
+      <div className={style.wrapper}>
+        <p className={style.title}>Educación</p>
         <button onClick={handleShowForm} className={style.editButton}></button>
       </div>
-
-      <div className={style.educationdetailContainer}>
-        {education.length > 0 ? (
-          education.map((option, index) => (
-            <div key={option.idOption}>
-              <div className={style.educationdetailbox}>
+      <div className={style.infoWrapper}>
+        {education.length != 0
+          ? education.map((option, index) => (
+            <div key={option.idOption} className={style.educationWrapper}>
+              <div className={style.educationBox}>
                 <div className={style.infoContainerLeft}>
-                  <h2 className={style.education}>{option.education}</h2>
+                  <p className={style.description}>{option.education}</p>
                   <p className={style.detailInfo}>
                     {option.institution}
                     <br />
@@ -91,27 +90,22 @@ function EducationProvider() {
                   </p>
                 </div>
                 <div className={style.infoContainerRight}>
-                  <p className={style.observationInfo}>{option.comment}</p>
+                  <p className={style.comment}>{option.comment}</p>
                 </div>
-                <button
-                  onClick={(event) =>
-                    handleDeleteService(option.idOption, event)
-                  }
-                  className={style.crossButton}
-                ></button>
+                <button onClick={(event) => handleDeleteService(option.idOption, event)} className={style.crossButton}></button>
               </div>
               {index !== education.length - 1 && (
-                <div>
-                  <p className={style.line}></p>
-                </div>
+                <div className={style.line}></div>
               )}
             </div>
           ))
-          ) : (
-            <p className={style.noInfo}>No hay información de educación disponible.</p>
-            )}
+          :
+          <p className={style.noInfo}>
+            No hay información de educación disponible.
+          </p>
+        }
       </div>
-            {showForm && <Form handleShowForm={handleShowForm} />}
+      {showForm && <Form handleShowForm={handleShowForm} />}
     </div>
   );
 }

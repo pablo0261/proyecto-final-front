@@ -5,10 +5,11 @@ import Validation from "../FormExperience/validationFormExperience";
 import styles from "./FormExperience.module.sass";
 
 function Form({ handleShowForm }) {
+
   const dispatch = useDispatch();
   const userLog = useSelector((state) => state.infoUserLog);
-
-  const ExperiencieNumber = ["Número de orden","1", "2", "3", "4"];
+  const [isSelected, setIsSelected] = useState("")
+  const ExperiencieNumber = ["1", "2", "3", "4"];
 
 
   const [userData, setUserData] = useState({
@@ -21,43 +22,52 @@ function Form({ handleShowForm }) {
   });
 
   const [localErrors, setLocalErrors] = useState({
-    institution: "",
-    description: "",
-    year: "",
-    comment: "",
+    idOption: "*Campo Obligatorio",
+    institution: "*Campo Obligatorio",
+    description: "*Campo Obligatorio",
+    year: "*Campo Obligatorio",
+    comment: "*Campo Obligatorio",
   });
 
   const handleChange = (event) => {
     const { name, value } = event.target;
     if (name === "idOption") {
+      setIsSelected(value)
       let newIdOption;
       switch (value) {
         case "2":
           newIdOption = "114";
+          setUserData((prevUserData) => ({ ...prevUserData, idOption: newIdOption }));
           break;
         case "3":
           newIdOption = "115";
+          setUserData((prevUserData) => ({ ...prevUserData, idOption: newIdOption }));
           break;
         case "4":
           newIdOption = "116";
+          setUserData((prevUserData) => ({ ...prevUserData, idOption: newIdOption }));
           break;
         default:
           newIdOption = "113";
+          setUserData((prevUserData) => ({ ...prevUserData, idOption: newIdOption }));
       }
-      setUserData((prevUserData) => ({ ...prevUserData, idOption: newIdOption }));
     } else {
       setUserData((prevUserData) => ({ ...prevUserData, [name]: value }));
     }
     Validation(name, setLocalErrors, { ...userData, [name]: value });
   };
-  
+
   const handleExperienceAdd = (event) => {
     event.preventDefault();
-    try {
-      dispatch(postUserServices(userData));
-      handleShowForm();
-    } catch (error) {
-      console.error("Error al guardar la experiencia", error);
+    if (Object.values(localErrors).every(errors => errors === "")) {
+      try {
+        dispatch(postUserServices(userData));
+        handleShowForm();
+      } catch (error) {
+        console.error("Error al guardar la experiencia", error);
+      }
+    } else {
+      window.alert("Debes rellenar todos los campos obligatorios antes de guardar")
     }
   };
 
@@ -69,18 +79,18 @@ function Form({ handleShowForm }) {
           className={styles.closeButton}
           onClick={() => handleShowForm()}
         ></button>
-        <p className={styles.textTitle}>Agregue su Experiencia</p>
-        <form
-          className={styles.Form}
-          onSubmit={(event) => handleExperienceAdd(event)}
-        >
+        <p className={styles.textTitle}>Cuentanos sobre tus experiencias</p>
+        <form className={styles.Form} onSubmit={(event) => handleExperienceAdd(event)}>
+          {
+            Object.values(userData).some((data) => data !== "") && <p className={styles.errorMessageStatic}>(*)Rellene los campos obligatorios</p>
+          }
           <div className={styles.FormDivInput}>
             <div className={styles.FormDivInput}>
               <label className={styles.labels}>*N° de Experiencia:</label>
               <select
-                className={styles.inputDetail}
+                className={styles.inputSelect}
                 name="idOption"
-                value={userData.idOption}
+                value={isSelected}
                 onChange={handleChange}
                 placeholder={"Selecciona el número de experiencia que completarás"}
               >
@@ -93,116 +103,73 @@ function Form({ handleShowForm }) {
                   </option>
                 ))}
               </select>
+              <div className={localErrors.idOption ? styles.errorMessage : styles.errorNotMessage}>
+                {localErrors.idOption ? localErrors.idOption : "Datos Válidos"}
+              </div>
             </div>
 
             <div className={styles.FormDivInput}>
 
               <div className={styles.FormDivInput}>
-                <label className={styles.labels}>
-                  Que tarea realizó?
-                </label>
+                <label className={styles.labels}>*Puesto:</label>
                 <input
-                  className={styles.inputDetail}
+                  className={styles.inputs}
                   type="text"
-                  name="institution"
-                  value={userData.institution}
+                  name="description"
+                  value={userData.description}
                   onChange={handleChange}
-                  placeholder="Cuidado y Limpieza"
+                  placeholder="Ej: Enfermero"
                 />
-                <div
-                  className={
-                    userData.institution &&
-                    (localErrors.institution
-                      ? styles.errorMessage
-                      : styles.errorNotMessage)
-                  }
-                >
-                  {userData.institution
-                    ? localErrors.institution
-                      ? localErrors.institution
-                      : "Datos Válidos"
-                    : null}
+                <div className={localErrors.description ? styles.errorMessage : styles.errorNotMessage}>
+                  {localErrors.description ? localErrors.description : "Datos Válidos"}
                 </div>
               </div>
             </div>
 
             <div className={styles.FormDivInput}>
-              <label className={styles.labels}>Donde desarrollaste la actividad?</label>
+              <label className={styles.labels}>*Institución:</label>
               <input
-                className={styles.inputDetail}
+                className={styles.inputs}
                 type="text"
-                name="description"
-                value={userData.description}
+                name="institution"
+                value={userData.institution}
                 onChange={handleChange}
-                placeholder="Lugar"
+                placeholder="Ej: Clínica del Sol"
               />
-              <div
-                className={
-                  userData.description &&
-                  (localErrors.description
-                    ? styles.errorMessage
-                    : styles.errorNotMessage)
-                }
-              >
-                {userData.description
-                  ? localErrors.description
-                    ? localErrors.description
-                    : "Datos Válidos"
-                  : null}
+              <div className={localErrors.institution ? styles.errorMessage : styles.errorNotMessage}>
+                {localErrors.institution ? localErrors.institution : "Datos Válidos"}
               </div>
             </div>
           </div>
 
           <div className={styles.FormDivInput}>
             <div className={styles.FormDivInput}>
-              <label className={styles.labels}>Año:</label>
+              <label className={styles.labels}>*Año:</label>
               <input
                 className={styles.inputs}
                 type="text"
                 name="year"
                 value={userData.year}
                 onChange={handleChange}
-                placeholder="Año"
+                placeholder="Ej: 2010"
               />
-              <div
-                className={
-                  userData.year &&
-                  (localErrors.year
-                    ? styles.errorMessage
-                    : styles.errorNotMessage)
-                }
-              >
-                {userData.year
-                  ? localErrors.year
-                    ? localErrors.year
-                    : "Datos Válidos"
-                  : null}
+              <div className={localErrors.year ? styles.errorMessage : styles.errorNotMessage}>
+                {localErrors.year ? localErrors.year : "Datos Válidos"}
               </div>
             </div>
 
             <div className={styles.FormDivInput}>
-              <label className={styles.labels}>Observaciones:</label>
+              <label className={styles.labels}>*Observaciones:</label>
               <textarea
-                className={styles.inputDetailObservation}
+                className={styles.inputDetail}
                 type="text"
                 name="comment"
                 value={userData.comment}
                 onChange={handleChange}
-                placeholder="Detalla tu labor"
+                placeholder="Detalla tus tareas dentro de este puesto"
               />
-              <div
-                className={
-                  userData.comment &&
-                  (localErrors.comment
-                    ? styles.errorMessage
-                    : styles.errorNotMessage)
-                }
-              >
-                {userData.comment
-                  ? localErrors.comment
-                    ? localErrors.comment
-                    : "Datos Válidos"
-                  : null}
+              <div className={localErrors.comment ? styles.errorMessage : styles.errorNotMessage}>
+                {localErrors.comment ? localErrors.comment : "Datos Válidos"}
               </div>
             </div>
           </div>
@@ -210,7 +177,7 @@ function Form({ handleShowForm }) {
           <button className={styles.buttonSave} type="submit">
             Guardar
           </button>
-        </form>{" "}
+        </form>
       </div>
     </div>
   );

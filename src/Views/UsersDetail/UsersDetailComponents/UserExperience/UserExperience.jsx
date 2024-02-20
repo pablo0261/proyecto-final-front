@@ -33,8 +33,7 @@ function UserExperience(props) {
       }
     }
   }, [infoUser]);
-
-  console.log(experiences)
+  
   return (
     <div className={style.background}>
       <div className={style.wrapper}>

@@ -16,7 +16,7 @@ function Form({ handleShowForm }) {
     }));
   }, []);
 
-  const [ isProvinciaSelected , setIsProvinciaSelected ] = useState("Selecciona una provincia")
+  const [isProvinciaSelected, setIsProvinciaSelected] = useState("Selecciona una provincia")
 
   const provincias = [
     "Buenos Aires",
@@ -45,12 +45,14 @@ function Form({ handleShowForm }) {
     "Tucumán"
   ]
 
-  const [ciudades, setCiudades] = useState([]); 
+  const [ciudades, setCiudades] = useState([]);
 
   const handleProvinciaChange = async (event) => {
+    const property = event.target.name
     setIsProvinciaSelected(event.target.value)
     const provincia = event.target.value.toLowerCase();
-    setUserData({ ...userData, Provincia: provincia });
+    setUserData({ ...userData, [property]: provincia });
+    Validation(property, setLocalErrors, { ...userData, [property]: provincia });
     try {
       const response = await fetch(
         `${REACT_APP_API_URL}/municipalities?province=${encodeURIComponent(
@@ -67,7 +69,7 @@ function Form({ handleShowForm }) {
     }
   }
 
-  const [profession, setProfession] = useState([]); 
+  const [profession, setProfession] = useState([]);
 
   useEffect(() => {
     const handleProfessionChange = async () => {
@@ -85,15 +87,15 @@ function Form({ handleShowForm }) {
       }
     };
 
-    handleProfessionChange(); 
-  }, []); 
+    handleProfessionChange();
+  }, []);
 
   const [userData, setUserData] = useState({
     id: userLog,
     Nombre: "",
     Profesion: "",
     Telefono: "",
-    País: "",
+    País: "Argentina",
     Provincia: "",
     Localidad: "",
     Calle: "",
@@ -101,14 +103,17 @@ function Form({ handleShowForm }) {
   });
 
   const [localErrors, setLocalErrors] = useState({
-    Nombre: "",
-    Telefono: "",
+    Nombre: "*Campo Obligatorio",
+    Telefono: "*Campo Obligatorio",
     País: "",
-    Provincia: "",
-    Localidad: "",
-    Calle: "",
-    "Sobre mi": "",
+    Provincia: "*Campo Obligatorio",
+    Localidad: "*Campo Obligatorio",
+    Calle: "*Campo Obligatorio",
+    Profesion: "*Campo Obligatorio",
+    "Sobre mi": "*Campo Obligatorio",
   });
+
+  const [professionSelected, setProfessionSelected] = useState("")
 
   //-PARA ENVIAR CON EL POST--/
   const userDataEnglish = {
@@ -126,6 +131,9 @@ function Form({ handleShowForm }) {
     const property = event.target.name;
     const value = event.target.value;
 
+    if (property === "Profesion") {
+      setProfessionSelected(value)
+    }
     Validation(property, setLocalErrors, { ...userData, [property]: value });
     setUserData({ ...userData, [property]: value });
   };
@@ -171,19 +179,8 @@ function Form({ handleShowForm }) {
               onChange={handleChange}
               placeholder="Ej: Ana Maria de los Angeles"
             />
-            <div
-              className={
-                userData.Nombre &&
-                (localErrors.Nombre
-                  ? styles.errorMessage
-                  : styles.errorNotMessage)
-              }
-            >
-              {userData.Nombre
-                ? localErrors.Nombre
-                  ? localErrors.Nombre
-                  : "Datos Validos"
-                : null}
+            <div className={localErrors.Nombre ? styles.errorMessage : styles.errorNotMessage}>
+              {localErrors.Nombre ? localErrors.Nombre : "Datos Válidos"}
             </div>
           </div>
 
@@ -198,19 +195,8 @@ function Form({ handleShowForm }) {
                 onChange={handleChange}
                 placeholder="Ej: 54 9 ...(Tu número sin el 15)... "
               />
-              <div
-                className={
-                  userData.Telefono &&
-                  (localErrors.Telefono
-                    ? styles.errorMessage
-                    : styles.errorNotMessage)
-                }
-              >
-                {userData.Telefono
-                  ? localErrors.Telefono
-                    ? localErrors.Telefono
-                    : "Datos Validos"
-                  : null}
+              <div className={localErrors.Telefono ? styles.errorMessage : styles.errorNotMessage}>
+                {localErrors.Telefono ? localErrors.Telefono : "Datos Válidos"}
               </div>
             </div>
 
@@ -223,20 +209,6 @@ function Form({ handleShowForm }) {
               >
                 {userData.País || "Argentina"}
               </span>
-              <div
-                className={
-                  userData.País &&
-                  (localErrors.País
-                    ? styles.errorMessage
-                    : styles.errorNotMessage)
-                }
-              >
-                {userData.País
-                  ? localErrors.País
-                    ? localErrors.País
-                    : "Datos Válidos"
-                  : null}
-              </div>
             </div>
 
             <div className={styles.FormDivInputFlex}>
@@ -256,6 +228,9 @@ function Form({ handleShowForm }) {
                   </option>
                 ))}
               </select>
+              <div className={localErrors.Provincia ? styles.errorMessage : styles.errorNotMessage}>
+                {localErrors.Provincia ? localErrors.Provincia : "Datos Válidos"}
+              </div>
             </div>
 
             <div className={styles.FormDivInputFlex}>
@@ -279,6 +254,9 @@ function Form({ handleShowForm }) {
                     </option>
                   ))}
               </select>
+              <div className={localErrors.Localidad ? styles.errorMessage : styles.errorNotMessage}>
+                {localErrors.Localidad ? localErrors.Localidad : "Datos Válidos"}
+              </div>
             </div>
           </div>
           <div className={styles.FormDivInput}>
@@ -291,43 +269,35 @@ function Form({ handleShowForm }) {
               onChange={handleChange}
               placeholder="Ej: Av. Chacabuco"
             />
-            <div
-              className={
-                userData.Calle &&
-                (localErrors.Calle
-                  ? styles.errorMessage
-                  : styles.errorNotMessage)
-              }
-            >
-              {userData.Calle
-                ? localErrors.Calle
-                  ? localErrors.Calle
-                  : "Datos Válidos"
-                : null}
+            <div className={localErrors.Calle ? styles.errorMessage : styles.errorNotMessage}>
+              {localErrors.Calle ? localErrors.Calle : "Datos Válidos"}
             </div>
           </div>
 
           <div className={styles.FormDivInput}>
             <label className={styles.labels}>*Profesión:</label>
             <select
-                className={styles.inputSelect}
-                name="Ocupación"
-                value={userData.profession}
-                onChange={handleChange}
-              >
-                <option value="" disabled>
-                  Selecciona una profesión
-                </option>
-                {Array.isArray(profession) &&
-                  profession.map((profession) => (
-                    <option
-                      key={profession.idOption}
-                      value={profession.idOption}
-                    >
-                      {profession.description}
-                    </option>
-                  ))}
-              </select>
+              className={styles.inputSelect}
+              name="Profesion"
+              value={professionSelected}
+              onChange={handleChange}
+            >
+              <option value="" disabled>
+                Selecciona una profesión
+              </option>
+              {Array.isArray(profession) &&
+                profession.map((profession) => (
+                  <option
+                    key={profession.idOption}
+                    value={profession.description}
+                  >
+                    {profession.description}
+                  </option>
+                ))}
+            </select>
+            <div className={localErrors.Profesion ? styles.errorMessage : styles.errorNotMessage}>
+              {localErrors.Profesion ? localErrors.Profesion : "Datos Válidos"}
+            </div>
           </div>
 
           <div className={styles.FormDivInput}>
@@ -340,19 +310,8 @@ function Form({ handleShowForm }) {
               onChange={handleChange}
               placeholder="Cuentales a los clientes quien eres..."
             />
-            <div
-              className={
-                userData["Sobre mi"] &&
-                (localErrors["Sobre mi"]
-                  ? styles.errorMessage
-                  : styles.errorNotMessage)
-              }
-            >
-              {userData["Sobre mi"]
-                ? localErrors["Sobre mi"]
-                  ? localErrors["Sobre mi"]
-                  : "Datos Válidos"
-                : null}
+            <div className={localErrors["Sobre mi"] ? styles.errorMessage : styles.errorNotMessage}>
+              {localErrors["Sobre mi"] ? localErrors["Sobre mi"] : "Datos Válidos"}
             </div>
           </div>
            <button className={styles.buttonSave} type="submit" >

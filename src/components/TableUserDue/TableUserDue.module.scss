@@ -47,15 +47,32 @@
         .mail{
             @include buttonTables(#A64208);
         };
+        .mail:hover{
+            @include buttonTables(#cd6b32);
+            transform: scale(1.22)
+        }
         .activo{
             @include buttonTables(#22B573);
+        };
+        .activo:hover{
+            @include buttonTables(#2ad98a);
+            transform: scale(1.22)
         };
         .inactivo{
             @include buttonTables(#F2B138);
             color: black;
         };
+        .inactivo:hover{
+            @include buttonTables(#f6bf58);
+            transform: scale(1.22);
+            color: black;
+        };
         .cancelar{
             @include buttonTables(#D95555);
+        };
+        .cancelar:hover{
+            @include buttonTables(#d67f7f);
+            transform: scale(1.22)
         };
     };
 };

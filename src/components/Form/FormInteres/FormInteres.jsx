@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { postUserInteres } from "../../../redux/actions/index";
 import styles from "./FormInteres.module.sass";
+import Validation from "./validationFormInteres";
 
 function Form({ handleShowForm }) {
   const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
@@ -14,14 +15,18 @@ function Form({ handleShowForm }) {
     idOption: "",
   });
 
+  const [localErrors, setLocalErrors] = useState({
+    idOption : "*Campo Obligatorio"
+  })
+
   const [interes, setInteres] = useState([]);
   
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        const response = await fetch(`${REACT_APP_API_URL}/categories`);
+        const response = await fetch(`${REACT_APP_API_URL}/categories?isDeleted=false&idCategorie=6`);
         const data = await response.json();
-        const interesOptions = data.categories.data[4].categories_options.map(
+        const interesOptions = data.categories.data[0].categories_options.map(
           (option) => {
             return { description: option.description, idOption: option.idOption }
           }
@@ -38,12 +43,17 @@ function Form({ handleShowForm }) {
 
   const handleInteresAdd = (event) => {
     event.preventDefault();
-    try {
-      dispatch(postUserInteres(userData));
-      handleShowForm();
-    } catch (error) {
-      console.error("Error al guardar la educación", error);
+    if (!localErrors.idOption) {
+      try {
+        dispatch(postUserInteres(userData));
+        handleShowForm();
+      } catch (error) {
+        console.error("Error al guardar la educación", error);
+      }
+    } else {
+      window.alert("Selecciona una opcion antes de guardar")
     }
+    
   };
   
 
@@ -52,6 +62,7 @@ function Form({ handleShowForm }) {
     const value = event.target.value;
 
     setUserData({ ...userData, [property]: value });
+    Validation(property, localErrors, setLocalErrors, { ...userData, [property]: value })
   };
 
   return (
@@ -62,13 +73,13 @@ function Form({ handleShowForm }) {
           className={styles.closeButton}
           onClick={() => handleShowForm()}
         ></button>
-        <p className={styles.textTitle}>Agregue sus Intereses</p>
+        <p className={styles.textTitle}>Selecciona tus intereses</p>
         <form className={styles.Form} onSubmit={(event)=> handleInteresAdd(event)}>
           <div className={styles.FormDivFlex}>
             <div className={styles.FormDivInputFlex}>
               <label className={styles.labels}>Opciones:</label>
               <select
-                className={styles.inputs}
+                className={styles.inputSelect}
                 name="idOption"
                 value={userData.idOption}
                 onChange={handleChange}
@@ -82,6 +93,9 @@ function Form({ handleShowForm }) {
                   </option>
                 ))}
               </select>
+              <div className={localErrors.idOption ? styles.errorMessage : styles.errorNotMessage}>
+                {localErrors.idOption ? localErrors.idOption : "Datos Válidos"}
+              </div>
             </div>
           </div>
           <button
