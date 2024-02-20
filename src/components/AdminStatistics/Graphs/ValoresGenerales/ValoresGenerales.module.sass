@@ -17,10 +17,11 @@
 
 .statisticsItem
     position: relative
+    display: flex
     width: 45%
     margin-bottom: 8px
     display: flex
-    height: 140px
+    height: 120px
     justify-content: center
     margin-inline: auto
     @include Mixins.boxShadowCard
@@ -41,6 +42,16 @@
 
 .statisticsValue  
     position: relative
+    width: 50%
     margin-block: auto
     margin-left: 25px
-    +Mixins.font(grey, 35px, bold, normal)
+    margin-block: center
+    +Mixins.font(grey, 38px, bold, normal)
+
+.statisticsDescription  
+    position: relative
+    with: 50%
+    margin-block: auto
+    margin-left: 10px
+    margin-block: center
+    +Mixins.font(grey, 18px, bold, normal)
