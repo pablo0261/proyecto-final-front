@@ -284,7 +284,6 @@ const postUserServices = (updatedUserData) => {
         `${REACT_APP_API_URL}/people/options`,
         updatedUserData
         );
-        console.log("response",response.data)
       dispatch({
         type: POST_NEW_SERVICE_USER,
         payload: response.data.people.data[0].people

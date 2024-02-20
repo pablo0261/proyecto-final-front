@@ -19,9 +19,9 @@ function Form({ handleShowForm }) {
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        const response = await fetch(`${REACT_APP_API_URL}/categories`);
+        const response = await fetch(`${REACT_APP_API_URL}/categories?isDeleted=false&idCategorie=6`);
         const data = await response.json();
-        const interesOptions = data.categories.data[4].categories_options.map(
+        const interesOptions = data.categories.data[0].categories_options.map(
           (option) => {
             return { description: option.description, idOption: option.idOption }
           }
@@ -62,13 +62,13 @@ function Form({ handleShowForm }) {
           className={styles.closeButton}
           onClick={() => handleShowForm()}
         ></button>
-        <p className={styles.textTitle}>Agregue sus Intereses</p>
+        <p className={styles.textTitle}>Selecciona tus intereses</p>
         <form className={styles.Form} onSubmit={(event)=> handleInteresAdd(event)}>
           <div className={styles.FormDivFlex}>
             <div className={styles.FormDivInputFlex}>
               <label className={styles.labels}>Opciones:</label>
               <select
-                className={styles.inputs}
+                className={styles.inputSelect}
                 name="idOption"
                 value={userData.idOption}
                 onChange={handleChange}

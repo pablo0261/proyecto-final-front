@@ -15,7 +15,7 @@
 
 .wrapper
   @include Mixins.boxShadowCard
-  width: 45%
+  width: 30%
   height: fit-content
   display: flex
   flex-direction: column
@@ -45,6 +45,7 @@
 
 .Form
   width: 85%
+  height: fit-content
   margin-top: 20px
 
 .FormDivInput
@@ -54,15 +55,16 @@
   align-items: flex-start
 
 .FormDivFlex
-  display: flex
-  flex-wrap: wrap
-  justify-content: space-between
-
-.FormDivInputFlex
+  width: 100%
   display: flex
   flex-direction: column
-  width: 45%
+  gap: 20px
 
+.FormDivInputFlex
+  width: 100%
+  display: flex
+  flex-direction: column
+  
 .inputs
   @include Mixins.inputsFormat
 
@@ -72,25 +74,18 @@
 .inputs::placeholder
   @include Mixins.inputsFormat_Placeholder
 
-.inputDetail
-  height: 100px
-  width: 100%
-  padding: 10px 15px
-  font-family: 'K2D', sans-serif
-  font-size: 16px
-  font-style: normal
-  font-weight: normal
-  color: $secondaryColor
-  box-sizing: border-box
-  border: 2px solid $secondaryColor
-  border-radius: 10px
-  transition: .2s
-  resize: none
+.inputSelect
+  @include Mixins.inputsFormat
+  -webkit-appearance: none
+  -moz-appearance: none
+  appearance: none
+  background: url('../../../assets/Icons/ArrowSelect.png') no-repeat right center
+  background-size: 30px
 
-.inputDetail:focus
+.inputSelect:focus
   @include Mixins.inputsFormat_Hover
 
-.inputDetail::placeholder
+.inputSelect::placeholder
   @include Mixins.inputsFormat_Placeholder
 
 .labels

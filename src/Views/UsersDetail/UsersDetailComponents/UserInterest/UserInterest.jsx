@@ -29,16 +29,14 @@ function UserInterest(props) {
       <div className={style.wrapper}>
         <p className={style.title}>Intereses</p>
         <div className={style.infoWrapper}>
-        {intereses.length != 0 ? (
-          intereses.map((option) => (
-            <div className={style.interes}>{option.interes}</div>
-          ))
-        ) : (
-          <p className={style.noInfo}>No hay información de intereses disponible.</p>
-        )}
+          {intereses.length != 0
+            ? intereses.map((option) =>
+              <div className={style.interes}>{option.interes}</div>)
+            : <p className={style.noInfo}>No hay información de intereses disponible.</p>
+          }
+        </div>
       </div>
     </div>
-    </div >
   );
 }
 

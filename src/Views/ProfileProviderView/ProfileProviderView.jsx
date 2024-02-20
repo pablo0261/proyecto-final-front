@@ -19,21 +19,14 @@ function ProfileProviderView() {
   return (
     <div className={style.wrapper}>
         <ProfileProvider />
-        {infoUserLog.typeOfPerson === "provider" && 
-        <ServicesProviderCard />
-  }
+        {infoUserLog.typeOfPerson === "provider" && <ServicesProviderCard />}
         <EducationProvider />
-        {infoUserLog.typeOfPerson === "provider" && 
-        <ExperienciaProvider />
-}
+        {infoUserLog.typeOfPerson === "provider" && <ExperienciaProvider />}
         <SkillsProviderCard />
         <InteresProviderCard />
-        {infoUserLog.typeOfPerson === "provider" && 
-        <ScheduleProviderCard />
-}
+        {infoUserLog.typeOfPerson === "provider" && <ScheduleProviderCard />}
         <MapProviderCard />
         {/* <ReviewProviderCard /> */}
-        {/* <ConectionProviderCard /> */}
     </div>
   );
 }

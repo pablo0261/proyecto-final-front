@@ -302,8 +302,8 @@ function Form({ handleShowForm }) {
             <label className={styles.labels}>*Profesión:</label>
             <select
                 className={styles.inputSelect}
-                name="Ocupación"
-                value={userData.profession}
+                name="Profesion"
+                value={userData.Profesion}
                 onChange={handleChange}
               >
                 <option value="" disabled>
@@ -313,7 +313,7 @@ function Form({ handleShowForm }) {
                   profession.map((profession) => (
                     <option
                       key={profession.idOption}
-                      value={profession.idOption}
+                      value={profession.description}
                     >
                       {profession.description}
                     </option>

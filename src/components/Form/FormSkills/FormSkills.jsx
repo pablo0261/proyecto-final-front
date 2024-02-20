@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { postUserServices } from "../../../redux/actions/index";
 import styles from "./FormSkills.module.sass";
+import Validation from "./validationFormSkills";
 
 function Form({ handleShowForm }) {
   const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
@@ -14,14 +15,18 @@ function Form({ handleShowForm }) {
     idOption: "",
   });
 
+  const [localErrors, setLocalErrors] = useState({
+    idOption : "*Campo Obligatorio"
+  })
+
   const [skills, setSkills] = useState([]);
   
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        const response = await fetch(`${REACT_APP_API_URL}/categories`);
+        const response = await fetch(`${REACT_APP_API_URL}/categories?isDeleted=false&idCategorie=3`);
         const data = await response.json();
-        const skillsOptions = data.categories.data[2].categories_options.map(
+        const skillsOptions = data.categories.data[0].categories_options.map(
           (option) => {
             return { description: option.description, idOption: option.idOption }
           }
@@ -37,11 +42,15 @@ function Form({ handleShowForm }) {
 
   const handleSkillsAdd = (event) => {
     event.preventDefault();
-    try {
-      dispatch(postUserServices(userData));
-      handleShowForm();
-    } catch (error) {
-      console.error("Error al guardar la educación", error);
+    if (!localErrors.idOption) {
+      try {
+        dispatch(postUserServices(userData));
+        handleShowForm();
+      } catch (error) {
+        console.error("Error al guardar la educación", error);
+      }
+    } else {
+      window.alert("Selecciona una opcion antes de guardar")
     }
   };
   
@@ -51,6 +60,7 @@ function Form({ handleShowForm }) {
     const value = event.target.value;
 
     setUserData({ ...userData, [property]: value });
+    Validation(property, localErrors, setLocalErrors, { ...userData, [property]: value });
   };
 
   return (
@@ -61,13 +71,13 @@ function Form({ handleShowForm }) {
           className={styles.closeButton}
           onClick={() => handleShowForm()}
         ></button>
-        <p className={styles.textTitle}>Agregue sus habilidades</p>
+        <p className={styles.textTitle}>Selecciona tus habilidades</p>
         <form className={styles.Form} onSubmit={(event)=> handleSkillsAdd(event)}>
           <div className={styles.FormDivFlex}>
             <div className={styles.FormDivInputFlex}>
-              <label className={styles.labels}>Opciones:</label>
+              <label className={styles.labels}>*Opciones:</label>
               <select
-                className={styles.inputs}
+                className={styles.inputSelect}
                 name="idOption"
                 value={userData.idOption}
                 onChange={handleChange}
@@ -81,6 +91,9 @@ function Form({ handleShowForm }) {
                   </option>
                 ))}
               </select>
+              <div className={localErrors.idOption ? styles.errorMessage : styles.errorNotMessage}>
+                {localErrors.idOption ? localErrors.idOption : "Datos Válidos"}
+              </div>
             </div>
           </div>
           <button

@@ -6,6 +6,7 @@ import Form from "../../Form/FormServices/Form";
 import style from "./ServiceProviderCard.module.sass";
 
 function ServicesProviderCard() {
+
   const dispatch = useDispatch();
   const infoUserLog = useSelector((state) => state.infoUserLog);
   const [showForm, setShowForm] = useState(false);
@@ -16,30 +17,21 @@ function ServicesProviderCard() {
   };
 
   useEffect(() => {
-    if (infoUserLog.categories && infoUserLog.categories.length > 0) {
-      const serviceCategory = infoUserLog.categories.find(
-        (category) => category.idCategorie === 1
-      );
-      if (serviceCategory && serviceCategory.categories_options) {
-        const categoriesOptions = serviceCategory.categories_options.flatMap(
+    if (infoUserLog.categories.length != 0) {
+      const services = infoUserLog.categories.find((category) => category.idCategorie === 1);
+      if (services && services.categories_options.length != 0) {
+        const serviceOption = services.categories_options.map(
           (option) => {
-            if (option.people_options && option.people_options.length > 0) {
-              return option.people_options.map((personOption) => ({
-                description: option.description || "No description",
-                price: personOption.price || null,
-                idOption: option.idOption,
-              }));
-            } else {
-              return {
-                description: option.description || "No description",
-                price: null,
-              };
+            const newService = {
+              idOption: option.idOption,
+              description: option.description,
+              price: option.people_options[0].price,
             }
+            return newService
           }
-        );
-
-        setServicesData(categoriesOptions);
-      }
+        )
+        setServicesData(serviceOption)
+      } 
     }
   }, [infoUserLog]);
 
@@ -49,9 +41,8 @@ function ServicesProviderCard() {
       idOption: service.idOption,
     };
     Swal.fire({
-      title: "Quieres eliminar este servicio?",
-      text: `Click en Aceptarpara eliminarlo, o dale a Cancelar para regresar`,
-      footer: "Confirma que quieres eliminar el servicio seleccionado",
+      title: "¿Quieres eliminar este servicio?",
+      text: "Confirma que quieres eliminar el servicio seleccionado",
       icon: "alert",
       showDenyButton: true,
       denyButtonText: "Cancelar",
@@ -61,53 +52,41 @@ function ServicesProviderCard() {
     }).then((response) => {
       if (response.isConfirmed) {
         dispatch(deleteService(deleteData));
+        setServicesData(preServices =>
+          preServices.filter(services => services.idOption !== service.idOption)
+        );
       }
     });
   };
 
   return (
     <div className={style.background}>
-      <div className={style.servicesWrapper}>
-        <div className={style.serviceItem}>
-          <div className={style.column1}>
-            <p className={style.column1title}>Servicios</p>
-          </div>
-          {servicesData.slice(0, 4).map((service, index) => (
-            <div key={index} className={style.items}>
-              <button
-                onClick={() => handleDeleteService(service)}
-                className={style.crossButton}
-              ></button>
-              <div className={style.descriptionBox}>{service.description}</div>
+      <div className={style.tableWrapper}>
+        <div className={style.headerTable}>
+          <p className={style.column1title}>Servicios</p>
+          <p className={style.column2title}>Precio x Hora</p>
+          <div className={style.column3title}><button onClick={() => handleShowForm()} className={style.editButton}></button></div>
+        </div>
+        {
+          servicesData.length != 0
+            ? <div className={style.bodyTable}>
+              {
+                servicesData.map((service, index) => (
+                  <div key={index} className={style.row}>
+                    <button onClick={() => handleDeleteService(service)} className={style.crossButton}></button>
+                    <div className={style.descriptionBox}>{service.description}</div>
+                    <div className={style.priceBox}>${service.price ? service.price : "N/A"}</div>
+                    <div className={style.contratItem}>Servicio Activo</div>
+                  </div>
+                ))
+              }
             </div>
-          ))}
-        </div>
-        <div className={style.priceList}>
-          <div className={style.column2}>
-            <p className={style.column2title}>Precio x Hora</p>
-          </div>
-          {servicesData.slice(0, 4).map((service, index) => (
-            <div key={index} className={style.priceBox}>
-              $ {service.price ? service.price : "N/A"}
-            </div>
-          ))}
-        </div>
-        <div className={style.contratList}>
-          <div className={style.column3}>
-            <button
-              onClick={() => handleShowForm()}
-              className={style.editButton}
-            ></button>
-            {servicesData.slice(0, 4).map((service, index) => (
-              <button key={index} className={style.contratItem}>
-                Contratar este Servicio{" "}
-              </button>
-            ))}
-          </div>
-        </div>
-        {showForm && <Form handleShowForm={handleShowForm} />}
+            :
+            <p className={style.noInfo}>No tienes Servicios cargados</p>
+        }
       </div>
-    </div>
+      {showForm && <Form handleShowForm={handleShowForm} />}
+    </div >
   );
 }
 export default ServicesProviderCard;

@@ -61,15 +61,20 @@
 .FormDivInputFlex
   display: flex
   flex-direction: column
-  width: 90%
+  width: 100%
 
-.inputs
+.inputSelect
   @include Mixins.inputsFormat
+  -webkit-appearance: none
+  -moz-appearance: none
+  appearance: none
+  background: url('../../../assets/Icons/ArrowSelect.png') no-repeat right center
+  background-size: 30px
 
-.inputs:focus
+.inputSelect:focus
   @include Mixins.inputsFormat_Hover
 
-.inputs::placeholder
+.inputSelect::placeholder
   @include Mixins.inputsFormat_Placeholder
 
 .labels

@@ -5,7 +5,7 @@ function UserSkills(props) {
 
   const { infoUser } = props
   const [skills, setSkills] = useState([])
-  console.log(infoUser)
+
   useEffect(() => {
     if (infoUser.categories && infoUser.categories.length != 0) {
       const skillsCategory = infoUser.categories.find(category => category.idCategorie === 3);
@@ -19,7 +19,7 @@ function UserSkills(props) {
       }
     }
   }, [infoUser]);
-  console.log(skills)
+  
   return (
     <div className={style.background}>
       <div className={style.wrapper}>

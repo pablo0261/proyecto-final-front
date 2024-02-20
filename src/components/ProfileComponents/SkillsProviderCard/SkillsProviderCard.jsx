@@ -17,8 +17,8 @@ function SkillsProviderCard() {
 
   useEffect(() => {
     if (infoUserLog && infoUserLog.categories && infoUserLog.categories.length > 0) {
-      const skillCategory = infoUserLog.categories.find(category => category.idCategorie === 3); 
-      
+      const skillCategory = infoUserLog.categories.find(category => category.idCategorie === 3);
+
       if (skillCategory && skillCategory.categories_options && skillCategory.categories_options.length > 0) {
         const interesOptions = skillCategory.categories_options;
 
@@ -38,7 +38,7 @@ function SkillsProviderCard() {
       idPeople: infoUserLog.idPeople,
       idOption: idOption,
     };
-    
+
 
     Swal.fire({
       title: "Quieres eliminar esta Habilidad?",
@@ -56,37 +56,27 @@ function SkillsProviderCard() {
         setSkills(prevSkills =>
           prevSkills.filter(skill => skill.idOption !== idOption)
         );
-      } 
+      }
     });
   };
 
   return (
-    <div className={style.container}>
-      <div className={style.titleContainer}>
-        <h1 className={style.title}>Habilidades</h1>
+    <div className={style.background}>
+      <div className={style.wrapper}>
+        <p className={style.title}>Habilidades</p>
         <button onClick={handleShowForm} className={style.editButton}></button>
       </div>
-
-      <div className={style.containerCard}>
-        {skills.length > 0 ? (
-          skills.map((option) => (
-            <div className={style.skillsdetailContainer} key={option.idOption}>
-              <button
-                onClick={(event) => handleDeleteService(option.idOption, event)}
-                className={style.skillFalseButton}
-              >
-                {option.skill}
-              </button>
-            </div>
-          ))
-        ) : (
-          <p className={style.noInfo}>
-            No hay información de experiencia disponible.
-          </p>
-        )}
+      <div className={style.infoWrapper}>
+        {skills.length != 0
+          ? skills.map(
+            (option) =>
+              <button onClick={(event) => handleDeleteService(option.idOption, event)} className={style.skill}>{option.skill}</button>
+          )
+          : <p className={style.noInfo}>No hay información de habilidades disponible.</p>
+        }
       </div>
       {showForm && <Form handleShowForm={handleShowForm} />}
-    </div>
+    </div >
   );
 }
 
