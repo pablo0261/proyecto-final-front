@@ -83,7 +83,6 @@ function Reports() {
             subject: asunto,  
             text: message
         }
-        console.log(data)
         axios.post(`${REACT_APP_API_URL}/sendmail`, data)
     }
     return (
