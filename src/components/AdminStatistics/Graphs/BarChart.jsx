@@ -1,55 +1,57 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import * as echarts from 'echarts/core';
-import { BarChart } from 'echarts/charts';
 import {
-  TitleComponent,
-  TooltipComponent,
-  LegendComponent,
   ToolboxComponent,
-  GridComponent
+  TooltipComponent,
+  GridComponent,
+  LegendComponent
 } from 'echarts/components';
+import { BarChart, LineChart } from 'echarts/charts';
+import { UniversalTransition } from 'echarts/features';
 import { CanvasRenderer } from 'echarts/renderers';
 
 echarts.use([
-  BarChart,
-  TitleComponent,
-  TooltipComponent,
-  LegendComponent,
   ToolboxComponent,
+  TooltipComponent,
   GridComponent,
-  CanvasRenderer
+  LegendComponent,
+  BarChart,
+  LineChart,
+  CanvasRenderer,
+  UniversalTransition
 ]);
 
-function PaymentsStatistics() {
-  const [paymentData, setPaymentData] = useState([]);
+function ServicesValues() {
+  const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
+  const userLog = useSelector((state) => state.infoUserLog);
+  const [admisionesPorSemana, setAdmisionesPorSemana] = useState([]);
 
   useEffect(() => {
-    const generateRandomPayments = () => {
-      const payments = [];
-      const currentDate = new Date();
-      const currentMonth = currentDate.getMonth() + 1;
-
-      for (let i = 0; i < 12; i++) {
-        const month = (currentMonth - i) <= 0 ? (12 - Math.abs(currentMonth - i)) : (currentMonth - i);
-        const totalPayments = Math.floor(Math.random() * 100) + 1;
-        const onTimePayments = Math.floor(Math.random() * totalPayments);
-        const delayedPayments = Math.floor(Math.random() * (totalPayments - onTimePayments));
-        const suspendedUsers = Math.floor(Math.random() * (totalPayments - onTimePayments - delayedPayments));
-        payments.push({
-          month: month,
-          totalPayments: totalPayments,
-          onTimePayments: onTimePayments,
-          delayedPayments: delayedPayments,
-          suspendedUsers: suspendedUsers
-        });
+    const fetchEducation = async () => {
+      try {
+        const response = await fetch(
+          `${REACT_APP_API_URL}/stats/provider?idPeople=${userLog.idPeople}`
+        );
+        const data = await response.json();
+        console.log("data", data);
+        const admisiones = data.data.admisionesPorSemana.map(
+          (option) => ({
+            name: `Semana ${option.ejex}`,
+            value: [Number(option.Clientes), Number(option.Proveedores)],
+          })
+        );
+        setAdmisionesPorSemana(admisiones);
+      } catch (error) {
+        console.error(
+          "Error al obtener las admisiones de proveedores y clientes:",
+          error
+        );
       }
-
-      return payments;
     };
-
-    setPaymentData(generateRandomPayments());
-  }, []);
-
+    fetchEducation();
+  }, [REACT_APP_API_URL, userLog.idPeople]);
+  
   useEffect(() => {
     const chartDom = document.getElementById("payments-chart");
     const myChart = echarts.init(chartDom);
@@ -58,70 +60,61 @@ function PaymentsStatistics() {
       tooltip: {
         trigger: 'axis',
         axisPointer: {
-          type: 'shadow'
+          type: 'cross',
+          crossStyle: {
+            color: '#999'
+          }
+        }
+      },
+      toolbox: {
+        feature: {
+          magicType: { show: true, type: ['line', 'bar'] },
+          saveAsImage: { show: true }
         }
       },
       legend: {
-        data: ['Total de pagos', 'Pagos a tiempo', 'Pagos con retraso', 'Usuarios suspendidos']
-      },
-      toolbox: {
-        show: true,
-        orient: 'vertical',
-        left: 'right',
-        top: 'center',
-        feature: {
-          mark: { show: true },
-          dataView: { show: true, readOnly: false },
-          magicType: { show: true, type: ['line', 'bar', 'stack'] },
-          restore: { show: true },
-          saveAsImage: { show: true }
-        }
+        data: ['Proveedor', 'Cliente']
       },
       xAxis: [
         {
           type: 'category',
-          axisTick: { show: false },
-          data: paymentData.map(payment => `${payment.month}`)
+          data: admisionesPorSemana.map((serie) => serie.name), // Ahora los nombres de las series están en el eje x
+          axisPointer: {
+            type: 'shadow'
+          }
         }
       ],
       yAxis: [
         {
-          type: 'value'
-        }
+          type: 'value',
+          name: 'Activos',
+          min: 0,
+          max: 20,
+          interval: 5,
+          axisLabel: {
+            formatter: '{value}'
+          }
+        },
+        
       ],
       series: [
         {
-          name: 'Total de pagos',
+          name: 'Proveedor',
           type: 'bar',
-          emphasis: {
-            focus: 'series'
+          tooltip: {
+            formatter: '{b}: {c} ml'
           },
-          data: paymentData.map(payment => payment.totalPayments)
+          data: admisionesPorSemana.map((serie) => serie.value[1]),
         },
         {
-          name: 'Pagos a tiempo',
+          name: 'Cliente',
           type: 'bar',
-          emphasis: {
-            focus: 'series'
+          tooltip: {
+            formatter: '{b}: {c} ml'
           },
-          data: paymentData.map(payment => payment.onTimePayments)
+          data: admisionesPorSemana.map((serie) => serie.value[0]),
         },
-        {
-          name: 'Pagos con retraso',
-          type: 'bar',
-          emphasis: {
-            focus: 'series'
-          },
-          data: paymentData.map(payment => payment.delayedPayments)
-        },
-        {
-          name: 'Usuarios suspendidos',
-          type: 'bar',
-          emphasis: {
-            focus: 'series'
-          },
-          data: paymentData.map(payment => payment.suspendedUsers)
-        }
+       
       ]
     };
 
@@ -130,9 +123,9 @@ function PaymentsStatistics() {
     return () => {
       myChart.dispose();
     };
-  }, [paymentData]);
+  }, []);
 
   return <div id="payments-chart" style={{ height: "400px" }}></div>;
 }
 
-export default PaymentsStatistics;
+export default ServicesValues;
