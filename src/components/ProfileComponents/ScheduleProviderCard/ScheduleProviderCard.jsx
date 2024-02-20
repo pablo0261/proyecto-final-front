@@ -40,13 +40,13 @@ function ScheduleProviderCard() {
   const shifts = ["Mañana", "Tarde", "Noche"];
 
   return (
-    <div className={styles.container}>
-      <div className={styles.titleContainer}>
+    <div className={styles.background}>
+      <div className={styles.wrapper}>
         <h1 className={styles.title}>Disponibilidad y Ubicación</h1>
         <button onClick={handleShowForm} className={styles.editButton}></button>
       </div>
-      <div className={styles.scheduledetailContainer}>
-        <table>
+      <div className={styles.infoWrapper}>
+        <table className={styles.table}>
           <thead>
             <tr>
               <th className={styles.days}></th>
@@ -57,14 +57,14 @@ function ScheduleProviderCard() {
               ))}
             </tr>
           </thead>
-          <tbody className={styles.tbody}>
+          <tbody>
             {shifts.map((shift, shiftIndex) => (
-              <tr className={styles.turnos} key={shiftIndex}>
-                <td className={styles.moment}>{shift}</td>
+              <tr key={shiftIndex}>
+                <td className={styles.turnos}>{shift}</td>
                 {daysOfWeek.map((day, dayIndex) => {
                   const index = dayIndex * shifts.length + shiftIndex;
                   return (
-                    <td className={styles.campos} key={dayIndex}>
+                    <td key={dayIndex}>
                       {schedule[index] ? (
                         <img src={okIcon} alt="OK" />
                       ) : (

@@ -13,7 +13,7 @@ function UserPersonal(props) {
                         <div className={infoUser.logged ? style.stateActive : style.stateInactive}>{infoUser.logged ? "Conectado" : "Desconectado"}</div>
                         <img className={style.image} src={infoUser.image ? infoUser.image : "https://res.cloudinary.com/dn3kedyer/image/upload/v1707141615/image/g08drlndxzjhmpbtxbdw.png"} alt="Imagen" />
                         <div className={style.valoration}>
-                            {[...Array(Number(infoUser.averageRating))].map((_, index) => (
+                            {[...Array(Math.floor(Number(infoUser.averageRating)))].map((_, index) => (
                                 <div key={index} className={style.starIcon}></div>
                             ))}
                             <p className={style.textStar}>{infoUser.averageRating} ({infoUser.countRating})</p>

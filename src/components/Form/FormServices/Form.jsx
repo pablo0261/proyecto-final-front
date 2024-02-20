@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { postUserServices } from "../../../redux/actions/index";
-import Validation from "../FormProfileProvider/validationFormProfile";
+import Validation from "./validationFormServices";
 import styles from "./FormServices.module.sass";
 
 function Form({ handleShowForm }) {
@@ -12,7 +12,12 @@ function Form({ handleShowForm }) {
   const [userData, setUserData] = useState({
     idPeople: userLog.idPeople,
     price: "",
-    idOption: "" | "1",
+    idOption: "",
+  });
+
+  const [localErrors, setLocalErrors] = useState({
+    idOption: "*Campo Obligatorio",
+    price: "*Campo Obligatorio",
   });
 
   const [services, setServices] = useState([]);
@@ -20,7 +25,7 @@ function Form({ handleShowForm }) {
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        const response = await fetch(`${REACT_APP_API_URL}/categories`);
+        const response = await fetch(`${REACT_APP_API_URL}/categories?isDeleted=false&idCategorie=1`);
         const data = await response.json();
         const serviceOptions = data.categories.data[0].categories_options.map(
           (option) => {
@@ -39,31 +44,32 @@ function Form({ handleShowForm }) {
 
   const handleServicesAdd = (event) => {
     event.preventDefault();
-    try {
-      const updatedUserData = {
-        ...userData,
-        price: userData.price,
-        idOption: userData.idOption,
-      };
-
-      dispatch(postUserServices(updatedUserData));
-      handleShowForm()
-    } catch (error) {
-      console.error("Error al guardar los servicios y preciso:", error);
+    if (Object.values(localErrors).every(error => error === "")) {
+      try {
+        const updatedUserData = {
+          ...userData,
+          price: userData.price,
+          idOption: userData.idOption,
+        };
+  
+        dispatch(postUserServices(updatedUserData));
+        handleShowForm()
+      } catch (error) {
+        console.error("Error al guardar los servicios y preciso:", error);
+      }
+    } else {
+      window.alert("Seleccione su servicio y agregue su valor antes de guardar.")
     }
+    
   };
 
-  const [localErrors, setLocalErrors] = useState({
-    servicio: "",
-    precio: "",
-  });
-
+  
   const handleChange = (event) => {
     const property = event.target.name;
     const value = event.target.value;
 
-    Validation(property, setLocalErrors, { ...userData, [property]: value });
     setUserData({ ...userData, [property]: value });
+    Validation(property, localErrors, setLocalErrors, { ...userData, [property]: value });
   };
 
   
@@ -81,7 +87,7 @@ function Form({ handleShowForm }) {
             <div className={styles.FormDivInputFlex}>
               <label className={styles.labels}>Servicios:</label>
               <select
-                className={styles.inputs}
+                className={styles.inputSelect}
                 name="idOption"
                 value={userData.servicio}
                 onChange={handleChange}
@@ -95,19 +101,8 @@ function Form({ handleShowForm }) {
                   </option>
                 ))}
               </select>
-              <div
-                className={
-                  userData.servicio &&
-                  (localErrors.servicio
-                    ? styles.errorMessage
-                    : styles.errorNotMessage)
-                }
-              >
-                {userData.servicio
-                  ? localErrors.servicio
-                    ? localErrors.servicio
-                    : "Datos Válidos"
-                  : null}
+              <div className={localErrors.idOption ? styles.errorMessage : styles.errorNotMessage}>
+                {localErrors.idOption ? localErrors.idOption : "Datos Válidos"}
               </div>
             </div>
 
@@ -119,21 +114,10 @@ function Form({ handleShowForm }) {
                 name="price"
                 value={userData.price}
                 onChange={handleChange}
-                placeholder="$ ARG"
+                placeholder="$ARG"
               />
-              <div
-                className={
-                  userData.price &&
-                  (localErrors.precio
-                    ? styles.errorMessage
-                    : styles.errorNotMessage)
-                }
-              >
-                {userData.price
-                  ? localErrors.precio
-                    ? localErrors.precio
-                    : "Datos Validos"
-                  : null}
+              <div className={localErrors.price ? styles.errorMessage : styles.errorNotMessage}>
+                {localErrors.price ? localErrors.price : "Datos Válidos"}
               </div>
             </div>
           </div>

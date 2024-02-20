@@ -3,11 +3,24 @@ const Validation = (
   setLocalErrors,
   userData,
 ) => {
-  const errors = {};
 
   switch (property) {
-    case "actividad":
-      if (userData[property].trim() === "") {
+    case "idOption":
+      if (userData[property] === "") {
+        setLocalErrors((prevErrors) => ({
+          ...prevErrors,
+          [property]: "*Debes seleccionar una opción",
+        }));
+      } else {
+        setLocalErrors((prevErrors) => ({
+          ...prevErrors,
+          [property]: "",
+        }));
+      }
+      break;
+
+    case "description":
+      if (userData[property] === "") {
         setLocalErrors((prevErrors) => ({
           ...prevErrors,
           [property]: "*Ingrese la actividad que desarrolló.",
@@ -30,8 +43,8 @@ const Validation = (
       }
       break;
 
-    case "lugar":
-      if (userData[property].trim() === "") {
+    case "institution":
+      if (userData[property] === "") {
         setLocalErrors((prevErrors) => ({
           ...prevErrors,
           [property]: "*Ingrese el lugar donde desarrolló la actividad.",
@@ -56,24 +69,41 @@ const Validation = (
 
     case "year":
       const currentYear = new Date().getFullYear();
-      const enteredYear = parseInt(userData[property]);
-      if (userData[property].trim() === "") {
-        errors[property] = "*Este campo es obligatorio";
-      } else if (
-        !/^\d{4}$/.test(userData[property]) ||
-        enteredYear < 1900 ||
-        enteredYear > currentYear
-      ) {
-        errors[property] = "*Ingrese un año válido (1900-" + currentYear + ")";
+      const enteredYear = Number(userData[property]);
+      if (userData[property] === "") {
+        setLocalErrors((prevErrors) => ({
+          ...prevErrors,
+          [property]: "*Ingrese el año cuando desempeño la tarea",
+        }));
+      } else if (!/^\d{4}$/.test(userData[property]) || enteredYear < 1900 ||  enteredYear > currentYear) {
+        setLocalErrors((prevErrors) => ({
+          ...prevErrors,
+          [property]: "*Ingrese un año válido (1900-" + currentYear + ")",
+        }));
+      } else {
+        setLocalErrors((prevErrors) => ({
+          ...prevErrors,
+          [property]: "",
+        }));
       }
       break;
 
     case "comment":
       if (userData[property].trim().length > 200) {
-        errors[property] =
-          "*El texto es demasiado largo (máximo 200 caracteres)";
+        setLocalErrors((prevErrors) => ({
+          ...prevErrors,
+          [property]: "*El texto es demasiado largo (máximo 200 caracteres)",
+        }));
       } else if (!/^[\w\sáéíóúÁÉÍÓÚüÜñÑ.,]+$/.test(userData[property])) {
-        errors[property] = "*Las observaciones no pueden contener simbolos";
+        setLocalErrors((prevErrors) => ({
+          ...prevErrors,
+          [property]: "*Las observaciones no pueden contener simbolos",
+        }));
+      } else {
+        setLocalErrors((prevErrors) => ({
+          ...prevErrors,
+          [property]: "",
+        }));
       }
       break;
 
