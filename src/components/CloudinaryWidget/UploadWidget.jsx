@@ -1,14 +1,18 @@
 import axios from "axios";
 import { useEffect, useRef } from "react";
 import style from "./UploadWidget.module.sass";
+import { useDispatch } from "react-redux";
+import { putUserData } from "../../redux/actions";
 const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
 
 
 
 const UploadWidget = ({ setPublicId, user }) => {
+
   const cloudinaryRef = useRef();
   const widgetRef = useRef();
   const imageUrlRef = useRef(null);
+  const dispatch = useDispatch()
 
   useEffect(() => {
     cloudinaryRef.current = window.cloudinary;
@@ -44,14 +48,19 @@ const UploadWidget = ({ setPublicId, user }) => {
           }
         }
       },
-      function (error, result) {
+      async function (error, result) {
         if (!error && result && result.event === "success") {
           const imageUrl = result.info.url;
-          setPublicId(imageUrl);
-          axios.put(`${REACT_APP_API_URL}/people`, {
-            "idPeople": user,
-            "image": imageUrl
-          })
+          const newImage =  {
+            idPeople: user,
+            image: imageUrl
+          }
+          try {
+            await dispatch(putUserData(newImage))
+            setPublicId(imageUrl);
+          } catch (error) {
+            window.alert(error)
+          } 
         }
       }
     );

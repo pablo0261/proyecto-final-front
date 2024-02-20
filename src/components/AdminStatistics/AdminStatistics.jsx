@@ -5,6 +5,7 @@ import loadingHouse from "../../assets/Icons/loadingHouse.gif";
 import Barchart from "../../components/AdminStatistics/Graphs/BarChart";
 import ValoresGenerales from "./Graphs/ValoresGenerales/ValoresGenerales";
 
+
 import style from "./AdminStatistics.module.sass";
 
 function AdminStatistics() {
@@ -13,6 +14,7 @@ function AdminStatistics() {
   useEffect(() => {
     setTimeout(() => {
       setIsLoading(false);
+
     }, 2000); //* Simula 2 seg de retraso para darle tiempo a cargar a los componentes
   }, []);
 
@@ -43,6 +45,7 @@ function AdminStatistics() {
               {/* Aqui va el componente del Grafico 2 */}
             </div>
           </div>
+
         </div>
       )}
       {isLoading && (
@@ -50,6 +53,7 @@ function AdminStatistics() {
           <img src={loadingHouse} alt="Loading..." />
         </div>
       )}
+
     </>
   );
 }

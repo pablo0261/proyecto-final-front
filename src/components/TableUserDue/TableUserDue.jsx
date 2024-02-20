@@ -16,10 +16,10 @@ function TableUserDue() {
   const handleShowForm = () => {
     setShowForm(!showForm);
   };
-
+console.log(people)
   useEffect(() => {
     dispatch(allProviderAdmin(""));
-  }, []);
+  }, [people]);
 
   const handleChangeStatus = async (value, state) => {
     const auxState = state === "Active" ? "Inactive" : "Active";
@@ -27,14 +27,14 @@ function TableUserDue() {
         "idPeople": value,
         "state": auxState
       });
-      if (response.status === 200) {
-        return dispatch(allProviderAdmin("&pageNumber=" + InfoPag.pageNumber));
-      }
+      // if (response.status === 200) {
+      //   return dispatch(allProviderAdmin("&pageNumber=" + InfoPag.pageNumber));
+      // }
     }
 
-  const handlerPagination = (queryConstructOrder) => {
-    dispatch(allProviderAdmin(queryConstructOrder));
-  };
+  // const handlerPagination = (queryConstructOrder) => {
+  //   dispatch(allProviderAdmin(queryConstructOrder));
+  // };
 
   if (!people) {
     return null;
@@ -55,41 +55,42 @@ function TableUserDue() {
           <tr>
             <th>Nombre</th>
             <th>Mail</th>
-            <th>Telefono</th>
             <th>Activo/Inactivo</th>
+            <th>Dia de pago</th>
             <th>Pago</th>
-            <th>Antiguedad</th>
+            <th>Fecha de Emision</th>
+            <th>Fecha de Vencimiento</th>
             <th></th>
             <th></th>
           </tr>
         </thead>
         <tbody>
           {people.map((person) => (
-            <tr key={person.people.idPeople}>
-              <td>{person.people.fullName}</td>
-              <td>{person.people.email}</td>
-              <td>{person.people.phone}</td>
-              <td>{person.people.state}</td>
-              {/* Revisar el campo del pago */}
-              <td>{person.people.pago}</td>
-              <td>{person.people.dateOfAdmission}</td>
-              <td><button onClick={() => {
+            <tr key={person.person.idPeople}>
+              <td>{person.person.fullName}</td>
+              <td>{person.person.email}</td>
+              <td>{person.person.state}</td>
+              <td>{person.paymentDay}</td>
+              <td>{person.price}</td>
+              <td>{person.emisionDate}</td>
+              <td>{person.dueDate}</td>
+              <td><button className={styles.mail} onClick={() => {
                 handleShowForm();
-                onMailButtonClick(person.people.email);
+                onMailButtonClick(person.person.email);
               }}>MAIL</button></td>
-              <td><button onClick={() => handleChangeStatus(person.people.idPeople, person.people.state)} >{person.people.state === "Active" ? "Inactivo" : "Activo"}</button></td>
+              <td><button 
+              className={person.person.state === "Active" ? styles.inactivo : styles.activo} 
+              onClick={() => handleChangeStatus(person.person.idPeople, person.person.state)} >
+              {person.person.state === "Active" ? "Desactivar" : "Activar"}
+              </button></td>
             </tr>
           ))}
         </tbody>
       </table>
       {showForm && <Form handleShowForm={handleShowForm} email={email}/>}
-
-      <div>
+      {/* <div>
       <Pagination pageNumber={InfoPag.pageNumber} totalOfPages={InfoPag.totalOfPages} onPageChange={handlerPagination}/>
-      </div>
-
-
-
+      </div> */}
     </div>
   );
 }

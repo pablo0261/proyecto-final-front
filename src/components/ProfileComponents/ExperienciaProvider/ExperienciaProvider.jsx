@@ -16,102 +16,88 @@ function ExperienciaProvider() {
   };
 
   useEffect(() => {
-    if (infoUserLog.categories && infoUserLog.categories.length > 0) {
-      const experienceCategory = infoUserLog.categories.find(
-        (category) => category.idCategorie === 7
-      );
-      if (
-        experienceCategory &&
-        experienceCategory.categories_options &&
-        experienceCategory.categories_options.length > 0
-      ) {
-        const experienceOption = experienceCategory.categories_options;
-
-        if (experienceOption && experienceOption.length > 0) {
-          const experienceData = experienceOption.map((option) => ({
+    if (infoUserLog.categories && infoUserLog.categories.length != 0) {
+      const experienceCategory = infoUserLog.categories.find((category) => category.idCategorie === 7);
+      console.log(experienceCategory)
+      if (experienceCategory && experienceCategory.categories_options.length != 0) {
+        const experienceOption = experienceCategory.categories_options.map((option) => {
+          const newExperience = {
             idPeople: infoUserLog.idPeople,
             idOption: option.idOption,
-            education: option.description || "No informado",
-            institution: option.people_options[0].institution || "No informado",
-            year: option.people_options[0]?.year || "No informado",
-            comment: option.people_options[0]?.comment || "No informado",
-          }));
-
-          setExperience(experienceData);
-        }
+            description: option.people_options[0].description,
+            institution: option.people_options[0].institution,
+            year: option.people_options[0].year,
+            comment: option.people_options[0].comment,
+          }
+          return newExperience
+        })
+        setExperience(experienceOption);
       }
     }
   }, [infoUserLog]);
 
-  const handleDeleteService = (idOption, event) => {
-    event.preventDefault();
-    const deleteData = {
-      idPeople: infoUserLog.idPeople,
-      idOption: idOption,
-    };
-    Swal.fire({
-      title: "Quieres eliminar esta Experiencia?",
-      text: `Click en Aceptar para eliminarla, o dale a Cancelar para regresar`,
-      footer: "Confirma que quieres eliminar la Experiencia seleccionado",
-      icon: "alert",
-      showDenyButton: true,
-      denyButtonText: "Cancelar",
-      denyButtonColor: "Grey",
-      confirmButtonText: "Eliminar",
-      confirmButtonColor: "Red",
-    }).then((response) => {
-      if (response.isConfirmed) {
-        dispatch(deleteService(deleteData));
-      } 
-    });
-  }
-
-  return (
-    <div className={style.container}>
-      <div className={style.titleContainer}>
-        <h1 className={style.title}>Experiencia</h1>
-        <button onClick={handleShowForm} className={style.editButton}></button>
-      </div>
-
-      <div className={style.educationdetailContainer}>
-        {experience.length > 0 ? (
-          experience.map((option, index) => (
-            <div key={option.idOption}>
-              <div className={style.educationdetailbox}>
-                <div className={style.infoContainerLeft}>
-                  <h2 className={style.education}>{option.education}</h2>
-                  <p className={style.detailInfo}>
-                    {option.institution}
-                    <br />
-                    {option.year}
-                  </p>
-                </div>
-                <div className={style.infoContainerRight}>
-                  <p className={style.observationInfo}>{option.comment}</p>
-                </div>
-                <button
-                  onClick={(event) =>
-                    handleDeleteService(option.idOption, event)
-                  }
-                  className={style.crossButton}
-                ></button>
-              </div>
-              {index !== experience.length - 1 && (
-                <div>
-                  <p className={style.line}></p>
-                </div>
-              )}
-            </div>
-          ))
-          ) : (
-            <p className={style.noInfo}>
-            No hay información de experiencia disponible.
-          </p>
-        )}
-      </div>
-        {showForm && <Form handleShowForm={handleShowForm} />}
+const handleDeleteService = (idOption, event) => {
+  event.preventDefault();
+  const deleteData = {
+    idPeople: infoUserLog.idPeople,
+    idOption: idOption,
+  };
+  Swal.fire({
+    title: "Quieres eliminar esta Experiencia?",
+    text: "Confirma que quieres eliminar la Experiencia seleccionado",
+    icon: "warning",
+    showDenyButton: true,
+    denyButtonText: "Cancelar",
+    denyButtonColor: "Grey",
+    confirmButtonText: "Eliminar",
+    confirmButtonColor: "Red",
+  }).then((response) => {
+    if (response.isConfirmed) {
+      dispatch(deleteService(deleteData));
+      setExperience(preExperiencie =>
+        preExperiencie.filter(exp => exp.idOption !== idOption)
+      );
+    }
+  });
+}
+return (
+  <div className={style.background}>
+    <div className={style.wrapper}>
+      <p className={style.title}>Experiencia</p>
+      <button onClick={handleShowForm} className={style.editButton}></button>
     </div>
-  );
+    <div className={style.infoWrapper}>
+      {experience.length != 0
+        ? experience.map((option, index) => (
+          <div key={option.idOption} className={style.educationWrapper}>
+            <div className={style.educationBox}>
+              <div className={style.infoContainerLeft}>
+                <p className={style.description}>{option.description}</p>
+                <p className={style.detailInfo}>
+                  {option.institution}
+                  <br />
+                  {option.year}
+                </p>
+              </div>
+              <div className={style.infoContainerRight}>
+                <p className={style.comment}>{option.comment}</p>
+              </div>
+              <button onClick={(event) => handleDeleteService(option.idOption, event)} className={style.crossButton}></button>
+            </div>
+            {index !== experience.length - 1 && (
+              <div className={style.line}></div>
+            )}
+          </div>
+        ))
+        :
+        <p className={style.noInfo}>
+          No hay información de educación disponible.
+        </p>
+      }
+    </div>
+    {showForm && <Form handleShowForm={handleShowForm} />}
+  </div>
+);
 }
 
 export default ExperienciaProvider;

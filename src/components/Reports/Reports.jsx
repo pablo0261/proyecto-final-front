@@ -17,7 +17,6 @@ function Reports() {
         typeOfQuestion: "qaa",
         response: ""
     })
-
     useEffect(() => {
         const reportAxios = async () => {
             try {
@@ -50,7 +49,6 @@ function Reports() {
     const handleSendChat = (event) => {
         event.preventDefault()
         if (!Object.values(message).some((msg) => msg === "")) {
-            console.log(message)
             axios.put(`${REACT_APP_API_URL}/questions`, message)
                 .then((response) => {
                     if (response.status === 200) {
@@ -79,6 +77,14 @@ function Reports() {
         }
     }
 
+    const handleSendMail = (email, asunto, message) => {
+        const data = {
+            to: email,
+            subject: asunto,  
+            text: message
+        }
+        axios.post(`${REACT_APP_API_URL}/sendmail`, data)
+    }
     return (
         <div className={style.wrapper}>
             <div className={style.filterWrapper}>
@@ -139,7 +145,7 @@ function Reports() {
                                 placeholder='Escribe un mensaje'
                                 onChange={handleChangeMessage}
                                 className={style.inputChat} />
-                            <button type='submit' className={style.buttonChat}>Enviar</button>
+                            <button type='submit' className={style.buttonChat} onClick={()=>handleSendMail(report[0].senderMail, report[0].title, message.response)}>Enviar</button>
                         </form>
                     </div>
                 }
