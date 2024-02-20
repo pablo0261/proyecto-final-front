@@ -18,7 +18,6 @@ function ExperienciaProvider() {
   useEffect(() => {
     if (infoUserLog.categories && infoUserLog.categories.length != 0) {
       const experienceCategory = infoUserLog.categories.find((category) => category.idCategorie === 7);
-      console.log(experienceCategory)
       if (experienceCategory && experienceCategory.categories_options.length != 0) {
         const experienceOption = experienceCategory.categories_options.map((option) => {
           const newExperience = {
@@ -43,7 +42,7 @@ const handleDeleteService = (idOption, event) => {
     idOption: idOption,
   };
   Swal.fire({
-    title: "Quieres eliminar esta Experiencia?",
+    title: "¿Quieres eliminar esta Experiencia?",
     text: "Confirma que quieres eliminar la Experiencia seleccionado",
     icon: "warning",
     showDenyButton: true,

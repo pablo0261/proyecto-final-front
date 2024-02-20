@@ -42,7 +42,7 @@ function InteresProviderCard() {
     };
 
     Swal.fire({
-      title: "Quieres eliminar este Interés?",
+      title: "¿Quieres eliminar este Interés?",
       text: "Confirma que quieres eliminar el Interés seleccionado",
       icon: "warning",
       showDenyButton: true,
@@ -68,8 +68,8 @@ function InteresProviderCard() {
       </div>
       <div className={style.infoWrapper}>
         {intereses.length != 0
-          ? intereses.map((option) =>
-            <button onClick={(event) => handleDeleteService(option.idOption, event)} className={style.interes}> {option.interes}</button>)
+          ? intereses.map((option, index) =>
+            <button key={index} onClick={(event) => handleDeleteService(option.idOption, event)} className={style.interes}> {option.interes}</button>)
           : <p className={style.noInfo}>No hay información de intereses disponible.</p>
         }
       </div>
