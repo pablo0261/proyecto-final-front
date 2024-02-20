@@ -49,7 +49,6 @@ function Form({ handleShowForm }) {
 
   const handleProvinciaChange = async (event) => {
     setIsProvinciaSelected(event.target.value)
-    // Trae las ciudades segun al provincia seleccionada
     const provincia = event.target.value.toLowerCase();
     setUserData({ ...userData, Provincia: provincia });
     try {
@@ -75,8 +74,12 @@ function Form({ handleShowForm }) {
       try {
         const response = await fetch(`${REACT_APP_API_URL}/categories`);
         const data = await response.json();
-        const professionList = data.categories.data[3].categories_options
-        setProfession(professionList);
+        const professionList = data.categories.data.find(
+          category => category.idCategorie === 5
+        );
+        if (professionList) {
+          setProfession(professionList.categories_options);
+        }
       } catch (error) {
         window.alert("Error al obtener las profesiones:", error);
       }
@@ -129,7 +132,12 @@ function Form({ handleShowForm }) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const hasErrors = Object.values(localErrors).some((error) => error !== "");
+    const hasErrors = userData.Nombre !== "" &&
+    userData.Telefono !== "" &&
+    userData.País !== "" &&
+    userData.Provincia !== "" &&
+    userData.Localidad !== "" &&
+    userData.Calle !== "" && Object.values(localErrors).some((error) => error !== "");
 
     if (!hasErrors) {
       dispatch(postUserData(userDataEnglish));
@@ -138,6 +146,7 @@ function Form({ handleShowForm }) {
       window.alert("Complete el formulario sin errores");
     }
   };
+
 
   return (
     <div className={styles.background}>
@@ -346,7 +355,7 @@ function Form({ handleShowForm }) {
                 : null}
             </div>
           </div>
-          <button className={styles.buttonSave} type="submit">
+           <button className={styles.buttonSave} type="submit" >
             Guardar
           </button>
         </form>
