@@ -3,7 +3,7 @@ import { clear } from "../../redux/actions";
 import { useDispatch } from "react-redux";
 import styles from "./SearchBar.module.scss";
 
-export default function SearchBar({onSearchChange}) {
+export default function SearchBar({onSearchChange, setShowTable}) {
   const [searchInput, setSearchInput] = useState("");
   const dispatch = useDispatch();
 
@@ -12,6 +12,7 @@ export default function SearchBar({onSearchChange}) {
   const handleClear = () => {
     setSearchInput("")
     dispatch(clear())
+    setShowTable(false)
   }
 
   const handleChange = (event) => {
@@ -24,6 +25,7 @@ export default function SearchBar({onSearchChange}) {
       algunvalor = "&fullName=" + searchInput;
     }
     onSearchChange(algunvalor);
+    setShowTable(true); // Mostrar la tabla cuando hay resultados de búsqueda
   };
 
   return (

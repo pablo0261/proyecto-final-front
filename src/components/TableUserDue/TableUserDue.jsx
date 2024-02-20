@@ -16,7 +16,6 @@ function TableUserDue() {
   const handleShowForm = () => {
     setShowForm(!showForm);
   };
-console.log(people)
   useEffect(() => {
     dispatch(allProviderAdmin(""));
   }, [people]);
@@ -47,6 +46,11 @@ console.log(people)
     <div className={styles.wrapper}>
       <div className={styles.container_header}>
         <h2>Usuarios en deuda</h2>
+        <a href="http://www.diegolepore.com.ar/webmail" target="_blank"><button>Ir a Webmail</button></a>
+        <div className={styles.filterOrderContainer}>
+            {/* <button className={showFilters ? styles.buttonActived : styles.button} onClick={() => handleFilterVisibility()}>Filtrar</button>
+            <button className={showOrder ? styles.buttonActived : styles.button} onClick={() => handleOrderVisibility()}>Ordenar</button> */}
+          </div>
       </div>
       
 

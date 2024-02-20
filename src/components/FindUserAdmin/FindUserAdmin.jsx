@@ -13,6 +13,7 @@ function FindUserAdmin() {
   const [valor, setValor] = useState("");
   const [email, setEmail] = useState("");
   const [showForm, setShowForm] = useState(false);
+  const [showTable, setShowTable] = useState(false);
   const handleShowForm = () => {
     setShowForm(!showForm);
   };
@@ -31,30 +32,32 @@ function FindUserAdmin() {
     setEmail(email)
   }
 
-  useEffect(() => {
-    setIsLoading(true); 
-    setTimeout(() => {
-      setIsLoading(false); 
-    }, 2000); //* Simula 2 seg de retraso para darle tiempo a cargar a los componentes
-  }, []);
+  // useEffect(() => {
+  //   setIsLoading(true); 
+  //   setTimeout(() => {
+  //     setIsLoading(false); 
+  //   }, 2000); //* Simula 2 seg de retraso para darle tiempo a cargar a los componentes
+  // }, []);
 
   return (
     <>
-      {!isLoading && (
+      {/* {!isLoading && ( */}
         <div>
           <div className={styles.container}>
             <h2>Buscar Usuario</h2>
-            <SearchBar setIsLoading={setIsLoading} onSearch={findUser} onSearchChange={funcionbusqueda} />
+            {/* <SearchBar setIsLoading={setIsLoading} onSearch={findUser} onSearchChange={funcionbusqueda} /> */}
+            <SearchBar  onSearch={findUser} onSearchChange={funcionbusqueda } setShowTable={setShowTable}/>
           </div>
-          <TableUser setIsLoading={setIsLoading} people={people} valor={valor} onMailButtonClick={onMailButtonClick} handleShowForm={handleShowForm}/>
+          {/* <TableUser setIsLoading={setIsLoading} people={people} valor={valor} onMailButtonClick={onMailButtonClick} handleShowForm={handleShowForm}/> */}
+          {showTable && <TableUser  people={people} valor={valor} onMailButtonClick={onMailButtonClick} handleShowForm={handleShowForm}/>}
           {showForm && <Form handleShowForm={handleShowForm} email={email}/>}
         </div>
-      )}
+       {/*)}
       {isLoading && (
         <div className={styles.loading}>
           <img src={loadingHouse} alt="Loading..." />
         </div>
-      )}
+      )} */}
     </>
   );
 }
