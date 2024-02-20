@@ -9,19 +9,23 @@ import ValoresGenerales from "./Graphs/ValoresGenerales/ValoresGenerales";
 import style from "./AdminStatistics.module.sass";
 
 function AdminStatistics() {
-  const [isLoading, setIsLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
+    const timer = setTimeout(() => {
+      setLoading(false); 
+    }, 5000);
 
-    }, 2000); //* Simula 2 seg de retraso para darle tiempo a cargar a los componentes
-  }, []);
+    return () => clearTimeout(timer); 
+  }, []); 
 
   return (
-    <>
-      {!isLoading && (
         <div className={style.background}>
+        {loading && (
+          <div className={style.loading}>
+            <img className={style.loadingIcon} src={loadingHouse} alt="Loading..." />
+          </div>
+        )}
           <div className={style.dashboardWrapper}>
             {/* SERVICIOS MAS BUSCADOS */}
             <div className={style.container}>
@@ -47,14 +51,6 @@ function AdminStatistics() {
           </div>
 
         </div>
-      )}
-      {isLoading && (
-        <div>
-          <img src={loadingHouse} alt="Loading..." />
-        </div>
-      )}
-
-    </>
   );
 }
 
