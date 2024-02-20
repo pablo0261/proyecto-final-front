@@ -10,8 +10,6 @@
     
     gap: 10px;
 
-   
-
     button {
         @include buttonActive;
 
@@ -25,3 +23,7 @@
     }
 
 } 
+
+.select{
+    border: 3px solid red;
+}

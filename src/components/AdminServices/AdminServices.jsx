@@ -81,8 +81,8 @@ const handleDelete = async () => {
           },
           
           control: {
-            
-            width: '800px',
+            ...theme.control,
+            width: '90%',
           },
           
          
