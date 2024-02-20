@@ -1,8 +1,8 @@
 import MostSearch from "./Graphs/MostSearch/MostSearch";
-import DayFlow from "./Graphs/DayFlow/DayFlow";
 import React, { useEffect, useState } from "react";
 import loadingHouse from "../../assets/Icons/loadingHouse.gif";
 import Barchart from "../../components/AdminStatistics/Graphs/BarChart";
+import Piechart from "../../components/AdminStatistics/Graphs/PieChart";
 import ValoresGenerales from "./Graphs/ValoresGenerales/ValoresGenerales";
 
 
@@ -27,12 +27,10 @@ function AdminStatistics() {
           </div>
         )}
           <div className={style.dashboardWrapper}>
-            {/* SERVICIOS MAS BUSCADOS */}
             <div className={style.container}>
               <p className={style.mostSearch}>Servicios mas buscados</p>
               <MostSearch />
             </div>
-            {/* NUMEROS  */}
             <div className={style.container}>
               <ValoresGenerales />
             </div>
@@ -43,10 +41,11 @@ function AdminStatistics() {
                 <Barchart />
               </div>
             </div>
-            {/* GRAFICO 2  */}
             <div className={style.containerG}>
-              <h2 className={style.h2HistoriaServ}>Grafico 2</h2>
-              {/* Aqui va el componente del Grafico 2 */}
+              <h2 className={style.h2HistoriaServ}>Servicios Disponibles</h2>
+              <div>
+                <Piechart />
+              </div>
             </div>
           </div>
 

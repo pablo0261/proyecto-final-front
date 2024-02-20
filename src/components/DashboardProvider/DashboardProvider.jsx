@@ -5,7 +5,7 @@ import MostSearch from "./Graphs/MostSearch/MostSearch";
 import PeopleVisit from "./Graphs/PeopleVisit/PeopleVisit";
 import Calification from "./Graphs/Calification/Calification";
 import LastComment from "./Graphs/LastComment/LastComment";
-import loadingHouse from "../../assets/icons/loadingHouse.gif";
+import loadingHouse from "../../assets/Icons/loadingHouse.gif";
 import style from "./DashboardProvider.module.sass";
 
 function Dashboard() {
