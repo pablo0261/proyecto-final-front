@@ -129,11 +129,11 @@ const allProviderAdmin = (query) => {
   return async (dispatch) => {
     try {
       const response = await axios.get(
-        `${REACT_APP_API_URL}/people?typeOfPerson=provider&state=Inactive&state=Active${query}`
+        `${REACT_APP_API_URL}/paidMemberships${query}`
       );
       return dispatch({
         type: GET_ALL_PROVIDER_ADMIN,
-        payload: response.data.people,
+        payload: response.data,
       });
     } catch (error) {
       window.alert(error);
@@ -172,7 +172,7 @@ const getPeopleFilteredOrderedPagination = (queryConstructor, queryPagination) =
 const getFiltersOrdersDB = () => {
   return async (dispatch) => {
     try {
-      const response = await axios.get(`${REACT_APP_API_URL}/categories`);
+      const response = await axios.get(`${REACT_APP_API_URL}/categories?isDeleted=false`);
       return dispatch({
         type: FILTER_SERVICES,
         payload: response.data.categories.data,
