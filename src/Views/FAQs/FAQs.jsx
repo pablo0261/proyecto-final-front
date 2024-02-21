@@ -19,9 +19,8 @@ const FAQs = () => {
   const [expandedAnswers, setExpandedAnswers] = useState({});
 
   const dispatch = useDispatch();
-  
+
   const userLoggedInfo = useSelector(state => state.infoUserLog);
- 
 
   const faqSDetail = useSelector((state) => state.faqS);
 
@@ -53,18 +52,25 @@ const FAQs = () => {
     setEditIndex(null);
   };
 
+  /* Función para confirmar la eliminacion de una FAQs */
+  const confirmDeleteQuestion = (idQuestion) => {
+    const confirmDelete = window.confirm('¿Está seguro de que desea eliminar la pregunta?');
+    if (confirmDelete) {
+      handleDeleteQuestion(idQuestion);
+    }
+  };
+
   /* Función para eliminar una pregunta */
   const handleDeleteQuestion = (idQuestion) => {
     console.log("ID de la FAQs:", idQuestion);
     dispatch(deleteFAQs(idQuestion));
   };
-  
 
   /* Función para entrar en el modo de edición */
   const handlePutQuestion = (index, destination) => {
     setEditMode(true);
     setEditIndex(index);
-  
+
     const faqToEdit = faqSDetail.questions.data[index];
     setFormData({
       idQuestion: faqToEdit.idQuestion,
@@ -73,11 +79,11 @@ const FAQs = () => {
       title: faqToEdit.title,
       message: faqToEdit.message
     });
-  
+
     setShowForm(true);
     setFaqType(destination);
   };
-  
+
   /* Función para cambiar el estado de visibilidad de answer */
   const toggleAnswer = (index) => {
     setExpandedAnswers(prevState => ({
@@ -85,7 +91,6 @@ const FAQs = () => {
       [index]: !prevState[index]
     }));
   };
-
 
   return (
     <div className={styles.wrap}>
@@ -117,12 +122,8 @@ const FAQs = () => {
               <hr />
               {userLoggedInfo.typeOfPerson === 'administrator' && (
                 <div className={styles.container__buttons}>
-                  <button onClick={() => handleDeleteQuestion(faq.idQuestion, 'provider')}>Eliminar</button>
-
-
+                  <button onClick={() => confirmDeleteQuestion(faq.idQuestion, 'provider')}>Eliminar</button>
                   <button onClick={() => handlePutQuestion(index, 'provider')}>Editar</button>
-
-
                 </div>
               )}
 
@@ -173,7 +174,7 @@ const FAQs = () => {
               <hr />
               {userLoggedInfo.typeOfPerson === 'administrator' && (
                 <div className={styles.container__buttons}>
-                  <button onClick={() => handleDeleteQuestion(faq.idQuestion, 'client')}>Eliminar</button>
+                  <button onClick={() => confirmDeleteQuestion(faq.idQuestion, 'client')}>Eliminar</button>
                   <button onClick={() => handlePutQuestion(index, 'client')}>Editar</button>
                 </div>
               )}
