@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom'
 import Helpers from '../../Helpers/RoutesFront'
 import PendingBox from './PendingBox/PendingBox'
 import NotChatBox from './NotChatBox/NotChatBox'
+import { SET_SELECTED_OPPORTUNITIE } from '../../redux/actions/action-types'
 
 function Connections() {
 
@@ -60,6 +61,12 @@ function Connections() {
 
     const handleNavigate = (opportunitie) => {
         if (infoUserLog.typeOfPerson === 'customer') {
+            dispatch({
+                type: SET_SELECTED_OPPORTUNITIE,
+                payload: {
+                  idOpportunitie: isSelected
+                }
+              })
             navigate(Helpers.UserDetail.replace(":id", opportunitie.idProvider))
         } else if (infoUserLog.typeOfPerson === 'provider') {
             navigate(Helpers.UserDetail.replace(":id", opportunitie.idCustomer))

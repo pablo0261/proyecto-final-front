@@ -5,7 +5,9 @@
     width: 70%;
     height: fit-content;
     @include flexbox(row, center, center);
-};
+}
+
+;
 
 .container_form {
     width: 100%;
@@ -26,14 +28,22 @@
 
     button {
         @include buttonActive;
-    };
+    }
+
+    ;
 
     button:hover {
         @include buttonHover;
-    };
+    }
+
+    ;
 
     button:active {
         @include buttonPressed;
-    };
+    }
 
-};
+    ;
+
+}
+
+;

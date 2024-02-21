@@ -3,14 +3,10 @@
 
  .container {
     
-    @include flexbox(row, center, center);
-    width: 100%;
+  display: flex;
     margin: 0;
     padding: 0;
-    
     gap: 10px;
-
-   
 
     button {
         @include buttonActive;
@@ -25,3 +21,7 @@
     }
 
 } 
+
+.select{
+    border: 3px solid red;
+}

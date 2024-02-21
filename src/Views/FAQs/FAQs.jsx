@@ -5,10 +5,8 @@ import Loader from '../../utils/Loader/Loader'
 import { useEffect, useState } from 'react';
 import FormFAQs from '../../components/Form/FormFAQs/FormFAQs';
 import { useDispatch, useSelector } from 'react-redux';
-import StoreItem from '../../Helpers/LocalStorage';
-import { addInfoUserLog, getFiltersOrdersDB, recoverUserLoggedData, getFAQs } from '../../redux/actions';
-import { jwtDecode } from "jwt-decode";
-import axios from 'axios';
+import { getFAQs } from '../../redux/actions';
+
 
 
 const FAQs = () => {
@@ -21,8 +19,9 @@ const FAQs = () => {
   const [expandedAnswers, setExpandedAnswers] = useState({});
 
   const dispatch = useDispatch();
-  const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;//*
+  
   const userLoggedInfo = useSelector(state => state.infoUserLog);
+ 
 
   const faqSDetail = useSelector((state) => state.faqS);
 
@@ -46,52 +45,6 @@ const FAQs = () => {
       })
   }, [dispatch])
 
-  useEffect(() => {
-    dispatch(getFiltersOrdersDB());
-
-    if (localStorage.getItem(StoreItem.emailUserLogged)) {
-      dispatch(recoverUserLoggedData(localStorage.getItem(StoreItem.emailUserLogged)));
-    }
-  }, []);
-
-  const handleCallbackResponse = async (response) => {
-    const userObject = jwtDecode(response.credential);
-
-    try {
-      const response = await axios.get(
-        `${REACT_APP_API_URL}/people?email=${userObject.email}`
-      );
-
-      if (response.data.people.count > 0) {
-        const user = response.data.people.data[0].people;
-        localStorage.setItem(StoreItem.emailUserLogged, userObject.email);
-        dispatch(addInfoUserLog(user));
-
-
-        if (user.typeOfPerson === 'administrator') {
-
-        } else {
-
-        }
-      } else {
-        window.alert("Usuario no existe.");
-      }
-    } catch (error) {
-      window.alert(error);
-    }
-  };
-
-  useEffect(() => {
-
-    google.accounts.id.initialize({
-      client_id: "554332329432-0b6a0dh2ihgrkj5obs34lmnngpfvrq4j.apps.googleusercontent.com",
-      callback: handleCallbackResponse
-    });
-
-    if (!localStorage.getItem(StoreItem.emailUserLogged)) {
-      google.accounts.id.prompt();
-    }
-  }, []);
 
   const handleToggleForm = (type) => {
     setShowForm(!showForm);
@@ -131,8 +84,6 @@ const FAQs = () => {
     setFaqType(destination);
   };
   
-
-
   /* Función para cambiar el estado de visibilidad de answer */
   const toggleAnswer = (index) => {
     setExpandedAnswers(prevState => ({
@@ -229,7 +180,7 @@ const FAQs = () => {
               {userLoggedInfo.typeOfPerson === 'administrator' && (
                 <div className={styles.container__buttons}>
                   <button onClick={() => handleDeleteQuestion(index, 'client')}>Eliminar</button>
-                  <button onClick={() => handlePutQuestion(index, 'client')}>Editarrr</button>
+                  <button onClick={() => handlePutQuestion(index, 'client')}>Editar</button>
                 </div>
               )}
 
