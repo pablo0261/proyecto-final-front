@@ -45,26 +45,24 @@ const FormFAQs = ({ typeOfFAQs, formData: initialFormData }) => {
     const isValid = Object.values(localErrors).every((error) => error === '');
 
     if (isValid) {
-      if (initialFormData) {
-        
-        dispatch(putFAQs(formData))
-          .then(() => {
-            setSuccessMessage('Pregunta y respuesta editadas con éxito');
-            clearFormData();
+      dispatch(createFAQs(formData))
+        .then(() => {
+          setSuccessMessage('Pregunta y respuesta enviadas con éxito');
+          Swal.fire({
+            title: 'Pregunta y respuesta enviadas con éxito!',
+            icon: 'success',
           })
-          .catch(() => {
-            setSuccessMessage('Error al editar la pregunta y respuesta');
-          });
-      } else {
-        dispatch(createFAQs(formData))
-          .then(() => {
-            setSuccessMessage('Pregunta y respuesta creadas con éxito');
-            clearFormData();
+          clearFormData();
+        })
+        .catch(() => {
+          setSuccessMessage('Error al enviar el reporte');
+          Swal.fire({
+            title: 'Error al enviar el reporte!',
+            text: `el Reporte no se envió, por favor intentelo nuevamente`,
+            icon: 'warning',
           })
-          .catch(() => {
-            setSuccessMessage('Error al crear la pregunta y respuesta');
-          });
-      }
+        });
+
     } else {
       setSuccessMessage('Formulario con errores');
       Swal.fire({
