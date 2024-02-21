@@ -11,7 +11,7 @@ function Reports() {
     const dispatch = useDispatch()
     const [report, setReport] = useState([])
     const [isSelected, setIsSelected] = useState("")
-    const [filter, setFilter] = useState("completada")
+    const [filter, setFilter] = useState("")
     const [message, setMessage] = useState({
         idQuestion: "",
         typeOfQuestion: "qaa",
@@ -21,11 +21,13 @@ function Reports() {
         const reportAxios = async () => {
             try {
                 if (infoUserLog.typeOfPerson === 'administrator') {
-                    const query = `&questionStatus=${filter}`
+                    const query = `&questionStatus=pendiente`
                     dispatch(getReports(query))
+                    setFilter("pendiente")
                 } else {
-                    const query = `&senderMail=${infoUserLog.email}&questionStatus=${filter}`
+                    const query = `&senderMail=${infoUserLog.email}&questionStatus=completada`
                     dispatch(getReports(query))
+                    setFilter("completada")
                 }
             } catch (error) {
                 window.alert(error)
@@ -89,7 +91,7 @@ function Reports() {
         <div className={style.wrapper}>
             <div className={style.filterWrapper}>
                 <button className={filter === "pendiente" ? style.filterButtonPressed : style.filterButton} onClick={() => handleFilter('pendiente')}>Pendientes</button>
-                <button className={filter === "completada" ? style.filterButtonPressed : style.filterButton} onClick={() => handleFilter('completada')}>Confirmados</button>
+                <button className={filter === "completada" ? style.filterButtonPressed : style.filterButton} onClick={() => handleFilter('completada')}>Respondidos</button>
             </div>
             <div className={style.connectionsWrapper}>
                 <div className={style.listWrapper}>

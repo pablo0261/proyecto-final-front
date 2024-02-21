@@ -31,7 +31,11 @@ function FormContract(props) {
 
     if (Object.values(errors).every((error) => error === "")) {
       try {
-        const response = axios.put(`${REACT_APP_API_URL}/opportunities`, contractForm)
+        const response = await axios.put(`${REACT_APP_API_URL}/opportunities`, contractForm)
+        if (response.status === 200) {
+          window.alert("Solicitud enviada al proveedor")
+          setShowContract(false)
+        }
       } catch (error) {
         window.alert(error)
       }
