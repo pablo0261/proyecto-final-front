@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { postUserData } from "../../../redux/actions/index";
+import { deleteService, postUserData, postUserInteres } from "../../../redux/actions/index";
 import Validation from "./validationFormProfile";
 import styles from "./FormProfile.module.sass";
 
 function Form({ handleShowForm }) {
+
   const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
   const dispatch = useDispatch();
   const userLog = useSelector((state) => state.infoUserLog);
@@ -93,13 +94,17 @@ function Form({ handleShowForm }) {
   const [userData, setUserData] = useState({
     id: userLog,
     Nombre: "",
-    Profesion: "",
     Telefono: "",
     País: "Argentina",
     Provincia: "",
     Localidad: "",
     Calle: "",
     "Sobre mi": "",
+  });
+
+  const [userDataProfession, setUserDataProfession] = useState({
+    idPeople: userLog.idPeople,
+    idOption: "",
   });
 
   const [localErrors, setLocalErrors] = useState({
@@ -113,12 +118,9 @@ function Form({ handleShowForm }) {
     "Sobre mi": "*Campo Obligatorio",
   });
 
-  const [professionSelected, setProfessionSelected] = useState("")
-
   //-PARA ENVIAR CON EL POST--/
   const userDataEnglish = {
     idPeople: userData.id,
-    profession: userData.Profesion,
     fullName: userData.Nombre,
     phone: userData.Telefono,
     country: userData.País,
@@ -132,29 +134,43 @@ function Form({ handleShowForm }) {
     const value = event.target.value;
 
     if (property === "Profesion") {
-      setProfessionSelected(value)
+      setUserDataProfession({ ...userDataProfession, idOption: value });
+    } else {
+      setUserData({ ...userData, [property]: value });
     }
     Validation(property, setLocalErrors, { ...userData, [property]: value });
-    setUserData({ ...userData, [property]: value });
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const hasErrors = userData.Nombre !== "" &&
-    userData.Telefono !== "" &&
-    userData.País !== "" &&
-    userData.Provincia !== "" &&
-    userData.Localidad !== "" &&
-    userData.Calle !== "" && Object.values(localErrors).some((error) => error !== "");
-
-    if (!hasErrors) {
-      dispatch(postUserData(userDataEnglish));
-      handleShowForm();
+    if (Object.values(localErrors).every((error) => error === "")) {
+      try {
+        dispatch(postUserData(userDataEnglish));
+        if (userLog.categories && userLog.categories.length != 0) {
+          const profession = userLog.categories.find(category => category.idCategorie === 5);
+          
+          if (profession && profession.categories_options.length != 0) {
+            const oldProfession = profession.categories_options.filter((profession) => profession => profession.idOption != userDataProfession.idOption)
+            const deletedProfession = {
+              idPeople : userLog.idPeople,
+              idOption : oldProfession[0].idOption
+            }
+            dispatch(deleteService(deletedProfession))
+            dispatch(postUserInteres(userDataProfession))
+            handleShowForm();
+          } else {
+            dispatch(postUserInteres(userDataProfession))
+            handleShowForm();
+          }
+          
+        }
+      } catch (error) {
+        window.alert(error);
+      }
     } else {
       window.alert("Complete el formulario sin errores");
     }
   };
-
 
   return (
     <div className={styles.background}>
@@ -279,7 +295,7 @@ function Form({ handleShowForm }) {
             <select
               className={styles.inputSelect}
               name="Profesion"
-              value={professionSelected}
+              value={userDataProfession.idOption}
               onChange={handleChange}
             >
               <option value="" disabled>
@@ -289,7 +305,7 @@ function Form({ handleShowForm }) {
                 profession.map((profession) => (
                   <option
                     key={profession.idOption}
-                    value={profession.description}
+                    value={profession.idOption}
                   >
                     {profession.description}
                   </option>
@@ -314,7 +330,7 @@ function Form({ handleShowForm }) {
               {localErrors["Sobre mi"] ? localErrors["Sobre mi"] : "Datos Válidos"}
             </div>
           </div>
-           <button className={styles.buttonSave} type="submit" >
+          <button className={styles.buttonSave} type="submit" >
             Guardar
           </button>
         </form>
