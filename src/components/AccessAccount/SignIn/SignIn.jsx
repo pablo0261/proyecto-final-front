@@ -51,7 +51,6 @@ function SignIn(props) {
   useEffect(() => {
     localStorage.setItem(StoreItem.dataUserSignIn, JSON.stringify(signInData));
   }, [signInData]);
-
   return (
     <div className={style.wrapper}>
       <p className={style.title}>

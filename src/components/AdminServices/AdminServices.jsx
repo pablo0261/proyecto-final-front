@@ -62,7 +62,6 @@ const handleDelete = async () => {
     <div className={styles.container}>
       
       <CreatableSelect
-      
         isClearable
         isDisabled={isLoading}
         isLoading={isLoading}
@@ -70,25 +69,24 @@ const handleDelete = async () => {
         onCreateOption={handleCreate}
         options={options}
         value={value}
-
+        placeholder={""}
+        styles={{
+          control: (baseStyles, state) => ({
+            ...baseStyles,
+            width: "900px",
+            fontSize: "x-large",
+            fontSize: state.isFocused ? "x-large" : "x-large",
+          }),
+        }}
         theme={(theme) => ({
           ...theme,
           borderRadius: 10,
           colors: {
             ...theme.colors,
-            primary25: 'rgb(245, 245, 245)',
-            primary: 'black',
+            primary25: '#d9d8d8',
+            primary: '#c47c52',
           },
-          
-          control: {
-            
-            width: '800px',
-          },
-          
-         
         })}
-
-
       />
       <button onClick={handleDelete} value={idCategorie}>Delete</button>
     </div>
