@@ -74,7 +74,6 @@ const handleDelete = async () => {
           control: (baseStyles, state) => ({
             ...baseStyles,
             width: "900px",
-            fontSize: "x-large",
             fontSize: state.isFocused ? "x-large" : "x-large",
           }),
         }}

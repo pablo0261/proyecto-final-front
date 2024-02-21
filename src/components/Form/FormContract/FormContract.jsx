@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import style from './FormContract.module.sass'
 import ValidationContract from './ValidationContract';
 import axios from 'axios';
+import Swal from 'sweetalert2'
 
 function FormContract(props) {
 
@@ -33,14 +34,26 @@ function FormContract(props) {
       try {
         const response = await axios.put(`${REACT_APP_API_URL}/opportunities`, contractForm)
         if (response.status === 200) {
-          window.alert("Solicitud enviada al proveedor")
+          Swal.fire({
+            title: 'Solicitud enviada al Proveedor!',
+            text: `Para contactarlo dirigete a "Tus Conexiones"`,
+            icon: 'success',
+          })
           setShowContract(false)
         }
       } catch (error) {
-        window.alert(error)
+        Swal.fire({
+          title: 'Intentalo Nuevamente!',
+          text: `${error}`,
+          icon: 'error',
+        })
       }
     } else {
-      window.alert("Rellene su solicitud sin errores")
+      Swal.fire({
+        title: 'Complete su solicitud correctamente',
+        text: `Complete todos los campos del formulario`,
+        icon: 'error',
+      })
     }
 
   }

@@ -2,9 +2,7 @@ import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import style from "./MostSearch.module.sass"; 
 
-function MostSearch(props) {
-  const {setLoading} = props;
-  console.log("setLoading", setLoading)
+function MostSearch() {
   const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
   const userLog = useSelector((state) => state.infoUserLog);
   const [statistics, setStatistics] = useState([]);
@@ -21,8 +19,7 @@ function MostSearch(props) {
        serviciosMasBuscados.sort((a, b) => b.cantidad - a.cantidad);
        const limitedStatistics = serviciosMasBuscados.slice(0, 4);
        setStatistics(limitedStatistics);
-     if ( response.status === 200) {
-        setLoading(true)}
+     
       } catch (error) {
         console.error("Error al obtener los servicios mas buscados:", error);
       }
