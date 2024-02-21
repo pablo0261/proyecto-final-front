@@ -18,7 +18,7 @@ function Calification() {
         const data = await response.json();
         const serviciosMasBuscados = data.data.indicadoresPersonales;
         setStatistics({
-          promedio: Number(serviciosMasBuscados.ratingPromedio),
+          promedio: (Number(serviciosMasBuscados.ratingPromedio)).toFixed(2),
           cantidadEvaluaciones: serviciosMasBuscados.cantidadEvaluaciones
         });
       } catch (error) {
