@@ -96,12 +96,16 @@ function AccessAccount() {
           `${REACT_APP_API_URL}/people`,
           signInData
         );
-        console.llog("response", response.data);
-        if (response.status === 200) {
+        if (response.status === 201) {
+          const user = response.data.people.data[0].people;
+          localStorage.setItem(StoreItem.emailUserLogged, signInData.email);
+          dispatch(addInfoUserLog(user));
+          socket.emit("join-request", user.idPeople);
           navigate(Helpers.ProfileCustomerView);
         }
       }
     } catch (error) {
+      console.log("error",error)
       Swal.fire({
         title: 'Usuario ya Registrado!',
         text: `Para acceder al sistema realice el login`,
