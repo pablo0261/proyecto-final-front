@@ -17,7 +17,7 @@ import {
   CREATE_REPORT,
   CREATE_FAQS,
   GET_FAQS,
-  GET_ALL_PROVIDER_ADMIN,
+  GET_ALL_PAYMENTS,
   PUT_STATE,
   PUT_FAQS,
   // CONTRAT_SERVICE_USER
@@ -28,9 +28,11 @@ let initialState = {
 
   infoUserLog: {},
 
-  //Filter and getpeople
-  peopleForAdmin: [], /** El estado contiene los people que la tabla del admin*/
-  providerForAdmin: [],
+  //ADMIN
+  peopleForAdmin: [],
+  paymentsHistory: [],
+
+  //HOME
   getAllPeople: [],
   paginacionData: [],
   allServices: [],
@@ -106,17 +108,18 @@ const rootReducer = (state = initialState, { type, payload }) => {
         peopleForAdmin: payload,
       };
 
-    case GET_ALL_PROVIDER_ADMIN:
-      return {
-        ...state,
-        providerForAdmin: payload,
-      };
     case PUT_STATE:
       return {
         ...state,
         peopleForAdmin: payload,
       };
-    
+
+    case GET_ALL_PAYMENTS:
+      return {
+        ...state,
+        paymentsHistory: payload,
+      };
+
     case GET_HOME_PROVIDER:
       return {
         ...state,
@@ -194,7 +197,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         selected_opportunitie: payload
       }
-    
+
     //REPORTS
     case GET_REPORTS:
       return {
@@ -222,7 +225,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
         faqS: payload,
       }
 
-      case PUT_FAQS:
+    case PUT_FAQS:
       return {
         ...state,
         faqS: state.faqS.map((faq) => {

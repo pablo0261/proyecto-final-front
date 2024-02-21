@@ -12,7 +12,8 @@ import { io } from "socket.io-client";
 import Swal from "sweetalert2";
 import StatsAccessAccountClient from "../../components/AccessAccount/StatsAccessAccount/StatsClient/StatsAccessAccountClient";
 import StatsAccessAccountProvider from "../../components/AccessAccount/StatsAccessAccount/StatsProvider/StatsAccessAccountProvider";
-import MessageToShow from "../../components/AccessAccount/MessageToShow/MessageClient";
+import MessageToShowClient from "../../components/AccessAccount/MessageToShow/MessageClient";
+import MessageToShowProvider from "../../components/AccessAccount/MessageToShow/MessageProvider";
 
 const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
 const socket = io(REACT_APP_API_URL);
@@ -67,17 +68,11 @@ function AccessAccount() {
         }
       }
     } catch (error) {
-      console.log(error)
       Swal.fire({
-        title: 'Usuario ya Registrado!',
-        text: `Para acceder al sistema vuelva y realice el Login`,
-        icon: 'alert',
+        title: `${error.response.data.error}!`,
+        text: `Por favor, verifique los datos e intente nuevamente`,
+        icon: 'warning',
       })
-      .then(response => {
-        if(response.isConfirmed){
-          handleFormsVisibility()
-        }
-        })
     }
   };
 
@@ -97,16 +92,20 @@ function AccessAccount() {
           `${REACT_APP_API_URL}/people`,
           signInData
         );
-        console.llog("response", response.data);
-        if (response.status === 200) {
+        if (response.status === 201) {
+          const user = response.data.people.data[0].people;
+          localStorage.setItem(StoreItem.emailUserLogged, signInData.email);
+          dispatch(addInfoUserLog(user));
+          socket.emit("join-request", user.idPeople);
           navigate(Helpers.ProfileCustomerView);
         }
       }
     } catch (error) {
+      console.log("error",error)
       Swal.fire({
         title: 'Usuario ya Registrado!',
         text: `Para acceder al sistema realice el login`,
-        icon: 'alert',
+        icon: 'warning',
       })
       .then(response => {
         if(response.isConfirmed){
@@ -138,7 +137,16 @@ function AccessAccount() {
                   </div>
                 )}
                 <div className={style.components}>
-                  <MessageToShow />
+                {isProvider ? (
+                  <div className={style.components}>
+                    <MessageToShowProvider />
+                  </div>
+                ) : (
+                  <div className={style.components}>
+                    <MessageToShowClient />
+                  </div>
+                )}
+                  
                 </div>
               </div>
             </div>
@@ -159,9 +167,15 @@ function AccessAccount() {
                     <StatsAccessAccountClient />
                   </div>
                 )}
-                <div className={style.components}>
-                  <MessageToShow />
-                </div>
+               {isProvider ? (
+                  <div className={style.components}>
+                    <MessageToShowProvider />
+                  </div>
+                ) : (
+                  <div className={style.components}>
+                    <MessageToShowClient />
+                  </div>
+                )}
               </div>
             </div>
           )}

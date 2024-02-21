@@ -1,25 +1,28 @@
 @use '../../Styles/Mixins.sass' as *;
 @import '../../Styles/Variables.sass';
 
-.container {
+.container{
+    width: 70%;
+    height: fit-content;
     @include flexbox(row, center, center);
 }
 
 ;
 
 .container_form {
-    @include flexbox(null, center, center);
+    width: 100%;
+    height: fit-content;
+    @include flexbox(row, center, center);
     gap: 10px;
 
-    input {
+    input{
+        width: 100%;
         @include inputsFormat
-    }
-
-    input:focus {
+    };
+    input:focus{
         @include inputsFormat_Hover
-    }
-
-    input::placeholder {
+    };
+    input::placeholder{
         @include inputsFormat_Placeholder
     }
 
@@ -35,7 +38,7 @@
 
     ;
 
-    button:pressed {
+    button:active {
         @include buttonPressed;
     }
 

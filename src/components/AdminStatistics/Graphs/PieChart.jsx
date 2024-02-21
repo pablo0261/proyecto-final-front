@@ -1,14 +1,13 @@
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
-import * as echarts from 'echarts/core';
-import { PieChart } from 'echarts/charts';
+import * as echarts from "echarts/core";
+import { PieChart } from "echarts/charts";
 import {
   TitleComponent,
   TooltipComponent,
   LegendComponent,
-  ToolboxComponent
-} from 'echarts/components';
-import { CanvasRenderer } from 'echarts/renderers';
+  ToolboxComponent,
+} from "echarts/components";
+import { CanvasRenderer } from "echarts/renderers";
 
 echarts.use([
   PieChart,
@@ -16,87 +15,121 @@ echarts.use([
   TooltipComponent,
   LegendComponent,
   ToolboxComponent,
-  CanvasRenderer
+  CanvasRenderer,
 ]);
 
 function PieChartComponent() {
-
-    const infoUserLog = useSelector((state) => state.infoUserLog);
-    const [servicesData, setServicesData] = useState([]); 
-
-    useEffect(() => {
-        //*Todo esto recorre y valida la info del usuario para ver los servicios y precios
-        if (infoUserLog.categories && infoUserLog.categories.length > 0) {
-          const firstCategory = infoUserLog.categories[0];
-          if (
-            firstCategory.categories_options &&
-            firstCategory.categories_options.length > 0
-          ) {
-            const categoriesOptions = firstCategory.categories_options.flatMap(
-              (option) => {
-                if (option.people_options && option.people_options.length > 0) {
-                  return option.people_options.map((personOption) => ({
-                    description: option.description || "No description",
-                    price: personOption.price || null,
-                    idOption: option.idOption 
-                  }));
-                } else {
-                  return {
-                    description: option.description || "No description",
-                    price: null,
-                    idOption: option.idOption 
-                  };
-                }
-              }
-            );
-    
-            setServicesData(categoriesOptions);
-          }
-        }
-      }, [infoUserLog]);
-
+  const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
+  
+  const [statistics, setStatistics] = useState([]);
+console.log("statistics", statistics)
   useEffect(() => {
-    const chartDom = document.getElementById("pie-chart");
-    const myChart = echarts.init(chartDom);
+    const fetchAndDrawChart = async () => {
+      try {
+        const response = await fetch(`${REACT_APP_API_URL}/stats/provider`);
+        const data = await response.json();
+        const misServiciosMasContratados = data.data.serviciosTotales.map(
+          (option) => ({
+            servicio: option.Servicio || "",
+            cantidad: parseInt(option.Cantidad) || 1,
+          })
+        );
+        setStatistics(misServiciosMasContratados);
 
-    const option = {
-      legend: {
-        right: "botton",
-      },
-      toolbox: {
-        right: 20, 
-        top: 100, 
-        show: true,
-        feature: {
-          mark: { show: true },
-          dataView: { show: true, readOnly: false },
-          restore: { show: true },
-          saveAsImage: { show: true },
-        },
-      },
-      series: [
-        {
-          name: "Nightingale Chart",
-          type: "pie",
-          radius: [20, 150],
-          center: ["50%", "50%"],
-          roseType: "area",
-          itemStyle: {
-            borderRadius: 6,
-          },//! ESTO SE DEBE CAMBIAR POR LA CANTIDAD DE VECES QUE SE CONTRATO CADA SERVICIO
-          data: servicesData.map(service => ({ value: service.price || 0, name: service.description, label: {
-            formatter: '$ {c}',
-          }, })),
-        },
-      ],
+        const chartDom = document.getElementById("pie-chart");
+        const myChart = echarts.init(chartDom);
+
+        const option = {
+          tooltip: {
+            trigger: 'item',
+            formatter: '{a} <br/>{b}: {c} ({d}%)'
+          },
+          title: {
+            text: "",
+          },
+          toolbox: {
+            right: 10,
+            top: 0,
+            show: true,
+            orient: "vertical",
+            feature: {
+              dataView: { show: true, readOnly: false },
+              mark: { show: true },
+              restore: { show: true },
+              saveAsImage: { show: true },
+            },
+          },
+          
+         
+          series: [
+            {
+              name: "Servicio",
+              type: "pie",
+              radius: [20, 120],
+              center: ["50%", "50%"], 
+              roseType: "area",
+              itemStyle: {
+                borderRadius: 6,
+              },
+              label: {
+                bottom: 10,
+                width: 200,
+                height: 70,
+                formatter: function (params) {
+                  return '{hr|' + params.name + '}\n{b|Cantidad: ' + params.value + '}  {per|' + params.percent + '%}';
+                },
+                backgroundColor: '#F6F8FC',
+                borderColor: '#8C8D8E',
+                borderWidth: 1,
+                borderRadius: 4,
+                rich: {
+                  a: {
+                    color: '#6E7079',
+                    lineHeight: 22,
+                    align: 'center'
+                  },
+                  hr: {
+                    width: '80%',
+                    height: 30,
+                    margin: 'auto',
+                    align: 'left'
+                  },
+                  b: {
+                    color: '#4C5058',
+                    fontSize: 14,
+                    fontWeight: 'bold',
+                    lineHeight: 23,
+                    align: 'left'
+                  },
+                  per: {
+                    color: '#fff',
+                    backgroundColor: '#4C5058',
+                    padding: [3, 4],
+                    borderRadius: 4,
+                    align: 'right'
+                  }
+                }
+              },
+              data: misServiciosMasContratados.map((option) => ({
+                value: option.cantidad || 0,
+                name: option.servicio ,
+              })),
+            },
+          ],
+        };
+
+        myChart.setOption(option);
+
+        return () => {
+          myChart.dispose();
+        };
+      } catch (error) {
+        console.error("Error al obtener los servicios mas buscados:", error);
+      }
     };
 
-    myChart.setOption(option);
-
-    return () => {
-      myChart.dispose();
-    };
-  }, [servicesData]); 
+    fetchAndDrawChart();
+  }, []);
 
   return <div id="pie-chart" style={{ height: "400px" }}></div>;
 }

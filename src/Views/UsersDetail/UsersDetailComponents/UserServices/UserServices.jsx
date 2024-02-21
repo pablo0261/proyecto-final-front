@@ -52,7 +52,7 @@ function UserServices(props) {
     }
 
     return (
-        <div className={style.background} id='services'>
+        <div className={style.background} >
             <div className={style.servicesWrapper}>
                 <div className={style.serviceItem}>
                     <div className={style.column1}>

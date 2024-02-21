@@ -110,7 +110,8 @@ const FormConsultReport = () => {
                         value={formData.fullName}
                         onChange={handleChange}
                         placeholder="Ej: Fulanita de Tal"
-                        readOnly={!!userLoggedInfo}
+                        readOnly={!!userLoggedInfo && userLoggedInfo.email ? true : false}
+
                     />
                     <p className={styles.errorMessage}>{errors.fullName}</p>
                 </div>
@@ -125,7 +126,8 @@ const FormConsultReport = () => {
                         value={formData.senderMail}
                         onChange={handleChange}
                         placeholder="example@mail.com"
-                        readOnly={!!userLoggedInfo}
+                        readOnly={!!userLoggedInfo && userLoggedInfo.email ? true : false}
+
                     />
                     <p className={styles.errorMessage}>{errors.senderMail}</p>
                 </div>

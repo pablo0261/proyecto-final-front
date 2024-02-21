@@ -1,15 +1,13 @@
 import style from "./Message.module.sass";
 
-function MessageToShow() {
+function MessageToShowProvider() {
   return (
     <div className={style.introQuote}>
       <div className={style.quoteIcon}></div>
       <div className={style.quoteBox}>
         <p className={style.quote}>
           {" "}
-          "El servicio del proveedor fue excelente, especialmente porque
-          personalizan la atención para satisfacer las necesidades individuales
-          de cada cliente. Recomiendo mucho la página."
+          "Desde que me uní a la plataforma, he experimentado un aumento notable en la demanda de mis servicios. Su enfoque centrado en el usuario y su apoyo continuo han contribuido significativamente a mi desarrollo profesional."
         </p>
         <div className={style.profileBox}>
           <img
@@ -26,4 +24,4 @@ function MessageToShow() {
   );
 }
 
-export default MessageToShow;
+export default MessageToShowProvider;
