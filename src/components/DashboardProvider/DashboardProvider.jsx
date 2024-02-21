@@ -37,7 +37,6 @@ function Dashboard() {
           <div className={style.divPersonasQueTeBuscaron}>
             <PeopleVisit />
           </div>
-          <h2 className={style.h2HistoriaServ}>Historial de pagos</h2>
           <div className={style.divHistorialpagos}>
             <div>
               <BarChart />
@@ -54,7 +53,6 @@ function Dashboard() {
           <div className={style.divUltimoComent}>
             <LastComment />
           </div>
-          <h2 className={style.title}>Historia de Servicios</h2>
           <div className={style.divHitorialServicios}>
             <div>
               <PieChart />

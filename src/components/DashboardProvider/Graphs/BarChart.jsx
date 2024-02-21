@@ -27,7 +27,7 @@ function PaymentsStatistics() {
   const [oportunidadesPorSemana, setOportunidadesPorSemana] = useState([]);
 
   useEffect(() => {
-    const fetchEducation = async () => {
+    const fetchData = async () => {
       try {
         const response = await fetch(
           `${REACT_APP_API_URL}/stats/provider?idPeople=${userLog.idPeople}`
@@ -47,7 +47,8 @@ function PaymentsStatistics() {
         );
       }
     };
-    fetchEducation();
+
+    fetchData();
   }, [REACT_APP_API_URL, userLog.idPeople]);
 
   useEffect(() => {
@@ -119,7 +120,7 @@ function PaymentsStatistics() {
     return () => {
       myChart.dispose();
     };
-  }, [oportunidadesPorSemana]);
+  }, []);
 
   return <div id="payments-chart" style={{ height: "400px" }}></div>;
 }
