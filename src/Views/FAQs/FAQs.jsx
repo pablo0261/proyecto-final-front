@@ -5,7 +5,7 @@ import Loader from '../../utils/Loader/Loader'
 import { useEffect, useState } from 'react';
 import FormFAQs from '../../components/Form/FormFAQs/FormFAQs';
 import { useDispatch, useSelector } from 'react-redux';
-import { getFAQs } from '../../redux/actions';
+import { getFAQs, deleteFAQs } from '../../redux/actions';
 
 
 
@@ -32,7 +32,7 @@ const FAQs = () => {
     title: '',
     message: ''
   });
-
+  console.log(faqSDetail);
   /* Get FAQs */
   useEffect(() => {
     dispatch(getFAQs())
@@ -54,17 +54,11 @@ const FAQs = () => {
   };
 
   /* Función para eliminar una pregunta */
-  const handleDeleteQuestion = (index, type) => {
-    if (type === 'provider') {
-      const updatedList = [...providerFaqList];
-      updatedList.splice(index, 1);
-      setProviderFaqList(updatedList);
-    } else if (type === 'client') {
-      const updatedList = [...clientFaqList];
-      updatedList.splice(index, 1);
-      setClientFaqList(updatedList);
-    }
+  const handleDeleteQuestion = (idQuestion) => {
+    console.log("ID de la FAQs:", idQuestion);
+    dispatch(deleteFAQs(idQuestion));
   };
+  
 
   /* Función para entrar en el modo de edición */
   const handlePutQuestion = (index, destination) => {
@@ -123,7 +117,7 @@ const FAQs = () => {
               <hr />
               {userLoggedInfo.typeOfPerson === 'administrator' && (
                 <div className={styles.container__buttons}>
-                  <button onClick={() => handleDeleteQuestion(index, 'provider')}>Eliminar</button>
+                  <button onClick={() => handleDeleteQuestion(faq.idQuestion, 'provider')}>Eliminar</button>
 
 
                   <button onClick={() => handlePutQuestion(index, 'provider')}>Editar</button>
@@ -179,7 +173,7 @@ const FAQs = () => {
               <hr />
               {userLoggedInfo.typeOfPerson === 'administrator' && (
                 <div className={styles.container__buttons}>
-                  <button onClick={() => handleDeleteQuestion(index, 'client')}>Eliminar</button>
+                  <button onClick={() => handleDeleteQuestion(faq.idQuestion, 'client')}>Eliminar</button>
                   <button onClick={() => handlePutQuestion(index, 'client')}>Editar</button>
                 </div>
               )}

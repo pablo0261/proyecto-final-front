@@ -21,6 +21,7 @@ import {
   GET_REPORTS,
   GET_ALL_PAYMENTS,
   PUT_FAQS,
+  DELETE_FAQS,
 } from "./action-types";
 
 const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
@@ -478,6 +479,23 @@ const putFAQs = (data) => {
 };
 
 
+/* Delete FAQs */
+const deleteFAQs = (idQuestion) => {
+  return async (dispatch) => {
+    try {
+      await axios.delete(`${REACT_APP_API_URL}/questions/${idQuestion}`);
+      dispatch(getFAQs());
+      dispatch({
+        type: DELETE_FAQS,
+        payload: idQuestion,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+};
+
+
 export {
   addInfoUserLog,
   logOutDeleteData,
@@ -505,5 +523,6 @@ export {
   putState,
   putStateProvider,
   putFAQs,
+  deleteFAQs,
   clear
 };

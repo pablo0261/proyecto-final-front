@@ -20,6 +20,7 @@ import {
   GET_ALL_PAYMENTS,
   PUT_STATE,
   PUT_FAQS,
+  DELETE_FAQS,
   // CONTRAT_SERVICE_USER
 } from "../actions/action-types";
 
@@ -235,6 +236,12 @@ const rootReducer = (state = initialState, { type, payload }) => {
           return faq;
         }),
       };
+
+      case DELETE_FAQS:
+        return {
+          ...state,
+          faqS: state.faqS.filter((faq) => faq.idQuestion !== payload),
+        };
 
 
     default:
