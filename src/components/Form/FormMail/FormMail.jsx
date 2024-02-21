@@ -1,38 +1,41 @@
 import { useState } from "react";
-import Validation from "../FormExperience/validationFormExperience";
 import styles from "./FormMail.module.sass";
 import axios from "axios";
+import { Validation } from "./ValidationFormMail";
 
-function Form({ handleShowForm , email}) {
+function Form({ handleShowForm, email }) {
   const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
   const [userData, setUserData] = useState({
-    email: email,
+    to: email,
     subject: "",
     text: "",
   });
   const [localErrors, setLocalErrors] = useState({
-    description: "",
-    subject: "",
-    text: "",
+    to: "",
+    subject: "*Campo Obligatorio",
+    text: "*Campo Obligatorio",
   });
 
   const handleChange = (event) => {
     const { name, value } = event.target;
     setUserData((prevUserData) => ({ ...prevUserData, [name]: value }));
-    Validation(name, setLocalErrors, { ...userData, [name]: value });
+    Validation(name, localErrors, setLocalErrors, { ...userData, [name]: value });
   };
-  
+
   const handleExperienceAdd = async (event) => {
     event.preventDefault();
-    try {
-      const response = await axios.post(`${REACT_APP_API_URL}/sendmail`, {
-        "to": userData.email,
-        "subject": userData.subject,  
-        "text": userData.text
-      });
-      handleShowForm();
-    } catch (error) {
-      console.error("Error al enviar el correo electrónico", error);
+    if (Object.values(localErrors).every(error => error === "")) {
+      try {
+        const response = await axios.post(`${REACT_APP_API_URL}/sendmail`, userData);
+        if (response.status === 200) {
+          handleShowForm();
+          window.alert("Correo enviado exitosamente")
+        }
+      } catch (error) {
+        console.error("Error al enviar el correo electrónico", error);
+      }
+    } else {
+      window.alert("Debes rellenar todos los campos obligatorios")
     }
   };
 
@@ -44,35 +47,24 @@ function Form({ handleShowForm , email}) {
           className={styles.closeButton}
           onClick={() => handleShowForm()}
         ></button>
-        <p className={styles.textTitle}>Aqui los mails</p>
+        <p className={styles.textTitle}>Notificar Usuario</p>
         <form
           className={styles.Form}
           onSubmit={(event) => handleExperienceAdd(event)}
         >
           <div className={styles.FormDivInput}>
             <div className={styles.FormDivInput}>
-            <label className={styles.labels}>Mail:</label>
-            <input
-            className={styles.inputDetail}
-            type="email"
-            name="email" // Debería ser "email" en lugar de "mail"
-            value={userData.email}
-            onChange={handleChange}
-            placeholder="Ingrese un correo electronico"
-            ></input>
-              <div
-                className={
-                  userData.email &&
-                  (localErrors.email
-                    ? styles.errorMessage
-                    : styles.errorNotMessage)
-                }
-              >
-                {userData.email
-                  ? localErrors.email
-                    ? localErrors.email
-                    : "Datos Válidos"
-                  : null}
+              <label className={styles.labels}>Mail:</label>
+              <input
+                className={styles.inputDetail}
+                type="email"
+                name="to"
+                value={userData.to}
+                onChange={handleChange}
+                placeholder="Ingrese un correo electronico"
+              ></input>
+              <div className={localErrors.to ? styles.errorMessage : styles.errorNotMessage}>
+                {localErrors.to ? localErrors.to : "Datos Válidos"}
               </div>
             </div>
           </div>
@@ -88,19 +80,8 @@ function Form({ handleShowForm , email}) {
                 onChange={handleChange}
                 placeholder="Asunto"
               />
-              <div
-                className={
-                  userData.subject &&
-                  (localErrors.subject
-                    ? styles.errorMessage
-                    : styles.errorNotMessage)
-                }
-              >
-                {userData.subject
-                  ? localErrors.subject
-                    ? localErrors.subject
-                    : "Datos Válidos"
-                  : null}
+              <div className={localErrors.subject ? styles.errorMessage : styles.errorNotMessage}>
+                {localErrors.subject ? localErrors.subject : "Datos Válidos"}
               </div>
             </div>
 
@@ -114,19 +95,8 @@ function Form({ handleShowForm , email}) {
                 onChange={handleChange}
                 placeholder="Tu Mensaje"
               />
-              <div
-                className={
-                  userData.text &&
-                  (localErrors.text
-                    ? styles.errorMessage
-                    : styles.errorNotMessage)
-                }
-              >
-                {userData.text
-                  ? localErrors.text
-                    ? localErrors.text
-                    : "Datos Válidos"
-                  : null}
+              <div className={localErrors.text ? styles.errorMessage : styles.errorNotMessage}>
+                {localErrors.text ? localErrors.text : "Datos Válidos"}
               </div>
             </div>
           </div>

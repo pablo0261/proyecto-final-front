@@ -1,44 +1,71 @@
 import React, { useEffect, useState } from 'react';
 import styles from "./TableUserDue.module.scss";
 import Pagination from '../Pagination/Pagination';
-import { allProviderAdmin } from '../../redux/actions';
+import { allPayments } from '../../redux/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import Form from "../Form/FormMail/FormMail"
 
 function TableUserDue() {
+
   const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
-  const people = useSelector((state) => state.providerForAdmin.data);
-  const InfoPag = useSelector((state) => state.providerForAdmin);
+  const payments = useSelector(state => state.paymentsHistory)
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [showForm, setShowForm] = useState(false);
+
+  useEffect(() => {
+    const getPayments = async () => {
+      try {
+        await dispatch(allPayments(""))
+      } catch (error) {
+        window.alert(error)
+      }
+    }
+    getPayments()
+  }, [])
+
   const handleShowForm = () => {
     setShowForm(!showForm);
   };
-console.log(people)
-  useEffect(() => {
-    dispatch(allProviderAdmin(""));
-  }, [people]);
 
-  const handleChangeStatus = async (value, state) => {
-    const auxState = state === "Active" ? "Inactive" : "Active";
+  const handleChangeStatus = async (idPeople, state) => {
+    try {
+      const auxState = state === "Active" ? "Inactive" : "Active";
       const response = await axios.put(`${REACT_APP_API_URL}/people`, {
-        "idPeople": value,
+        "idPeople": idPeople,
         "state": auxState
       });
-      // if (response.status === 200) {
-      //   return dispatch(allProviderAdmin("&pageNumber=" + InfoPag.pageNumber));
-      // }
+      if (response.status === 200) {
+        dispatch(allPayments(""))
+      }
+    } catch (error) {
+      window.alert(error)
     }
+    // if (response.status === 200) {
+    //   return dispatch(allProviderAdmin("&pageNumber=" + InfoPag.pageNumber));
+    // }
+  }
+
+  const handleChangeCancel = async (idValue, state) => {
+    try {
+      const auxState = state === "Deleted" ? "Active" : "Deleted";
+      const response = await axios.put(`${REACT_APP_API_URL}/people`, {
+        "idPeople": idValue,
+        "state": auxState
+      });
+      if (response.status === 200) {
+        dispatch(allPayments(""))
+      }
+    } catch (error) {
+      window.alert(error)
+    }
+  }
 
   // const handlerPagination = (queryConstructOrder) => {
   //   dispatch(allProviderAdmin(queryConstructOrder));
   // };
 
-  if (!people) {
-    return null;
-  }
   const onMailButtonClick = (email) => {
     setEmail(email)
   }
@@ -46,48 +73,74 @@ console.log(people)
   return (
     <div className={styles.wrapper}>
       <div className={styles.container_header}>
-        <h2>Usuarios en deuda</h2>
+        <p className={styles.title}>Historial de Pago:</p>
       </div>
-      
-
-      <table>
-        <thead>
-          <tr>
-            <th>Nombre</th>
-            <th>Mail</th>
-            <th>Activo/Inactivo</th>
-            <th>Dia de pago</th>
-            <th>Pago</th>
-            <th>Fecha de Emision</th>
-            <th>Fecha de Vencimiento</th>
-            <th></th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          {people.map((person) => (
-            <tr key={person.person.idPeople}>
-              <td>{person.person.fullName}</td>
-              <td>{person.person.email}</td>
-              <td>{person.person.state}</td>
-              <td>{person.paymentDay}</td>
-              <td>{person.price}</td>
-              <td>{person.emisionDate}</td>
-              <td>{person.dueDate}</td>
-              <td><button className={styles.mail} onClick={() => {
-                handleShowForm();
-                onMailButtonClick(person.person.email);
-              }}>MAIL</button></td>
-              <td><button 
-              className={person.person.state === "Active" ? styles.inactivo : styles.activo} 
-              onClick={() => handleChangeStatus(person.person.idPeople, person.person.state)} >
-              {person.person.state === "Active" ? "Desactivar" : "Activar"}
-              </button></td>
+      <div className={styles.tableWrapper}>
+        <table className={styles.table}>
+          <thead>
+            <tr>
+              <th className={styles.firstTh}>Nombre Completo</th>
+              <th>Correo Electrónico</th>
+              <th className={styles.centerTd}>Estado</th>
+              <th className={styles.centerTd}>Ultimo Pago</th>
+              <th className={styles.centerTd}>Monto Pagado</th>
+              <th className={styles.centerTd}>Emision de Deuda</th>
+              <th className={styles.centerTd}>Vencimiento</th>
+              <th></th>
+              <th></th>
+              <th className={styles.lastTh}></th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-      {showForm && <Form handleShowForm={handleShowForm} email={email}/>}
+          </thead>
+          <tbody>
+            {
+              payments.length != 0
+              && payments.map((person) => (
+                <tr key={person.person.idPeople}>
+                  <td className={styles.firstTd}>{person.person.fullName}</td>
+                  <td>{person.person.email}</td>
+                  <td className={styles.centerTd}>{person.person.state}</td>
+                  <td className={styles.centerTd}>{person.paymentDay}</td>
+                  <td className={styles.centerTd}>{person.price}</td>
+                  <td className={styles.centerTd}>{person.emisionDate}</td>
+                  <td className={styles.centerTd}>{person.dueDate}</td>
+                  <td>
+                    <button
+                      className={styles.mail} onClick={() => {
+                        handleShowForm();
+                        onMailButtonClick(person.person.email);
+                      }}>Enviar email</button>
+                  </td>
+                  <td>
+                    {
+                      person.person.state != "Unverified" &&
+                      <button
+                        className={person.person.state === "Active" ? styles.inactivo : styles.activo}
+                        type="button"
+                        onClick={() => handleChangeStatus(person.person.idPeople, person.person.state)}
+                      >
+                        {person.person.state === "Active" ? "Desactivar" : "Activar"}
+                      </button>
+                    }
+                  </td>
+                  <td className={styles.lastTd}>
+                    {
+                      person.person.state != "Deleted" &&
+                      <button
+                        className={styles.cancel}
+                        type="button"
+                        onClick={() => handleChangeCancel(person.person.idPeople, person.person.state)}
+                      >
+                        Cancelar
+                      </button>
+                    }
+                  </td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+      {showForm && <Form handleShowForm={handleShowForm} email={email} />}
       {/* <div>
       <Pagination pageNumber={InfoPag.pageNumber} totalOfPages={InfoPag.totalOfPages} onPageChange={handlerPagination}/>
       </div> */}

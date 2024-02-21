@@ -4,75 +4,110 @@ import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import { allPeople } from '../../redux/actions';
 
-function TableDue({ people , valor , onMailButtonClick , handleShowForm}) {
+function TableUser(props) {
+
+  const { people, searchInput, onMailButtonClick, handleShowForm } = props
+  console.log(searchInput.length)
   const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
   const dispatch = useDispatch();
 
-  const handleChangeStatus = async (idValue, state) => {
+  const handleChangeStatus = async (idPeople, state) => {
     const auxState = state === "Active" ? "Inactive" : "Active";
     const response = await axios.put(`${REACT_APP_API_URL}/people`, {
-      "idPeople": idValue,
+      "idPeople": idPeople,
       "state": auxState
     });
     if (response.status === 200) {
-      dispatch(allPeople(valor))
+      if (searchInput.length != 0) {
+        const query = `&fullName=${searchInput}`
+        dispatch(allPeople(query))
+      } else {
+        dispatch(allPeople(""))
+      }
     }
   }
-  const handleChangeCancel = async (idValue, state) => {
+
+  const handleChangeCancel = async (idPeople, state) => {
     const auxState = state === "Deleted" ? "Active" : "Deleted";
     const response = await axios.put(`${REACT_APP_API_URL}/people`, {
-      "idPeople": idValue,
+      "idPeople": idPeople,
       "state": auxState
     });
     if (response.status === 200) {
-      dispatch(allPeople(valor))
+      if (searchInput.length != 0) {
+        const query = `&fullName=${searchInput}`
+        dispatch(allPeople(query))
+      } else {
+        dispatch(allPeople(""))
+      }
     }
   }
+
   return (
     <div className={styles.wrapper}>
-      <table>
-        <thead>
-          <tr>
-            <th>Nombre</th>
-            <th>Mail</th>
-            <th>Telefono</th>
-            <th>Activo/Inactivo</th>
-            <th>Pago</th>
-            <th>Antiguedad</th>
-            <th></th>
-            <th></th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          {people && people.map((person) => (
-            <tr key={person.people.idPeople}>
-              <td>{person.people.fullName}</td>
-              <td>{person.people.email}</td>
-              <td>{person.people.phone}</td>
-              <td>{person.people.state}</td>
-              <td>{person.people.pago || "No data"}</td>
-              <td>{person.people.dateOfAdmission}</td>
-              <td><button className={styles.mail} onClick={() => {
-                handleShowForm();
-                onMailButtonClick(person.people.email);
-              }}>MAIL</button></td>
-              <td>
-                <button
-                  className={person.people.state === "Active" ? styles.inactivo : styles.activo}
-                  type="button"
-                  onClick={() => handleChangeStatus(person.people.idPeople, person.people.state)}
-                >
-                  {person.people.state === "Active" ? "Desactivar" : "Activar"}
-                </button>
-              </td>
-              <td><button className={styles.cancelar} type="button" onClick={() => handleChangeCancel(person.people.idPeople, person.people.state)} >{person.people.state === "Delete" ? "Active" : "Delete"}</button></td>
+      <div className={styles.tableWrapper}>
+        <table className={styles.table}>
+          <thead>
+            <tr>
+              <th className={styles.firstTh}>Nombre Completo</th>
+              <th>Correo Electrónico</th>
+              <th className={styles.centerTd}>Telefono</th>
+              <th className={styles.centerTd}>Tipo de Usuario</th>
+              <th className={styles.centerTd}>Estado</th>
+              <th className={styles.centerTd}>Ultimo Pago</th>
+              <th className={styles.centerTd}>Antigüedad</th>
+              <th></th>
+              <th></th>
+              <th className={styles.lastTd}></th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {people && people.map((person) => (
+              <tr key={person.people.idPeople}>
+                <td className={styles.firstTd}>{person.people.fullName}</td>
+                <td>{person.people.email}</td>
+                <td className={styles.centerTd}>{person.people.phone}</td>
+                <td className={styles.centerTd}>{person.people.typeOfPerson}</td>
+                <td className={styles.centerTd}>{person.people.state}</td>
+                <td className={styles.centerTd}>{person.people.pago || "No data"}</td>
+                <td className={styles.centerTd}>{person.people.dateOfAdmission}</td>
+                <td><button
+                  className={styles.mail}
+                  onClick={() => {
+                    handleShowForm();
+                    onMailButtonClick(person.people.email);
+                  }}>Enviar email</button></td>
+                <td>
+                  {
+                    person.people.state != "Unverified" &&
+                    <button
+                      className={person.people.state === "Active" ? styles.inactivo : styles.activo}
+                      type="button"
+                      onClick={() => handleChangeStatus(person.people.idPeople, person.people.state)}
+                    >
+                      {person.people.state === "Active" ? "Desactivar" : "Activar"}
+                    </button>
+                  }
+                </td>
+                <td className={styles.lastTd}>
+                  {
+                    person.people.state != "Deleted" &&
+                    <button
+                      className={styles.cancel}
+                      type="button"
+                      onClick={() => handleChangeCancel(person.people.idPeople, person.people.state)}
+                    >
+                      Cancelar
+                    </button>
+                  }
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
+    </div >
   );
 }
 
-export default TableDue;
+export default TableUser;

@@ -1,21 +1,17 @@
 @use '../../Styles/Mixins.sass' as *;
 @import '../../Styles/Variables.sass';
 
+.background{
+    width: 100%;
+    height: fit-content;
+    @include flexbox(column, center, center);
+
+}
+
 .container {
-    width: 100%; 
-    @include flexbox(column, center, null); 
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  
-  
- /*  .ff
-    width: 100%
-    margin: auto
-    
-.containerServices    
-    display: flex
-    flex-direction: column
-    justify-content: center */
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    @include flexbox(column, center, center);
+}

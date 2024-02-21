@@ -83,6 +83,7 @@ const handleDelete = async () => {
           borderRadius: 10,
           colors: {
             ...theme.colors,
+
             primary25: '#d9d8d8',
             primary: '#c47c52',
           },
