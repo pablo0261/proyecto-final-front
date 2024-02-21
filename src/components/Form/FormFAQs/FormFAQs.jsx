@@ -48,10 +48,19 @@ console.log(formData);
       dispatch(createFAQs(formData))
         .then(() => {
           setSuccessMessage('Pregunta y respuesta enviadas con éxito');
+          Swal.fire({
+            title: 'Pregunta y respuesta enviadas con éxito!',
+            icon: 'success',
+          })
           clearFormData();
         })
         .catch(() => {
           setSuccessMessage('Error al enviar el reporte');
+          Swal.fire({
+            title: 'Error al enviar el reporte!',
+            text: `el Reporte no se envió, por favor intentelo nuevamente`,
+            icon: 'warning',
+          })
         });
     } else {
       setSuccessMessage('Formulario con errores');
