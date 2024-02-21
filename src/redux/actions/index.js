@@ -358,20 +358,6 @@ const deleteService = (deleteData) => {
   };
 };
 
-
-const handleEditProfile = (formData) => {
-  return async (dispatch) => {
-    try {
-      dispatch({
-        type: EDIT_INFO_USER,
-        payload: formData,
-      });
-    } catch (error) {
-      window.alert(error);
-    }
-  };
-};
-
 // OPPORTUNITIES
 const getOpportunities = (filter) => {
   return async (dispatch) => {
@@ -503,7 +489,6 @@ export {
   infoDetailProveedor,
   handleContratService,
   postUserData,
-  handleEditProfile,
   saveSelectionsGlobal,
   allPeopleProvider,
   getFiltersOrdersDB,

@@ -26,6 +26,16 @@ function ProfileProvider() {
     dispatch(putUserData(newStatus))
   };
 
+  const handleFindProfession = () => {
+    if (infoUserLog.categories && infoUserLog.categories.length != 0) {
+      const profession = infoUserLog.categories.find(category => category.idCategorie === 5);
+      
+      if (profession && profession.categories_options.length != 0) {
+        return profession.categories_options[0].description
+      }      
+    }
+  }
+
   return (
     <div className={style.background}>
       <div className={style.wrapper}>
@@ -84,7 +94,7 @@ function ProfileProvider() {
         <p className={style.textData}>
           {infoUserLog.age} años | {infoUserLog.address}, {infoUserLog.locationName}, {infoUserLog.provinceName}, {infoUserLog.country}
         </p>
-        <p className={style.textOcupation}>{infoUserLog.profession}</p>
+        <p className={style.textOcupation}>{handleFindProfession()}</p>
         <p className={style.textDetail}>{infoUserLog.aboutMe}</p>
         <div className={style.contacts}>
           <p className={style.textContact}>Contactos: </p>
