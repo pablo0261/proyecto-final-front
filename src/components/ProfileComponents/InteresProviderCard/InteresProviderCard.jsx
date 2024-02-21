@@ -39,10 +39,9 @@ function InteresProviderCard() {
     };
 
     Swal.fire({
-      title: "Quieres eliminar este Interés?",
-      text: `Click en Aceptar para eliminarlo, o dale a Cancelar para regresar`,
-      footer: "Confirma que quieres eliminar el Interés seleccionado",
-      icon: "alert",
+      title: "¿Quieres eliminar este Interés?",
+      text: "Confirma que quieres eliminar el Interés seleccionado",
+      icon: "warning",
       showDenyButton: true,
       denyButtonText: "Cancelar",
       denyButtonColor: "Grey",
@@ -64,17 +63,12 @@ function InteresProviderCard() {
         <h1 className={style.title}>Intereses</h1>
         <button onClick={handleShowForm} className={style.editButton}></button>
       </div>
-
-      <div className={style.containerCard}>
-        {intereses.length > 0 ? (
-          intereses.map((option) => (
-          <div className={style.interesDetailContainer} key={option.idOption}>
-            <button onClick={(event) => handleDeleteService(option.idOption, event)} className={style.interesFalseButton}> {option.interes}</button>
-          </div>
-        ))
-        ): (
-          <p className={style.noInfo}>No hay información de intereses disponible.</p>
-        )}
+      <div className={style.infoWrapper}>
+        {intereses.length != 0
+          ? intereses.map((option, index) =>
+            <button key={index} onClick={(event) => handleDeleteService(option.idOption, event)} className={style.interes}> {option.interes}</button>)
+          : <p className={style.noInfo}>No hay información de intereses disponible.</p>
+        }
       </div>
       {showForm && <Form handleShowForm={handleShowForm} />}
     </div>

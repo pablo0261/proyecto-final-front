@@ -42,10 +42,9 @@ function SkillsProviderCard() {
     
 
     Swal.fire({
-      title: "Quieres eliminar esta Habilidad?",
-      text: `Click en Aceptar para eliminarla, o dale a Cancelar para regresar`,
-      footer: "Confirma que quieres eliminar la Habilidad seleccionado",
-      icon: "alert",
+      title: "¿Quieres eliminar esta Habilidad?",
+      text: "Confirma que quieres eliminar la Habilidad seleccionada",
+      icon: "warning",
       showDenyButton: true,
       denyButtonText: "Cancelar",
       denyButtonColor: "Grey",
@@ -67,24 +66,14 @@ function SkillsProviderCard() {
         <h1 className={style.title}>Habilidades</h1>
         <button onClick={handleShowForm} className={style.editButton}></button>
       </div>
-
-      <div className={style.containerCard}>
-        {skills.length > 0 ? (
-          skills.map((option) => (
-            <div className={style.skillsdetailContainer} key={option.idOption}>
-              <button
-                onClick={(event) => handleDeleteService(option.idOption, event)}
-                className={style.skillFalseButton}
-              >
-                {option.skill}
-              </button>
-            </div>
-          ))
-        ) : (
-          <p className={style.noInfo}>
-            No hay información de experiencia disponible.
-          </p>
-        )}
+      <div className={style.infoWrapper}>
+        {skills.length != 0
+          ? skills.map(
+            (option, index) =>
+              <button key={index} onClick={(event) => handleDeleteService(option.idOption, event)} className={style.skill}>{option.skill}</button>
+          )
+          : <p className={style.noInfo}>No hay información de habilidades disponible.</p>
+        }
       </div>
       {showForm && <Form handleShowForm={handleShowForm} />}
     </div>
