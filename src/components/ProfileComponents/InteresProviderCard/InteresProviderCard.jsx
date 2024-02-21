@@ -58,8 +58,8 @@ function InteresProviderCard() {
   };
 
   return (
-    <div className={style.container}>
-      <div className={style.titleContainer}>
+    <div className={style.background}>
+      <div className={style.wrapper}>
         <h1 className={style.title}>Intereses</h1>
         <button onClick={handleShowForm} className={style.editButton}></button>
       </div>

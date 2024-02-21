@@ -61,13 +61,13 @@ function Connections() {
 
     const handleNavigate = (opportunitie) => {
         if (infoUserLog.typeOfPerson === 'customer') {
-            dispatch({
+            /* dispatch({
                 type: SET_SELECTED_OPPORTUNITIE,
                 payload: {
-                  idOpportunitie: isSelected
+                  idOpportunitie: opportunitie.idOpportunitie
                 }
               })
-            navigate(Helpers.UserDetail.replace(":id", opportunitie.idProvider))
+            navigate(Helpers.UserDetail.replace(":id", opportunitie.idProvider)) */
         } else if (infoUserLog.typeOfPerson === 'provider') {
             navigate(Helpers.UserDetail.replace(":id", opportunitie.idCustomer))
         } else {

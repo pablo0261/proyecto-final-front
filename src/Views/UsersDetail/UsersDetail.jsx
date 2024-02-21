@@ -35,7 +35,7 @@ function UsersDetail() {
 
     getInfoProvider()
   }, [])
-  console.log(idOpportunitie)
+  
   if (infoUser) {
     return (
       <div className={style.wrapper}>

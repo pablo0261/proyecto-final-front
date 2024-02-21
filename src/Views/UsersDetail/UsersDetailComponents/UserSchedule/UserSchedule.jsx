@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import style from './UserSchedule.module.sass'
+import styles from './UserSchedule.module.sass'
 import okIcon from '../../../../assets/Icons/IconCheck.png'
 import emptyIcon from '../../../../assets/Icons/IconCheckEmpty.png'
 
@@ -19,39 +19,42 @@ function UserSchedule(props) {
   const shifts = ["Mañana", "Tarde", "Noche"]
 
   return (
-    <div className={style.background}>
-      <div className={style.wrapper}>
-        <p className={style.title}>Disponibilidad y Ubicación</p>
-        <div className={style.infoWrapper}>
-          <table className={style.table}>
-            <thead>
-              <tr>
-                <th className={style.days}></th>
-                {daysOfWeek.map((day, dayIndex) => (
-                  <th className={style.days} key={dayIndex}>
-                    {day}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {shifts.map((shift, shiftIndex) => (
-                <tr key={shiftIndex}>
-                  <td className={style.turnos}>{shift}</td>
-                  {daysOfWeek.map((day, dayIndex) => (
+    <div className={styles.background}>
+      <div className={styles.wrapper}>
+        <h1 className={styles.title}>Disponibilidad y Ubicación</h1>
+      </div>
+      <div className={styles.infoWrapper}>
+        <table className={styles.table}>
+          <thead>
+            <tr>
+              <th className={styles.days}></th>
+              {daysOfWeek.map((day, dayIndex) => (
+                <th className={styles.days} key={dayIndex}>
+                  {day}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {shifts.map((shift, shiftIndex) => (
+              <tr key={shiftIndex}>
+                <td className={styles.turnos}>{shift}</td>
+                {daysOfWeek.map((day, dayIndex) => {
+                  const index = dayIndex * shifts.length + shiftIndex;
+                  return (
                     <td key={dayIndex}>
-                      {schedule[shiftIndex * daysOfWeek.length + dayIndex] ? (
+                      {schedule[index] ? (
                         <img src={okIcon} alt="OK" />
                       ) : (
                         <img src={emptyIcon} alt="OK" />
                       )}
                     </td>
-                  ))}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+                  );
+                })}
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );

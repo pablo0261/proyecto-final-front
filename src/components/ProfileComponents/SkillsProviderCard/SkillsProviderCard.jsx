@@ -61,8 +61,8 @@ function SkillsProviderCard() {
   };
 
   return (
-    <div className={style.container}>
-      <div className={style.titleContainer}>
+    <div className={style.background}>
+      <div className={style.wrapper}>
         <h1 className={style.title}>Habilidades</h1>
         <button onClick={handleShowForm} className={style.editButton}></button>
       </div>
