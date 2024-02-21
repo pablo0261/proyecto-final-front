@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Validation from './validationFormFAQs';
 import styles from "./FormFAQs.module.scss";
 import { useDispatch } from 'react-redux';
-import { createFAQs } from '../../../redux/actions/index';
+import { createFAQs, putFAQs } from '../../../redux/actions/index';
 
 
 
@@ -14,7 +14,7 @@ const FormFAQs = ({ typeOfFAQs, formData: initialFormData }) => {
     title: '',
     message: ''
   });
-console.log(formData);
+
   const [successMessage, setSuccessMessage] = useState('');
 
   const [localErrors, setLocalErrors] = useState({
@@ -62,6 +62,7 @@ console.log(formData);
             icon: 'warning',
           })
         });
+
     } else {
       setSuccessMessage('Formulario con errores');
       Swal.fire({
