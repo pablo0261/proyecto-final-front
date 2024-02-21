@@ -6,7 +6,6 @@ import Form from "../../Form/FormInteres/FormInteres";
 import style from "./InteresProvider.module.sass";
 
 function InteresProviderCard() {
-
   const dispatch = useDispatch();
   const infoUserLog = useSelector((state) => state.infoUserLog);
   const [showForm, setShowForm] = useState(false);
@@ -17,19 +16,17 @@ function InteresProviderCard() {
   };
 
   useEffect(() => {
-    if (infoUserLog && infoUserLog.categories.length != 0) {
-      const interesCategory = infoUserLog.categories.find(category => category.idCategorie === 6);
+    if (infoUserLog && infoUserLog.categories && infoUserLog.categories.length > 0) {
+      const interesCategory = infoUserLog.categories.find(category => category.idCategorie === 6); 
+      
+      if (interesCategory && interesCategory.categories_options && interesCategory.categories_options.length > 0) {
+        const interesOptions = interesCategory.categories_options;
 
-      if (interesCategory && interesCategory.categories_options.length != 0) {
-        const interesOptions = interesCategory.categories_options.map(
-          (option) => {
-            const newInteres = {
-              idOption: option.idOption,
-              interes: option.description
-            }
-            return newInteres
-          });
-        setIntereses(interesOptions);
+        const interesData = interesOptions.map((option) => ({
+          idOption: option.idOption,
+          interes: option.description,
+        }));
+        setIntereses(interesData);
       }
     }
   }, [infoUserLog]);
@@ -42,9 +39,10 @@ function InteresProviderCard() {
     };
 
     Swal.fire({
-      title: "¿Quieres eliminar este Interés?",
-      text: "Confirma que quieres eliminar el Interés seleccionado",
-      icon: "warning",
+      title: "Quieres eliminar este Interés?",
+      text: `Click en Aceptar para eliminarlo, o dale a Cancelar para regresar`,
+      footer: "Confirma que quieres eliminar el Interés seleccionado",
+      icon: "alert",
       showDenyButton: true,
       denyButtonText: "Cancelar",
       denyButtonColor: "Grey",
@@ -56,31 +54,30 @@ function InteresProviderCard() {
         setIntereses(preInteres =>
           preInteres.filter(interes => interes.idOption !== idOption)
         );
-      }
+      } 
     });
   };
 
   return (
-    <div className={style.background}>
-      <div className={style.wrapper}>
-        <p className={style.title}>Intereses</p>
+    <div className={style.container}>
+      <div className={style.titleContainer}>
+        <h1 className={style.title}>Intereses</h1>
         <button onClick={handleShowForm} className={style.editButton}></button>
       </div>
-      <div className={style.infoWrapper}>
-        {intereses.length != 0
-          ? intereses.map((option, index) =>
-            <button 
-            key={index} 
-            onClick={(event) => handleDeleteService(option.idOption, event)} 
-            onMouseEnter={(event) => event.target.innerText = "Eliminar"}
-            onMouseLeave={(event) => event.target.innerText = option.interes}
-            className={style.interes}
-            > {option.interes}</button>)
-          : <p className={style.noInfo}>No hay información de intereses disponible.</p>
-        }
+
+      <div className={style.containerCard}>
+        {intereses.length > 0 ? (
+          intereses.map((option) => (
+          <div className={style.interesDetailContainer} key={option.idOption}>
+            <button onClick={(event) => handleDeleteService(option.idOption, event)} className={style.interesFalseButton}> {option.interes}</button>
+          </div>
+        ))
+        ): (
+          <p className={style.noInfo}>No hay información de intereses disponible.</p>
+        )}
       </div>
       {showForm && <Form handleShowForm={handleShowForm} />}
-    </div >
+    </div>
   );
 }
 

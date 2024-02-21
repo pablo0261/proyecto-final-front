@@ -20,122 +20,116 @@ echarts.use([
 
 function PieChartComponent() {
   const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
+  
   const [statistics, setStatistics] = useState([]);
-
+console.log("statistics", statistics)
   useEffect(() => {
-    const fetchEducation = async () => {
+    const fetchAndDrawChart = async () => {
       try {
-        const response = await fetch(`${REACT_APP_API_URL}/categories`);
+        const response = await fetch(`${REACT_APP_API_URL}/stats/provider`);
         const data = await response.json();
+        const misServiciosMasContratados = data.data.serviciosTotales.map(
+          (option) => ({
+            servicio: option.Servicio || "",
+            cantidad: parseInt(option.Cantidad) || 1,
+          })
+        );
+        setStatistics(misServiciosMasContratados);
 
-        if (data.categories && data.categories.length > 0) {
-          const servicesCategory = data.categories.find(
-            (category) => category.idCategorie === 1
-          );
+        const chartDom = document.getElementById("pie-chart");
+        const myChart = echarts.init(chartDom);
 
-          if (
-            servicesCategory &&
-            servicesCategory.categories_options &&
-            servicesCategory.categories_options.length > 0
-          ) {
-            const servicesOptions = servicesCategory.categories_options;
+        const option = {
+          tooltip: {
+            trigger: 'item',
+            formatter: '{a} <br/>{b}: {c} ({d}%)'
+          },
+          title: {
+            text: "",
+          },
+          toolbox: {
+            right: 10,
+            top: 0,
+            show: true,
+            orient: "vertical",
+            feature: {
+              dataView: { show: true, readOnly: false },
+              mark: { show: true },
+              restore: { show: true },
+              saveAsImage: { show: true },
+            },
+          },
+          
+         
+          series: [
+            {
+              name: "Servicio",
+              type: "pie",
+              radius: [20, 120],
+              center: ["50%", "50%"], 
+              roseType: "area",
+              itemStyle: {
+                borderRadius: 6,
+              },
+              label: {
+                bottom: 10,
+                width: 200,
+                height: 70,
+                formatter: function (params) {
+                  return '{hr|' + params.name + '}\n{b|Cantidad: ' + params.value + '}  {per|' + params.percent + '%}';
+                },
+                backgroundColor: '#F6F8FC',
+                borderColor: '#8C8D8E',
+                borderWidth: 1,
+                borderRadius: 4,
+                rich: {
+                  a: {
+                    color: '#6E7079',
+                    lineHeight: 22,
+                    align: 'center'
+                  },
+                  hr: {
+                    width: '80%',
+                    height: 30,
+                    margin: 'auto',
+                    align: 'left'
+                  },
+                  b: {
+                    color: '#4C5058',
+                    fontSize: 14,
+                    fontWeight: 'bold',
+                    lineHeight: 23,
+                    align: 'left'
+                  },
+                  per: {
+                    color: '#fff',
+                    backgroundColor: '#4C5058',
+                    padding: [3, 4],
+                    borderRadius: 4,
+                    align: 'right'
+                  }
+                }
+              },
+              data: misServiciosMasContratados.map((option) => ({
+                value: option.cantidad || 0,
+                name: option.servicio ,
+              })),
+            },
+          ],
+        };
 
-            const servicesData = servicesOptions.map((option) => ({
-              name: option.description,
-            }));
+        myChart.setOption(option);
 
-            setStatistics(servicesData);
-            console.log("services", servicesData);
-          }
-        }
+        return () => {
+          myChart.dispose();
+        };
       } catch (error) {
         console.error("Error al obtener los servicios mas buscados:", error);
       }
     };
-    fetchEducation();
+
+    fetchAndDrawChart();
   }, []);
-
-  useEffect(() => {
-    const chartDom = document.getElementById("pie-chart");
-    const myChart = echarts.init(chartDom);
-
-    const option = {
-      legend: {
-        center: 10,
-      },
-      title: {
-        text: "",
-      },
-      toolbox: {
-        right: 10,
-        top: 0,
-        show: true,
-        orient: "horizontal",
-        feature: {
-          mark: { show: true },
-          restore: { show: true },
-          saveAsImage: { show: true },
-        },
-      },
-      series: [
-        {
-          name: "Contrataciones",
-          type: "pie",
-          radius: [20, 120],
-          center: ["50%", "50%"],
-          roseType: "area",
-          itemStyle: {
-            borderRadius: 6,
-          },
-          label: {
-            bottom: 10,
-            width: 100,
-            height: 50,
-            formatter: "{a|{a}}{abg|}\n{hr|}\n  {c}  {per|{d}%}  ",
-            backgroundColor: "#F6F8FC",
-            borderColor: "#8C8D8E",
-            borderWidth: 1,
-            borderRadius: 4,
-            rich: {
-              a: {
-                color: "#6E7079",
-                lineHeight: 22,
-                align: "center",
-              },
-              hr: {
-                borderColor: "#8C8D8E",
-                width: "100%",
-                borderWidth: 1,
-                height: 0,
-              },
-              b: {
-                color: "#4C5058",
-                fontSize: 20,
-                fontWeight: "normal",
-                lineHeight: 40,
-              },
-              per: {
-                color: "#fff",
-                backgroundColor: "#4C5058",
-                padding: [3, 4],
-                borderRadius: 4,
-              },
-            },
-          },
-          data: statistics.map((option) => ({
-            value: option.cantidad || 1,
-            name: option.servicio,
-          })),
-        },
-      ],
-    };
-
-    myChart.setOption(option);
-
-    return () => {
-      myChart.dispose();
-    };
-  }, [statistics]);
 
   return <div id="pie-chart" style={{ height: "400px" }}></div>;
 }

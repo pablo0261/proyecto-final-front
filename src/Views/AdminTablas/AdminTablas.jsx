@@ -21,6 +21,7 @@ function AdminTablas() {
             categoriesOptions={categoria.categories_options}
             idCategorie={categoria.idCategorie} 
             servicios={servicios} 
+            className={styles.adminservices}
           />
         </div>
       ))}
