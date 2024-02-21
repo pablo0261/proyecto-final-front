@@ -28,7 +28,7 @@ const ValidationContract = (property, errors, setErrors, contractForm) => {
     if (property === "durationOfService") {
         if (!contractForm.durationOfService) {
             setErrors({ ...errors, durationOfService: "*Ingresá el total de horas que necesitas" })
-        } else  if (contractForm.durationOfService === "0") {
+        } else  if (contractForm.durationOfService <= 0) {
             setErrors({ ...errors, durationOfService: "*Ingresá un total de horas válido" })
         } else {
             setErrors({ ...errors, durationOfService: "" })
