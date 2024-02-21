@@ -3,7 +3,7 @@ import Validation from './validationFormFAQs';
 import styles from "./FormFAQs.module.scss";
 import { useDispatch } from 'react-redux';
 import { createFAQs, putFAQs } from '../../../redux/actions/index';
-
+import Swal from 'sweetalert2'
 
 
 const FormFAQs = ({ typeOfFAQs, formData: initialFormData }) => {

@@ -4,6 +4,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import validation from "./validationFormConsultReport";
 import ReCAPTCHA from "react-google-recaptcha";
+import Swal from 'sweetalert2'
 
 const FormConsultReport = () => {
   const [successMessage, setSuccessMessage] = useState("");
