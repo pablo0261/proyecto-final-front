@@ -2,7 +2,9 @@ import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import style from "./MostSearch.module.sass"; 
 
-function MostSearch() {
+function MostSearch(props) {
+  const {setLoading} = props;
+  console.log("setLoading", setLoading)
   const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
   const userLog = useSelector((state) => state.infoUserLog);
   const [statistics, setStatistics] = useState([]);
@@ -12,7 +14,6 @@ function MostSearch() {
       try {
         const response = await fetch(`${REACT_APP_API_URL}/stats/provider?idPeople=${userLog.idPeople}`);
         const data = await response.json();
-        console.log("URL",`${REACT_APP_API_URL}/stats/provider?idPeople=${userLog.idPeople}`)
         const serviciosMasBuscados = data.data.serviciosMasBuscados.map((option) => ({
           servicio: option.servicio || "Limpieza",
           cantidad: parseInt(option.cantidad, 10) || 0, 
@@ -20,6 +21,8 @@ function MostSearch() {
        serviciosMasBuscados.sort((a, b) => b.cantidad - a.cantidad);
        const limitedStatistics = serviciosMasBuscados.slice(0, 4);
        setStatistics(limitedStatistics);
+     if ( response.status === 200) {
+        setLoading(true)}
       } catch (error) {
         console.error("Error al obtener los servicios mas buscados:", error);
       }
@@ -37,6 +40,7 @@ function MostSearch() {
     ));
   };
 
+  
   return (
     <div className={style.statisticsContainer}>
       <div className={style.statisticsBox}>{renderStatistics()}</div>

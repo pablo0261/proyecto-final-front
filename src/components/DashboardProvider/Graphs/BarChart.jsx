@@ -33,7 +33,6 @@ function PaymentsStatistics() {
           `${REACT_APP_API_URL}/stats/provider?idPeople=${userLog.idPeople}`
         );
         const data = await response.json();
-        console.log("data", data);
         const oportunidades = data.data.opportunidadesPorSemana.map(
           (option) => ({
             name: `Semana ${option.ejex}`,
