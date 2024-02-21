@@ -145,24 +145,28 @@ function Form({ handleShowForm }) {
     event.preventDefault();
     if (Object.values(localErrors).every((error) => error === "")) {
       try {
-        dispatch(postUserData(userDataEnglish));
         if (userLog.categories && userLog.categories.length != 0) {
           const profession = userLog.categories.find(category => category.idCategorie === 5);
-          
           if (profession && profession.categories_options.length != 0) {
             const oldProfession = profession.categories_options.filter((profession) => profession => profession.idOption != userDataProfession.idOption)
             const deletedProfession = {
-              idPeople : userLog.idPeople,
-              idOption : oldProfession[0].idOption
+              idPeople: userLog.idPeople,
+              idOption: oldProfession[0].idOption
             }
             dispatch(deleteService(deletedProfession))
+            dispatch(postUserData(userDataEnglish));
             dispatch(postUserInteres(userDataProfession))
             handleShowForm();
           } else {
+            dispatch(postUserData(userDataEnglish));
             dispatch(postUserInteres(userDataProfession))
             handleShowForm();
           }
-          
+
+        } else {
+          dispatch(postUserData(userDataEnglish));
+          dispatch(postUserInteres(userDataProfession))
+          handleShowForm();
         }
       } catch (error) {
         window.alert(error);
