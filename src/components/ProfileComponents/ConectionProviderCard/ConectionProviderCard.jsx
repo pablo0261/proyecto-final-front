@@ -18,6 +18,7 @@ function ConectionProviderCard(props) {
     Swal.fire({
       title: '¿Quieres Conectar con el Proveedor?',
       text: `Para poder Conectar con ${infoUser.fullName} debes contratarlo(a) `,
+      footer: `Si ya contrataste a ${infoUser.fullName} contactalo en "Mis Conexiones"`,
       icon: 'warning',
     })
   };

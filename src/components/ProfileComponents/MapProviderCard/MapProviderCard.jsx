@@ -50,9 +50,8 @@ function MapProviderCard() {
       await dispatch(putUserData(dataToSend));
     } catch (error) {
       Swal.fire({
-        title: '¡Su posición no se pudo registrar!',
-        text: 'Regrese y vuelva a intentarlo',
-        icon: 'error',
+        title: '¡"Por favor recuerde grabar su posicion en el mapa"!',
+        icon: 'info',
       })
     }
   };

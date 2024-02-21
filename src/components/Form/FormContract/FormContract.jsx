@@ -37,7 +37,6 @@ function FormContract(props) {
           Swal.fire({
             title: 'Solicitud enviada al Proveedor!',
             text: `Para contactarlo dirigete a "Tus Conexiones"`,
-            footer: 'Regrese y realice su registro',
             icon: 'success',
           })
           setShowContract(false)
