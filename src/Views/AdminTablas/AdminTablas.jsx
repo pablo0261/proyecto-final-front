@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { getFiltersOrdersDB } from "../../redux/actions";
 import { useDispatch, useSelector } from 'react-redux';
-import styles from "./AdminTablas.module.scss";
+import styles from "./AdminTablas.module.sass";
 import AdminServices from '../../components/AdminServices/AdminServices';
 
 function AdminTablas() {
@@ -12,9 +12,10 @@ function AdminTablas() {
     dispatch(getFiltersOrdersDB());
   }, []);
   return (
+    <div className={styles.container}>
     <div className={styles.wrapper}>
       {servicios.map((categoria, index) => (
-        <div key={index}>
+        <div className={styles.containerh2} key={index}>
           <h2>{categoria.description}</h2>
           <AdminServices
             categoriesOptions={categoria.categories_options}
@@ -24,6 +25,7 @@ function AdminTablas() {
           />
         </div>
       ))}
+    </div>
     </div>
   );
 }
