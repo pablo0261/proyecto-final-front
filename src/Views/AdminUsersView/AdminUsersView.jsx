@@ -3,14 +3,14 @@ import TableUserDue from '../../components/TableUserDue/TableUserDue'
 import styles from "../AdminUsersView/AdminUsersView.module.scss"
 
 function AdminUsersView() {
-return (
-  
-    <div className={styles.container}>
-      <TableUserDue />
-      <FindUserAdmin />
+  return (
+    <div className={styles.background}>
+      <div className={styles.container}>
+        <TableUserDue />
+        <FindUserAdmin />
+      </div>
     </div>
-  
-)
+  )
 
 }
 

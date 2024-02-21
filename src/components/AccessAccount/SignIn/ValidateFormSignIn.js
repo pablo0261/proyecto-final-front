@@ -23,6 +23,8 @@ export const ValidateFormSignIn = (property, errors, setErrors, signInData) => {
 
         if (age < 18) {
             setErrors({ ...errors, birthDate: "*Debes ser mayor de 18 años" })
+        } else if (age > 100) {
+            setErrors({ ...errors, birthDate: "*Ingresa una fecha de nacimiento válida" })
         } else {
             setErrors({ ...errors, birthDate: "" })
         }

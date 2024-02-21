@@ -35,7 +35,7 @@ function UsersDetail() {
 
     getInfoProvider()
   }, [])
-
+  
   if (infoUser) {
     return (
       <div className={style.wrapper}>

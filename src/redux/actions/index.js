@@ -19,7 +19,7 @@ import {
   GET_FAQS,
   GET_PEOPLE,
   GET_REPORTS,
-  GET_ALL_PROVIDER_ADMIN,
+  GET_ALL_PAYMENTS,
   PUT_FAQS,
 } from "./action-types";
 
@@ -95,10 +95,9 @@ const handleContratService = (item) => {
 };
 
 const allPeople = (query) => {
-  //** Esta ruta solo llama a todos los registrados en la tabla people*/
   return async (dispatch) => {
     try {
-      const response = await axios.get(`${REACT_APP_API_URL}/people?typeOfPerson=customer&typeOfPerson=provider&state=Inactive&state=Active${query}`);
+      const response = await axios.get(`${REACT_APP_API_URL}/people?typeOfPerson=customer&typeOfPerson=provider&state=Inactive&state=Active&state=Deleted&state=Unverified${query}&pageSize=100`);
       return dispatch({
         type: GET_PEOPLE,
         payload: response.data.people,
@@ -125,16 +124,19 @@ const allPeopleProvider = (query) => {
   };
 };
 
-const allProviderAdmin = (query) => {
+const allPayments = (query) => {
   return async (dispatch) => {
     try {
       const response = await axios.get(
         `${REACT_APP_API_URL}/paidMemberships${query}`
       );
-      return dispatch({
-        type: GET_ALL_PROVIDER_ADMIN,
-        payload: response.data,
-      });
+      console.log(response)
+      if (response.status === 200) {
+        return dispatch({
+          type: GET_ALL_PAYMENTS,
+          payload: response.data.data,
+        });
+      }
     } catch (error) {
       window.alert(error);
     }
@@ -499,7 +501,7 @@ export {
   createFAQs,
   getFAQs,
   postUserInteres,
-  allProviderAdmin,
+  allPayments,
   putState,
   putStateProvider,
   putFAQs,

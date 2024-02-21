@@ -7,60 +7,146 @@
     margin: 0px 0 20px 0;
     padding: 0; 
     
+    .tableWrapper {
+        width: 100%;
+        max-height: 400px;
+        overflow: auto;
+    }
 
-    table {
+    .tableWrapper::-webkit-scrollbar {
+        width: 5px;
+        border-radius: 10px;
+        margin-left: 10px;
+    }
+
+
+    .tableWrapper::-webkit-scrollbar-track {
+        background-color: rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+    }
+
+
+    .tableWrapper::-webkit-scrollbar-thumb {
+        background-color: $primaryColor;
+        border-radius: 10px;
+    }
+
+    .table {
         border-collapse: separate;
         border-spacing: 0 10px;
         @include boxShadowCard;
-        width: 80%;
+        width: 100%;
+        text-align: left;
 
         thead {
-            th {
-                padding: 15px 10px;
-                @include font($secondaryColor, 18px, bold, normal);
-            };
-        };
+            tr {
+                height: 50px;
+
+                .firstTh {
+                    padding-left: 40px;
+                }
+
+                th {
+                    @include font($secondaryColor, 18px, bold, normal);
+                }
+
+                .centerTd {
+                    text-align: center
+                }
+
+                .lastTd {
+                    padding-right: 10px;
+                }
+            }
+        }
 
         tbody {
+            width: 100%;
 
             tr {
                 background-color: rgb(245, 245, 245);
 
+                .firstTd {
+                    padding-left: 40px;
+                }
+
                 td {
-                    padding: 10px;
-                    @include font($secondaryColor, 18px, normal, normal);
-                };
-            };
+                    padding: 10px 0px;
+                    @include font($tertiaryColor, 16px, normal, normal);
+                }
+
+                .centerTd {
+                    text-align: center
+                }
+
+                .lastTd {
+                    padding-right: 10px;
+                }
+
+                .mail {
+                    width: 90%;
+                    padding: 8px 5px;
+                    border-radius: 10px;
+                    border: none;
+                    @include font(white, 14px, normal, normal);
+                    background-color: $primaryColor;
+                    transition: .2s;
+                    cursor: pointer;
+                }
+
+                .mail:hover {
+                    transform: scale(1.1);
+                    background-color: $hoverColor;
+                    transition: .2s
+                }
+
+                .activo {
+                    width: 90%;
+                    padding: 8px 5px;
+                    border-radius: 10px;
+                    border: none;
+                    @include font(white, 14px, normal, normal);
+                    background-color: $textSuccessColor;
+                    transition: .2s;
+                    cursor: pointer;
+                }
+
+                .activo:hover {
+                    transform: scale(1.1);
+                    transition: .2s;
+                }
+
+                .inactivo {
+                    width: 90%;
+                    padding: 8px 5px;
+                    border-radius: 10px;
+                    border: none;
+                    @include font($tertiaryColor, 14px, normal, normal);
+                    background-color: $alertColor;
+                    transition: .2s;
+                    cursor: pointer;
+                }
+
+                .inactivo:hover {
+                    transform: scale(1.1);
+                    transition: .2s;
+                }
+                .cancel {
+                    width: 90%;
+                    padding: 8px 5px;
+                    border-radius: 10px;
+                    border: none;
+                    @include font(white, 14px, normal, normal);
+                    background-color: $textFailureColor;
+                    transition: .2s;
+                    cursor: pointer;
+                }
+
+                .cancel:hover {
+                    transform: scale(1.1);
+                    transition: .2s;
+                }
+            }
         }
-        .mail{
-            @include buttonTables(#A64208);
-        };
-        .mail:hover{
-            @include buttonTables(#cd6b32);
-            transform: scale(1.22)
-        }
-        .activo{
-            @include buttonTables(#22B573);
-        };
-        .activo:hover{
-            @include buttonTables(#2ad98a);
-            transform: scale(1.22)
-        };
-        .inactivo{
-            @include buttonTables(#F2B138);
-            color: black;
-        };
-        .inactivo:hover{
-            @include buttonTables(#f6bf58);
-            transform: scale(1.22);
-            color: black;
-        };
-        .cancelar{
-            @include buttonTables(#D95555);
-        };
-        .cancelar:hover{
-            @include buttonTables(#e66d6d);
-            transform: scale(1.22)
-        };
     };
 };
