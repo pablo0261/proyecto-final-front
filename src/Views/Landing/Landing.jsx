@@ -77,9 +77,7 @@ const Landing = () => {
             <div className={styles.quoteIcon}></div>
             <div className={styles.quoteBox}>
               <p className={styles.quote}>
-                "El servicio del proveedor fue excelente, especialmente porque
-                personalizan la atención para satisfacer las necesidades
-                individuales de cada cliente. Recomiendo mucho la página."
+              "Gracias a la plataforma, he podido expandir mi presencia en línea y conectar con clientes potenciales de todo el mundo. Su interfaz intuitiva y herramientas eficientes han sido clave en mi éxito."
               </p>
               <div className={styles.profileBox}>
                 <img
