@@ -52,18 +52,6 @@ function AdminStatistics() {
             <Piechart />
           </div>
         </div>
-        {/* <div className={style.containerG}>
-          <h2 className={style.h2HistoriaServ}>Estado de Pago de Proveedores</h2>
-          <div>
-            <Paychart />
-          </div>
-        </div>
-        <div className={style.containerG}>
-          <h2 className={style.h2HistoriaServ}>Demanda de Servicios</h2>
-          <div>
-            <Servicechart />
-          </div>
-        </div> */}
       </div>
     </div>
   );

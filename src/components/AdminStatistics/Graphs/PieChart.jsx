@@ -22,16 +22,16 @@ function PieChartComponent() {
   const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
   
   const [statistics, setStatistics] = useState([]);
-
+console.log("statistics", statistics)
   useEffect(() => {
     const fetchAndDrawChart = async () => {
       try {
         const response = await fetch(`${REACT_APP_API_URL}/stats/provider`);
         const data = await response.json();
-        const misServiciosMasContratados = data.data.misServiciosMasContratados.map(
+        const misServiciosMasContratados = data.data.serviciosTotales.map(
           (option) => ({
-            servicio: option.servicio || "",
-            cantidad: parseInt(option.cantidad) || 1,
+            servicio: option.Servicio || "",
+            cantidad: parseInt(option.Cantidad) || 1,
           })
         );
         setStatistics(misServiciosMasContratados);
@@ -40,71 +40,79 @@ function PieChartComponent() {
         const myChart = echarts.init(chartDom);
 
         const option = {
-          legend: {
-            center: 10,
+          tooltip: {
+            trigger: 'item',
+            formatter: '{a} <br/>{b}: {c} ({d}%)'
           },
           title: {
             text: "",
           },
           toolbox: {
-            right: 0,
-            top: 100,
+            right: 10,
+            top: 0,
             show: true,
             orient: "vertical",
             feature: {
+              dataView: { show: true, readOnly: false },
               mark: { show: true },
               restore: { show: true },
               saveAsImage: { show: true },
             },
           },
+          
+         
           series: [
             {
-              name: "Contrataciones",
+              name: "Servicio",
               type: "pie",
               radius: [20, 120],
-              center: ["50%", "50%"],
+              center: ["50%", "50%"], 
               roseType: "area",
               itemStyle: {
                 borderRadius: 6,
               },
               label: {
                 bottom: 10,
-                width: 100,
-                height: 50,
-                formatter: "{a|{a}}{abg|}\n{hr|}\n  {c}  {per|{d}%}  ",
-                backgroundColor: "#F6F8FC",
-                borderColor: "#8C8D8E",
+                width: 200,
+                height: 70,
+                formatter: function (params) {
+                  return '{hr|' + params.name + '}\n{b|Cantidad: ' + params.value + '}  {per|' + params.percent + '%}';
+                },
+                backgroundColor: '#F6F8FC',
+                borderColor: '#8C8D8E',
                 borderWidth: 1,
                 borderRadius: 4,
                 rich: {
                   a: {
-                    color: "#6E7079",
+                    color: '#6E7079',
                     lineHeight: 22,
-                    align: "center",
+                    align: 'center'
                   },
                   hr: {
-                    borderColor: "#8C8D8E",
-                    width: "100%",
-                    borderWidth: 1,
-                    height: 0,
+                    width: '80%',
+                    height: 30,
+                    margin: 'auto',
+                    align: 'left'
                   },
                   b: {
-                    color: "#4C5058",
-                    fontSize: 20,
-                    fontWeight: "normal",
-                    lineHeight: 40,
+                    color: '#4C5058',
+                    fontSize: 14,
+                    fontWeight: 'bold',
+                    lineHeight: 23,
+                    align: 'left'
                   },
                   per: {
-                    color: "#fff",
-                    backgroundColor: "#4C5058",
+                    color: '#fff',
+                    backgroundColor: '#4C5058',
                     padding: [3, 4],
                     borderRadius: 4,
-                  },
-                },
+                    align: 'right'
+                  }
+                }
               },
               data: misServiciosMasContratados.map((option) => ({
                 value: option.cantidad || 0,
-                name: option.servicio,
+                name: option.servicio ,
               })),
             },
           ],
