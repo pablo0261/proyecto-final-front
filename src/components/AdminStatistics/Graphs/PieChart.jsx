@@ -22,7 +22,6 @@ function PieChartComponent() {
   const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
   
   const [statistics, setStatistics] = useState([]);
-console.log("statistics", statistics)
   useEffect(() => {
     const fetchAndDrawChart = async () => {
       try {
@@ -73,10 +72,11 @@ console.log("statistics", statistics)
               },
               label: {
                 bottom: 10,
-                width: 200,
+                width: 180,
                 height: 70,
                 formatter: function (params) {
-                  return '{hr|' + params.name + '}\n{b|Cantidad: ' + params.value + '}  {per|' + params.percent + '%}';
+                  const name = params.name.length > 24 ? params.name.slice(0, 24) + '...' : params.name;
+                  return '{hr|' + name + '}\n{b|Cantidad: ' + params.value + '}  {per|' + params.percent + '%}';
                 },
                 backgroundColor: '#F6F8FC',
                 borderColor: '#8C8D8E',
@@ -89,7 +89,7 @@ console.log("statistics", statistics)
                     align: 'center'
                   },
                   hr: {
-                    width: '80%',
+                    width: 140,
                     height: 30,
                     margin: 'auto',
                     align: 'left'

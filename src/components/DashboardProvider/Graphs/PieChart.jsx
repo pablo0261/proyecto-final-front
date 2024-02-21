@@ -25,24 +25,24 @@ function PieChartComponent() {
   const [statistics, setStatistics] = useState([]);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchEducation = async () => {
       try {
         const response = await fetch(
           `${REACT_APP_API_URL}/stats/provider?idPeople=${infoUserLog.idPeople}`
         );
         const data = await response.json();
-        const misServiciosMasContratados = data.data.misServiciosMasContratados.map((option) => ({
-          servicio: option.servicio || "",
-          cantidad: parseInt(option.cantidad) || 1,
-        }));
+        const misServiciosMasContratados =
+          data.data.misServiciosMasContratados.map((option) => ({
+            servicio: option.servicio || "",
+            cantidad: parseInt(option.cantidad) || 1,
+          }));
         setStatistics(misServiciosMasContratados);
       } catch (error) {
         console.error("Error al obtener los servicios mas buscados:", error);
       }
     };
-
-    fetchData();
-  }, [statistics]);
+    fetchEducation();
+  }, [infoUserLog]);
 
   useEffect(() => {
     const chartDom = document.getElementById("pie-chart");
@@ -125,7 +125,7 @@ function PieChartComponent() {
     return () => {
       myChart.dispose();
     };
-  }, []);
+  }, [statistics]);
 
   return <div id="pie-chart" style={{ height: "400px" }}></div>;
 }
