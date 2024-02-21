@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Validation from './validationFormFAQs';
 import styles from "./FormFAQs.module.scss";
 import { useDispatch } from 'react-redux';
-import { createFAQs } from '../../../redux/actions/index';
+import { createFAQs, putFAQs } from '../../../redux/actions/index';
 
 
 
@@ -14,7 +14,7 @@ const FormFAQs = ({ typeOfFAQs, formData: initialFormData }) => {
     title: '',
     message: ''
   });
-console.log(formData);
+
   const [successMessage, setSuccessMessage] = useState('');
 
   const [localErrors, setLocalErrors] = useState({
@@ -45,14 +45,24 @@ console.log(formData);
     const isValid = Object.values(localErrors).every((error) => error === '');
 
     if (isValid) {
-      dispatch(createFAQs(formData))
-        .then(() => {
-          setSuccessMessage('Pregunta y respuesta enviadas con éxito');
-          clearFormData();
-        })
-        .catch(() => {
-          setSuccessMessage('Error al enviar el reporte');
-        });
+      if (initialFormData) {
+        
+        dispatch(putFAQs(formData))
+          .then(() => {
+            setSuccessMessage('Pregunta y respuesta editadas con éxito');
+          })
+          .catch(() => {
+            setSuccessMessage('Error al editar la pregunta y respuesta');
+          });
+      } else {
+        dispatch(createFAQs(formData))
+          .then(() => {
+            setSuccessMessage('Pregunta y respuesta creadas con éxito');
+          })
+          .catch(() => {
+            setSuccessMessage('Error al crear la pregunta y respuesta');
+          });
+      }
     } else {
       setSuccessMessage('Formulario con errores');
       window.alert('Por favor complete el formulario correctamente antes de enviarlo');
