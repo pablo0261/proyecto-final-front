@@ -55,15 +55,7 @@ const FAQs = () => {
 
   /* Función para eliminar una pregunta */
   const handleDeleteQuestion = (index, type) => {
-    if (type === 'provider') {
-      const updatedList = [...providerFaqList];
-      updatedList.splice(index, 1);
-      setProviderFaqList(updatedList);
-    } else if (type === 'client') {
-      const updatedList = [...clientFaqList];
-      updatedList.splice(index, 1);
-      setClientFaqList(updatedList);
-    }
+    console.log('eliminar');
   };
 
   /* Función para entrar en el modo de edición */
