@@ -55,7 +55,11 @@ console.log(formData);
         });
     } else {
       setSuccessMessage('Formulario con errores');
-      window.alert('Por favor complete el formulario correctamente antes de enviarlo');
+      Swal.fire({
+        title: 'Formulario con errores!',
+        text: `Por favor complete el formulario correctamente antes de enviarlo`,
+        icon: 'warning',
+      })
     }
   };
 
