@@ -17,7 +17,7 @@ function MapProviderCard() {
   
   const geopositionArray = infoUserLog.geoposition
   ? infoUserLog.geoposition.split(",").map((str) => parseFloat(str.trim()))
-  : [-34.6142, -64.1770];
+  : [-34.51422255, -64.177055446];
 
   const [draggable, setDraggable] = useState(false);
   const [position, setPosition] = useState({ lat: geopositionArray[0], lng: geopositionArray[1] });
