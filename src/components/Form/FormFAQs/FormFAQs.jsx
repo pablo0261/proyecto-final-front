@@ -50,6 +50,7 @@ const FormFAQs = ({ typeOfFAQs, formData: initialFormData }) => {
         dispatch(putFAQs(formData))
           .then(() => {
             setSuccessMessage('Pregunta y respuesta editadas con éxito');
+            clearFormData();
           })
           .catch(() => {
             setSuccessMessage('Error al editar la pregunta y respuesta');
@@ -58,6 +59,7 @@ const FormFAQs = ({ typeOfFAQs, formData: initialFormData }) => {
         dispatch(createFAQs(formData))
           .then(() => {
             setSuccessMessage('Pregunta y respuesta creadas con éxito');
+            clearFormData();
           })
           .catch(() => {
             setSuccessMessage('Error al crear la pregunta y respuesta');
