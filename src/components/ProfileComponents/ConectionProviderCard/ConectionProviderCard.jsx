@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import Swal from 'sweetalert2'
 import style from "./ConectionProvider.module.sass";
 
 function ConectionProviderCard(props) {
@@ -7,13 +8,18 @@ function ConectionProviderCard(props) {
   const { infoUser } = props
 
   const scrollToTutorial = () => {
-    const tutorialSection = document.getElementById('services');
+    const tutorialSection = document.getElementById('nameWrapper');
     if (tutorialSection) {
       window.scrollTo({
         top: tutorialSection.offsetTop,
         behavior: 'smooth'
       });
     }
+    Swal.fire({
+      title: '¿Quieres Conectar con el Proveedor?',
+      text: `Para poder Conectar con ${infoUser.fullName} debes contratarlo(a) `,
+      icon: 'warning',
+    })
   };
 
   return (

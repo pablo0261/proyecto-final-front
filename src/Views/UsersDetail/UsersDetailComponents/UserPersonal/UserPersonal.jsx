@@ -6,7 +6,7 @@ function UserPersonal(props) {
     const { infoUser } = props
 
     return (
-        <div className={style.background}>
+        <div className={style.background} >
             <div className={style.wrapper}>
                 <div className={style.perfilWrapper}>
                     <div className={style.imageWrapper}>
@@ -20,7 +20,7 @@ function UserPersonal(props) {
                         </div>
                     </div>
                     <div className={style.infoWrapper}>
-                        <div className={style.nameWrapper}>
+                        <div className={style.nameWrapper} id='nameWrapper'>
                             <p className={style.textName}>{infoUser.fullName}</p>
                             <div className={style.iconVerified}></div>
                             <p className={style.textVerified}>Cuenta Verificada</p>

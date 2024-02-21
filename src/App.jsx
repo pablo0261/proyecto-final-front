@@ -85,7 +85,7 @@ function App() {
           title: 'Usuario no registrado!',
           text: `Para acceder al sistema es necesario realizar el Registro`,
           footer: 'Regrese y realice su registro',
-          icon: 'alert',
+          icon: 'warning',
           // showDenyButton: true,
           // denyButtonText: 'Cancelar',
           // confirmButtonText: 'Aceptar',

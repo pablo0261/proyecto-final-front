@@ -12,7 +12,8 @@ import { io } from "socket.io-client";
 import Swal from "sweetalert2";
 import StatsAccessAccountClient from "../../components/AccessAccount/StatsAccessAccount/StatsClient/StatsAccessAccountClient";
 import StatsAccessAccountProvider from "../../components/AccessAccount/StatsAccessAccount/StatsProvider/StatsAccessAccountProvider";
-import MessageToShow from "../../components/AccessAccount/MessageToShow/MessageClient";
+import MessageToShowClient from "../../components/AccessAccount/MessageToShow/MessageClient";
+import MessageToShowProvider from "../../components/AccessAccount/MessageToShow/MessageProvider";
 
 const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
 const socket = io(REACT_APP_API_URL);
@@ -70,13 +71,8 @@ function AccessAccount() {
       Swal.fire({
         title: `${error.response.data.error}!`,
         text: `Por favor, verifique los datos e intente nuevamente`,
-        icon: 'alert',
+        icon: 'warning',
       })
-      // .then(response => {
-      //   if(response.isConfirmed){
-      //     handleFormsVisibility()
-      //   }
-      //   })
     }
   };
 
@@ -109,7 +105,7 @@ function AccessAccount() {
       Swal.fire({
         title: 'Usuario ya Registrado!',
         text: `Para acceder al sistema realice el login`,
-        icon: 'alert',
+        icon: 'warning',
       })
       .then(response => {
         if(response.isConfirmed){
@@ -141,7 +137,16 @@ function AccessAccount() {
                   </div>
                 )}
                 <div className={style.components}>
-                  <MessageToShow />
+                {isProvider ? (
+                  <div className={style.components}>
+                    <MessageToShowProvider />
+                  </div>
+                ) : (
+                  <div className={style.components}>
+                    <MessageToShowClient />
+                  </div>
+                )}
+                  
                 </div>
               </div>
             </div>
@@ -162,9 +167,15 @@ function AccessAccount() {
                     <StatsAccessAccountClient />
                   </div>
                 )}
-                <div className={style.components}>
-                  <MessageToShow />
-                </div>
+               {isProvider ? (
+                  <div className={style.components}>
+                    <MessageToShowProvider />
+                  </div>
+                ) : (
+                  <div className={style.components}>
+                    <MessageToShowClient />
+                  </div>
+                )}
               </div>
             </div>
           )}
