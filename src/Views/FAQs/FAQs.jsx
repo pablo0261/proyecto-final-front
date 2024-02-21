@@ -1,7 +1,8 @@
 import styles from './faqs.module.scss';
 import more from '../../assets/Icons/more.svg'
 import less from '../../assets/Icons/less.svg'
-import Loader from '../../utils/Loader/Loader'
+import Loading from '../../../src/assets/Icons/loadingHouse.gif'
+
 import { useEffect, useState } from 'react';
 import FormFAQs from '../../components/Form/FormFAQs/FormFAQs';
 import { useDispatch, useSelector } from 'react-redux';
@@ -95,7 +96,8 @@ const FAQs = () => {
   return (
     <div className={styles.wrap}>
 
-      {isLoading && <Loader />}
+      {isLoading && <img src={Loading} alt="Loading.." />}
+      
       {/* FAQs proveedor */}
 
       <h2>FAQs proveedor</h2>
