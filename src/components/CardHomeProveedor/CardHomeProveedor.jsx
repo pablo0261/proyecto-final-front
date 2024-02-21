@@ -34,6 +34,18 @@ function Card(props) {
       .catch((reason) => window.alert(reason))
   }
 
+  const handleFindProfession = () => {
+    if (props.user.categories && props.user.categories.length != 0) {
+      const profession = props.user.categories.find(category => category.idCategorie === 5);
+      
+      if (profession && profession.categories_options.length != 0) {
+        return profession.categories_options[0].description
+      } else {
+        return ""
+      }     
+    }
+  }
+
   return (
     <div className={styles.wrapper} onClick={() => handleNavigate()}>
       <div className={styles.profileWrapper}>
@@ -49,9 +61,9 @@ function Card(props) {
           <p className={styles.textGrey}>A partir de <span className={styles.textPrice}>${props.user.minPrice ? props.user.minPrice : ""}</span> x Hora</p>
         </div>
         <p className={styles.textGrey}>{props.user.address}</p>
-        <p className={styles.textDark}>{props.user.profession}</p>
+        <p className={styles.textDark}>{handleFindProfession()}</p>
         <div className={styles.servicesWrapper}>
-          {props.user.categories[0]?.categories_options && props.user.categories[0].categories_options.length !== 0 ? props.user.categories[0].categories_options.map((option) => (
+          {props.user.categories[0]?.categories_options && props.user.categories[0].categories_options.length != 0 ? props.user.categories[0].categories_options.map((option) => (
             <div key={`${option.idCategoryOption}-${option.description}`}
               className={styles.textServices}>
               {option.description}

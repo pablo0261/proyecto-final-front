@@ -108,7 +108,7 @@ const Home = () => {
               <div className={styles.Box}>
                 <div className={styles.filterBox}>
                   {allServices.map((category) => {
-                    if (!category.isInterest && !category.isExperience) {
+                    if (!category.isInterest && !category.isExperience && !category.isGenre) {
                       return (
                         <div key={category.idCategorie} className={styles.categoryWrapper}>
                           <p className={styles.titleCategory}>{category.description}</p>
