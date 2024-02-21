@@ -42,7 +42,7 @@ function AdminStatistics() {
 
         <div className={style.containerG}>
           <h2 className={style.h2HistoriaServ}>Usuarios Activos</h2>
-          <div>
+          <div >
             <Barchart />
           </div>
         </div>

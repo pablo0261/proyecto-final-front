@@ -32,7 +32,6 @@ const FAQs = () => {
     title: '',
     message: ''
   });
-  console.log(faqSDetail);
   /* Get FAQs */
   useEffect(() => {
     dispatch(getFAQs())
