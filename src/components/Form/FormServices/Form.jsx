@@ -37,9 +37,9 @@ function Form({ handleShowForm }) {
         setServices(serviceOptions);
       } catch (error) {
         Swal.fire({
-          title: `${error}`,
+          title: `Error: 404`,
           text: "Error al obtener las opciones de servicios",
-          icon: 'warning',
+          icon: 'error',
           confirmButtonText: 'Aceptar'
         });
       }
