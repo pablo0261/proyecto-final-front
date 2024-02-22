@@ -8,9 +8,9 @@ import ScheduleProviderCard from '../../components/ProfileComponents/SchedulePro
 import EducationProvider from '../../components/ProfileComponents/EducationProvider/EducationProvider';
 import ExperienciaProvider from '../../components/ProfileComponents/ExperienciaProvider/ExperienciaProvider';
 import MapProviderCard from '../../components/ProfileComponents/MapProviderCard/MapProviderCard';
-// import ReviewProviderCard from '../../components/ProfileComponents/ReviewProviderCard/ReviewProviderCard';
-// import ConectionProviderCard from '../../components/ProfileComponents/ConectionProviderCard/ConectionProviderCard';
+import ReviewProviderCard from "../../components/ProfileComponents/ReviewProviderCard/ReviewProviderCard";
 import style from './ProfileProviderView.module.sass'
+
 
 function ProfileProviderView() {
   const infoUserLog = useSelector((state) => state.infoUserLog);
@@ -26,7 +26,7 @@ function ProfileProviderView() {
         <InteresProviderCard />
         {infoUserLog.typeOfPerson === "provider" && <ScheduleProviderCard />}
         <MapProviderCard />
-        {/* <ReviewProviderCard /> */}
+        <ReviewProviderCard />
     </div>
   );
 }
