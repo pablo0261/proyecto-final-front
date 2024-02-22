@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import style from './NotChatBox.module.sass'
 import axios from 'axios'
 import ChatRender from './ChatRender/ChatRender'
+import Swal from 'sweetalert2'
 
 function NotChatBox(props) {
 
@@ -21,7 +22,11 @@ function NotChatBox(props) {
                     setIsLoadingChat(false)
                 }
             } catch (error) {
-                window.alert(error)
+                Swal.fire({
+                    title: `${error}`,
+                    icon: 'error',
+                    confirmButtonText: 'Aceptar'
+                  });
             }
         }
 

@@ -3,6 +3,7 @@ import { useState } from "react";
 import axios from "axios";
 import style from "./MercadoPago.module.sass";
 import StoreItem from '../../../Helpers/LocalStorage';
+import Swal from 'sweetalert2';
 
 const MercadoPago = (props) => {
 
@@ -16,7 +17,14 @@ const MercadoPago = (props) => {
       const { id } = response.data;
       return id;
     } catch (error) {
-      window.alert("Error createPreference:", error)
+      Swal.fire({
+        title: `error`,
+        icon: 'error',
+        // showDenyButton: true,
+        // denyButtonText: 'Cancelar',
+        // confirmButtonText: 'Aceptar',
+        // ConfirmButtonColor: "green",
+      })
     }
   }
 
@@ -28,7 +36,14 @@ const MercadoPago = (props) => {
         localStorage.setItem(StoreItem.dataUserSignIn, JSON.stringify(userData))
       }
     } else {
-      window.alert("Debes completar los campos sin errores")
+      Swal.fire({
+        title: "Debes completar los campos sin errores",
+        icon: 'warning',
+        // showDenyButton: true,
+        // denyButtonText: 'Cancelar',
+        // confirmButtonText: 'Aceptar',
+        // ConfirmButtonColor: "green",
+      })
     }
   }
 

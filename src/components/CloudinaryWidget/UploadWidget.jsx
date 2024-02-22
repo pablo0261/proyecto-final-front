@@ -4,6 +4,7 @@ import style from "./UploadWidget.module.sass";
 import { useDispatch } from "react-redux";
 import { putUserData } from "../../redux/actions";
 const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
+import Swal from "sweetalert2";
 
 
 
@@ -59,7 +60,14 @@ const UploadWidget = ({ setPublicId, user }) => {
             await dispatch(putUserData(newImage))
             setPublicId(imageUrl);
           } catch (error) {
-            window.alert(error)
+            Swal.fire({
+              title: `${error}`,
+              icon: 'error',
+              // showDenyButton: true,
+              // denyButtonText: 'Cancelar',
+              // confirmButtonText: 'Aceptar',
+              // ConfirmButtonColor: "green",
+            })
           } 
         }
       }

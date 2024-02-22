@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { ValidateFormLogIn } from './ValidateFormLogIn'
 import style from './LogIn.module.sass'
+import Swal from  'sweetalert2'
 
 function LogIn(props) {
 
@@ -37,7 +38,26 @@ function LogIn(props) {
         if (Object.values(errors).every(error => error === '')) {
             logInProcess(logInData)
         } else {
-            window.alert('Datos con errores')
+            Swal.fire({
+                title: `Datos con errores`,
+                icon: 'error',
+                // showDenyButton: true,
+                // denyButtonText: 'Cancelar',
+                // confirmButtonText: 'Aceptar',
+                // ConfirmButtonColor: "green",
+              })
+              //*Codigo para descomentar cuando sea necesario personailzar el cartel de alert!
+              // .then(response => {
+              //   if(response.isConfirmed){
+              //     Swal.fire("Exito", "El registro fue exitoso")
+              //   }
+              //   else if(response.isDenied){
+              //     Swal.fire("Información", "Todo bien", "info")
+              //   }
+              //   else{
+              //     Swal.fire("Error", "Ocurrió un error", "error")
+              //   }
+              // })
         }
     }
 
