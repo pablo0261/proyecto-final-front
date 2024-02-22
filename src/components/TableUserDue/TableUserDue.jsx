@@ -5,6 +5,7 @@ import { allPayments } from '../../redux/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import Form from "../Form/FormMail/FormMail"
+import Swal from 'sweetalert2';
 
 function TableUserDue() {
 
@@ -19,7 +20,11 @@ function TableUserDue() {
       try {
         await dispatch(allPayments(""))
       } catch (error) {
-        window.alert(error)
+        Swal.fire({
+          title: `${error}`,
+          icon: 'error',
+          confirmButtonText: 'Aceptar'
+        });
       }
     }
     getPayments()
@@ -40,11 +45,13 @@ function TableUserDue() {
         dispatch(allPayments(""))
       }
     } catch (error) {
-      window.alert(error)
+      Swal.fire({
+        title: `${error}`,
+        icon: 'error',
+        confirmButtonText: 'Aceptar'
+      });
     }
-    // if (response.status === 200) {
-    //   return dispatch(allProviderAdmin("&pageNumber=" + InfoPag.pageNumber));
-    // }
+   
   }
 
   const handleChangeCancel = async (idValue, state) => {
@@ -58,13 +65,13 @@ function TableUserDue() {
         dispatch(allPayments(""))
       }
     } catch (error) {
-      window.alert(error)
+      Swal.fire({
+        title: `${error}`,
+        icon: 'error',
+        confirmButtonText: 'Aceptar'
+      });
     }
   }
-
-  // const handlerPagination = (queryConstructOrder) => {
-  //   dispatch(allProviderAdmin(queryConstructOrder));
-  // };
 
   const onMailButtonClick = (email) => {
     setEmail(email)

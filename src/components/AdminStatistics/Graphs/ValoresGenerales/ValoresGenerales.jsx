@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import style from "./ValoresGenerales.module.sass"; // Asegúrate de importar el archivo de estilos
+import Swal from "sweetalert2";
 
 
 function Calification() {
@@ -17,7 +18,12 @@ const customersByProvider = Math.ceil(Number(statistics.cantidadProveedores) / N
         const indicadoresPersonales = data.data.indicadoresPersonales
         setStatistics(indicadoresPersonales);
       } catch (error) {
-        console.error("Error al obtener los servicios mas buscados:", error);
+        Swal.fire({
+          title: 'Error',
+          text: 'Error al obtener los servicios mas buscados.',
+          icon: 'error',
+          confirmButtonText: 'Aceptar'
+        });
       }
     };
     fetchEducation();

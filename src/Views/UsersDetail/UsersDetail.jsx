@@ -13,6 +13,7 @@ import UserSchedule from './UsersDetailComponents/UserSchedule/UserSchedule';
 import UserMap from './UsersDetailComponents/UserMap/UserMap';
 import UserInterest from './UsersDetailComponents/UserInterest/UserInterest';
 import UserComments from './UsersDetailComponents/UserComments/UserComments'
+import Swal from 'sweetalert2';
 
 function UsersDetail() {
 
@@ -30,7 +31,12 @@ function UsersDetail() {
           setInfoUser(response.data.people.data[0].people)
         }
       } catch (error) {
-        window.alert(error)
+        Swal.fire({
+          title: `${error}`,
+          text: "Error al obtener las opciones de servicios",
+          icon: 'warning',
+          confirmButtonText: 'Aceptar'
+        });
       }
     }
 

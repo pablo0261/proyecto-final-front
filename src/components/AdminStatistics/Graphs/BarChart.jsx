@@ -27,7 +27,6 @@ function ServicesValues() {
 
   useEffect(() => {
     const fetchEducation = async () => {
-      try {
         const response = await fetch(`${REACT_APP_API_URL}/stats/provider`);
         const data = await response.json();
         const admisiones = data.data.admisionesPorSemana.map((option) => ({
@@ -108,9 +107,7 @@ function ServicesValues() {
         return () => {
           myChart.dispose();
         };
-      } catch (error) {
-        console.error("Error al cargar el gráfico:", error);
-      }
+      
     };
     fetchEducation();
   }, []);

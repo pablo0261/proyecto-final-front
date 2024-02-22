@@ -46,13 +46,9 @@ function SignIn(props) {
       signInProcess(signInData);
     } else {
       Swal.fire({
-        title: 'Error en el Formulario!',
-        text: `"Por favor completa el formulario sin errores"`,
-        icon: 'error',
-        // showDenyButton: true,
-        // denyButtonText: 'Cancelar',
-        // confirmButtonText: 'Aceptar',
-        // ConfirmButtonColor: "green",
+        title: 'Campos con errores!',
+        text: `Por favor complete el formulario correctamente`,
+        icon: 'warning',
       })
     }
   };

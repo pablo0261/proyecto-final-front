@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import CreatableSelect from 'react-select/creatable';
 import styles from "../AdminServices/AdminServices.module.scss"
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 const AdminServices = ({ categoriesOptions, idCategorie , servicios}) => {
   const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
@@ -52,9 +53,12 @@ const handleDelete = async () => {
   const data ={idOption: idOption}
   try {
     const deleted = await axios.delete(`${REACT_APP_API_URL}/categories/options`, {data});
-    console.log(deleted)
   } catch(error){
-    console.log(error)
+    Swal.fire({
+      title: `Debes seleccionar un elemento para Eliminar`,
+      icon: 'warning',
+      confirmButtonText: 'Aceptar'
+    });
   }
 };
 

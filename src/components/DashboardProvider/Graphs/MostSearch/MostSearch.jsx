@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import style from "./MostSearch.module.sass"; 
+import Swal from "sweetalert2";
 
 function MostSearch() {
   const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
@@ -21,7 +22,12 @@ function MostSearch() {
        setStatistics(limitedStatistics);
      
       } catch (error) {
-        console.error("Error al obtener los servicios mas buscados:", error);
+        Swal.fire({
+          title: 'Error',
+          text: 'Error al obtener los servicios mas buscados.',
+          icon: 'error',
+          confirmButtonText: 'Aceptar'
+        });
       }
     };
     fetchEducation();
