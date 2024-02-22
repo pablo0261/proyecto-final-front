@@ -57,6 +57,7 @@ function Form({ handleShowForm }) {
     Validation(name, setLocalErrors, { ...userData, [name]: value });
   };
 
+  console.log("userData Experiencia", userData)
   const handleExperienceAdd = (event) => {
     event.preventDefault();
     if (Object.values(localErrors).every(errors => errors === "")) {
