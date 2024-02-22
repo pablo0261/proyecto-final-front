@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { postUserServices } from "../../../redux/actions/index";
 import styles from "./FormSkills.module.sass";
 import Validation from "./validationFormSkills";
+import Swal from "sweetalert2";
 
 function Form({ handleShowForm }) {
   const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
@@ -33,7 +34,12 @@ function Form({ handleShowForm }) {
           )
         setSkills(skillsOptions);
       } catch (error) {
-        console.error("Error al obtener las opciones de servicios:", error);
+        Swal.fire({
+          title: `${error}`,
+          text: "Error al obtener las opciones de servicios",
+          icon: 'warning',
+          confirmButtonText: 'Aceptar'
+        });
       }
     };
 
@@ -47,10 +53,20 @@ function Form({ handleShowForm }) {
         dispatch(postUserServices(userData));
         handleShowForm();
       } catch (error) {
-        console.error("Error al guardar la educación", error);
+        Swal.fire({
+          title: `${error}`,
+          text: "Error al guardar la educación",
+          icon: 'error',
+          confirmButtonText: 'Aceptar'
+        });
       }
     } else {
-      window.alert("Selecciona una opcion antes de guardar")
+      Swal.fire({
+        title: `Datos Incorrectos!`,
+        text: "Selecciona una opcion antes de guardar",
+        icon: 'warning',
+        confirmButtonText: 'Aceptar'
+      });
     }
   };
   

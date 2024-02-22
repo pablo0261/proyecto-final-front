@@ -4,6 +4,7 @@ import { putUserData } from "../../../redux/actions/index";
 import styles from "./FormSchedule.module.sass";
 import okIcon from "../../../assets/Icons/IconCheck.png";
 import emptyIcon from "../../../assets/Icons/IconCheckEmpty.png";
+import Swal from "sweetalert2";
 
 function ScheduleForm({ handleShowForm }) {
   const dispatch = useDispatch();
@@ -39,7 +40,12 @@ function ScheduleForm({ handleShowForm }) {
     dispatch(putUserData(userData));
     handleShowForm();
   } catch (error) {
-    console.error("Error al guardar la agenda:", error);
+    Swal.fire({
+      title: 'Error',
+      text: 'Error al guardar la agenda.',
+      icon: 'error',
+      confirmButtonText: 'Aceptar'
+    });
   }
   };
 

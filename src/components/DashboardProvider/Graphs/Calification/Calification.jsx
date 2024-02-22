@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import style from "./Calification.module.sass"; // Asegúrate de importar el archivo de estilos
 import StarIcon from "../../../../assets/Icons/IconStar.png";
+import Swal from "sweetalert2";
 
 function Calification() {
   const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
@@ -22,7 +23,12 @@ function Calification() {
           cantidadEvaluaciones: serviciosMasBuscados.cantidadEvaluaciones
         });
       } catch (error) {
-        console.error("Error al obtener las cantidades de visitas al perfil:", error);
+        Swal.fire({
+          title: 'Error',
+          text: 'Error al obtener las cantidades de visitas al perfil.',
+          icon: 'error',
+          confirmButtonText: 'Aceptar'
+        });
       }
     };
     fetchEducation();

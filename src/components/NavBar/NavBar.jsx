@@ -7,8 +7,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { logOutDeleteData } from '../../redux/actions';
 import { io } from 'socket.io-client';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
 const socket = io(REACT_APP_API_URL);
+
 
 function NavBar() {
 
@@ -28,7 +30,11 @@ function NavBar() {
                 socket.emit('logout-request', userLoggedInfo.idPeople)
                 navigate(Helpers.Landing)}
         } catch (error) {
-            window.alert(error)
+            Swal.fire({
+                title: `${error}`,
+                icon: 'error',
+                confirmButtonText: 'Aceptar'
+              });
         }
     }
 

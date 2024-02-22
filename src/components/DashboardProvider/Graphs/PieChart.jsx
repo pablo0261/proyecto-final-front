@@ -9,6 +9,7 @@ import {
   ToolboxComponent,
 } from "echarts/components";
 import { CanvasRenderer } from "echarts/renderers";
+import Swal from "sweetalert2";
 
 echarts.use([
   PieChart,
@@ -38,7 +39,12 @@ function PieChartComponent() {
           }));
         setStatistics(misServiciosMasContratados);
       } catch (error) {
-        console.error("Error al obtener los servicios mas buscados:", error);
+        Swal.fire({
+          title: 'Error',
+          text: 'Error al obtener los servicios mas buscados.',
+          icon: 'error',
+          confirmButtonText: 'Aceptar'
+        });
       }
     };
     fetchEducation();

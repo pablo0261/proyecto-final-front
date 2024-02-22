@@ -22,10 +22,6 @@ function StatsAccesAccount() {
         setLoading(false);
       } catch (error) {
         setLoading(false);
-        console.error(
-          "Error al obtener las cantidades de visitas al perfil:",
-          error
-        );
       }
     };
     fetchEducation();

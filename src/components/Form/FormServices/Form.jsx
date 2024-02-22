@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { postUserServices } from "../../../redux/actions/index";
 import Validation from "./validationFormServices";
 import styles from "./FormServices.module.sass";
+import Swal from "sweetalert2";
 
 function Form({ handleShowForm }) {
   const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
@@ -35,7 +36,12 @@ function Form({ handleShowForm }) {
         serviceOptions.sort((a, b) => a.description.localeCompare(b.description));
         setServices(serviceOptions);
       } catch (error) {
-        console.error("Error al obtener las opciones de servicios:", error);
+        Swal.fire({
+          title: `${error}`,
+          text: "Error al obtener las opciones de servicios",
+          icon: 'warning',
+          confirmButtonText: 'Aceptar'
+        });
       }
     };
 
@@ -51,14 +57,23 @@ function Form({ handleShowForm }) {
           price: userData.price,
           idOption: userData.idOption,
         };
-  console.log("updatedUserData", updatedUserData);
         dispatch(postUserServices(updatedUserData));
         handleShowForm()
       } catch (error) {
-        console.error("Error al guardar los servicios y preciso:", error);
+        Swal.fire({
+          title: `${error}`,
+          text: "Error al guardar los servicios",
+          icon: 'warning',
+          confirmButtonText: 'Aceptar'
+        });
       }
     } else {
-      window.alert("Seleccione su servicio y agregue su valor antes de guardar.")
+      Swal.fire({
+        title: `Error al guardar los servicios`,
+        text: "Seleccione un Servicio y agregue su valor antes de Guardar.",
+        icon: 'warning',
+        confirmButtonText: 'Aceptar'
+      });
     }
     
   };

@@ -108,7 +108,7 @@ const Home = () => {
               <div className={styles.Box}>
                 <div className={styles.filterBox}>
                   {allServices.map((category) => {
-                    if (!category.isInterest && !category.isExperience && !category.isGenre) {
+                    if (!category.isInterest && !category.isExperience) {
                       return (
                         <div key={category.idCategorie} className={styles.categoryWrapper}>
                           <p className={styles.titleCategory}>{category.description}</p>
@@ -195,7 +195,7 @@ const Home = () => {
               : providers
                 ? providers.length != 0 
                   ? providers.map((user) => <Card key={user.people.idPeople} user={user.people} />)
-                  : <p>No existen proveedores</p>
+                  : <p className={styles.noInfo}>No se encontraron Proveedores con las caracteristicas solicitadas</p>
                 : <></>
             }
           </div>

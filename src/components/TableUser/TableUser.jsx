@@ -3,6 +3,7 @@ import styles from "./TableUser.module.scss";
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import { allPeople } from '../../redux/actions';
+import Swal from 'sweetalert2';
 
 function TableUser(props) {
 
@@ -22,7 +23,12 @@ function TableUser(props) {
         const query = `&fullName=${searchInput}`
         dispatch(allPeople(query))
       } else {
-        dispatch(allPeople(""))
+        Swal.fire({
+          title: 'Campo de búsqueda vacío',
+          text: 'Por favor, ingrese un Nombre antes de realizar la búsqueda.',
+          icon: 'warning',
+          confirmButtonText: 'Aceptar'
+        });
       }
     }
   }

@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import FormFAQs from '../../components/Form/FormFAQs/FormFAQs';
 import { useDispatch, useSelector } from 'react-redux';
 import { getFAQs, deleteFAQs } from '../../redux/actions';
+import Swal from 'sweetalert2';
 
 
 
@@ -37,13 +38,18 @@ const FAQs = () => {
   useEffect(() => {
     dispatch(getFAQs())
       .then(() => {
-        setIsLoading(false); // Cuando la carga se completa con éxito, se cambia isLoading a false
+        setIsLoading(false); 
       })
       .catch((error) => {
-        console.error('Error fetching FAQs:', error);
-        setIsLoading(false); // En caso de error, también se cambia isLoading a false
-      })
-  }, [dispatch])
+        Swal.fire({
+          title: `${error}`,
+          text: 'Error al enviar las FAQs.',
+          icon: 'error',
+          confirmButtonText: 'Aceptar'
+        });
+        setIsLoading(false); 
+      });
+  }, [dispatch]);
 
 
   const handleToggleForm = (type) => {
@@ -55,7 +61,13 @@ const FAQs = () => {
 
   /* Función para confirmar la eliminacion de una FAQs */
   const confirmDeleteQuestion = (idQuestion) => {
-    const confirmDelete = window.confirm('¿Está seguro de que desea eliminar la pregunta?');
+    const confirmDelete = 
+    Swal.fire({
+      title: `Alerta!`,
+      text: "¿Está seguro de que desea eliminar la pregunta?",
+      icon: 'question',
+      confirmButtonText: 'Aceptar'
+    });
     if (confirmDelete) {
       handleDeleteQuestion(idQuestion);
     }

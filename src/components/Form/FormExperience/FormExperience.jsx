@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { postUserServices } from "../../../redux/actions/index";
 import Validation from "../FormExperience/validationFormExperience";
 import styles from "./FormExperience.module.sass";
+import Swal from "sweetalert2";
 
 function Form({ handleShowForm }) {
 
@@ -57,7 +58,6 @@ function Form({ handleShowForm }) {
     Validation(name, setLocalErrors, { ...userData, [name]: value });
   };
 
-  console.log("userData Experiencia", userData)
   const handleExperienceAdd = (event) => {
     event.preventDefault();
     if (Object.values(localErrors).every(errors => errors === "")) {
@@ -65,10 +65,20 @@ function Form({ handleShowForm }) {
         dispatch(postUserServices(userData));
         handleShowForm();
       } catch (error) {
-        console.error("Error al guardar la experiencia", error);
+        Swal.fire({
+          title: 'Error',
+          text: 'Error al guardar la experiencia.',
+          icon: 'error',
+          confirmButtonText: 'Aceptar'
+        });
       }
     } else {
-      window.alert("Debes rellenar todos los campos obligatorios antes de guardar")
+      Swal.fire({
+        title: `Datos Incorrectos!`,
+        text: "El formulario contiene campos vacíos o con datos erróneos.",
+        icon: 'warning',
+        confirmButtonText: 'Aceptar'
+      });
     }
   };
 

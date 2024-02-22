@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { postUserInteres } from "../../../redux/actions/index";
 import styles from "./FormInteres.module.sass";
 import Validation from "./validationFormInteres";
+import Swal from "sweetalert2";
 
 function Form({ handleShowForm }) {
   const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
@@ -34,7 +35,12 @@ function Form({ handleShowForm }) {
           interesOptions.sort((a, b) => a.description.localeCompare(b.description));
           setInteres(interesOptions);
       } catch (error) {
-        console.error("Error al obtener las opciones de servicios:", error);
+        Swal.fire({
+          title: 'Error',
+          text: 'Error al obtener los intereses.',
+          icon: 'error',
+          confirmButtonText: 'Aceptar'
+        });
       }
     };
 
@@ -48,10 +54,20 @@ function Form({ handleShowForm }) {
         dispatch(postUserInteres(userData));
         handleShowForm();
       } catch (error) {
-        console.error("Error al guardar la educación", error);
+        Swal.fire({
+          title: `${error}`,
+          text: "Error al guardar la educación",
+          icon: 'warning',
+          confirmButtonText: 'Aceptar'
+        });
       }
     } else {
-      window.alert("Selecciona una opcion antes de guardar")
+      Swal.fire({
+        title: `Datos Incorrectos!`,
+        text: "Selecciona una opcion antes de guardar",
+        icon: 'warning',
+        confirmButtonText: 'Aceptar'
+      });
     }
     
   };

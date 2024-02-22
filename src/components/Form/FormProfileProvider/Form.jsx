@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { deleteService, postUserData, postUserInteres } from "../../../redux/actions/index";
 import Validation from "./validationFormProfile";
 import styles from "./FormProfile.module.sass";
+import Swal from "sweetalert2";
 
 function Form({ handleShowForm }) {
 
@@ -66,7 +67,12 @@ function Form({ handleShowForm }) {
       );
       setCiudades(sortedCiudades);
     } catch (error) {
-      window.alert("Error al obtener las ciudades:", error);
+      Swal.fire({
+        title: `${error}`,
+        text:"Error al obtener las ciudades",
+        icon: 'error',
+        confirmButtonText: 'Aceptar'
+      });
     }
   }
 
@@ -84,7 +90,12 @@ function Form({ handleShowForm }) {
           setProfession(professionList.categories_options);
         }
       } catch (error) {
-        window.alert("Error al obtener las profesiones:", error);
+        Swal.fire({
+          title: `${error}`,
+          text:"Error al obtener las profesiones",
+          icon: 'error',
+          confirmButtonText: 'Aceptar'
+        });
       }
     };
 
@@ -169,10 +180,19 @@ function Form({ handleShowForm }) {
           handleShowForm();
         }
       } catch (error) {
-        window.alert(error);
+        Swal.fire({
+          title: `${error}`,
+          icon: 'error',
+          confirmButtonText: 'Aceptar'
+        });
       }
     } else {
-      window.alert("Complete el formulario sin errores");
+      Swal.fire({
+        title: `Datos Incorrectos!`,
+        text: "El formulario contiene campos vacíos o con datos erróneos.",
+        icon: 'warning',
+        confirmButtonText: 'Aceptar'
+      });
     }
   };
 
