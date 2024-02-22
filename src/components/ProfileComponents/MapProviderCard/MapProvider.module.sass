@@ -1,11 +1,23 @@
 @use '../../../Styles/Mixins'
 @import '../../../Styles/Variables'
 
+.background
+    margin-top: 30px
+    width: 100%
+    height: fit-content
+    display: flex
+    flex-direction: column
+    align-items: center
+    justify-content: center
+    gap: 10px
+
 .mapWrapper
     width: 80%
     height: 300px
-    margin-top: 10px
-    margin-inline: auto
     @include Mixins.boxShadowCard
     z-index: 0
-    
+
+.ubicate
+    width: 80%
+    text-align: right
+    @include Mixins.font($secondaryColor, 22px, bold, normal)
