@@ -4,6 +4,7 @@ import axios from 'axios'
 import ChatRender from './ChatRender/ChatRender'
 import { useDispatch } from 'react-redux'
 import { putOpportunities } from '../../../redux/actions'
+import Swal  from 'sweetalert2'
 
 function PendingBox(props) {
 
@@ -30,7 +31,11 @@ function PendingBox(props) {
                 setIsLoadingChat(false)
             }
         } catch (error) {
-            window.alert(error)
+            Swal.fire({
+                title: `${error}`,
+                icon: 'error',
+                confirmButtonText: 'Aceptar'
+              });
         }
     }
 
@@ -63,7 +68,12 @@ function PendingBox(props) {
                 setDataChat([])
             }
         } else {
-            window.alert("Debes indicar el porque")
+            Swal.fire({
+                title: `Error`,
+                text: "Debes indicar el porque",
+                icon: 'Warniing',
+                confirmButtonText: 'Aceptar'
+              });
         }
     }
 

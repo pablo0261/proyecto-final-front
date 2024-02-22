@@ -2,8 +2,11 @@ import React, { useEffect, useState } from 'react'
 import style from './ChatRender.module.sass'
 import { io } from 'socket.io-client';
 import axios from 'axios';
+import Swal from 'sweetalert2';
+
 const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
 const socket = io(REACT_APP_API_URL);
+
 
 function ChatRender(props) {
 
@@ -18,7 +21,11 @@ function ChatRender(props) {
                 setDataChatRender(response.data.data)
             }
         } catch (error) {
-            window.alert(error)
+            Swal.fire({
+                title: `${error}`,
+                icon: 'error',
+                confirmButtonText: 'Aceptar'
+              });
         }
     }
 

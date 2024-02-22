@@ -9,6 +9,7 @@ import Helpers from '../../Helpers/RoutesFront'
 import PendingBox from './PendingBox/PendingBox'
 import NotChatBox from './NotChatBox/NotChatBox'
 import { SET_SELECTED_OPPORTUNITIE } from '../../redux/actions/action-types'
+import Swal from 'sweetalert2'
 
 function Connections() {
 
@@ -41,7 +42,14 @@ function Connections() {
                     await dispatch(getOpportunities(query))
                 }
             } catch (error) {
-                window.alert(error)
+                Swal.fire({
+                    title: `${error}`,
+                    icon: 'error',
+                    // showDenyButton: true,
+                    // denyButtonText: 'Cancelar',
+                    // confirmButtonText: 'Aceptar',
+                    // ConfirmButtonColor: "green",
+                  })
             }
         }
 
@@ -71,7 +79,14 @@ function Connections() {
         } else if (infoUserLog.typeOfPerson === 'provider') {
             navigate(Helpers.UserDetail.replace(":id", opportunitie.idCustomer))
         } else {
-            window.alert("Vacio")
+            Swal.fire({
+                title: `Vacio`,
+                icon: 'error',
+                // showDenyButton: true,
+                // denyButtonText: 'Cancelar',
+                // confirmButtonText: 'Aceptar',
+                // ConfirmButtonColor: "green",
+              })
         }
     }
 

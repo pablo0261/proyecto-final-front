@@ -104,10 +104,30 @@ function App() {
         //   }
         // })
 
-        window.alert("Usuario no existe.")
       }
     } catch (error) {
-      window.alert(error);
+      Swal.fire({
+        title: `${error}`,
+        text: `Para acceder al sistema es necesario realizar el Registro`,
+        footer: 'Regrese y realice su registro',
+        icon: 'error',
+        // showDenyButton: true,
+        // denyButtonText: 'Cancelar',
+        // confirmButtonText: 'Aceptar',
+        // ConfirmButtonColor: "green",
+      })
+      //*Codigo para descomentar cuando sea necesario personailzar el cartel de alert!
+      // .then(response => {
+      //   if(response.isConfirmed){
+      //     Swal.fire("Exito", "El registro fue exitoso")
+      //   }
+      //   else if(response.isDenied){
+      //     Swal.fire("Información", "Todo bien", "info")
+      //   }
+      //   else{
+      //     Swal.fire("Error", "Ocurrió un error", "error")
+      //   }
+      // })
     }
   }
 
