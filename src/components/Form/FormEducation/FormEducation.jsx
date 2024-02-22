@@ -37,7 +37,12 @@ function Form({ handleShowForm }) {
         )
         setEducation(educationOptions);
       } catch (error) {
-        console.error("Error al obtener las opciones de educación:", error);
+        Swal.fire({
+          title: 'Error',
+          text: 'Error al obtener las opciones de educación.',
+          icon: 'error',
+          confirmButtonText: 'Aceptar'
+        });
       }
     };
 
@@ -60,11 +65,11 @@ function Form({ handleShowForm }) {
       }
     } else {
       Swal.fire({
-        title: `error`,
-        text: "Rellene todos los campos antes de guardar cambios.",
+        title: `Datos Incorrectos!`,
+        text: "El formulario contiene campos vacíos o con datos erróneos.",
         icon: 'warning',
         confirmButtonText: 'Aceptar'
-    })
+      });
   }
   };
 

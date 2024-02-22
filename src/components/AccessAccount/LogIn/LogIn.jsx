@@ -39,25 +39,11 @@ function LogIn(props) {
             logInProcess(logInData)
         } else {
             Swal.fire({
-                title: `Datos con errores`,
-                icon: 'error',
-                // showDenyButton: true,
-                // denyButtonText: 'Cancelar',
-                // confirmButtonText: 'Aceptar',
-                // ConfirmButtonColor: "green",
+                title: 'Campos con errores!',
+                text: `Por favor complete el formulario correctamente`,
+                icon: 'warning',
               })
-              //*Codigo para descomentar cuando sea necesario personailzar el cartel de alert!
-              // .then(response => {
-              //   if(response.isConfirmed){
-              //     Swal.fire("Exito", "El registro fue exitoso")
-              //   }
-              //   else if(response.isDenied){
-              //     Swal.fire("Información", "Todo bien", "info")
-              //   }
-              //   else{
-              //     Swal.fire("Error", "Ocurrió un error", "error")
-              //   }
-              // })
+            
         }
     }
 

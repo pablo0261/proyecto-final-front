@@ -1,4 +1,5 @@
 import axios from "axios";
+import Swal from "sweetalert2";
 
 import {
   ACCESS_BACK_SAVE_DATA,
@@ -57,10 +58,19 @@ const recoverUserLoggedData = (emailUserData) => {
           payload: data.data.people.data[0].people,
         });
       } else {
-        window.alert(data);
+        Swal.fire({
+          title: `${data}`,
+          icon: 'warning',
+          confirmButtonText: 'Aceptar'
+        });
       }
     } catch (error) {
-      window.alert(error);
+      Swal.fire({
+        title: `${error}`,
+        text: "Error al obtener las opciones de servicios",
+        icon: 'warning',
+        confirmButtonText: 'Aceptar'
+      });
     }
   };
 };
@@ -76,7 +86,12 @@ const infoDetailProveedor = (id) => {
         payload: data,
       });
     } catch (error) {
-      window.alert(error);
+      Swal.fire({
+        title: `${error}`,
+        text: "Error al obtener las opciones de servicios",
+        icon: 'warning',
+        confirmButtonText: 'Aceptar'
+      });
     }
   };
 };
@@ -90,7 +105,12 @@ const handleContratService = (item) => {
         payload: response.data,
       });
     } catch (error) {
-      window.alert(error);
+      Swal.fire({
+        title: `${error}`,
+        text: "Error al obtener las opciones de servicios",
+        icon: 'warning',
+        confirmButtonText: 'Aceptar'
+      });
     }
   };
 };
@@ -104,7 +124,12 @@ const allPeople = (query) => {
         payload: response.data.people,
       });
     } catch (error) {
-      window.alert(error);
+      Swal.fire({
+        title: `${error}`,
+        text: "Error al obtener las opciones de servicios",
+        icon: 'warning',
+        confirmButtonText: 'Aceptar'
+      });
     }
   };
 };
@@ -120,7 +145,12 @@ const allPeopleProvider = (query) => {
         payload: response.data.people,
       });
     } catch (error) {
-      window.alert(error);
+      Swal.fire({
+        title: `${error}`,
+        text: "Error al obtener las opciones de servicios",
+        icon: 'warning',
+        confirmButtonText: 'Aceptar'
+      });
     }
   };
 };
@@ -131,7 +161,6 @@ const allPayments = (query) => {
       const response = await axios.get(
         `${REACT_APP_API_URL}/paidMemberships${query}`
       );
-      console.log(response)
       if (response.status === 200) {
         return dispatch({
           type: GET_ALL_PAYMENTS,
@@ -139,7 +168,12 @@ const allPayments = (query) => {
         });
       }
     } catch (error) {
-      window.alert(error);
+      Swal.fire({
+        title: `${error}`,
+        text: "Error al obtener las opciones de servicios",
+        icon: 'warning',
+        confirmButtonText: 'Aceptar'
+      });
     }
   };
 };
@@ -152,7 +186,12 @@ const clear = () => {
         payload: "",
       });
     } catch (error) {
-      window.alert(error);
+      Swal.fire({
+        title: `${error}`,
+        text: "Error al obtener las opciones de servicios",
+        icon: 'warning',
+        confirmButtonText: 'Aceptar'
+      });
     }
   };
 };
@@ -167,7 +206,12 @@ const getPeopleFilteredOrderedPagination = (queryConstructor, queryPagination) =
         payload: response.data.people,
       });
     } catch (error) {
-      window.alert(error);
+      Swal.fire({
+        title: `${error}`,
+        text: "Error al obtener las opciones de servicios",
+        icon: 'warning',
+        confirmButtonText: 'Aceptar'
+      });
     }
   };
 };
@@ -181,7 +225,12 @@ const getFiltersOrdersDB = () => {
         payload: response.data.categories.data,
       });
     } catch (error) {
-      window.alert(error);
+      Swal.fire({
+        title: `${error}`,
+        text: "Error al obtener las opciones de servicios",
+        icon: 'warning',
+        confirmButtonText: 'Aceptar'
+      });
     }
   };
 };
@@ -194,7 +243,12 @@ const saveSelectionsGlobal = (selectedOptions) => {
         payload: selectedOptions,
       });
     } catch (error) {
-      console.error(error);
+      Swal.fire({
+        title: `${error}`,
+        text: "Error al obtener las opciones de servicios",
+        icon: 'warning',
+        confirmButtonText: 'Aceptar'
+      });
     }
   };
 };
@@ -219,7 +273,12 @@ const postUserData = (userDataEnglish) => {
           type: SET_ERROR_BACK,
           payload: error.response.data,
         });
-        window.alert(error);
+        Swal.fire({
+          title: `${error}`,
+          text: "Error al obtener las opciones de servicios",
+          icon: 'warning',
+          confirmButtonText: 'Aceptar'
+        });
         throw error.response.data;
       }
     }
@@ -246,7 +305,12 @@ const putUserData = (userData) => {
           type: SET_ERROR_BACK,
           payload: error.response.data,
         });
-        window.alert(error);
+        Swal.fire({
+          title: `${error}`,
+          text: "Error al obtener las opciones de servicios",
+          icon: 'warning',
+          confirmButtonText: 'Aceptar'
+        });
         throw error.response.data;
       }
     }
@@ -262,7 +326,12 @@ const putState = (value, auxState) => {
       })
 
     } catch (error) {
-      window.alert(error);
+      Swal.fire({
+        title: `${error}`,
+        text: "Error al obtener las opciones de servicios",
+        icon: 'warning',
+        confirmButtonText: 'Aceptar'
+      });
     };
   }; 
 };
@@ -274,7 +343,12 @@ const putStateProvider = (value, auxState) => {
         "state": auxState
       })
     } catch (error) {
-      window.alert(error);
+      Swal.fire({
+        title: `${error}`,
+        text: "Error al obtener las opciones de servicios",
+        icon: 'warning',
+        confirmButtonText: 'Aceptar'
+      });
     };
   }; 
 };
@@ -298,7 +372,12 @@ const postUserServices = (updatedUserData) => {
           type: SET_ERROR_BACK,
           payload: error.response.data,
         });
-        window.alert(error);
+        Swal.fire({
+          title: `${error}`,
+          text: "Error al obtener las opciones de servicios",
+          icon: 'warning',
+          confirmButtonText: 'Aceptar'
+        });
         throw error.response.data;
       }
     }
@@ -324,7 +403,12 @@ const postUserInteres = (updatedUserData) => {
           type: SET_ERROR_BACK,
           payload: error.response.data,
         });
-        window.alert(error);
+        Swal.fire({
+          title: `${error}`,
+          text: "Error al obtener las opciones de servicios",
+          icon: 'warning',
+          confirmButtonText: 'Aceptar'
+        });
         throw error.response.data;
       }
     }
@@ -351,7 +435,12 @@ const deleteService = (deleteData) => {
           type: SET_ERROR_BACK,
           payload: error.response.data,
         });
-        window.alert(error);
+        Swal.fire({
+          title: `${error}`,
+          text: "Error al obtener las opciones de servicios",
+          icon: 'warning',
+          confirmButtonText: 'Aceptar'
+        });
         throw error.response.data;
       }
     }
@@ -370,7 +459,12 @@ const getOpportunities = (filter) => {
         })
       }
     } catch (error) {
-      window.alert(error)
+      Swal.fire({
+        title: `${error}`,
+        text: "Error al obtener las opciones de servicios",
+        icon: 'warning',
+        confirmButtonText: 'Aceptar'
+      });
     }
   }
 }
@@ -383,7 +477,12 @@ const putOpportunities = (data, filter) => {
         dispatch(getOpportunities(filter))
       }
     } catch (error) {
-      window.alert(error)
+      Swal.fire({
+        title: `${error}`,
+        text: "Error al obtener las opciones de servicios",
+        icon: 'warning',
+        confirmButtonText: 'Aceptar'
+      });
     }
   }
 }
@@ -400,7 +499,12 @@ const getReports = (query) => {
         })
       }
     } catch (error) {
-      window.alert(error)
+      Swal.fire({
+        title: `${error}`,
+        text: "Error al obtener las opciones de servicios",
+        icon: 'warning',
+        confirmButtonText: 'Aceptar'
+      });
     }
   }
 }
@@ -415,7 +519,12 @@ const createReport = (formData) => {
         payload: response.data
       });
     } catch (error) {
-      window.alert(error);
+      Swal.fire({
+        title: `${error}`,
+        text: "Error al obtener las opciones de servicios",
+        icon: 'warning',
+        confirmButtonText: 'Aceptar'
+      });
     }
   };
 };
@@ -430,7 +539,12 @@ const createFAQs = (formData) => {
         payload: response.data
       });
     } catch (error) {
-      window.alert(error);
+      Swal.fire({
+        title: `${error}`,
+        text: "Error al obtener las opciones de servicios",
+        icon: 'warning',
+        confirmButtonText: 'Aceptar'
+      });
     }
   };
 };
@@ -442,7 +556,12 @@ const getFAQs = () => {
       const response = await axios(`${REACT_APP_API_URL}/questions`);
       dispatch({ type: GET_FAQS, payload: response.data });
     } catch (error) {
-      window.alert(error)
+      Swal.fire({
+        title: `${error}`,
+        text: "Error al obtener las opciones de servicios",
+        icon: 'warning',
+        confirmButtonText: 'Aceptar'
+      });
     }
   };
 };
@@ -459,7 +578,12 @@ const putFAQs = (data) => {
         });
       }
     } catch (error) {
-      window.alert(error);
+      Swal.fire({
+        title: `${error}`,
+        text: "Error al obtener las opciones de servicios",
+        icon: 'warning',
+        confirmButtonText: 'Aceptar'
+      });
     }
   };
 };
@@ -476,7 +600,12 @@ const deleteFAQs = (idQuestion) => {
         payload: idQuestion,
       });
     } catch (error) {
-      console.error(error);
+      Swal.fire({
+        title: `${error}`,
+        text: "Error al obtener las opciones de servicios",
+        icon: 'warning',
+        confirmButtonText: 'Aceptar'
+      });
     }
   };
 };

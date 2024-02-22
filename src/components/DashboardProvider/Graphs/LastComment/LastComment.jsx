@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import style from "./LastComment.module.sass";
 import profileImage from "../../../../assets/Icons/PerfilImage.png";
 import StarIcon from "../../../../assets/Icons/IconStar.png";
+import Swal from "sweetalert2";
 
 function LastComment() {
   const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
@@ -31,10 +32,13 @@ function LastComment() {
           rating: ultimoComentario.rating || "",
         });
       } catch (error) {
-        console.error(
-          "Error al obtener las cantidades de visitas al perfil:",
-          error
-        );
+        Swal.fire({
+          title: 'Error',
+          text: 'Error al obtener las cantidades de visitas al perfil.',
+          icon: 'error',
+          confirmButtonText: 'Aceptar'
+        });
+        
       }
     };
     fetchEducation();

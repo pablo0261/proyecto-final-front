@@ -24,7 +24,6 @@ function PieChartComponent() {
   const [statistics, setStatistics] = useState([]);
   useEffect(() => {
     const fetchAndDrawChart = async () => {
-      try {
         const response = await fetch(`${REACT_APP_API_URL}/stats/provider`);
         const data = await response.json();
         const misServiciosMasContratados = data.data.serviciosTotales.map(
@@ -123,9 +122,7 @@ function PieChartComponent() {
         return () => {
           myChart.dispose();
         };
-      } catch (error) {
-        console.error("Error al obtener los servicios mas buscados:", error);
-      }
+     
     };
 
     fetchAndDrawChart();

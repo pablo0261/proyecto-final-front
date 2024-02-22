@@ -3,6 +3,7 @@ import style from './Reports.module.sass'
 import { useDispatch, useSelector } from 'react-redux'
 import { getReports } from '../../redux/actions'
 import axios from 'axios'
+import Swal from 'sweetalert2'
 
 function Reports() {
 
@@ -30,7 +31,11 @@ function Reports() {
                     setFilter("completada")
                 }
             } catch (error) {
-                window.alert(error)
+                Swal.fire({
+                    title: `${error}`,
+                    icon: 'error',
+                    confirmButtonText: 'Aceptar'
+                  });
             }
         }
         reportAxios()
@@ -60,11 +65,24 @@ function Reports() {
                         setReport([])
                     }
                 })
-                .catch((reason) => console.log(reason))
-        } else {
-            window.alert("Escribe un mensaje")
-        }
-    }
+                .catch((error) => {
+                    Swal.fire({
+                    title: `${error.message}`,
+                      text: 'Ocurrió un error al enviar la pregunta. Por favor, intente nuevamente más tarde.',
+                      icon: 'error',
+                      confirmButtonText: 'Aceptar'
+                    });
+                  });
+              } else {
+                Swal.fire({
+                  title: `Campos vacíos`,
+                  text: "Escribe un mensaje",
+                  icon: 'warning',
+                  confirmButtonText: 'Aceptar'
+                });
+              }
+            };
+
 
     const handleFilter = (filter) => {
         setIsSelected("")

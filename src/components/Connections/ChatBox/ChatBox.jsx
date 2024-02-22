@@ -83,7 +83,7 @@ function ChatBox(props) {
               } else {
                 Swal.fire({
                   title: `Error al enviar el Mensaje`,
-                  text: `Debes escribir un mensaje`,
+                  text: `No puedes enviar un mensaje vacío`,
                   icon: 'warning',
                   confirmButtonText: 'Aceptar'
                 });

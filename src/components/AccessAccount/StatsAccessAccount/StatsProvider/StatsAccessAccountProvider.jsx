@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import style from "./StatsAccessAccountProvider.module.sass"
+import Swal from "sweetalert2";
 
 function StatsAccesAccount() {
   const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
@@ -18,7 +19,11 @@ function StatsAccesAccount() {
           porcentajeConexiones: data.successfulConnections,
         })
       } catch (error) {
-        console.error("Error al obtener las cantidades de visitas al perfil:", error);
+        Swal.fire({
+          title: `${error.response.data.error}!`,
+          text: `Error al obtener las cantidades de visitas al perfil`,
+          icon: 'warning',
+        })
       }
     };
     fetchEducation();

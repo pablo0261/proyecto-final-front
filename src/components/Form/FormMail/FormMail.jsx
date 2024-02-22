@@ -2,6 +2,7 @@ import { useState } from "react";
 import styles from "./FormMail.module.sass";
 import axios from "axios";
 import { Validation } from "./ValidationFormMail";
+import Swal from "sweetalert2";
 
 function Form({ handleShowForm, email }) {
   const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
@@ -29,13 +30,27 @@ function Form({ handleShowForm, email }) {
         const response = await axios.post(`${REACT_APP_API_URL}/sendmail`, userData);
         if (response.status === 200) {
           handleShowForm();
-          window.alert("Correo enviado exitosamente")
+          Swal.fire({
+            title: "Correo enviado exitosamente",
+            icon: 'success',
+            confirmButtonText: 'Aceptar'
+          });
         }
       } catch (error) {
-        console.error("Error al enviar el correo electrónico", error);
+        Swal.fire({
+          title: `${error}`,
+          text: "Error al enviar el correo electrónico",
+          icon: 'error',
+          confirmButtonText: 'Aceptar'
+        });
       }
     } else {
-      window.alert("Debes rellenar todos los campos obligatorios")
+      Swal.fire({
+        title: `Error en el Formulario`,
+        text: "Debes rellenar todos los campos obligatorios",
+        icon: 'warning',
+        confirmButtonText: 'Aceptar'
+      })
     }
   };
 
