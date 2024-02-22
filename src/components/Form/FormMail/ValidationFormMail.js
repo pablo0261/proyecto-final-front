@@ -1,6 +1,6 @@
 const isEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
 
-export const Validation = (property, localErrors, setLocalErrors, userData) => {
+const Validation = (property, localErrors, setLocalErrors, userData) => {
     if (property === 'to') {
         if (!userData[property]) {
             setLocalErrors({ ...localErrors, [property]: "Ingresá el email" })
@@ -29,3 +29,5 @@ export const Validation = (property, localErrors, setLocalErrors, userData) => {
         }
     }
 }
+
+export default Validation
