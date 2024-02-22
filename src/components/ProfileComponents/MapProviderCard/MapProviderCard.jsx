@@ -1,10 +1,4 @@
-import React, {
-  useState,
-  useEffect,
-  useMemo,
-  useCallback,
-  useRef,
-} from "react";
+import React, { useState, useEffect, useMemo, useCallback, useRef} from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import { putUserData } from "../../../redux/actions/index";
@@ -15,27 +9,20 @@ function MapProviderCard() {
   const dispatch = useDispatch();
   const infoUserLog = useSelector((state) => state.infoUserLog);
   
-  const geopositionArray = infoUserLog.geoposition
-  ? infoUserLog.geoposition.split(",").map((str) => parseFloat(str.trim()))
-  : [-34.51422255, -64.177055446];
-
-  console.log(infoUserLog.geoposition)
+  const geopositionArray = infoUserLog.geoposition.split(",").map((str) => parseFloat(str.trim()))
+  
   const [draggable, setDraggable] = useState(false);
   const [position, setPosition] = useState({ lat: geopositionArray[0], lng: geopositionArray[1] });
 
-  const dataToSend = {
-    idPeople: infoUserLog.idPeople,
-    geoposition: `${position.lat},${position.lng}`
-  }
-
-
   const markerRef = useRef(null);
+
   const eventHandlers = useMemo(
     () => ({
       dragend() {
         const marker = markerRef.current;
         if (marker != null) {
           setPosition(marker.getLatLng());
+          handleSaveGeoposition(marker.getLatLng())
         }
       },
     }),
@@ -46,9 +33,13 @@ function MapProviderCard() {
     setDraggable((d) => !d);
   }, []);
 
-  const handleSaveGeoposition = async () => {
+  const handleSaveGeoposition = (position) => {
+    const dataToSend = {
+      idPeople : infoUserLog.idPeople,
+      geoposition : `${position.lat},${position.lng}`
+    }
     try {
-      await dispatch(putUserData(dataToSend));
+      dispatch(putUserData(dataToSend));
     } catch (error) {
       Swal.fire({
         title: '¡"Por favor recuerde grabar su posicion en el mapa"!',
@@ -57,12 +48,8 @@ function MapProviderCard() {
     }
   };
 
-  useEffect(() => {
-    handleSaveGeoposition();
-  }, [position]);
-
   return (
-    <div>
+    <div className={styles.background}>
       <MapContainer
         className={styles.mapWrapper}
         center={position}
@@ -88,6 +75,7 @@ function MapProviderCard() {
           </Popup>
         </Marker>
       </MapContainer>
+      <div className={styles.ubicate}>Ubicate en el Mapa</div>
     </div>
   );
 }
