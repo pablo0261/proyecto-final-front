@@ -23,7 +23,7 @@ function ProfileProvider() {
       idPeople: infoUserLog.idPeople,
     };
     dispatch(putUserData(newStatus));
-  };
+
 
   const handleFindProfession = () => {
     if (infoUserLog.categories && infoUserLog.categories.length != 0) {
@@ -116,7 +116,6 @@ function ProfileProvider() {
               </p>
             </div>
           </div>
-
           <div className={style.infoWrapper}>
             <div className={style.nameWrapper}>
               <p className={style.textName}>{infoUserLog.fullName}</p>
@@ -139,13 +138,11 @@ function ProfileProvider() {
                   )}
                 </div>
               )}
-
               <button
                 onClick={() => handleShowForm()}
                 className={style.editButton}
               ></button>
             </div>
-
             <p className={style.textData}>
               {infoUserLog.age} años | {infoUserLog.address},{" "}
               {infoUserLog.locationName}, {infoUserLog.provinceName},{" "}
@@ -165,6 +162,7 @@ function ProfileProvider() {
       </div>
       {showForm && <Form handleShowForm={handleShowForm} />}
     </div>
+
   );
 }
 
