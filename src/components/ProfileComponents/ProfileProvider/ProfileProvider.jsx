@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import style from "./ProfileProvider.module.sass";
 import Form from "../../Form/FormProfileProvider/Form";
 import profileImage from "../../../assets/Icons/PerfilImage.png";
@@ -23,7 +23,7 @@ function ProfileProvider() {
       idPeople: infoUserLog.idPeople,
     };
     dispatch(putUserData(newStatus));
-
+  };
 
   const handleFindProfession = () => {
     if (infoUserLog.categories && infoUserLog.categories.length != 0) {
@@ -116,6 +116,7 @@ function ProfileProvider() {
               </p>
             </div>
           </div>
+
           <div className={style.infoWrapper}>
             <div className={style.nameWrapper}>
               <p className={style.textName}>{infoUserLog.fullName}</p>
@@ -138,11 +139,13 @@ function ProfileProvider() {
                   )}
                 </div>
               )}
+
               <button
                 onClick={() => handleShowForm()}
                 className={style.editButton}
               ></button>
             </div>
+
             <p className={style.textData}>
               {infoUserLog.age} años | {infoUserLog.address},{" "}
               {infoUserLog.locationName}, {infoUserLog.provinceName},{" "}
@@ -162,7 +165,6 @@ function ProfileProvider() {
       </div>
       {showForm && <Form handleShowForm={handleShowForm} />}
     </div>
-
   );
 }
 
