@@ -22,6 +22,7 @@ import {
   GET_ALL_PAYMENTS,
   PUT_FAQS,
   DELETE_FAQS,
+  GET_COMMENTS_USERS,
 } from "./action-types";
 
 const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
@@ -80,6 +81,23 @@ const infoDetailProveedor = (id) => {
     }
   };
 };
+
+const getCommentsUsers = (filter) => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.get(`${REACT_APP_API_URL}/stats/bestcomments${filter}`)
+      console.log(response)
+      if (response.status === 200) {
+        return dispatch({
+          type: GET_COMMENTS_USERS,
+          payload: response.data.data.comentarios,
+        }); 
+      }
+    } catch (error) {
+      window.alert(error)
+    }
+  }
+}
 
 const handleContratService = (item) => {
   return async (dispatch) => {
@@ -484,6 +502,7 @@ const deleteFAQs = (idQuestion) => {
 
 export {
   addInfoUserLog,
+  getCommentsUsers,
   logOutDeleteData,
   recoverUserLoggedData,
   infoDetailProveedor,

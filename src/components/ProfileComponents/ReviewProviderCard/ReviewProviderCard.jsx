@@ -1,38 +1,89 @@
-import { useSelector } from "react-redux";
-import "./ReviewProviderCard.style.css";
+import { useDispatch, useSelector } from "react-redux";
+import style from "./ReviewProviderCard.module.sass";
+import { useEffect } from "react";
+import { getCommentsUsers } from "../../../redux/actions";
 
 function ReviewProviderCard() {
-  const infoUserLog = useSelector((state) => state.infoUserLog);
 
-  const promedioPuntuacion = infoUserLog.promedioPuntuacion || 0;
-  const avaliation = infoUserLog.avaliation || [];
+  const infoUserLog = useSelector((state) => state.infoUserLog);
+  const commentsUserLog = useSelector((state) => state.comments_User)
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    const getComments = async () => {
+      try {
+        const query = `?idPeople=${infoUserLog.idPeople}`
+        await dispatch(getCommentsUsers(query))
+      } catch (error) {
+        window.alert(error)
+      }
+    }
+    getComments()
+  }, [])
+
+  const formatearFecha = (fechaString) => {
+    const fecha = new Date(fechaString)
+
+    const horas = fecha.getHours().toString().padStart(2, '0')
+    const minutos = fecha.getMinutes().toString().padStart(2, '0')
+    const dia = fecha.getDate().toString().padStart(2, '0')
+    const mes = (fecha.getMonth() + 1).toString().padStart(2, '0')
+    const año = fecha.getFullYear()
+
+    return `${horas}:${minutos} - ${dia}/${mes}/${año}`
+  }
 
   return (
-    <div className="containerValoration">
-      <div className="averageRating">
-        <img src="estrella" alt="Estrella" className="star" />
-        <h2>{promedioPuntuacion}</h2>
-        <p>Promedio Puntuación</p>
-      </div>
-      <div className="clientCardsValoration">
-        {avaliation.map((avaliation, index) => (
-          <div key={index} className="clientCardValoration">
-            <img className="clientImageValoration" src={avaliation.imageId} alt="Imagen" />
-            <div className="clientInfoValoration">
-              <div className="clientNameValoration">
-                <h2>{avaliation.name}</h2>
-                <p>{`${avaliation.state} - ${avaliation.country}`}</p>
+    <div className={style.background}>
+      <div className={style.wrapper}>
+        <p className={style.title}>Comentarios sobre este usuario:</p>
+        {
+          commentsUserLog.length != 0
+            ?
+            <div className={style.sectionInfo}>
+              <div className={style.ratingWrapper}>
+                <div className={style.star}></div>
+                <p className={style.rating}>{infoUserLog.averageRating}</p>
+                <p className={style.count}>({infoUserLog.countRating})</p>
+                <p className={style.title}>Promedio de puntuación</p>
               </div>
-              <div className="clientServicesValoration">
-                <p>{avaliation.service.name}</p>
-              </div>
-              <div className="clientRatingValoration">
-                <img src="Estrella" alt="Estrella" className="star" />
-                <p>{avaliation.valoration}</p>
+              <div className={style.commentsWrapper}>
+                {
+                  commentsUserLog.map((comment, index) => (
+                    <div key={index} className={style.comment}>
+                      <div className={style.imgWrapper}>
+                        <img className={style.img} src={comment.imagen} alt="Imagen" />
+                      </div>
+                      <div className={style.infoWrapper}>
+                        <p className={style.name}>{comment.persona}
+                        {
+                          infoUserLog.typeOfPerson === 'provider' 
+                          ? <span> (Cliente)</span>
+                          : <span> (Proveedor)</span>
+                        }
+                        </p>
+                        <p className={style.date}>{formatearFecha(comment.fecha)}</p>
+                        <div className={style.starWrapper}>
+                          {[...Array(Math.floor(Number(comment.rating)))].map((_, index) => (
+                            <div key={index} className={style.starIcon}></div>
+                          ))}
+                        </div>
+                      </div>
+                      <div className={style.reviewWrapper}>
+                        <p className={style.subTitle}>Servicio solicitado por el cliente:</p>
+                        <p className={style.service}>{comment.service}</p>
+                        <p className={style.review}>"{comment.review}"</p>
+                      </div>
+                    </div>
+                  ))
+                }
               </div>
             </div>
-          </div>
-        ))}
+            :
+            <div className={style.sectionInfo}>
+              <p className={style.noInfo}>Este usuario no tiene calificaciones</p>
+            </div>
+        }
       </div>
     </div>
   );

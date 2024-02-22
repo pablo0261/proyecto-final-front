@@ -21,6 +21,7 @@ import {
   PUT_STATE,
   PUT_FAQS,
   DELETE_FAQS,
+  GET_COMMENTS_USERS,
   // CONTRAT_SERVICE_USER
 } from "../actions/action-types";
 
@@ -28,6 +29,7 @@ import {
 let initialState = {
 
   infoUserLog: {},
+  comments_User: [],
 
   //ADMIN
   peopleForAdmin: [],
@@ -102,6 +104,12 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         infoUserLog: payload,
       };
+    
+    case GET_COMMENTS_USERS:
+      return {
+        ...state,
+        comments_User: payload
+      }
 
     case GET_PEOPLE:
       return {
@@ -231,17 +239,17 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         faqS: state.faqS.map((faq) => {
           if (faq.idQuestion === payload.idQuestion) {
-            return payload; 
+            return payload;
           }
           return faq;
         }),
       };
 
-      case DELETE_FAQS:
-        return {
-          ...state,
-          faqS: state.faqS.filter((faq) => faq.idQuestion !== payload),
-        };
+    case DELETE_FAQS:
+      return {
+        ...state,
+        faqS: state.faqS.filter((faq) => faq.idQuestion !== payload),
+      };
 
 
     default:
