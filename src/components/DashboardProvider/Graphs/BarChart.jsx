@@ -94,7 +94,7 @@ function PaymentsStatistics() {
       },
       series: [
         {
-          name: "Oportunidades",
+          name: "Visitas a su Perfil",
           type: "bar",
           data: oportunidadesPorSemana.map((serie) => serie.value[0]),
           itemStyle: { color: colorPalette[0] },

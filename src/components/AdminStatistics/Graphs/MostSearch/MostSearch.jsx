@@ -22,7 +22,7 @@ function MostSearch() {
 
   return (
     <div className={style.statisticsContainer}>
-      {statistics.map((item, index) => (
+      {statistics.slice(0, 6).map((item, index) => (
         <div key={index} className={style.statisticsItem}>
           <p className={style.statisticsValue}>{item.cantidad}</p>
           <p className={style.statisticsText}>{item.servicio}</p>

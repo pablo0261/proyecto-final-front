@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { ValidateFormSignIn } from "./ValidateFormSignIn";
 import style from "./SignIn.module.sass";
 import StoreItem from "../../../Helpers/LocalStorage";
+import Swal from "sweetalert2";
 
 function SignIn(props) {
   const { isProvider, handleFormsVisibility, signInProcess } = props;
@@ -44,7 +45,15 @@ function SignIn(props) {
     if (Object.values(errors).every((error) => error === "")) {
       signInProcess(signInData);
     } else {
-      window.alert("Por favor completa el formulario sin errores");
+      Swal.fire({
+        title: 'Error en el Formulario!',
+        text: `"Por favor completa el formulario sin errores"`,
+        icon: 'error',
+        // showDenyButton: true,
+        // denyButtonText: 'Cancelar',
+        // confirmButtonText: 'Aceptar',
+        // ConfirmButtonColor: "green",
+      })
     }
   };
 

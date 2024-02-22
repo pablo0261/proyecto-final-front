@@ -26,8 +26,8 @@ function validation(formData) {
         errors.title = "Campo obligatorio";
     } else if (!validateText.test(formData.title)) {
         errors.title = "Caracteres inválidos";
-    } else if (formData.title.length < 25) {
-        errors.title = "El título debe tener al menos 25 caracteres";
+    } else if (formData.title.length < 10) {
+        errors.title = "El título debe tener al menos 10 caracteres";
     } else if (formData.title.length > 150) {
         errors.title = "Título demasiado extenso";
     }
@@ -36,9 +36,9 @@ function validation(formData) {
         errors.message = "Campo obligatorio";
     } else if (!validateText.test(formData.message)) {
         errors.message = "Caracteres inválidos";
-    } else if (formData.message.length < 150) {
-        errors.message = "El mensaje debe tener al menos 150 caracteres";
-    } else if (formData.message.length > 350) {
+    } else if (formData.message.length < 50) {
+        errors.message = "El mensaje debe tener al menos 50 caracteres";
+    } else if (formData.message.length > 190) {
         errors.message = "Mensaje demasiado extenso";
     }
 

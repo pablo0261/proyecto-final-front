@@ -7,6 +7,7 @@ import { putOpportunities } from '../../../redux/actions'
 import { io } from 'socket.io-client';
 const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
 const socket = io(REACT_APP_API_URL);
+import Swal from 'sweetalert2'
 
 function ChatBox(props) {
 
@@ -31,7 +32,14 @@ function ChatBox(props) {
                 setIsLoadingChat(false)
             }
         } catch (error) {
-            window.alert(error)
+            Swal.fire({
+                title: `${error}`,
+                icon: 'error',
+                // showDenyButton: true,
+                // denyButtonText: 'Cancelar',
+                // confirmButtonText: 'Aceptar',
+                // ConfirmButtonColor: "green",
+              })
         }
     }
 
@@ -64,12 +72,24 @@ function ChatBox(props) {
                         socket.emit('send-chat', socketEmit)
                     }
                 })
-                .catch((reason) => window.alert(reason))
-        } else {
-            window.alert("Escribe un mensaje")
-        }
-    }
-
+                .catch((error) => {
+                    Swal.fire({
+                      title: `${error}`,
+                      text: 'Ocurrió un error al enviar el mensaje. Por favor, intente nuevamente más tarde.',
+                      icon: 'error',
+                      confirmButtonText: 'Aceptar'
+                    });
+                  });
+              } else {
+                Swal.fire({
+                  title: `Error al enviar el Mensaje`,
+                  text: `Debes escribir un mensaje`,
+                  icon: 'warning',
+                  confirmButtonText: 'Aceptar'
+                });
+              }
+            };
+    
     const [showForm, setShowForm] = useState(false)
     const [cancelation, setCancelation] = useState({
         idOpportunitie: idOpportunitie,
@@ -100,7 +120,12 @@ function ChatBox(props) {
                 setDataChat([])
             }
         } else {
-            window.alert("Debes indicar el porque")
+            Swal.fire({
+                title: `Error`,
+                text: "Debes indicar el porque",
+                icon: 'warning',
+                confirmButtonText: 'Aceptar'
+              });
         }
     }
 

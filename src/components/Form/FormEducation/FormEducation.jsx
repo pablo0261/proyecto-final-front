@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { postUserServices } from "../../../redux/actions/index";
 import Validation from "../FormEducation/validationFormEducation";
 import styles from "./FormEducation.module.sass";
+import Swal from "sweetalert2";
 
 function Form({ handleShowForm }) {
   const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
@@ -50,11 +51,21 @@ function Form({ handleShowForm }) {
         dispatch(postUserServices(userData));
         handleShowForm();
       } catch (error) {
-        console.error("Error al guardar la educación", error);
+        Swal.fire({
+          title: `${error}`,
+          text: "Error al guardar la educación",
+          icon: 'error',
+          confirmButtonText: 'Aceptar'
+        });
       }
     } else {
-      window.alert("Rellene todos los campos antes de guardar cambios.")
-    }
+      Swal.fire({
+        title: `error`,
+        text: "Rellene todos los campos antes de guardar cambios.",
+        icon: 'warning',
+        confirmButtonText: 'Aceptar'
+    })
+  }
   };
 
   const [localErrors, setLocalErrors] = useState({

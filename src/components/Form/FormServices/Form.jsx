@@ -51,7 +51,7 @@ function Form({ handleShowForm }) {
           price: userData.price,
           idOption: userData.idOption,
         };
-  
+  console.log("updatedUserData", updatedUserData);
         dispatch(postUserServices(updatedUserData));
         handleShowForm()
       } catch (error) {

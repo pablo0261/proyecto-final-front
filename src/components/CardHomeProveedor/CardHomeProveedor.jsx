@@ -6,6 +6,7 @@ import Helpers from '../../Helpers/RoutesFront';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { SET_SELECTED_OPPORTUNITIE } from '../../redux/actions/action-types';
+import Swal from 'sweetalert2';
 
 function Card(props) {
 
@@ -31,8 +32,19 @@ function Card(props) {
           navigate(Helpers.UserDetail.replace(":id", props.user.idPeople))
         }
       })
-      .catch((reason) => window.alert(reason))
-  }
+      .catch((error) => {
+        Swal.fire({
+          title: `${error.response.status}`,
+          text: 'Para acceder al sistema es necesario realizar el Registro',
+          footer: 'Regrese y realice su registro',
+          icon: 'warning',
+          // showDenyButton: true,
+          // denyButtonText: 'Cancelar',
+          // confirmButtonText: 'Aceptar',
+          // ConfirmButtonColor: "green",
+        });
+      });
+  };
 
   const handleFindProfession = () => {
     if (props.user.categories && props.user.categories.length != 0) {

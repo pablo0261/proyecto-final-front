@@ -231,7 +231,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         faqS: state.faqS.map((faq) => {
           if (faq.idQuestion === payload.idQuestion) {
-            return payload; // Reemplaza la FAQ existente con la nueva información
+            return payload; 
           }
           return faq;
         }),
