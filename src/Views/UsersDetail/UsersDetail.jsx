@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import style from './UsersDetail.module.sass'
-import UserServices from './UsersDetailComponents/UserServices/UserServices';
-import UserPersonal from './UsersDetailComponents/UserPersonal/UserPersonal';
 import { useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import axios from 'axios'
+import style from './UsersDetail.module.sass'
+import UserServices from './UsersDetailComponents/UserServices/UserServices';
+import UserPersonal from './UsersDetailComponents/UserPersonal/UserPersonal';
 import ConectionProviderCard from '../../components/ProfileComponents/ConectionProviderCard/ConectionProviderCard';
 import UserEducation from './UsersDetailComponents/UserEducation/UserEducation';
 import UserExperience from './UsersDetailComponents/UserExperience/UserExperience';
@@ -12,6 +12,7 @@ import UserSkills from './UsersDetailComponents/UserSkills/UserSkills';
 import UserSchedule from './UsersDetailComponents/UserSchedule/UserSchedule';
 import UserMap from './UsersDetailComponents/UserMap/UserMap';
 import UserInterest from './UsersDetailComponents/UserInterest/UserInterest';
+import UserComments from './UsersDetailComponents/UserComments/UserComments'
 import Swal from 'sweetalert2';
 
 function UsersDetail() {
@@ -53,7 +54,7 @@ function UsersDetail() {
         <UserInterest infoUser={infoUser}/>
         <UserSchedule infoUser={infoUser} />
         <UserMap infoUser={infoUser} />
-        {/* <ReviewProviderCard /> */}
+        <UserComments infoUser={infoUser}/>
         {infoUserLog.typeOfPerson === 'customer' && <ConectionProviderCard infoUser={infoUser}/>}
       </div>
     )
