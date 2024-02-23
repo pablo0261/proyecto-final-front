@@ -35,9 +35,9 @@ function Form({ handleShowForm }) {
         setSkills(skillsOptions);
       } catch (error) {
         Swal.fire({
-          title: `${error}`,
-          text: "Error al obtener las opciones de servicios",
-          icon: 'warning',
+          title: `Error: 404`,
+          text: "Error al obtener las opciones de Habilidades",
+          icon: 'error',
           confirmButtonText: 'Aceptar'
         });
       }

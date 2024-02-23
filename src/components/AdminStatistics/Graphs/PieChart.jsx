@@ -71,7 +71,7 @@ function PieChartComponent() {
               },
               label: {
                 bottom: 10,
-                width: 180,
+                width: 170,
                 height: 70,
                 formatter: function (params) {
                   const name = params.name.length > 24 ? params.name.slice(0, 24) + '...' : params.name;

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styles from "./FormMail.module.sass";
 import axios from "axios";
-import { Validation } from "./ValidationFormMail";
+import Validation from "./ValidationFormMail";
 import Swal from "sweetalert2";
 
 function Form({ handleShowForm, email }) {

@@ -45,6 +45,7 @@
       .textStep{
         @include font($secondaryColor, 20px, normal, normal);
         margin: 20px 0px 0px 0px;
+        text-align: justify; 
       }
     }
 

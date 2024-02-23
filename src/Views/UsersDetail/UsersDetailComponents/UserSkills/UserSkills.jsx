@@ -27,7 +27,7 @@ function UserSkills(props) {
         <div className={style.infoWrapper}>
           {skills.length != 0 ? (
             skills.map((option) => (
-              <div className={style.skills}>{option.Skill}</div>
+              <div key={option.idOption} className={style.skills}>{option.Skill}</div>
             ))
           ) : (
             <p className={style.noInfo}>No hay información de habilidades disponible.</p>

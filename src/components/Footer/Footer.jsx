@@ -16,7 +16,7 @@ const Footer = () => {
                     <p>Ayuda</p>
                     </li>
                     <li>
-                        <a className={styles.a} href={Helpers.FAQs}>Frequently Asked Questions</a>
+                        <a className={styles.a} href={Helpers.FAQs}>Preguntas Frecuentes</a>
                     </li>
                     <li>
                         <a className={styles.a} href={Helpers.ConsultReport}>Consulta/Reporte</a>

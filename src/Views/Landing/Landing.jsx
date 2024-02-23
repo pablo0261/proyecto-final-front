@@ -81,7 +81,7 @@ const Landing = () => {
               </p>
               <div className={styles.profileBox}>
                 <img
-                  src="https://res.cloudinary.com/dn3kedyer/image/upload/v1707141615/image/g08drlndxzjhmpbtxbdw.png"
+                  src="https://images.pexels.com/photos/733872/pexels-photo-733872.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
                   alt=""
                   className={styles.profileImg}
                 />

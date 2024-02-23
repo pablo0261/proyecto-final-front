@@ -11,7 +11,7 @@ function MessageToShowProvider() {
         </p>
         <div className={style.profileBox}>
           <img
-            src="https://res.cloudinary.com/dn3kedyer/image/upload/v1707141615/image/g08drlndxzjhmpbtxbdw.png"
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqwmMLrbd94gDp84-OiQNwmbBon7ZnSazr9ZfTKcWMN_KYNMwY_ptQqJ_6zaunkubQqR8&usqp=CAU"
             alt=""
             className={style.profileImg}
           />

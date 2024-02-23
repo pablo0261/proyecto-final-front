@@ -10,23 +10,25 @@ function LastComment() {
   const userLog = useSelector((state) => state.infoUserLog);
   const [statistics, setStatistics] = useState({
     idPeople: "",
-    image: profileImage,
+    imagen: "" ||  profileImage,
     cliente: "",
     review: "",
     rating: "",
   });
-
+  
+  console.log("statistics", statistics)
   useEffect(() => {
     const fetchEducation = async () => {
       try {
         const response = await fetch(
           `${REACT_APP_API_URL}/stats/provider?idPeople=${userLog.idPeople}`
-        );
-        const data = await response.json();
+          );
+          const data = await response.json();
+          console.log("data", data)
         const ultimoComentario = data.data.ultimoComentario;
         setStatistics({
           idPeople: userLog.idPeople || "",
-          image: ultimoComentario.photo ? ultimoComentario.photo : profileImage,
+          imagen:  ultimoComentario.imagen ||  profileImage,
           cliente: ultimoComentario.cliente || "",
           review: ultimoComentario.review || "",
           rating: ultimoComentario.rating || "",
@@ -56,7 +58,7 @@ function LastComment() {
   return (
     <div className={style.container}>
       <div className={style.imageContainer}>
-        <img className={style.imagen} src={statistics.image} alt="Imagen" />
+        <img className={style.imagen} src={statistics.imagen} alt="Imagen" />
       </div>
       <div className={style.infoContainerLeft}>
         <h2 className={style.client}>{statistics.cliente}</h2>

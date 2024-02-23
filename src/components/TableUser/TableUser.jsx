@@ -23,13 +23,15 @@ function TableUser(props) {
         const query = `&fullName=${searchInput}`
         dispatch(allPeople(query))
       } else {
-        Swal.fire({
-          title: 'Campo de búsqueda vacío',
-          text: 'Por favor, ingrese un Nombre antes de realizar la búsqueda.',
-          icon: 'warning',
-          confirmButtonText: 'Aceptar'
-        });
+        dispatch(allPeople(""))
       }
+    } else {
+      Swal.fire({
+        title: 'Error al cambiar el estado del usuario',
+        text: 'Por favor, notifique a los programadores',
+        icon: 'warning',
+        confirmButtonText: 'Aceptar'
+      });
     }
   }
 
@@ -46,6 +48,13 @@ function TableUser(props) {
       } else {
         dispatch(allPeople(""))
       }
+    } else {
+      Swal.fire({
+        title: 'Error al cambiar el estado del usuario',
+        text: 'Por favor, notifique a los programadores',
+        icon: 'warning',
+        confirmButtonText: 'Aceptar'
+      });
     }
   }
 
