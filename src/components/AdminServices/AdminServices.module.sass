@@ -1,0 +1,23 @@
+@use '../../Styles/Mixins.sass' as *
+@import '../../Styles/Variables.sass'
+
+.container
+    width: 100%
+    height: fit-content
+    display: flex
+    margin-top: 10px
+    gap: 10px
+
+    button
+        @include buttonActive
+
+        &:hover
+            @include buttonHover
+
+        &:active
+            @include buttonPressed
+
+.select
+    width: 100%
+    @include font($secondaryColor, 20px, normal, normal)
+    
