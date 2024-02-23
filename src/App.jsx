@@ -67,6 +67,18 @@ function App() {
       );
       if (response.data.people.count > 0) {
         const user = response.data.people.data[0].people
+
+        if (user.state === 'Deleted') {
+          Swal.fire({
+            title: 'Usuario bloqueado',
+            text: 'Tu usuario a sido bloqueado, porfavor comuniquese con el administrador',
+            icon: 'error',
+            confirmButtonText: 'Aceptar',
+            ConfirmButtonColor: "green",
+          })
+          return
+        }
+
         localStorage.setItem(StoreItem.emailUserLogged, userObject.email);
 
         dispatch(addInfoUserLog(user))
