@@ -64,7 +64,6 @@ const recoverUserLoggedData = (emailUserData) => {
     } catch (error) {
       Swal.fire({
         title: `${error}`,
-        text: "Error al obtener las opciones de servicios",
         icon: 'warning',
         confirmButtonText: 'Aceptar'
       });
@@ -85,7 +84,6 @@ const infoDetailProveedor = (id) => {
     } catch (error) {
       Swal.fire({
         title: `${error}`,
-        text: "Error al obtener las opciones de servicios",
         icon: 'warning',
         confirmButtonText: 'Aceptar'
       });
@@ -121,7 +119,7 @@ const handleContratService = (item) => {
     } catch (error) {
       Swal.fire({
         title: `${error}`,
-        text: "Error al obtener las opciones de servicios",
+        text: "Error al contratar el servicio",
         icon: 'warning',
         confirmButtonText: 'Aceptar'
       });
@@ -140,7 +138,7 @@ const allPeople = (query) => {
     } catch (error) {
       Swal.fire({
         title: `${error}`,
-        text: "Error al obtener las opciones de servicios",
+        text: "Error al obtener allPeople",
         icon: 'warning',
         confirmButtonText: 'Aceptar'
       });
@@ -161,7 +159,7 @@ const allPeopleProvider = (query) => {
     } catch (error) {
       Swal.fire({
         title: `${error}`,
-        text: "Error al obtener las opciones de servicios",
+        text: "Error al obtener allPeopleProvider",
         icon: 'warning',
         confirmButtonText: 'Aceptar'
       });
@@ -184,7 +182,7 @@ const allPayments = (query) => {
     } catch (error) {
       Swal.fire({
         title: `${error}`,
-        text: "Error al obtener las opciones de servicios",
+        text: "Error al obtener allPayments",
         icon: 'warning',
         confirmButtonText: 'Aceptar'
       });
@@ -202,7 +200,7 @@ const clear = () => {
     } catch (error) {
       Swal.fire({
         title: `${error}`,
-        text: "Error al obtener las opciones de servicios",
+        text: "Error al limpiar: Clear",
         icon: 'warning',
         confirmButtonText: 'Aceptar'
       });
@@ -222,7 +220,7 @@ const getPeopleFilteredOrderedPagination = (queryConstructor, queryPagination) =
     } catch (error) {
       Swal.fire({
         title: `${error}`,
-        text: "Error al obtener las opciones de servicios",
+        text: "Error getPeopleFilteredOrderedPagination",
         icon: 'warning',
         confirmButtonText: 'Aceptar'
       });
@@ -241,7 +239,7 @@ const getFiltersOrdersDB = () => {
     } catch (error) {
       Swal.fire({
         title: `${error}`,
-        text: "Error al obtener las opciones de servicios",
+        text: "Error getFiltersOrdersDB",
         icon: 'warning',
         confirmButtonText: 'Aceptar'
       });
@@ -259,7 +257,7 @@ const saveSelectionsGlobal = (selectedOptions) => {
     } catch (error) {
       Swal.fire({
         title: `${error}`,
-        text: "Error al obtener las opciones de servicios",
+        text: "Error saveSelectionsGlobal",
         icon: 'warning',
         confirmButtonText: 'Aceptar'
       });
@@ -289,7 +287,7 @@ const postUserData = (userDataEnglish) => {
         });
         Swal.fire({
           title: `${error}`,
-          text: "Error al obtener las opciones de servicios",
+          text: "Error postUserData",
           icon: 'warning',
           confirmButtonText: 'Aceptar'
         });
@@ -321,7 +319,7 @@ const putUserData = (userData) => {
         });
         Swal.fire({
           title: `${error}`,
-          text: "Error al obtener las opciones de servicios",
+          text: "Error putUserData",
           icon: 'warning',
           confirmButtonText: 'Aceptar'
         });
@@ -342,7 +340,7 @@ const putState = (value, auxState) => {
     } catch (error) {
       Swal.fire({
         title: `${error}`,
-        text: "Error al obtener las opciones de servicios",
+        text: "Error putState",
         icon: 'warning',
         confirmButtonText: 'Aceptar'
       });
@@ -359,7 +357,7 @@ const putStateProvider = (value, auxState) => {
     } catch (error) {
       Swal.fire({
         title: `${error}`,
-        text: "Error al obtener las opciones de servicios",
+        text: "Error putStateProvider",
         icon: 'warning',
         confirmButtonText: 'Aceptar'
       });
@@ -388,7 +386,7 @@ const postUserServices = (updatedUserData) => {
         });
         Swal.fire({
           title: `${error}`,
-          text: "Error al obtener las opciones de servicios",
+          text: "Error postUserServices",
           icon: 'warning',
           confirmButtonText: 'Aceptar'
         });
@@ -419,7 +417,7 @@ const postUserInteres = (updatedUserData) => {
         });
         Swal.fire({
           title: `${error}`,
-          text: "Error al obtener las opciones de servicios",
+          text: "Error postUserInteres",
           icon: 'warning',
           confirmButtonText: 'Aceptar'
         });
@@ -451,7 +449,7 @@ const deleteService = (deleteData) => {
         });
         Swal.fire({
           title: `${error}`,
-          text: "Error al obtener las opciones de servicios",
+          text: "Error deleteService",
           icon: 'warning',
           confirmButtonText: 'Aceptar'
         });
@@ -475,7 +473,7 @@ const getOpportunities = (filter) => {
     } catch (error) {
       Swal.fire({
         title: `${error}`,
-        text: "Error al obtener las opciones de servicios",
+        text: "Error getOpportunities",
         icon: 'warning',
         confirmButtonText: 'Aceptar'
       });
@@ -493,7 +491,7 @@ const putOpportunities = (data, filter) => {
     } catch (error) {
       Swal.fire({
         title: `${error}`,
-        text: "Error al obtener las opciones de servicios",
+        text: "Error putOpportunities",
         icon: 'warning',
         confirmButtonText: 'Aceptar'
       });
@@ -515,7 +513,7 @@ const getReports = (query) => {
     } catch (error) {
       Swal.fire({
         title: `${error}`,
-        text: "Error al obtener las opciones de servicios",
+        text: "Error getReports",
         icon: 'warning',
         confirmButtonText: 'Aceptar'
       });
@@ -535,7 +533,7 @@ const createReport = (formData) => {
     } catch (error) {
       Swal.fire({
         title: `${error}`,
-        text: "Error al obtener las opciones de servicios",
+        text: "Error createReport",
         icon: 'warning',
         confirmButtonText: 'Aceptar'
       });
@@ -561,7 +559,7 @@ const createFAQs = (formData) => {
     } catch (error) {
       Swal.fire({
         title: `${error}`,
-        text: "Error al obtener las opciones de servicios",
+        text: "Error createFAQs",
         icon: 'warning',
         confirmButtonText: 'Aceptar'
       });
@@ -581,7 +579,7 @@ const getFAQs = () => {
     } catch (error) {
       Swal.fire({
         title: `${error}`,
-        text: "Error al obtener las opciones de servicios",
+        text: "Error getFAQs",
         icon: 'warning',
         confirmButtonText: 'Aceptar'
       });
@@ -607,14 +605,13 @@ const putFAQs = (data) => {
     } catch (error) {
       Swal.fire({
         title: `${error}`,
-        text: "Error al obtener las opciones de servicios",
+        text: "Error putFAQs",
         icon: 'warning',
         confirmButtonText: 'Aceptar'
       });
     }
   };
 };
-
 
 export {
   addInfoUserLog,
