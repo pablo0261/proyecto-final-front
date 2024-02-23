@@ -33,7 +33,7 @@ function UsersDetail() {
       } catch (error) {
         Swal.fire({
           title: `${error}`,
-          text: "Error al obtener las opciones de servicios",
+          text: "Error getInfoProvider",
           icon: 'warning',
           confirmButtonText: 'Aceptar'
         });
