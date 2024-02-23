@@ -18,8 +18,6 @@ const FormFAQs = (props) => {
     message: ''
   });
 
-  console.log(formData)
-
   const [localErrors, setLocalErrors] = useState({
     destination: '*Campo Obligatorio',
     title: '*Campo Obligatorio',

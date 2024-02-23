@@ -30,7 +30,6 @@ const AdminServices = (props) => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [value, setValue] = useState("");
-  console.log(value)
   const handleCreate = async (inputValue) => {
     try {
       const newOptionDB = {
@@ -47,7 +46,6 @@ const AdminServices = (props) => {
         });
       }
     } catch (error) {
-      console.log(error)
       Swal.fire({
         title: 'No se pudo agregar la categoria',
         footer: `${error.response.data}`,
