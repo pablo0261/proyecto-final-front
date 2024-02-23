@@ -94,3 +94,12 @@
     height: 40px;
 };
 
+.buttonCreate {
+    @include buttonActive;
+}
+.buttonCreate:hover {
+    @include buttonHover;
+}
+.buttonCreate:active {
+    @include buttonPressed;
+}
