@@ -46,12 +46,10 @@ function AccessAccount() {
   const navigate = useNavigate();
 
   const logInProcess = async (logInData) => {
-    console.log(logInData)
     try {
       const response = await axios.post(
         `${REACT_APP_API_URL}/people/login`, logInData
         );
-      console.log(response)
       if (response.status === 200) {
         const user = response.data.people.data[0].people;
         localStorage.setItem(StoreItem.emailUserLogged, logInData.email);
@@ -101,7 +99,6 @@ function AccessAccount() {
         }
       }
     } catch (error) {
-      console.log("error",error)
       Swal.fire({
         title: 'Usuario ya Registrado!',
         text: `Para acceder al sistema realice el login`,

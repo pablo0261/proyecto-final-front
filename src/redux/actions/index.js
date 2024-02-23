@@ -95,7 +95,6 @@ const getCommentsUsers = (filter) => {
   return async (dispatch) => {
     try {
       const response = await axios.get(`${REACT_APP_API_URL}/stats/bestcomments${filter}`)
-      console.log(response)
       if (response.status === 200) {
         return dispatch({
           type: GET_COMMENTS_USERS,

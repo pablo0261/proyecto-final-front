@@ -8,7 +8,6 @@ import Swal from 'sweetalert2';
 function TableUser(props) {
 
   const { people, searchInput, onMailButtonClick, handleShowForm } = props
-  console.log(searchInput.length)
   const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
   const dispatch = useDispatch();
 
