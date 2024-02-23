@@ -21,7 +21,7 @@ const AdminServices = ({ categoriesOptions, idCategorie , servicios}) => {
   useEffect(() => {
     if (value !== null && !defaultOptions.some(option => option.label === value.label)) {
       setIsLoading(false);
-      axios.post(`${REACT_APP_API_URL}/categories/options`, {
+     axios.post(`${REACT_APP_API_URL}/categories/options`, {
         "idCategorie": idCategorie,
         "description": labelToSend
       });
