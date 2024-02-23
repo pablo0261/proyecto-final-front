@@ -75,3 +75,18 @@
     opacity: 0;
   }
 }
+
+.videoNormal {
+  width: 500px;
+  cursor: url('../../assets/Icons/zoom-in.png'), auto;
+}
+
+.videoExpanded {
+  width: 1200px; 
+  height: auto; 
+  position: absolute; 
+  top: 50%; 
+  left: 50%; 
+  transform: translate(-50%, -50%); 
+  cursor: url('../../assets/Icons/zoom-out.png'), auto;
+}
