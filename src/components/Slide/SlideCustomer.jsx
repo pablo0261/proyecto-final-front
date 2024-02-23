@@ -10,8 +10,6 @@ const SlideCustomer = () => {
   const toggleVideoSize = (index) => {
     setIsVideoExpanded(prevIndex => prevIndex === index ? null : index);
   };
-  // Establecer la clase CSS para el video según el estado de expansión
-  const videoClassName = isVideoExpanded ? styles.videoExpanded : styles.videoNormal;
 
   const { ref: step1, inView: step1Visible } = useInView();
   const { ref: step2, inView: step2Visible } = useInView();
