@@ -159,6 +159,7 @@ function App() {
 
                 <Route path={Helpers.UserDetail} element={<UsersDetail/>}></Route>
 
+                <Route path={Helpers.FAQs} element={<FAQs />} />
                 <Route path={Helpers.ConsultReport} element={<ConsultReport />} />
 
                 <Route path='*' element={<NotFound />}></Route>

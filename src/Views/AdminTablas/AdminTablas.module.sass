@@ -1,19 +1,35 @@
 @use '../../Styles/Mixins.sass'
 @import '../../Styles/Variables.sass'
-.container 
+
+.background
+    height: 80vh
     display: flex
+    flex-direction: column
     justify-content: center
-    @include Mixins.font($primaryColor, 20px,  bold, normal)
+    align-items: center
+    margin: 30px 0px
 
-.containerh2
-    display: flex
-    flex-direction: column
-    align-items: flex-start
-
-    
-.wrapper 
+.wrapper
     width: 80%
+    height: fit-content
     display: flex
     flex-direction: column
-    align-items: flex-start
-    padding: 0
+    gap: 30px
+
+.infoWrapper
+    width: 80%
+    height: fit-content
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-items: center
+    gap: 10px
+    margin-top: 15px
+    padding: 30px 0px
+    box-sizing: border-box
+    @include Mixins.boxShadowCard
+
+.title
+    margin: 0
+    text-align: left
+    @include Mixins.font($primaryColor, 25px, bold, normal)
