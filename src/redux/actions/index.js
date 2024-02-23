@@ -7,7 +7,6 @@ import {
   GET_INFO_USER,
   POST_NEW_INFO_USER,
   SET_ERROR_BACK,
-  EDIT_INFO_USER,
   CONTRAT_SERVICE_USER,
   GET_HOME_PROVIDER,
   FILTER_SERVICES,
@@ -16,13 +15,10 @@ import {
   POST_NEW_SERVICE_USER,
   SET_OPPORTUNITIE,
   CREATE_REPORT,
-  CREATE_FAQS,
   GET_FAQS,
   GET_PEOPLE,
   GET_REPORTS,
   GET_ALL_PAYMENTS,
-  PUT_FAQS,
-  DELETE_FAQS,
   GET_COMMENTS_USERS,
 } from "./action-types";
 
@@ -552,10 +548,16 @@ const createFAQs = (formData) => {
   return async (dispatch) => {
     try {
       const response = await axios.post(`${REACT_APP_API_URL}/questions`, formData);
-      dispatch({
-        type: CREATE_FAQS,
-        payload: response.data
-      });
+      if (response.status === 201) {
+        Swal.fire({
+          title: 'Pregunta y respuesta enviadas con éxito!',
+          icon: 'success',
+        }) 
+        return dispatch({ 
+          type: GET_FAQS, 
+          payload: response.data.questions.data 
+        });
+      }
     } catch (error) {
       Swal.fire({
         title: `${error}`,
@@ -571,8 +573,11 @@ const createFAQs = (formData) => {
 const getFAQs = () => {
   return async function (dispatch) {
     try {
-      const response = await axios(`${REACT_APP_API_URL}/questions`);
-      dispatch({ type: GET_FAQS, payload: response.data });
+      const response = await axios(`${REACT_APP_API_URL}/questions?typeOfQuestion=faq`);
+      return dispatch({ 
+        type: GET_FAQS, 
+        payload: response.data.questions.data 
+      });
     } catch (error) {
       Swal.fire({
         title: `${error}`,
@@ -590,33 +595,15 @@ const putFAQs = (data) => {
     try {
       const response = await axios.put(`${REACT_APP_API_URL}/questions`, data);
       if (response.status === 200) {
-        dispatch({
-          type: PUT_FAQS,
-          payload: response.data,
+        Swal.fire({
+          title: 'Pregunta y respuesta editadas con éxito!',
+          icon: 'success',
+        })
+        return dispatch({
+          type: GET_FAQS,
+          payload: response.data.questions.data,
         });
       }
-    } catch (error) {
-      Swal.fire({
-        title: `${error}`,
-        text: "Error al obtener las opciones de servicios",
-        icon: 'warning',
-        confirmButtonText: 'Aceptar'
-      });
-    }
-  };
-};
-
-
-/* Delete FAQs */
-const deleteFAQs = (idQuestion) => {
-  return async (dispatch) => {
-    try {
-      await axios.delete(`${REACT_APP_API_URL}/questions/${idQuestion}`);
-      dispatch(getFAQs());
-      dispatch({
-        type: DELETE_FAQS,
-        payload: idQuestion,
-      });
     } catch (error) {
       Swal.fire({
         title: `${error}`,
@@ -656,6 +643,5 @@ export {
   putState,
   putStateProvider,
   putFAQs,
-  deleteFAQs,
   clear
 };

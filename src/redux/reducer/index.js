@@ -15,11 +15,9 @@ import {
   SET_SELECTED_OPPORTUNITIE,
   GET_REPORTS,
   CREATE_REPORT,
-  CREATE_FAQS,
   GET_FAQS,
   GET_ALL_PAYMENTS,
   PUT_STATE,
-  PUT_FAQS,
   DELETE_FAQS,
   GET_COMMENTS_USERS,
   // CONTRAT_SERVICE_USER
@@ -87,9 +85,6 @@ let initialState = {
 
   /* Create report */
   createReport: [],
-
-  /* Create FAQs */
-  createFAQs: [],
 
   /* FAQs */
   faqS: [],
@@ -220,30 +215,12 @@ const rootReducer = (state = initialState, { type, payload }) => {
         createReport: payload,
       };
 
-    /* Create FAQs */
-    case CREATE_FAQS:
-      return {
-        ...state,
-        createFAQs: payload,
-      };
-
     /* GET FAQs */
     case GET_FAQS:
       return {
         ...state,
         faqS: payload,
       }
-
-    case PUT_FAQS:
-      return {
-        ...state,
-        faqS: state.faqS.map((faq) => {
-          if (faq.idQuestion === payload.idQuestion) {
-            return payload;
-          }
-          return faq;
-        }),
-      };
 
     case DELETE_FAQS:
       return {

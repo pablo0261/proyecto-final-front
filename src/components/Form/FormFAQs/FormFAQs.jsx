@@ -1,114 +1,178 @@
 import { useState } from 'react';
 import Validation from './validationFormFAQs';
-import styles from "./FormFAQs.module.scss";
+import styles from "./FormFAQs.module.sass";
 import { useDispatch } from 'react-redux';
 import { createFAQs, putFAQs } from '../../../redux/actions/index';
 import Swal from 'sweetalert2'
 
 
-const FormFAQs = ({ typeOfFAQs, formData: initialFormData }) => {
-  const [formData, setFormData] = useState(initialFormData || {
-    idQuestion:'',
-    typeOfQuestion: 'faq',
-    destination: typeOfFAQs === 'provider' ? 'provider' : 'customer',
-    title: '',
-    message: ''
-  });
+const FormFAQs = (props) => {
 
-  const [successMessage, setSuccessMessage] = useState('');
-
-  const [localErrors, setLocalErrors] = useState({
-    title: '',
-    message: ''
-  });
-
-  const clearFormData = () => {
-    setFormData({
-      typeOfQuestion: 'faq',
-      destination: typeOfFAQs === 'provider' ? 'provider' : 'customer',
-      title: '',
-      message: ''
-    });
-  };
-
+  const { idQuestion, setShowFormProvider, setShowFormCustomer, setShowForm, type } = props
   const dispatch = useDispatch();
 
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setFormData({ ...formData, [name]: value }); // Actualiza el estado formData con el nuevo valor
-    Validation(name, setLocalErrors, { ...formData, [name]: value }); // Realiza la validación de los campos
+  const [formData, setFormData] = useState({
+    typeOfQuestion: 'faq',
+    destination: '',
+    title: '',
+    message: ''
+  });
+
+  console.log(formData)
+
+  const [localErrors, setLocalErrors] = useState({
+    destination: '*Campo Obligatorio',
+    title: '*Campo Obligatorio',
+    message: '*Campo Obligatorios'
+  });
+
+  const handleHideForm = () => {
+    if (type === 'provider') {
+      setShowFormProvider(false)
+    } else if (type === 'customer') {
+      setShowFormCustomer(false)
+    } else {
+      setShowForm(false)
+    }
   };
 
-  const handleSubmit = (event) => {
+  const [isSelectedDestination, setIsSelectedDestination] = useState("")
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+
+    if (name === "destination") {
+      setIsSelectedDestination(value)
+    }
+    setFormData({ ...formData, [name]: value });
+    Validation(name, setLocalErrors, { ...formData, [name]: value });
+  };
+
+  const isValid = () => {
+    if (idQuestion) {
+      const { title, message } = localErrors
+      const newLocalError = { title: title, message: message }
+      return Object.values(newLocalError).every((error) => error === '');
+    } else {
+      return Object.values(localErrors).every((error) => error === '');
+    }
+  }
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const isValid = Object.values(localErrors).every((error) => error === '');
-
-    if (isValid) {
-      dispatch(createFAQs(formData))
-        .then(() => {
-          setSuccessMessage('Pregunta y respuesta enviadas con éxito');
-          Swal.fire({
-            title: 'Pregunta y respuesta enviadas con éxito!',
-            icon: 'success',
-          })
-          clearFormData();
+    if (isValid()) {
+      try {
+        if (idQuestion) {
+          const newFormData = { ...formData, idQuestion: idQuestion }
+          await dispatch(putFAQs(newFormData))
+          if (type === 'provider') {
+            setShowFormProvider(false)
+          } else if (type === 'customer') {
+            setShowFormCustomer(false)
+          } else {
+            setShowForm(false)
+          }
+        } else {
+          await dispatch(createFAQs(formData))
+          if (type === 'provider') {
+            setShowFormProvider(false)
+          } else if (type === 'customer') {
+            setShowFormCustomer(false)
+          } else {
+            setShowForm(false)
+          }
+        }
+      } catch (error) {
+        Swal.fire({
+          title: 'Error al enviar la FAQ!',
+          text: 'El envio no se envio correctame, intente nuevamente o comuniquese con los desarrolladores.',
+          icon: 'warning',
         })
-        .catch(() => {
-          setSuccessMessage('Error al enviar el reporte');
-          Swal.fire({
-            title: 'Error al enviar el reporte!',
-            text: `el Reporte no se envió, por favor intentelo nuevamente`,
-            icon: 'warning',
-          })
-        });
-
+      }
     } else {
-      setSuccessMessage('Formulario con errores');
       Swal.fire({
         title: 'Formulario con errores!',
-        text: `Por favor complete el formulario correctamente antes de enviarlo`,
+        text: 'Por favor complete el formulario correctamente antes de enviarlo',
         icon: 'warning',
       })
     }
   };
 
-  const isFormValid = formData.title !== '' && formData.message !== '' && Object.values(localErrors).every((error) => error === '');
-
   return (
-    <div className={styles.wrapper}>
+    <div className={styles.background}>
+      <div className={styles.wrapper}>
+        <button type='button' className={styles.closeButton} onClick={() => handleHideForm()}></button>
+        <form className={styles.Form} onSubmit={handleSubmit}>
+          <div className={styles.FormDivInputFlex}>
+            {
+              idQuestion
+                ? <p className={styles.textTitle}>Editar una Pregunta Frecuente</p>
+                : <p className={styles.textTitle}>Crear una Pregunta Frecuente</p>
+            }
+            {
+              !idQuestion &&
+              <div className={styles.FormDivInput}>
+                {/* Destinatario */}
+                <label htmlFor='title' className={styles.labels}>Destinatario:</label>
+                <select
+                  name="destination"
+                  value={isSelectedDestination}
+                  onChange={handleChange}
+                  className={styles.inputSelect}
+                >
+                  <option value="" disabled>
+                    Seleccione a quien va dirigido
+                  </option>
+                  <option value="provider">
+                    Proveedor
+                  </option>
+                  <option value="customer">
+                    Cliente
+                  </option>
+                </select>
+                <div className={localErrors.destination ? styles.errorMessage : styles.errorNotMessage}>
+                  {localErrors.destination ? localErrors.destination : "Datos Válidos"}
+                </div>
+              </div>
+            }
 
-      <form className={styles.Form} onSubmit={handleSubmit}>
-        <div className={styles.FormDivInputFlex}>
+            {/* question */}
+            <div className={styles.FormDivInput}>
+              <label htmlFor='title' className={styles.labels}>Ingresa una pregunta:</label>
+              <input
+                type="text"
+                name="title"
+                value={formData.title}
+                onChange={handleChange}
+                placeholder="¿Como registrarme?"
+                className={styles.inputs}
+              />
+              <div className={localErrors.title ? styles.errorMessage : styles.errorNotMessage}>
+                {localErrors.title ? localErrors.title : "Datos Válidos"}
+              </div>
+            </div>
 
-          {/* question */}
-          <label htmlFor='title'>Ingresa una pregunta:</label>
-          <input
-            id="title"
-            type="text"
-            name="title"
-            value={formData.title}
-            onChange={handleChange}
-            placeholder="Ingrese la pregunta"
-          />
-          {localErrors.title && <div className={styles.errorMessage}>{localErrors.title}</div>}
 
-          {/* answer */}
-          <label htmlFor='message'>Ingresa una respuesta:</label>
-          <textarea
-            id='message'
-            name="message"
-            value={formData.message}
-            onChange={handleChange}
-            placeholder="Ingrese la respuesta"
-          ></textarea>
-          {localErrors.message && <div className={styles.errorMessage}>{localErrors.message}</div>}
+            {/* answer */}
+            <div className={styles.FormDivInput}>
+              <label htmlFor='message' className={styles.labels}>Ingresa una respuesta:</label>
+              <textarea
+                name="message"
+                value={formData.message}
+                onChange={handleChange}
+                placeholder="Mire el tutorial"
+                className={styles.inputDetail}
+              ></textarea>
+              <div className={localErrors.message ? styles.errorMessage : styles.errorNotMessage}>
+                {localErrors.message ? localErrors.message : "Datos Válidos"}
+              </div>
+            </div>
 
-          <button type="submit" disabled={!isFormValid}>Guardar</button>
+            <button type="submit" className={styles.buttonSave}>Guardar</button>
 
-        </div>
-      </form>
-      {successMessage && <p className={styles.errorMessage}>{successMessage}</p>}
+          </div>
+        </form>
+      </div>
     </div>
   );
 };
