@@ -177,7 +177,10 @@ const FAQs = () => {
         })
       }
       {showForm && <FormFAQs idQuestion={""} setShowForm={setShowForm} type={""} />}
-      <button type='button' onClick={() => handleShowForm()} className={styles.buttonCreate}>Crear Pregunta Frecuente</button>
+      {
+        userLoggedInfo.typeOfPerson === 'administrator' &&
+        <button type='button' onClick={() => handleShowForm()} className={styles.buttonCreate}>Crear Pregunta Frecuente</button>
+      }
     </div>
   );
 };
