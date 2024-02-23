@@ -1,0 +1,133 @@
+@use '../../../Styles/Mixins.sass'
+@import '../../../Styles/Variables.sass'
+
+.background
+  width: 100%
+  height: 100%
+  background-color: #f2f2f200
+  position: fixed
+  left: 0
+  top: 0
+  z-index: 1
+  display: flex
+  justify-content: center
+  align-items: center
+
+  .wrapper
+    @include Mixins.boxShadowCard
+    width: 45%
+    height: fit-content
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-items: center
+    position: relative
+
+    .closeButton
+      width: 40px
+      height: 40px
+      background: url('../../../assets/Icons/IconCross.png')
+      background-position: center
+      background-repeat: no-repeat
+      border: none
+      position: absolute
+      top: 10px
+      right: 10px
+      cursor: pointer
+      transition: .2s
+
+    .closeButton:hover
+      transform: scale(1.1)
+
+    .textTitle
+      margin: 30px 0px 20px 0px
+      @include Mixins.font($primaryColor, 25px, bold, normal)
+
+    .Form
+      width: 85%
+      margin-top: 20px
+
+      .FormDivInput
+        width: 100%
+        display: flex
+        flex-direction: column
+        align-items: flex-start
+
+        .labels
+          text-align: left
+          margin: 0px 0px 5px 0px
+          @include Mixins.font($secondaryColor, 18px , normal , normal )
+
+        .inputs
+          @include Mixins.inputsFormat
+
+        .inputs:focus
+          @include Mixins.inputsFormat_Hover
+
+        .inputs::placeholder
+          @include Mixins.inputsFormat_Placeholder
+
+        .inputDetail
+          height: 100px
+          width: 100%
+          padding: 10px 15px
+          font-family: 'K2D', sans-serif
+          font-size: 16px
+          font-style: normal
+          font-weight: normal
+          color: $secondaryColor
+          box-sizing: border-box
+          border: 2px solid $secondaryColor
+          border-radius: 10px
+          transition: .2s
+          resize: none
+
+        .inputDetail:focus
+          @include Mixins.inputsFormat_Hover
+
+        .inputDetail::placeholder
+          @include Mixins.inputsFormat_Placeholder
+
+        .inputSelect
+          @include Mixins.inputsFormat
+          -webkit-appearance: none
+          -moz-appearance: none
+          appearance: none
+          background: url('../../../assets/Icons/ArrowSelect.png') no-repeat right center
+          background-size: 30px
+
+        .inputSelect:focus
+          @include Mixins.inputsFormat_Hover
+
+        .inputSelect::placeholder
+          @include Mixins.inputsFormat_Placeholder
+
+        .errorMessage
+          margin: 5px 0px
+          padding-left: 15px
+          text-align: left
+          @include Mixins.font($textFailureColor, 14px , normal , normal )
+
+        .errorNotMessage
+          margin: 5px 0px
+          padding-left: 15px
+          text-align: left
+          @include Mixins.font($textSuccessColor, 14px , normal , normal )
+
+      .buttonSave
+        margin: 20px 0px 30px 0px
+        @include Mixins.buttonActive
+        cursor: pointer
+        transition: .2s
+
+      .buttonSave:hover
+        @include Mixins.buttonHover
+
+      .buttonSave:active
+        @include Mixins.buttonPressed
+
+      .errorMessageStatic
+        width: 100%
+        text-align: left
+        margin: 0 0 10px 0
+        @include Mixins.font($textSecondaryColor, 14px , normal , normal )
