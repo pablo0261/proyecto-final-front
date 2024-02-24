@@ -35,8 +35,11 @@ const Landing = () => {
     const fetchStatistics = async () => {
         const response = await fetch(`${REACT_APP_API_URL}/stats/landing`);
         const data = await response.json();
+        console.log('Data recibida:', data);
+        const successfulConnections = Number(data.successfulConnections.replace('%', ''));
+        const formattedConnections = successfulConnections.toFixed(0) + '%';
         setStatistics({
-          successfulConnections: data.successfulConnections,
+          successfulConnections: formattedConnections,
           services: data.services,
           customerCount: data.customerCount,
           providerCount: data.providerCount,
