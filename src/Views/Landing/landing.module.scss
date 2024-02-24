@@ -68,7 +68,8 @@
 
 .introQuote {
     @include flexbox(column, center, flex-start);
-    width: 23%;
+    width: 25%;
+    margin-bottom: 5%;
     height: fit-content;
 
     .quoteIcon {
