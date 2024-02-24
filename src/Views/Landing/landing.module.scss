@@ -17,7 +17,7 @@
 
 .introWrapper {
     width: 80%;
-    margin: 120px 0px;
+    margin: 150px 0px;
     @include flexbox(row, space-between, flex-end);
 }
 
@@ -50,7 +50,7 @@
 
 .buttonWrapper {
     display: flex;
-    margin: 20px 0px 50px 0px;
+    margin-top: 20px;
     gap: 30px;
 
     button {
@@ -68,8 +68,7 @@
 
 .introQuote {
     @include flexbox(column, center, flex-start);
-    width: 25%;
-    margin-bottom: 5%;
+    width: 27%;
     height: fit-content;
 
     .quoteIcon {
