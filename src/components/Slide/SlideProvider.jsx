@@ -41,7 +41,7 @@ function SlideProvider() {
             onClick={() => toggleVideoSize(1)}
             className={isVideoExpanded === 1 ? style.videoExpanded : style.videoNormal}
           >
-            <source src='https://res.cloudinary.com/dn3kedyer/video/upload/v1708651809/client-01.mp4' type="video/mp4" />
+            <source src='https://res.cloudinary.com/dn3kedyer/video/upload/v1708900693/01-PROVIDE.mp4' type="video/mp4" />
           </video>
         </div>
         <div ref={step1} className={style.pivot}></div>
@@ -65,7 +65,7 @@ function SlideProvider() {
             onClick={() => toggleVideoSize(2)}
             className={isVideoExpanded === 2 ? style.videoExpanded : style.videoNormal}
           >
-            <source src='https://res.cloudinary.com/dn3kedyer/video/upload/v1708653984/client-02.mp4' type="video/mp4" />
+            <source src='https://res.cloudinary.com/dn3kedyer/video/upload/v1708900688/02-provider.mp4' type="video/mp4" />
           </video>
         </div>
         <div ref={step2} className={style.pivot}></div>
@@ -90,7 +90,7 @@ function SlideProvider() {
             onClick={() => toggleVideoSize(3)}
             className={isVideoExpanded === 3 ? style.videoExpanded : style.videoNormal}
           >
-            <source src='https://res.cloudinary.com/dn3kedyer/video/upload/v1708653993/client-03.mp4' type="video/mp4" />
+            <source src='https://res.cloudinary.com/dn3kedyer/video/upload/v1708900780/03-provider.mp4' type="video/mp4" />
           </video>
         </div>
         <div ref={step3} className={style.pivot}></div>
@@ -116,7 +116,7 @@ function SlideProvider() {
             onClick={() => toggleVideoSize(4)}
             className={isVideoExpanded === 4 ? style.videoExpanded : style.videoNormal}
           >
-            <source src='https://res.cloudinary.com/dn3kedyer/video/upload/v1708651813/client-04.mp4' type="video/mp4" />
+            <source src='https://res.cloudinary.com/dn3kedyer/video/upload/v1708900784/04-provider.mp4' type="video/mp4" />
           </video>
         </div>
         <div ref={step4} className={style.pivot}></div>
@@ -142,7 +142,7 @@ function SlideProvider() {
             onClick={() => toggleVideoSize(5)}
             className={isVideoExpanded === 5 ? style.videoExpanded : style.videoNormal}
           >
-            <source src='https://res.cloudinary.com/dn3kedyer/video/upload/v1708651809/client-05.mp4' type="video/mp4" />
+            <source src='https://res.cloudinary.com/dn3kedyer/video/upload/v1708900782/05-proveedor.mp4' type="video/mp4" />
           </video>
         </div>
         <div ref={step5} className={style.pivot}></div>
@@ -168,7 +168,7 @@ function SlideProvider() {
             onClick={() => toggleVideoSize(6)}
             className={isVideoExpanded === 6 ? style.videoExpanded : style.videoNormal}
           >
-            <source src='https://res.cloudinary.com/dn3kedyer/video/upload/v1708651809/client-06.mp4' type="video/mp4" />
+            <source src='https://res.cloudinary.com/dn3kedyer/video/upload/v1708900771/06-provider.mp4' type="video/mp4" />
           </video>
         </div>
         <div ref={step6} className={style.pivot}></div>
