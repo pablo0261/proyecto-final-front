@@ -25,7 +25,7 @@ function Calification() {
       } catch (error) {
         Swal.fire({
           title: 'Error',
-          text: 'Error al obtener las cantidades de visitas al perfil.',
+          text: 'Error al obtener las calificaciones.',
           icon: 'error',
           confirmButtonText: 'Aceptar'
         });

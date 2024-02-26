@@ -33,7 +33,7 @@ function LastComment() {
       } catch (error) {
         Swal.fire({
           title: 'Error',
-          text: 'Error al obtener las cantidades de visitas al perfil.',
+          text: 'Error al obtener el ultimo comentario recibido.',
           icon: 'error',
           confirmButtonText: 'Aceptar'
         });

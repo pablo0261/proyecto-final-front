@@ -39,6 +39,7 @@ function Dashboard() {
           </div>
           <div className={style.divHistorialpagos}>
             <div>
+              {/* Grafico  de calificaciones */}
               <BarChart />
             </div>
           </div>
@@ -55,6 +56,7 @@ function Dashboard() {
           </div>
           <div className={style.divHitorialServicios}>
             <div>
+              {/* Grafico de Servicios */}
               <PieChart />
             </div>
           </div>
