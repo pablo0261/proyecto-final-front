@@ -1,5 +1,5 @@
-import React from 'react';
-import { useNavigate } from 'react-router';
+import React, { useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import Helpers from '../../Helpers/RoutesFront';
 import { useSelector } from 'react-redux';
 
@@ -7,7 +7,7 @@ function NotFound() {
 
   const userLoggedInfo = useSelector(state => state.infoUserLog)
   const navigate = useNavigate()
-  
+
   const handleReset = () => {
       if (userLoggedInfo && userLoggedInfo.typeOfPerson === 'provider') {
         navigate(Helpers.StatsProviderView)

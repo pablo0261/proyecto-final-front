@@ -44,25 +44,40 @@ function App() {
   useEffect(() => {
     dispatch(getFiltersOrdersDB());
 
-    if (localStorage.getItem(StoreItem.emailUserLogged)) {
-      dispatch(recoverUserLoggedData(localStorage.getItem(StoreItem.emailUserLogged)))
-      if (userLoggedInfo.typeOfPerson === 'administrator' && pathname === Helpers.AccessAccount || pathname === Helpers.Landing) {
-        navigate(Helpers.StatsProviderView)
-      } else if (userLoggedInfo.typeOfPerson === 'provider' && pathname === Helpers.AccessAccount || pathname === Helpers.Landing) {
-        navigate(Helpers.StatsProviderView)
-      } else  if (userLoggedInfo.typeOfPerson === 'provider' && pathname === Helpers.AccessAccount || pathname === Helpers.Landing) {
-        navigate(Helpers.HomeCustomerView)
-      }
-      socket.emit('join-request', userLoggedInfo.idPeople);
+    const emailUserLogged = localStorage.getItem(StoreItem.emailUserLogged);
+    if (emailUserLogged) {
+      dispatch(recoverUserLoggedData(emailUserLogged));
     }
-  }, [])
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (!userLoggedInfo) return;
+
+    if (userLoggedInfo.typeOfPerson === 'administrator') {
+      if (pathname === Helpers.AccessAccount || pathname === Helpers.Landing) {
+        navigate(Helpers.StatsProviderView);
+      }
+    } else if (userLoggedInfo.typeOfPerson === 'provider') {
+      if (pathname === Helpers.AccessAccount || pathname === Helpers.Landing) {
+        navigate(Helpers.StatsProviderView);
+      }
+    } else if (userLoggedInfo.typeOfPerson === 'customer') {
+      if (pathname === Helpers.AccessAccount || pathname === Helpers.Landing) {
+        navigate(Helpers.HomeCustomerView);
+      }
+    }
+
+    socket.emit('join-request', userLoggedInfo.idPeople);
+  }, [userLoggedInfo]);
 
   return (
     <div>
       {
         userLoggedInfo.idPeople != null ?
           <div>
-            <NavBar></NavBar>
+            {
+              userLoggedInfo.typeOfPerson === 'customer' || userLoggedInfo.typeOfPerson === 'provider' || userLoggedInfo.typeOfPerson === 'administrator' ? <NavBar></NavBar> : null
+            }
             {
               userLoggedInfo.typeOfPerson === 'customer' &&
               <Routes>
@@ -72,7 +87,7 @@ function App() {
                 <Route path={Helpers.ReportsCustomerView} element={<ReportsCustomerView />} />
                 <Route path={Helpers.ProfileCustomerView} element={<ProfileProviderView />} />
 
-                <Route path={Helpers.UserDetail} element={<UsersDetail/>}></Route>
+                <Route path={Helpers.UserDetail} element={<UsersDetail />}></Route>
 
                 <Route path={Helpers.FAQs} element={<FAQs />} />
                 <Route path={Helpers.ConsultReport} element={<ConsultReport />} />
@@ -92,7 +107,7 @@ function App() {
                 <Route path={Helpers.ConnectionsProviderView} element={<ConnectionsProviderView />} />
                 <Route path={Helpers.ReportsProviderView} element={<ReportsProviderView />} />
 
-                <Route path={Helpers.UserDetail} element={<UsersDetail/>}></Route>
+                <Route path={Helpers.UserDetail} element={<UsersDetail />}></Route>
 
                 <Route path={Helpers.FAQs} element={<FAQs />} />
                 <Route path={Helpers.ConsultReport} element={<ConsultReport />} />
