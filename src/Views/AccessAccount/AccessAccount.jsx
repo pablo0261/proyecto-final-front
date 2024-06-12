@@ -4,7 +4,7 @@ import SignIn from "../../components/AccessAccount/SignIn/SignIn";
 import { Link, useNavigate } from "react-router-dom";
 import Helpers from "../../Helpers/RoutesFront";
 import StoreItem from "../../Helpers/LocalStorage";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import style from "./AccessAccount.module.sass";
 import axios from "axios";
 import { addInfoUserLog } from "../../redux/actions";
@@ -14,28 +14,15 @@ import StatsAccessAccountClient from "../../components/AccessAccount/StatsAccess
 import StatsAccessAccountProvider from "../../components/AccessAccount/StatsAccessAccount/StatsProvider/StatsAccessAccountProvider";
 import MessageToShowClient from "../../components/AccessAccount/MessageToShow/MessageClient";
 import MessageToShowProvider from "../../components/AccessAccount/MessageToShow/MessageProvider";
+import { GoogleLogin } from '@react-oauth/google';
+import { jwtDecode } from "jwt-decode";
 
 const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
 const socket = io(REACT_APP_API_URL);
 
 function AccessAccount() {
 
-  useEffect(() => {
-    // Carga la biblioteca de Google Sign-In
-    const script = document.createElement("script");
-    script.src = "https://apis.google.com/js/platform.js";
-    script.async = true;
-    document.body.appendChild(script);
-
-    // Llama a la función de renderizado de Google Sign-In después de que se haya cargado la biblioteca
-    script.onload = () => {
-      google.accounts.id.renderButton(document.getElementById("buttonDiv"), {
-        theme: "outline",
-        size: "medium",
-      });
-    };
-  }, []);
-
+  const userLoggedInfo = useSelector(state => state.infoUserLog)
   const isProvider = JSON.parse(localStorage.getItem(StoreItem.isProvider));
   const [signInView, setSignInView] = useState(false);
   const handleFormsVisibility = () => {
@@ -49,7 +36,7 @@ function AccessAccount() {
     try {
       const response = await axios.post(
         `${REACT_APP_API_URL}/people/login`, logInData
-        );
+      );
       if (response.status === 200) {
         const user = response.data.people.data[0].people;
         localStorage.setItem(StoreItem.emailUserLogged, logInData.email);
@@ -58,12 +45,13 @@ function AccessAccount() {
         socket.emit("join-request", user.idPeople);
 
         if (user.typeOfPerson === "administrator") {
-          navigate(Helpers.AdminStatistics); 
+          navigate(Helpers.AdminStatistics);
         } else if (user.typeOfPerson === "provider") {
           navigate(Helpers.StatsProviderView);
         } else {
           navigate(Helpers.HomeCustomerView);
         }
+        socket.emit('join-request', userLoggedInfo.idPeople);
       }
     } catch (error) {
       Swal.fire({
@@ -84,7 +72,7 @@ function AccessAccount() {
         if (response.status === 200) {
           const paymentLink = response.data.urlPayment;
           window.location.href = paymentLink;
-        } 
+        }
       } else {
         const response = await axios.post(
           `${REACT_APP_API_URL}/people`,
@@ -104,13 +92,68 @@ function AccessAccount() {
         text: `Para acceder al sistema realice el login`,
         icon: 'warning',
       })
-      .then(response => {
-        if(response.isConfirmed){
-          handleFormsVisibility()
-        }
+        .then(response => {
+          if (response.isConfirmed) {
+            handleFormsVisibility()
+          }
         })
     }
   };
+
+  const handleLogInGoogle = async (response) => {
+    const userObject = jwtDecode(response)
+    try {
+      const response = await axios.get(
+        `${REACT_APP_API_URL}/people?email=${userObject.email}`
+      );
+      if (response.data.people.count > 0) {
+        const user = response.data.people.data[0].people
+
+        if (user.state === 'Deleted') {
+          Swal.fire({
+            title: 'Usuario bloqueado',
+            text: 'Tu usuario a sido bloqueado, porfavor comuniquese con el administrador',
+            icon: 'error',
+            confirmButtonText: 'Aceptar',
+            ConfirmButtonColor: "green",
+          })
+          return
+        }
+
+        localStorage.setItem(StoreItem.emailUserLogged, userObject.email);
+
+        dispatch(addInfoUserLog(user))
+
+        if (user.typeOfPerson === 'administrator') {
+          navigate(Helpers.StatsProviderView)
+        } else if (user.typeOfPerson === 'provider') {
+          navigate(Helpers.StatsProviderView)
+        } else {
+          navigate(Helpers.HomeCustomerView)
+        }
+        socket.emit('join-request', userLoggedInfo.idPeople);
+      }
+      if (response.data.people.count === 0) {
+        Swal.fire({
+          title: 'Usuario no registrado!',
+          text: `Para acceder al sistema es necesario realizar el Registro`,
+          footer: 'Regrese y realice su registro',
+          icon: 'warning',
+          confirmButtonText: 'Aceptar',
+          ConfirmButtonColor: "green",
+        })
+      }
+    } catch (error) {
+      Swal.fire({
+        title: `${error}`,
+        text: `Para acceder al sistema es necesario realizar el Registro`,
+        footer: 'Regrese y realice su registro',
+        icon: 'error',
+        confirmButtonText: 'Aceptar',
+        ConfirmButtonColor: "green",
+      })
+    }
+  }
 
   return (
     <div className={style.wrapper}>
@@ -134,16 +177,16 @@ function AccessAccount() {
                   </div>
                 )}
                 <div className={style.components}>
-                {isProvider ? (
-                  <div className={style.components}>
-                    <MessageToShowProvider />
-                  </div>
-                ) : (
-                  <div className={style.components}>
-                    <MessageToShowClient />
-                  </div>
-                )}
-                  
+                  {isProvider ? (
+                    <div className={style.components}>
+                      <MessageToShowProvider />
+                    </div>
+                  ) : (
+                    <div className={style.components}>
+                      <MessageToShowClient />
+                    </div>
+                  )}
+
                 </div>
               </div>
             </div>
@@ -164,7 +207,7 @@ function AccessAccount() {
                     <StatsAccessAccountClient />
                   </div>
                 )}
-               {isProvider ? (
+                {isProvider ? (
                   <div className={style.components}>
                     <MessageToShowProvider />
                   </div>
@@ -176,7 +219,20 @@ function AccessAccount() {
               </div>
             </div>
           )}
-          <div id="buttonDiv" /* className={style.btnCustom} */></div>
+          <GoogleLogin
+            onSuccess={credentialResponse => {
+              handleLogInGoogle(credentialResponse.credential);
+            }}
+            onError={() => {
+              Swal.fire({
+                title: "Error de Inicio",
+                text: "Hubo un error en Google Auth",
+                icon: 'error',
+                confirmButtonText: 'Aceptar',
+                ConfirmButtonColor: "green",
+              })
+            }}
+          />;
         </div>
       ) : (
         <Link to={Helpers.Landing}>Volver a Landing</Link>
