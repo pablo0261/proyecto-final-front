@@ -21,7 +21,6 @@ import Footer from './components/Footer/Footer';
 import { useEffect } from 'react';
 import StoreItem from './Helpers/LocalStorage';
 import { addInfoUserLog, getFiltersOrdersDB, recoverUserLoggedData } from './redux/actions';
-import { jwtDecode } from "jwt-decode";
 import axios from 'axios';
 import AdminStatistics from './components/AdminStatistics/AdminStatistics';
 import AdminTablas from './Views/AdminTablas/AdminTablas';
@@ -55,102 +54,6 @@ function App() {
         navigate(Helpers.HomeCustomerView)
       }
       socket.emit('join-request', userLoggedInfo.idPeople);
-    }
-  }, [])
-
-  // GOOGLE AUTH
-  const handleCallbackResponse = async (response) => {
-    const userObject = jwtDecode(response.credential)
-    try {
-      const response = await axios.get(
-        `${REACT_APP_API_URL}/people?email=${userObject.email}`
-      );
-      if (response.data.people.count > 0) {
-        const user = response.data.people.data[0].people
-
-        if (user.state === 'Deleted') {
-          Swal.fire({
-            title: 'Usuario bloqueado',
-            text: 'Tu usuario a sido bloqueado, porfavor comuniquese con el administrador',
-            icon: 'error',
-            confirmButtonText: 'Aceptar',
-            ConfirmButtonColor: "green",
-          })
-          return
-        }
-
-        localStorage.setItem(StoreItem.emailUserLogged, userObject.email);
-
-        dispatch(addInfoUserLog(user))
-
-        if (user.typeOfPerson === 'administrator') {
-          navigate(Helpers.StatsProviderView)
-        } else if (user.typeOfPerson === 'provider') {
-          navigate(Helpers.StatsProviderView)
-        } else {
-          navigate(Helpers.HomeCustomerView)
-        }
-      }
-      if (response.data.people.count === 0) {
-
-        Swal.fire({
-          title: 'Usuario no registrado!',
-          text: `Para acceder al sistema es necesario realizar el Registro`,
-          footer: 'Regrese y realice su registro',
-          icon: 'warning',
-          // showDenyButton: true,
-          // denyButtonText: 'Cancelar',
-          // confirmButtonText: 'Aceptar',
-          // ConfirmButtonColor: "green",
-        })
-        //*Codigo para descomentar cuando sea necesario personailzar el cartel de alert!
-        // .then(response => {
-        //   if(response.isConfirmed){
-        //     Swal.fire("Exito", "El registro fue exitoso")
-        //   }
-        //   else if(response.isDenied){
-        //     Swal.fire("Información", "Todo bien", "info")
-        //   }
-        //   else{
-        //     Swal.fire("Error", "Ocurrió un error", "error")
-        //   }
-        // })
-
-      }
-    } catch (error) {
-      Swal.fire({
-        title: `${error}`,
-        text: `Para acceder al sistema es necesario realizar el Registro`,
-        footer: 'Regrese y realice su registro',
-        icon: 'error',
-        // showDenyButton: true,
-        // denyButtonText: 'Cancelar',
-        // confirmButtonText: 'Aceptar',
-        // ConfirmButtonColor: "green",
-      })
-      //*Codigo para descomentar cuando sea necesario personailzar el cartel de alert!
-      // .then(response => {
-      //   if(response.isConfirmed){
-      //     Swal.fire("Exito", "El registro fue exitoso")
-      //   }
-      //   else if(response.isDenied){
-      //     Swal.fire("Información", "Todo bien", "info")
-      //   }
-      //   else{
-      //     Swal.fire("Error", "Ocurrió un error", "error")
-      //   }
-      // })
-    }
-  }
-
-  useEffect(() => {
-    google.accounts.id.initialize({
-      client_id: "554332329432-0b6a0dh2ihgrkj5obs34lmnngpfvrq4j.apps.googleusercontent.com",
-      callback: handleCallbackResponse
-    })
-
-    if (!localStorage.getItem(StoreItem.emailUserLogged)) {
-      google.accounts.id.prompt();
     }
   }, [])
 

@@ -13,6 +13,7 @@
     "@cloudinary/react": "1.12.0",
     "@cloudinary/url-gen": "1.16.0",
     "@mercadopago/sdk-react": "0.0.16",
+    "@react-oauth/google": "^0.12.1",
     "axios": "1.6.5",
     "dotenv": "16.3.2",
     "echarts": "^5.4.3",
