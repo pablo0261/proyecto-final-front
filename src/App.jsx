@@ -41,6 +41,10 @@ function App() {
   const { pathname } = useLocation()
   const userLoggedInfo = useSelector(state => state.infoUserLog)
 
+  axios.get(`${import.meta.env.VITE_API_URL}/ping`)
+  .then(res => console.log(res.data))
+  .catch(err => console.error(err));
+  
   useEffect(() => {
     dispatch(getFiltersOrdersDB());
 
