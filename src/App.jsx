@@ -21,12 +21,11 @@ import Footer from './components/Footer/Footer';
 import { useEffect } from 'react';
 import StoreItem from './Helpers/LocalStorage';
 import { addInfoUserLog, getFiltersOrdersDB, recoverUserLoggedData } from './redux/actions';
-import axios from 'axios';
 import AdminStatistics from './components/AdminStatistics/AdminStatistics';
 import AdminTablas from './Views/AdminTablas/AdminTablas';
 import AdminReports from './Views/AdminReports/AdminReports.jsx';
 import { io } from 'socket.io-client';
-import Swal from 'sweetalert2'
+// import Swal from 'sweetalert2'
 import UsersDetail from './Views/UsersDetail/UsersDetail.jsx';
 
 const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
@@ -36,14 +35,14 @@ const socket = io(REACT_APP_API_URL);
 function App() {
 
   const dispatch = useDispatch()
-  const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
+  // const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
   const navigate = useNavigate()
   const { pathname } = useLocation()
   const userLoggedInfo = useSelector(state => state.infoUserLog)
 
-  axios.get(`${import.meta.env.VITE_API_URL}/ping`)
-  .then(res => console.log(res.data))
-  .catch(err => console.error(err));
+  // axios.get(`${import.meta.env.VITE_API_URL}/ping`)
+  // .then(res => console.log(res.data))
+  // .catch(err => console.error(err));
   
   useEffect(() => {
     dispatch(getFiltersOrdersDB());

@@ -10,6 +10,7 @@ function Form({ handleShowForm }) {
   const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
   const dispatch = useDispatch();
   const userLog = useSelector((state) => state.infoUserLog);
+  const [touchedFields, setTouchedFields] = useState({});
 
   useEffect(() => {
     setUserData((prevUserData) => ({
@@ -18,6 +19,11 @@ function Form({ handleShowForm }) {
     }));
   }, []);
 
+  const handleBlur = (event) => {
+    const { name } = event.target;
+    setTouchedFields(prev => ({ ...prev, [name]: true }));
+  };
+  
   const [isProvinciaSelected, setIsProvinciaSelected] = useState("Selecciona una provincia")
 
   const provincias = [
@@ -119,7 +125,7 @@ function Form({ handleShowForm }) {
   });
 
   const [localErrors, setLocalErrors] = useState({
-    Nombre: "*Campo Obligatorio",
+    Nombre: null,
     Telefono: "*Campo Obligatorio",
     País: "",
     Provincia: "*Campo Obligatorio",
@@ -128,6 +134,11 @@ function Form({ handleShowForm }) {
     Profesion: "*Campo Obligatorio",
     "Sobre mi": "*Campo Obligatorio",
   });
+
+  //HABILITA BOTON SEND//
+  const isFormValid = Object.values(localErrors).every((error) => error === "") &&
+  Object.values(userData).every((value) => value !== "") &&
+  userDataProfession.idOption !== "";
 
   //-PARA ENVIAR CON EL POST--/
   const userDataEnglish = {
@@ -207,7 +218,7 @@ function Form({ handleShowForm }) {
         <p className={styles.textTitle}>Completa tus datos personales</p>
         <form className={styles.Form} onSubmit={handleSubmit}>
           {
-            Object.values(userData).some((data) => data !== "") && <p className={styles.errorMessageStatic}>(*)Rellene los campos obligatorios</p>
+            Object.values(userData).some((data) => data !== "") && <p className={styles.errorMessageStatic}>(*)Campos obligatorios</p>
           }
           <div className={styles.FormDivInput}>
             <label className={styles.labels}>*Nombre y Apellido:</label>
@@ -218,9 +229,16 @@ function Form({ handleShowForm }) {
               value={userData.Nombre}
               onChange={handleChange}
               placeholder="Ej: Ana Maria de los Angeles"
+              onBlur={handleBlur}
             />
-            <div className={localErrors.Nombre ? styles.errorMessage : styles.errorNotMessage}>
-              {localErrors.Nombre ? localErrors.Nombre : "Datos Válidos"}
+            <div  className={
+      touchedFields.Nombre
+        ? (localErrors.Nombre ? styles.errorMessage : styles.errorNotMessage)
+        : styles.errorNotMessage
+    }>
+               {touchedFields.Nombre
+      ? (localErrors.Nombre ? localErrors.Nombre : "Datos Válidos")
+      : ""}
             </div>
           </div>
 
@@ -234,9 +252,16 @@ function Form({ handleShowForm }) {
                 value={userData.Telefono}
                 onChange={handleChange}
                 placeholder="Ej: 54 9 ...(Tu número sin el 15)... "
-              />
-              <div className={localErrors.Telefono ? styles.errorMessage : styles.errorNotMessage}>
-                {localErrors.Telefono ? localErrors.Telefono : "Datos Válidos"}
+                onBlur={handleBlur}
+                />
+                <div  className={
+          touchedFields.Nombre
+            ? (localErrors.Nombre ? styles.errorMessage : styles.errorNotMessage)
+            : styles.errorNotMessage
+        }>
+                   {touchedFields.Nombre
+          ? (localErrors.Nombre ? localErrors.Nombre : "Datos Válidos")
+          : ""}
               </div>
             </div>
 
@@ -252,26 +277,35 @@ function Form({ handleShowForm }) {
             </div>
 
             <div className={styles.FormDivInputFlex}>
-              <label className={styles.labels}>*Provincia:</label>
-              <select
-                className={styles.inputSelect}
-                name="Provincia"
-                value={isProvinciaSelected}
-                onChange={handleProvinciaChange}
-              >
-                <option value="Selecciona una provincia" disabled>
-                  Selecciona una provincia
-                </option>
-                {provincias.map((provincia) => (
-                  <option key={provincia} value={provincia}>
-                    {provincia}
-                  </option>
-                ))}
-              </select>
-              <div className={localErrors.Provincia ? styles.errorMessage : styles.errorNotMessage}>
-                {localErrors.Provincia ? localErrors.Provincia : "Datos Válidos"}
-              </div>
-            </div>
+  <label className={styles.labels}>*Provincia:</label>
+  <select
+    className={styles.inputSelect}
+    name="Provincia"
+    value={isProvinciaSelected}
+    onChange={handleProvinciaChange}
+    onBlur={handleBlur}
+  >
+    <option value="Selecciona una provincia" disabled>
+      Selecciona una provincia
+    </option>
+    {provincias.map((provincia) => (
+      <option key={provincia} value={provincia}>
+        {provincia}
+      </option>
+    ))}
+  </select>
+  <div
+    className={
+      touchedFields.Provincia
+        ? (localErrors.Provincia ? styles.errorMessage : styles.errorNotMessage)
+        : styles.errorNotMessage
+    }
+  >
+    {touchedFields.Provincia
+      ? (localErrors.Provincia ? localErrors.Provincia : "Datos Válidos")
+      : ""}
+  </div>
+</div>
 
             <div className={styles.FormDivInputFlex}>
               <label className={styles.labels}>*Ciudad:</label>
@@ -280,6 +314,7 @@ function Form({ handleShowForm }) {
                 name="Localidad"
                 value={userData.Localidad}
                 onChange={handleChange}
+                onBlur={handleBlur}
               >
                 <option value="" disabled>
                   Selecciona una ciudad
@@ -294,11 +329,19 @@ function Form({ handleShowForm }) {
                     </option>
                   ))}
               </select>
-              <div className={localErrors.Localidad ? styles.errorMessage : styles.errorNotMessage}>
-                {localErrors.Localidad ? localErrors.Localidad : "Datos Válidos"}
+              <div className={
+                touchedFields.Provincia
+                ? (localErrors.Localidad ? styles.errorMessage : styles.errorNotMessage)
+                : styles.errorNotMessage
+            }
+            >
+              {touchedFields.Provincia
+      ? (localErrors.Localidad ? localErrors.Localidad : "Datos Válidos")
+      : ""}
               </div>
             </div>
           </div>
+          
           <div className={styles.FormDivInput}>
             <label className={styles.labels}>*Calle:</label>
             <input
@@ -308,9 +351,16 @@ function Form({ handleShowForm }) {
               value={userData.Calle}
               onChange={handleChange}
               placeholder="Ej: Av. Chacabuco"
-            />
-            <div className={localErrors.Calle ? styles.errorMessage : styles.errorNotMessage}>
-              {localErrors.Calle ? localErrors.Calle : "Datos Válidos"}
+              onBlur={handleBlur}
+              />
+              <div  className={
+        touchedFields.Calle
+          ? (localErrors.Calle ? styles.errorMessage : styles.errorNotMessage)
+          : styles.errorNotMessage
+      }>
+                 {touchedFields.Calle
+        ? (localErrors.Calle ? localErrors.Calle : "Datos Válidos")
+        : ""}
             </div>
           </div>
 
@@ -321,6 +371,7 @@ function Form({ handleShowForm }) {
               name="Profesion"
               value={userDataProfession.idOption}
               onChange={handleChange}
+              onBlur={handleBlur}
             >
               <option value="" disabled>
                 Selecciona una profesión
@@ -335,8 +386,14 @@ function Form({ handleShowForm }) {
                   </option>
                 ))}
             </select>
-            <div className={localErrors.Profesion ? styles.errorMessage : styles.errorNotMessage}>
-              {localErrors.Profesion ? localErrors.Profesion : "Datos Válidos"}
+            <div  className={
+        touchedFields.Nombre
+          ? (localErrors.Profesion ? styles.errorMessage : styles.errorNotMessage)
+          : styles.errorNotMessage
+      }>
+                 {touchedFields.Profesion
+        ? (localErrors.Profesion ? localErrors.Profesion : "Datos Válidos")
+        : ""}
             </div>
           </div>
 
@@ -350,11 +407,17 @@ function Form({ handleShowForm }) {
               onChange={handleChange}
               placeholder="Cuentales a los clientes quien eres..."
             />
-            <div className={localErrors["Sobre mi"] ? styles.errorMessage : styles.errorNotMessage}>
-              {localErrors["Sobre mi"] ? localErrors["Sobre mi"] : "Datos Válidos"}
+             <div  className={
+        touchedFields.Nombre
+          ? (localErrors["Sobre mi"]  ? styles.errorMessage : styles.errorNotMessage)
+          : styles.errorNotMessage
+      }>
+                 {touchedFields["Sobre mi"] 
+        ? (localErrors["Sobre mi"]  ? localErrors["Sobre mi"]  : "Datos Válidos")
+        : ""}
             </div>
           </div>
-          <button className={styles.buttonSave} type="submit" >
+          <button className={styles.buttonSave} type="submit" disabled={!isFormValid} >
             Guardar
           </button>
         </form>

@@ -127,6 +127,12 @@
     transition: .2s
     @include font(white, 18px, normal, normal)
 
+@mixin buttonDisabled
+    background-color: $primaryColorDisabled
+    color: white
+    cursor: not-allowed
+    opacity: 0.6
+
 @mixin buttonFailure
     background-color: $textFailureColor
     padding: 10px 20px

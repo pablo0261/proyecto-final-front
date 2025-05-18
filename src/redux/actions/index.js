@@ -230,10 +230,11 @@ const getPeopleFilteredOrderedPagination = (queryConstructor, queryPagination) =
 const getFiltersOrdersDB = () => {
   return async (dispatch) => {
     try {
-      const response = await axios.get(`${REACT_APP_API_URL}/categories?isDeleted=false`);
+      const response = await axios.get(`${REACT_APP_API_URL}/categories`);
+      const categories = response.data?.categories?.data ?? [];
       return dispatch({
         type: FILTER_SERVICES,
-        payload: response.data.categories.data,
+        payload: categories,
       });
     } catch (error) {
       Swal.fire({
@@ -245,6 +246,7 @@ const getFiltersOrdersDB = () => {
     }
   };
 };
+
 
 const saveSelectionsGlobal = (selectedOptions) => {
   return async (dispatch) => {
